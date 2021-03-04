@@ -249,6 +249,10 @@
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Component id="jBCancel_MarketBulk" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -267,15 +271,14 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jcbTask_MarketBulk" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane5" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="1" pref="625" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLComments_MarketBulk" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="436" max="32767" attributes="0"/>
-                              <Component id="jBAddBulkMarket" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jBCancel_MarketBulk" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jBAddBulkMarket" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -286,8 +289,34 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLTaskID_MarketBulk" alignment="3" max="32767" attributes="0"/>
+                                          <Component id="jTextFieldTask_ID_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLTask_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jcbTask_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="191" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                                      <Component id="jLComments_MarketBulk" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jScrollPane5" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
+                              <Component id="jBAddBulkMarket" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLRegionBulk" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jcbRegionBulk" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -342,38 +371,13 @@
                                           <Component id="jLFailFTR_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jcbFailedFTR_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jBCancel_MarketBulk" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jBCancel_MarketBulk" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLTaskID_MarketBulk" alignment="3" max="32767" attributes="0"/>
-                                          <Component id="jTextFieldTask_ID_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLTask_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jcbTask_MarketBulk" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="191" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                                      <Component id="jLComments_MarketBulk" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jScrollPane5" min="-2" pref="150" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
-                              <Component id="jBAddBulkMarket" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -724,6 +728,136 @@
         </Container>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JFrame" name="jFrameHistory">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          <Component id="jB_ExportDates" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jL_StartDate" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jL_EndDate" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jDateChooser_End" alignment="1" pref="140" max="32767" attributes="0"/>
+                              <Component id="jDateChooser_Start" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jcb_Team_history" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jcb_Team_history" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jL_StartDate" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jDateChooser_Start" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jDateChooser_End" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jL_EndDate" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="78" max="32767" attributes="0"/>
+                  <Component id="jB_ExportDates" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser_Start">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser_End">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jL_StartDate">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Select the starting date:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jL_EndDate">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Select the ending date:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jB_ExportDates">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Search &amp; Export"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jB_ExportDatesActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcb_Team_history">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Select a team:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -734,15 +868,26 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemOpen">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_SavedTemplate">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Ericsson Hilda" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Import (csv file)"/>
+                <Property name="text" type="java.lang.String" value="Use saved template"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemOpenActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_SavedTemplateActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSaveTemplate">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ericsson Hilda" size="18" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Save as template"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemSaveTemplateActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemGenerate">
@@ -750,10 +895,21 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Ericsson Hilda" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Generate template "/>
+                <Property name="text" type="java.lang.String" value="Create csv ..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemGenerateActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemOpen">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ericsson Hilda" size="18" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Import csv ..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemOpenActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemExit">
@@ -994,7 +1150,7 @@
                           <EmptySpace min="-2" pref="634" max="-2" attributes="0"/>
                           <Component id="jLabelTeam" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jBInsert" min="-2" max="-2" attributes="0"/>
+                          <Component id="jB_Save" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -1184,7 +1340,7 @@
                                   <Component id="jBClearTable" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jBDeleteRow" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jBInsert" min="-2" max="-2" attributes="0"/>
+                              <Component id="jB_Save" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -1195,7 +1351,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jBInsert">
+        <Component class="javax.swing.JButton" name="jB_Save">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Ericsson Hilda" size="18" style="0"/>
@@ -1203,7 +1359,7 @@
             <Property name="text" type="java.lang.String" value="Save"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBInsertActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jB_SaveActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLTaskID">
@@ -1578,7 +1734,7 @@
                     <Column editable="false" title="Technology" type="java.lang.Object"/>
                     <Column editable="false" title="SAP Billing" type="java.lang.Object"/>
                     <Column editable="true" title="Work date" type="java.lang.Object"/>
-                    <Column editable="false" title="Logged Time" type="java.lang.Object"/>
+                    <Column editable="true" title="Logged Time" type="java.lang.Object"/>
                     <Column editable="false" title="Week" type="java.lang.Object"/>
                     <Column editable="false" title="FTR" type="java.lang.Object"/>
                     <Column editable="false" title="On Time" type="java.lang.Object"/>
@@ -1987,7 +2143,11 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="371" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabelHoursDaysB" alignment="1" max="32767" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jLabelHoursDaysB" max="32767" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jBHistory" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <Component id="jLabelHoursDaysH" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -2001,6 +2161,8 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jBClearTable2" min="-2" pref="90" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jB_ESS" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jBExport" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="jButtonUpdate" min="-2" max="-2" attributes="0"/>
@@ -2028,6 +2190,7 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabelHoursDaysB" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jcbTeam1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jBHistory" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jLabelTeam1" min="-2" max="-2" attributes="0"/>
@@ -2048,7 +2211,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jCheckBoxWeek" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="682" max="32767" attributes="0"/>
+                  <EmptySpace pref="680" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -2061,6 +2224,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jButtonUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jBExport" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jB_ESS" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
@@ -2180,9 +2344,9 @@
                     <Column editable="false" title="Subnetwork" type="java.lang.Object"/>
                     <Column editable="false" title="Activity code" type="java.lang.Object"/>
                     <Column editable="false" title="SAP Billing" type="java.lang.Object"/>
-                    <Column editable="false" title="Work date" type="java.lang.Object"/>
+                    <Column editable="true" title="Work date" type="java.lang.Object"/>
                     <Column editable="true" title="Logged Time" type="java.lang.Object"/>
-                    <Column editable="false" title="Week" type="java.lang.Object"/>
+                    <Column editable="true" title="Week" type="java.lang.Object"/>
                     <Column editable="false" title="FTR" type="java.lang.Object"/>
                     <Column editable="false" title="On Time" type="java.lang.Object"/>
                     <Column editable="false" title="Failed FTR" type="java.lang.Object"/>
@@ -2438,6 +2602,31 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBExportActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jBHistory">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="History"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBHistoryActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jB_ESS">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ericsson Hilda" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Export in ESS format"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jB_ESSActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

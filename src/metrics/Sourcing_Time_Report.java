@@ -7,7 +7,6 @@ package metrics;
 
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -48,13 +47,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import static metrics.Metrics.localversion;
@@ -76,10 +73,9 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     ArrayList<String> tasks_info = new ArrayList<>();
     ArrayList<String> networks_info = new ArrayList<>();
     ArrayList<String> metrics_sourcing_info = new ArrayList<>();
+    ArrayList<String> metrics_for_ess = new ArrayList<>();
     int current_week = 0, times_in_edit = 0;
     float hours = 0;
-    String imported_file = null;
-    boolean imported = false;
     String saved = "Data saved successfully!";
 
     public Sourcing_Time_Report() throws ParseException, IOException {
@@ -87,7 +83,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jPanel2.setVisible(false);
         jPanel3.setVisible(false);
         this.setVisible(true);
-        setExtendedState(this.MAXIMIZED_BOTH);
+        setExtendedState(Sourcing_Time_Report.MAXIMIZED_BOTH);
 
         jDLoading.setSize(350, 150);
         jDLoading.setTitle("MRT - Connecting to the server");
@@ -133,9 +129,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         current_week = now.get(Calendar.WEEK_OF_YEAR);
         // Set current week panel 2
         for (int i = 1; i <= current_week; i++) {
-            if (current_week == 1) {
-                jcbWeek1.addItem("52");
-            }
             jcbWeek1.addItem(String.valueOf(i));
         }
         jcbWeek1.setSelectedIndex(current_week - 1);
@@ -160,7 +153,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 String date_change = dcn.format(jDateChooser1.getDate());
-                int week = 0;
+
                 Date date_ = null;
                 try {
                     date_ = dcn.parse(date_change);
@@ -169,7 +162,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 }
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date_);
-                week = cal.get(Calendar.WEEK_OF_YEAR);
+                int week = cal.get(Calendar.WEEK_OF_YEAR);
                 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                     week = week - 1;
                 }
@@ -181,9 +174,9 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         if (usersinfo.get(2).equals("Sourcing Automation") || usersinfo.get(2).equals("IT Sourcing")) {
             jcbCU.addItem(usersinfo.get(2));
         }
-        for (int i = 0; i < cus.length; i++) {
-            if (cus[i].equals("Sourcing Automation") || cus[i].equals("IT Sourcing")) {
-                jcbCU.addItem(cus[i]);
+        for (String cu : cus) {
+            if (cu.equals("Sourcing Automation") || cu.equals("IT Sourcing")) {
+                jcbCU.addItem(cu);
             }
         }
         // Populate jcbTask1 with All default
@@ -245,8 +238,16 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jPanelLoading = new javax.swing.JPanel();
         jLabelLoading = new javax.swing.JLabel();
         jLabelLoading1 = new javax.swing.JLabel();
+        jFrameHistory = new javax.swing.JFrame();
+        jDateChooser_Start = new com.toedter.calendar.JDateChooser();
+        jDateChooser_End = new com.toedter.calendar.JDateChooser();
+        jL_StartDate = new javax.swing.JLabel();
+        jL_EndDate = new javax.swing.JLabel();
+        jB_ExportDates = new javax.swing.JButton();
+        jcb_Team_history = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jBInsert = new javax.swing.JButton();
+        jB_Save = new javax.swing.JButton();
         jLTaskID = new javax.swing.JLabel();
         jLTask = new javax.swing.JLabel();
         jcbTask = new javax.swing.JComboBox<>();
@@ -319,6 +320,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jcbTeam1 = new javax.swing.JComboBox<>();
         jLabelTeam1 = new javax.swing.JLabel();
         jBExport = new javax.swing.JButton();
+        jBHistory = new javax.swing.JButton();
+        jB_ESS = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelLogo = new javax.swing.JLabel();
         jLabelDagaz = new javax.swing.JLabel();
@@ -332,8 +335,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jLabelVersion = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItemOpen = new javax.swing.JMenuItem();
+        jMenuItem_SavedTemplate = new javax.swing.JMenuItem();
+        jMenuItemSaveTemplate = new javax.swing.JMenuItem();
         jMenuItemGenerate = new javax.swing.JMenuItem();
+        jMenuItemOpen = new javax.swing.JMenuItem();
         jMenuItemExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemRecord = new javax.swing.JMenuItem();
@@ -376,6 +381,77 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             .addComponent(jPanelLoading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jDateChooser_Start.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jDateChooser_End.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jL_StartDate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jL_StartDate.setText("Select the starting date:");
+
+        jL_EndDate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jL_EndDate.setText("Select the ending date:");
+
+        jB_ExportDates.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jB_ExportDates.setText("Search & Export");
+        jB_ExportDates.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_ExportDatesActionPerformed(evt);
+            }
+        });
+
+        jcb_Team_history.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jLabel1.setText("Select a team:");
+
+        javax.swing.GroupLayout jFrameHistoryLayout = new javax.swing.GroupLayout(jFrameHistory.getContentPane());
+        jFrameHistory.getContentPane().setLayout(jFrameHistoryLayout);
+        jFrameHistoryLayout.setHorizontalGroup(
+            jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameHistoryLayout.createSequentialGroup()
+                .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrameHistoryLayout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(jB_ExportDates))
+                    .addGroup(jFrameHistoryLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameHistoryLayout.createSequentialGroup()
+                                    .addComponent(jL_StartDate)
+                                    .addGap(31, 31, 31))
+                                .addGroup(jFrameHistoryLayout.createSequentialGroup()
+                                    .addComponent(jL_EndDate)
+                                    .addGap(38, 38, 38)))
+                            .addGroup(jFrameHistoryLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jDateChooser_End, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jDateChooser_Start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcb_Team_history, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        jFrameHistoryLayout.setVerticalGroup(
+            jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameHistoryLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcb_Team_history, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jL_StartDate)
+                    .addComponent(jDateChooser_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateChooser_End, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jL_EndDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(jB_ExportDates)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -383,11 +459,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jPanel1.setMaximumSize(new java.awt.Dimension(0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(1400, 915));
 
-        jBInsert.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jBInsert.setText("Save");
-        jBInsert.addActionListener(new java.awt.event.ActionListener() {
+        jB_Save.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jB_Save.setText("Save");
+        jB_Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBInsertActionPerformed(evt);
+                jB_SaveActionPerformed(evt);
             }
         });
 
@@ -538,7 +614,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true
+                false, false, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -717,7 +793,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 .addGap(508, 508, 508)
                                 .addComponent(jLabelTeam)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBInsert)))
+                                .addComponent(jB_Save)))
                         .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -804,14 +880,14 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBClearTable)
-                            .addComponent(jBDeleteRow))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jBInsert)
-                        .addComponent(jLabelTeam))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jBClearTable)
+                                .addComponent(jBDeleteRow))
+                            .addContainerGap())
+                        .addComponent(jLabelTeam, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jB_Save)))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -856,7 +932,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, true
+                false, false, false, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -954,6 +1030,23 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
         });
 
+        jBHistory.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jBHistory.setText("History");
+        jBHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBHistoryActionPerformed(evt);
+            }
+        });
+
+        jB_ESS.setBackground(new java.awt.Color(204, 255, 204));
+        jB_ESS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jB_ESS.setText("Export in ESS format");
+        jB_ESS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_ESSActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -993,7 +1086,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addGap(371, 371, 371)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jBHistory))
                                             .addComponent(jLabelHoursDaysH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(19, 19, 19))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -1003,6 +1099,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jBClearTable2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jB_ESS)
+                                .addGap(18, 18, 18)
                                 .addComponent(jBExport)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBUpdate))
@@ -1016,8 +1114,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelHoursDaysH, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBHistory)))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jcbTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelTeam1)))
@@ -1036,7 +1136,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxWeek)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -1047,7 +1147,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBUpdate)
-                            .addComponent(jBExport))
+                            .addComponent(jBExport)
+                            .addComponent(jB_ESS))
                         .addGap(35, 35, 35))))
         );
 
@@ -1147,23 +1248,41 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenu1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
-        jMenuItemOpen.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jMenuItemOpen.setText("Import (csv file)");
-        jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem_SavedTemplate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMenuItem_SavedTemplate.setText("Use saved template");
+        jMenuItem_SavedTemplate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemOpenActionPerformed(evt);
+                jMenuItem_SavedTemplateActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemOpen);
+        jMenu1.add(jMenuItem_SavedTemplate);
+
+        jMenuItemSaveTemplate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMenuItemSaveTemplate.setText("Save as template");
+        jMenuItemSaveTemplate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSaveTemplateActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemSaveTemplate);
 
         jMenuItemGenerate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jMenuItemGenerate.setText("Generate template ");
+        jMenuItemGenerate.setText("Create csv ...");
         jMenuItemGenerate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemGenerateActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItemGenerate);
+
+        jMenuItemOpen.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMenuItemOpen.setText("Import csv ...");
+        jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOpenActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemOpen);
 
         jMenuItemExit.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMenuItemExit.setText("Exit");
@@ -1243,188 +1362,332 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertActionPerformed
+    private void jB_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_SaveActionPerformed
         // Action for Save button
         if (jTableAddMetrics.getEditingRow() != -1) {
             jTableAddMetrics.getCellEditor().stopCellEditing();// In case there's selected a field in the table
         }
-        int rows = jTableAddMetrics.getRowCount();
-        boolean error = false;
-        if (imported) { // If data imported from csv file
-            System.out.println("File was imported");
-            for (int row = 0; row < rows; row++) {
-                String region = (String) jTableAddMetrics.getValueAt(row, 0);
-                String signum = (String) jTableAddMetrics.getValueAt(row, 1);
-                signum = signum.toLowerCase(); // In case user has signum in uppercase
-                String requestor = (String) jTableAddMetrics.getValueAt(row, 2);
-                String task_id = (String) jTableAddMetrics.getValueAt(row, 3);
-                String task = (String) jTableAddMetrics.getValueAt(row, 4);
-                String net = (String) jTableAddMetrics.getValueAt(row, 5);
-                String subnet = (String) jTableAddMetrics.getValueAt(row, 6);
-                String act = (String) jTableAddMetrics.getValueAt(row, 7);
-                String sap = (String) jTableAddMetrics.getValueAt(row, 8);
-                String w_date = (String) jTableAddMetrics.getValueAt(row, 9);
-                String time = (String) jTableAddMetrics.getValueAt(row, 10);
-                String week = (String) jTableAddMetrics.getValueAt(row, 11);
-                String ftr = (String) jTableAddMetrics.getValueAt(row, 12);
-                String on_time = (String) jTableAddMetrics.getValueAt(row, 13);
-                String f_ftr = (String) jTableAddMetrics.getValueAt(row, 14);
-                String f_on_time = (String) jTableAddMetrics.getValueAt(row, 15);
-                String requests = (String) jTableAddMetrics.getValueAt(row, 16);
-                String comments = (String) jTableAddMetrics.getValueAt(row, 17);
-                // Validate every cell is containing valid user info or is not empty
-                if (!(usersinfo.contains(signum) && tasks_info.contains(task_id) && tasks_info.contains(task)
-                        && (networks_info.contains(net) || net.equals("0")) && (networks_info.contains(subnet) || subnet.equals("0"))
-                        && (networks_info.contains(act) || act.equals("0")) && tasks_info.contains(sap))
-                        || time.isEmpty() || time.equals("0") || time.equals("0.0") || week.isEmpty() || ftr.isEmpty() || on_time.isEmpty()
-                        || f_ftr.isEmpty() || f_on_time.isEmpty() || requests.isEmpty() || comments.isEmpty() || requestor.isEmpty()
-                        || region.isEmpty() || w_date.isEmpty()) {
+        // Start thread
+        jLabelLoading.setText("Saving your metrics into database...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                int rows = jTableAddMetrics.getRowCount();
+                System.out.println("Rows to insert: " + rows);
+                boolean error = false;
+                DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
+
+                // Validate jAddMetrics table's info
+                for (int row = 0; row < rows; row++) {
+                    // Get each row's info
+                    String region = (String) jTableAddMetrics.getValueAt(0, 0);
+                    String signum = (String) jTableAddMetrics.getValueAt(0, 1);
+                    signum = signum.toLowerCase(); // In case user has signum in uppercase
+                    String requestor = (String) jTableAddMetrics.getValueAt(0, 2);
+                    String task_id = (String) jTableAddMetrics.getValueAt(0, 3);
+                    String task = (String) jTableAddMetrics.getValueAt(0, 4);
+                    String net = (String) jTableAddMetrics.getValueAt(0, 5);
+                    String subnet = (String) jTableAddMetrics.getValueAt(0, 6);
+                    String act = (String) jTableAddMetrics.getValueAt(0, 7);
+                    String sap = (String) jTableAddMetrics.getValueAt(0, 8);
+                    String w_date = (String) jTableAddMetrics.getValueAt(0, 9);
+                    String time = (String) jTableAddMetrics.getValueAt(0, 10);
+                    String week = (String) jTableAddMetrics.getValueAt(0, 11);
+                    String ftr = (String) jTableAddMetrics.getValueAt(0, 12);
+                    String on_time = (String) jTableAddMetrics.getValueAt(0, 13);
+                    String f_ftr = (String) jTableAddMetrics.getValueAt(0, 14);
+                    String f_on_time = (String) jTableAddMetrics.getValueAt(0, 15);
+                    String requests = (String) jTableAddMetrics.getValueAt(0, 16);
+                    String comments = (String) jTableAddMetrics.getValueAt(0, 17);
+                    // Validate every cell is containing valid user info or is not empty
+                    String failed = "";
+                    //Requestor format
+                    Pattern prequestor1 = Pattern.compile("^[a-zA-Z ]+$");          // Regular name
+                    Pattern prequestor2 = Pattern.compile("^([A-Za-z/]*)$");        // N/A
+                    Matcher mrequestor1 = prequestor1.matcher(requestor);
+                    Matcher mrequestor2 = prequestor2.matcher(requestor);
+                    boolean brequestor1 = mrequestor1.find();
+                    boolean brequestor2 = mrequestor2.find();
+                    // Find task in tasks_info
+                    int task_index = 0;
+                    for (int i = 0; i < tasks_info.size(); i++) {
+                        if (tasks_info.get(i).equals(task)) {
+                            task_index = i;
+                            System.out.println("1st task index: " + i);
+                            break;
+                        }
+                    }
+                    // Find subnet in networks_info
+                    int subnet_index = 0;
+                    for (int i = 0; i < networks_info.size(); i++) {
+                        if (networks_info.get(i).equals(subnet)) {
+                            subnet_index = i;
+                            break;
+                        }
+                    }
+                    //Date format
+                    Pattern pdate = Pattern.compile("^(([0-9][0-9][0-9][0-9]-)*([0-9][0-9]-)*([0-9][0-9]))$");  // Date format YYYY-MM-DD
+                    Matcher mdate = pdate.matcher(w_date);
+                    boolean bdate = mdate.find();
+                    //Time format
+                    Pattern ptime = Pattern.compile("^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$");
+                    Matcher mtime = ptime.matcher(time);
+                    boolean btime = mtime.find();
+                    // Week according to date
+                    SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date_ = new Date();
+                    try {
+                        date_ = dcn.parse(w_date);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Error parsing date " + w_date);
+                    }
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date_);
+                    int correct_week = cal.get(Calendar.WEEK_OF_YEAR);
+                    // List for ftr, on_time, f_ftr and f_on_time
+                    List<String> ftr_list = Arrays.asList("N/A", "Yes", "No");
+                    List<String> on_time_list = Arrays.asList("N/A", "Yes", "No");
+                    List<String> f_ftr_list = Arrays.asList("N/A", "Human error", "Lack of process adhereance", "Missing training",
+                            "Technical issues", "Tool related error", "Wrong inputs");
+                    List<String> f_on_time_list = Arrays.asList("N/A", "Yes", "No");
+                    // Requests format
+                    Pattern prequests = Pattern.compile("^[0-9]");
+                    Matcher mrequests = prequests.matcher(requests);
+                    boolean brequests = mrequests.find();
+                    //System.out.println("Task id in table: " + task_id + "|Task id in array: " + tasks_info.get(task_index - 1) + "|");
+                    //System.out.println("Task in table: " + task + "|Task in array: " + tasks_info.get(task_index) + "|");
+                    // Start validation
+                    if (region.equals("") || !region.equals("MANA")) {                  // Region
+                        failed = "Region " + region;
+                    }
+                    if (!(signum.equals(usersinfo.get(0))) || signum.equals("")) {      // Signum -> usersinfo
+                        failed = "Signum " + signum;
+                    }
+                    if (!brequestor1 || !brequestor2 || requestor.equals("")) {          // Requestor -> only alphabet characters    
+                        if (!brequestor1 && !requestor.equals("N/A")) {
+                            failed = "Requestor " + requestor;
+                        } else if (!brequestor2 || requestor.equals("")) {
+                            requestor = "N/A";
+                        }
+                    }
+                    if (!(task_id.equals(tasks_info.get(task_index - 1))) || task_id.equals("")) {      // Task_ID -> task_id associated with task found
+                        int new_index_task = ValidateTask_Save(task_index);
+                        // Validate again task id
+                        if (!(task_id.equals(tasks_info.get(new_index_task - 1))) || task_id.equals("")) {
+                            failed = "Task ID " + task_id;
+                        }
+                        //System.out.println("2 Task id in table: " + task_id + "|Task id in array: " + tasks_info.get(new_index_task - 1) + "|");
+                        //System.out.println("2 Task in table: " + task + "|Task in array: " + tasks_info.get(new_index_task) + "|");
+                    }
+                    if (!(task.equals(tasks_info.get(task_index))) || task.equals("")) {            // Task -> task found
+                        String task_copy = tasks_info.get(task_index);
+                        // Check for tasks with "same name"
+                        if (task_copy.contains("  ")) {
+                            task_copy = task_copy.replace("  ", "");
+                        }
+                        // Validate again task
+                        if (!(task.equals(task_copy)) || task.equals("")) {
+                            failed = "Task " + task;
+                        }
+                    }
+                    if (!net.equals("0") || net.equals("")) {
+                        if (!(net.equals(networks_info.get(subnet_index - 5)))) {                   // Network -> network associated with subnet
+                            failed = "Network " + net;
+                        }
+                    } else if (net.equals("0")) {
+                        if (!tasks_info.get(task_index - 1).contains("ADMIN")) {
+                            failed = "Network " + net;
+                        }
+                    }
+                    if (!subnet.equals("0") || subnet.equals("")) {
+                        if (!(subnet.equals(networks_info.get(subnet_index)))) {                    // Subnetwork -> subnet found
+                            failed = "Subnetwork " + subnet;
+                        }
+                    } else if (subnet.equals("0")) {
+                        if (!tasks_info.get(task_index - 1).contains("ADMIN")) {
+                            failed = "Subnetwork " + subnet;
+                        }
+                    }
+                    if (!act.equals("0") || act.equals("")) {
+                        if (!(act.equals(networks_info.get(subnet_index - 4)))) {                   // Activity -> act associated with subnet
+                            failed = "Activity " + act;
+                        }
+                    } else if (act.equals("0")) {
+                        if (!tasks_info.get(task_index - 1).contains("ADMIN")) {
+                            failed = "Activity " + act;
+                        }
+                    }
+                    if (!(sap.equals(tasks_info.get(task_index + 3))) || sap.equals("")) {         // SAP -> sap associated with task
+                        failed = "SAP " + sap;
+                    }
+                    if (!bdate || w_date.equals("")) {                                              // Date -> format YYYY-MM-DD
+                        System.out.println("Date: " + w_date);
+                        failed = "Date " + w_date;
+                    }
+                    if (!btime || time.equals("")) {                                                // Time -> decimal format
+                        failed = "Time " + time;
+                    }
+                    if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date                                      
+                        System.out.println(week + "| Correct week:" + correct_week);
+                        failed = "Week " + week;
+                    }
+                    if (!ftr_list.contains(ftr) || ftr.equals("")) {                               // FTR -> Not empty or in list                                      
+                        failed = "FTR " + ftr;
+                    }
+                    if (!on_time_list.contains(on_time) || on_time.equals("")) {                   // On time -> Not empty or in list                                     
+                        failed = "On time " + on_time;
+                    }
+                    if (!f_ftr_list.contains(f_ftr) || f_ftr.equals("")) {                         // Failed FTR -> Not empty or in list                                      
+                        failed = "Failed FTR " + f_ftr;
+                    }
+                    if (!f_on_time_list.contains(f_on_time) || f_on_time.equals("")) {             // Failed On time -> Not empty or in list                                      // Week -> corresponding to date
+                        failed = "Failed on time " + f_on_time;
+                    }
+                    if (!brequests || requests.equals("") || requests.equals("0")) {               // Requests -> Number format                                      // Week -> corresponding to date
+                        failed = "Num of requests " + requests;
+                    }
+                    // If something failed show where it did
                     int current_row = row + 1;
-                    JOptionPane.showMessageDialog(this, "File has inconsistent information in row " + current_row + ", please register your hours with this tool to prevent errors.");
-                    error = true;
+                    if (!failed.equals("")) {
+                        JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Please verify your info near " + failed + " in row " + current_row + ".");
+                        error = true;
+                        System.out.println("Error near " + failed + " in row " + current_row);
+                        jDLoading.dispose();
+                        return;
+                    }
+                    int res = 0;
+                    if (error == false) { // If true if before this should handle it
+                        if (rows == 0) {
+                            JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Nothing saved");
+                        } else {    // Insert into database
+                            jLabelLoading.setText("Saving your metrics into database...");
+                            res = InsertIntoDB(region, signum, requestor, task_id, task, net, subnet, act, sap, w_date, time, week,
+                                    ftr, on_time, f_ftr, f_on_time, requests, comments);
+                            System.out.println("Result of function: " + res);
+                            if (res == 0) {      // if failed
+                                break;
+                            } else {
+                                tblModel.removeRow(0);
+                            }
+                        }
+                    }
                 }
-            }
-            if (error == false) {
-                jLabelLoading.setText("Saving your metrics into database...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        InsertIntoDB();
-                        GetDailyHours();
-                        jDLoading.dispose();
-                        JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
-                    }
-                }).start();
-                jDLoading.setVisible(true);
-            }
-        } else {
-            if (rows == 0) {
-                JOptionPane.showMessageDialog(this, "Nothing saved");
-            } else {
-                jLabelLoading.setText("Saving your metrics into database...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        InsertIntoDB();
-                        GetDailyHours();
-                        jDLoading.dispose();
-                        JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
-                    }
-                }).start();
-                jDLoading.setVisible(true);
+
+                jDLoading.dispose();
+                // Refresh total hours
+
+                GetHours();
+
+                GetDailyHours();
+
+                System.out.println(
+                        "Total hours this week: " + hours);
+                Sourcing_Time_Report.this.setTitle(
+                        "SOURCING               " + usersinfo.get(0) + " | " + usersinfo.get(4)
+                        + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | " + "Hours: " + hours);
+                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
             }
         }
-    }//GEN-LAST:event_jBInsertActionPerformed
+        ).start();
 
-    private void InsertIntoDB() {
+        jDLoading.setVisible(
+                true);
+    }//GEN-LAST:event_jB_SaveActionPerformed
+
+    private int ValidateTask_Save(int old_task_index) {
+        // Check if there is a task with the same name
+        int new_task_index = 0;
+        String task_id = (String) jTableAddMetrics.getValueAt(0, 3);
+        String task = (String) jTableAddMetrics.getValueAt(0, 4);
+        // Look for task with same name
+        for (int i = old_task_index + 1; i < tasks_info.size(); i++) {
+            String task_copy = tasks_info.get(i);
+            // Check for tasks with "same name"
+            if (task_copy.contains("  ")) {
+                task_copy = task_copy.replace("  ", "");
+            }
+            // Update task index
+            if (task_copy.equals(task)) {
+                new_task_index = i;
+                //System.out.println("New task index: " + i);
+                break;
+            }
+        }
+        if (!(task_id.equals(tasks_info.get(new_task_index - 1))) || task_id.equals("")) {
+            new_task_index = ValidateTask_Save(new_task_index);
+        }
+        return new_task_index;
+    }
+
+    private int InsertIntoDB(String region, String signum, String requestor, String task_id, String task, String net,
+            String subnet, String act, String sap, String date, String time, String week, String ftr, String on_time,
+            String f_ftr, String f_on_time, String requests, String comments) {
         Connection connection;
         CallableStatement callableStatement;
+
         try {
-            int rows = jTableAddMetrics.getRowCount();
             connection = SQL_connection.getConnection();
-
             callableStatement = connection.prepareCall("CALL register_metrics_sourcing"
-                    + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                    + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
-            for (int row = 0; row < rows; row++) {
-                String region = (String) jTableAddMetrics.getValueAt(row, 0);
-                String signum = (String) jTableAddMetrics.getValueAt(row, 1);
-                signum = signum.toLowerCase(); // In case user has signum in uppercase
-                String requestor = (String) jTableAddMetrics.getValueAt(row, 2);
-                String task_id = (String) jTableAddMetrics.getValueAt(row, 3);
-                String task = (String) jTableAddMetrics.getValueAt(row, 4);
-                String net = (String) jTableAddMetrics.getValueAt(row, 5);
-                String subnet = (String) jTableAddMetrics.getValueAt(row, 6);
-                String act = (String) jTableAddMetrics.getValueAt(row, 7);
-                String sap = (String) jTableAddMetrics.getValueAt(row, 8);
-                String date = (String) jTableAddMetrics.getValueAt(row, 9);
-                // Format date to insert into DB
-                date = date.replace('/', '-');
-                String[] date_parts = date.split("-");
-                String year = date_parts[0];
-                String month = date_parts[1];
-                String day = date_parts[2];
-                if (year.contains("00")) {
-                    year = year.replace("00", "20");
-                }
-                date = year + "-" + month + "-" + day;
+            String tech = "N/A";    // No technology
+            String cu = "N/A";      // No customer unit
+            String market = "N/A";  // No market
+            Float.parseFloat(time);
+            Integer.parseInt(week);
+            Integer.parseInt(requests);
 
-                String time = (String) jTableAddMetrics.getValueAt(row, 10);
-                String week = (String) jTableAddMetrics.getValueAt(row, 11);
-                String ftr = (String) jTableAddMetrics.getValueAt(row, 12);
-                String ot = (String) jTableAddMetrics.getValueAt(row, 13);
-                String fail_ftr = (String) jTableAddMetrics.getValueAt(row, 14);
-                String fail_ot = (String) jTableAddMetrics.getValueAt(row, 15);
-                String req = (String) jTableAddMetrics.getValueAt(row, 16);
-                String comments = (String) jTableAddMetrics.getValueAt(row, 17);
-                String tech = "N/A";
-                String cu = "N/A";
-                String market = "N/A";
-                Float.parseFloat(time);
-                Integer.parseInt(week);
-                Integer.parseInt(req);
-
-                if (requestor.isEmpty() || requestor.equals("")) {
-                    requestor = "N/A";
-                }
-                if (req.isEmpty() || req.equals("")) {
-                    req = "0";
-                }
-                if (comments.isEmpty() || comments.equals("")) {
-                    comments = "N/A";
-                }
-                String org = usersinfo.get(4);
-                String name = usersinfo.get(1);
-
-                callableStatement.setObject(1, region);
-                callableStatement.setObject(2, org);
-                callableStatement.setObject(3, signum);
-                callableStatement.setObject(4, name);
-                callableStatement.setObject(5, requestor);
-                callableStatement.setObject(6, task_id);
-                callableStatement.setObject(7, task);
-                callableStatement.setObject(8, net);
-                callableStatement.setObject(9, subnet);
-                callableStatement.setObject(10, act);
-                callableStatement.setObject(11, sap);
-                callableStatement.setObject(12, date);
-                callableStatement.setObject(13, time);
-                callableStatement.setObject(14, week);
-                callableStatement.setObject(15, ftr);
-                callableStatement.setObject(16, ot);
-                callableStatement.setObject(17, fail_ftr);
-                callableStatement.setObject(18, fail_ot);
-                callableStatement.setObject(19, req);
-                callableStatement.setObject(20, comments);
-                callableStatement.setObject(21, tech);
-                callableStatement.setObject(22, cu);
-                callableStatement.setObject(23, market);
-                //callableStatement.registerOutParameter(21, java.sql.Types.INTEGER);
-                callableStatement.addBatch();
+            if (comments.isEmpty() || comments.equals("")) {
+                comments = "N/A";
             }
-            callableStatement.executeBatch();
-            System.out.println(callableStatement);
-            ClearDataPanel1();
-            // Clear table
-            DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-            tblModel.setRowCount(0);
+            String org = usersinfo.get(4);
+            String name = usersinfo.get(1);
+
+            callableStatement.setObject(1, region);
+            callableStatement.setObject(2, org);
+            callableStatement.setObject(3, signum);
+            callableStatement.setObject(4, name);
+            callableStatement.setObject(5, requestor);
+            callableStatement.setObject(6, task_id);
+            callableStatement.setObject(7, task);
+            callableStatement.setObject(8, net);
+            callableStatement.setObject(9, subnet);
+            callableStatement.setObject(10, act);
+            callableStatement.setObject(11, sap);
+            callableStatement.setObject(12, date);
+            callableStatement.setObject(13, time);
+            callableStatement.setObject(14, week);
+            callableStatement.setObject(15, ftr);
+            callableStatement.setObject(16, on_time);
+            callableStatement.setObject(17, f_ftr);
+            callableStatement.setObject(18, f_on_time);
+            callableStatement.setObject(19, requests);
+            callableStatement.setObject(20, comments);
+            callableStatement.setObject(21, tech);
+            callableStatement.setObject(22, cu);
+            callableStatement.setObject(23, market);
+            callableStatement.registerOutParameter(24, java.sql.Types.INTEGER);
+            callableStatement.executeUpdate();
+
+            int result = callableStatement.getInt(24);
+            if (result == 0) {
+                saved = "Unable to save " + task + " with time " + time + ".\nYou may have exceeded 24 hours.\nPlease verify rows were saved before this one.";
+            } else {
+                saved = "Data saved successfully!";
+            }
+            System.out.println("Entered: " + callableStatement + "\nResult: " + result);
+
             callableStatement.close();
             connection.close();
 
-            // Refresh total hours
-            GetHours();
-            System.out.println("Total hours this week: " + hours);
-            this.setTitle("SOURCING               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
-                    + "Hours: " + hours);
-            saved = "Data saved successfully!";
+            return result;
         } catch (SQLException e) {
             System.out.println(e);
             saved = "Something went wrong, please try again later.";
-            // Clear table
-            DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-            tblModel.setRowCount(0);
+            return 0;
         }
-        System.out.println("After insert: " + tasks_info);
     }
 
     private void ClearDataPanel1() {
@@ -1467,13 +1730,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         teams.add(usersinfo.get(3));
         jcbTeam1.removeAllItems();
         jcbTeam1.addItem("Sourcing");
-        if (!usersinfo.get(3).equals("Sourcing")) {
-            jcbTeam1.addItem(usersinfo.get(3));
-        }
         if (!usersinfo.get(7).equals("N/A")) {
             for (int i = 0; i < teams.size(); i++) {
                 if (!teams.get(i).equals("Sourcing")) {
                     jcbTeam1.addItem(teams.get(i));
+
                     JMenuItem menu = new JMenuItem(teams.get(i));
                     menu.setFont(new Font("Ericsson Hilda", 0, 18));
                     jMenu4.add(menu);
@@ -1507,8 +1768,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                                 jDLoading.dispose();
                                                 time_r.toFront();
                                                 time_r.requestFocus();
+
                                             } catch (ParseException | IOException ex) {
-                                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                                Logger.getLogger(Sourcing_Time_Report.class
+                                                        .getName()).log(Level.SEVERE, null, ex);
                                             }
                                         }
                                     }).start();
@@ -1538,8 +1801,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                                 jDLoading.dispose();
                                                 time_r.toFront();
                                                 time_r.requestFocus();
+
                                             } catch (ParseException | IOException ex) {
-                                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                                Logger.getLogger(Sourcing_Time_Report.class
+                                                        .getName()).log(Level.SEVERE, null, ex);
                                             }
                                         }
                                     }).start();
@@ -1563,9 +1828,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String time = null;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
         try {
             connection = SQL_connection.getConnection();
-            String sql_user_time = "SELECT SUM(Logged_Time) AS Hours FROM metrics_sourcing WHERE Signum='" + usersinfo.get(0) + "' AND Week=" + current_week + ";";
+            String sql_user_time = "SELECT SUM(Logged_Time) AS Hours FROM metrics_sourcing WHERE Signum='"
+                    + usersinfo.get(0) + "' AND Week=" + current_week + " AND Work_date LIKE '" + year + "-%';";
             preparedStatement = connection.prepareStatement(sql_user_time);
             resultset = preparedStatement.executeQuery();
             while (resultset.next()) {
@@ -1642,12 +1909,13 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void GetDailyHours() {
         try {
+            int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
                     + "FROM metrics_sourcing "
-                    + "WHERE Signum = ? AND Week = ? "
+                    + "WHERE Signum = ? AND Week = ? AND Work_date LIKE '" + year + "-%' "
                     + "GROUP BY Work_date ORDER BY Work_date;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -1672,12 +1940,13 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void GetDailyHours1() {
         try {
+            int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
                     + "FROM metrics_sourcing "
-                    + "WHERE Signum = ? AND Week = ? "
+                    + "WHERE Signum = ? AND Week = ? AND Work_date LIKE '" + year + "-%' "
                     + "GROUP BY Work_date ORDER BY Work_date;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -1704,20 +1973,23 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private void jBAddTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTableActionPerformed
         // Add info to jTable button
         // Validate data type in date, time, requestor and requests textfields
-        Pattern ptime = Pattern.compile("[^0-9.0-9]");
+        Pattern ptime = Pattern.compile("^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$");
         String stime = jTextFieldTime.getText();
         Matcher mtime = ptime.matcher(stime);
         boolean btime = mtime.find();
-        Pattern preq = Pattern.compile("[^0-9]");
+        // Requests format
+        Pattern preq = Pattern.compile("[1-9]+");
         String sreq = jTextFieldRequests.getText();
         Matcher mreq = preq.matcher(sreq);
         boolean breq = mreq.find();
-        Pattern preqtr = Pattern.compile("[^A-Za-z ]");
+        //Requestor format
         String sreqtr = jTextFieldRequestor.getText();
-        Matcher mreqtr = preqtr.matcher(sreqtr);
-        boolean breqtr = mreqtr.find();
-        int entries = 1;
+        Pattern prequestor1 = Pattern.compile("^[a-zA-Z ]+$");          // Regular name
+        Matcher mrequestor1 = prequestor1.matcher(sreqtr);
+        boolean brequestor = mrequestor1.find();
 
+        int entries = 1;
+        boolean error = false;
         jRSingle.setSelected(true);
         int validate_date = Integer.parseInt(jTextFieldWeek.getText());
         int thresh1 = current_week - 2;
@@ -1725,31 +1997,45 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
         if (jcbTask.getSelectedItem().equals("Select an activity...")) {
             JOptionPane.showMessageDialog(this, "Choose an activity!");
-        } else if (jcbSubnet.getSelectedItem().equals("Select a subnetwork...")) {
+            error = true;
+        }
+        if (jcbSubnet.getSelectedItem().equals("Select a subnetwork...")) {
             JOptionPane.showMessageDialog(this, "Choose a subnetwork!");
-        } else if (breq) {  // Add here condition if task must have number of req
+            error = true;
+        }
+        if (!breq) {
             JOptionPane.showMessageDialog(this, "Number of requests must be a number!");
             jTextFieldRequests.setText("");
-        } else if (jTextFieldRequests.getText().isEmpty()) {
+            error = true;
+        }
+        if (jTextFieldRequests.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Number of requests cannot be empty!");
-        } else if (jTextFieldRequests.getText().equals("0")) {
+            error = true;
+        }
+        if (jTextFieldRequests.getText().equals("0")) {
             JOptionPane.showMessageDialog(this, "Number of requests cannot be zero!");
-        } else if (stime.equals("") || btime) {
+            error = true;
+        }
+        if (stime.equals("") || !btime) {
             JOptionPane.showMessageDialog(this, "Logged Time must be a number! \nEx: 2 or 8.25");
             jTextFieldTime.setText("");
-        } else if (breqtr) {
+            error = true;
+        }
+        if (!brequestor && !sreqtr.equals("")) {
             JOptionPane.showMessageDialog(this, "Requestor must be a a name!");
             jTextFieldRequestor.setText("");
-        } else if (validate_date < thresh1) {
+            error = true;
+        }
+        if (validate_date < thresh1) {
             JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
-        } else if (validate_date > thresh2) {
-            if (current_week == 1 || current_week == 2) {
-
-            } else {
-                JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
-            }
-            System.out.println("Not doing anything");
-        } else {
+            error = true;
+        }
+        if (validate_date > thresh2) {
+            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
+            System.out.println("Not inserting because of date");
+            error = true;
+        }
+        if (!error) {
             // Get combo boxes values
             String sap = (String) jcbSAP.getSelectedItem();
             String task_id = (String) jTextFieldTask_ID.getText();
@@ -1803,6 +2089,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             String time_added = String.valueOf(time);
             // Sourcing has only MANA as Region
             String region = "MANA";
+            // Info to be added to table row
             String[] data = {region, usersinfo.get(0), requestor, task_id, task, net, subnet, act,
                 sap, date, time_added, week, ftr, on_time, fail_ftr, fail_on_time, requests, comments};
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
@@ -1818,6 +2105,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             jRBulk.setSelected(false);
             jSpinnerBulk.setVisible(false);
             jSpinnerBulk.setValue(((SpinnerNumberModel) jSpinnerBulk.getModel()).getMinimum());
+        } else {
+            return;
         }
     }//GEN-LAST:event_jBAddTableActionPerformed
 
@@ -1848,11 +2137,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void jBClearTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearTableActionPerformed
         // Clear table button
-        DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-        tblModel.setRowCount(0);
+        ClearDataPanel1();
         JOptionPane.showMessageDialog(this, "Table is empty.");
-        imported_file = null;
-        imported = false;
     }//GEN-LAST:event_jBClearTableActionPerformed
 
     private void jcbTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTaskActionPerformed
@@ -1895,11 +2181,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         fc.setFileFilter(filter);
         int response = fc.showOpenDialog(this);
         if (response == JFileChooser.APPROVE_OPTION) {
-            imported_file = fc.getSelectedFile().toString();
-            System.out.println(imported_file);
-            jPanel2.setVisible(false);
-            jPanel1.setVisible(true);
-
+            String imported_file = fc.getSelectedFile().toString();
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
             tblModel.setRowCount(0);
             try (BufferedReader br = new BufferedReader(new FileReader(imported_file))) {
@@ -1943,28 +2225,42 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                             }
                         }
                     }
-                    // Change date format
-                    SimpleDateFormat dcn = new SimpleDateFormat("MM/dd/yyyy");
-                    Date new_date = null;
-                    try {
-                        new_date = dcn.parse(finalValues.get(9));
-                    } catch (ParseException ex) {
-                        Logger.getLogger(COP_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    //Date format
+                    Pattern pdate = Pattern.compile("^(([0-9][0-9][0-9][0-9]-)*([0-9][0-9]-)*([0-9][0-9]))$");  // Date format YYYY-MM-DD
+                    Matcher mdate = pdate.matcher(finalValues.get(9));
+                    boolean bdate = mdate.find();
+                    if (!bdate) {
+                        // Change date format
+                        SimpleDateFormat dcn = new SimpleDateFormat("MM/dd/yyyy");
+                        Date new_date = null;
+                        try {
+                            new_date = dcn.parse(finalValues.get(9));
+
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Sourcing_Time_Report.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this, "File cannot be imported here");
+                        }
+                        SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
+                        finalValues.set(9, dcn1.format(new_date));
                     }
-                    SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                    finalValues.set(9, dcn1.format(new_date));
 
                     String[] row = new String[finalValues.size()];
                     finalValues.toArray(row);
                     tblModel.addRow(row);
+
                 }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Sourcing_Time_Report.class
+                        .getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "File cannot be imported here");
+
             } catch (IOException ex) {
-                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Sourcing_Time_Report.class
+                        .getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "File cannot be imported here");
             }
         }
-        imported = true;
     }//GEN-LAST:event_jMenuItemOpenActionPerformed
 
     private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
@@ -1977,7 +2273,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jPanel1.setVisible(true);
         jPanel2.setVisible(false);
         jPanel3.setVisible(false);
-        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\Reporting_time_" + usersinfo.get(0) + "_template.csv";
+        String cu = jcbCU.getSelectedItem().toString();
+        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\Reporting_time_sourcing_" + usersinfo.get(0) + "_template.csv";
         try (PrintWriter writer = new PrintWriter(new File(path))) {
             StringBuilder sb = new StringBuilder();
             SimpleDateFormat dcn = new SimpleDateFormat("MM/dd/yyyy");
@@ -2004,61 +2301,46 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             sb.append("Number_of_requests" + ',');
             sb.append("Comments" + ',');
             sb.append('\n');
-            // First row
-            sb.append("MANA" + ',');
-            sb.append(usersinfo.get(0) + ',');
-            sb.append("N/A" + ',');
-            sb.append(tasks_info.get(0) + ',');
-            sb.append(tasks_info.get(1) + ',');
-            if (tasks_info.get(0).contains("ADMIN")) {
-                sb.append("0" + ',');
-                sb.append("0" + ',');
-                sb.append("0" + ',');
-            } else {
-                sb.append(networks_info.get(0) + ',');
-                sb.append(networks_info.get(5) + ',');
-                sb.append(networks_info.get(1) + ',');
+            // Get first 2 tasks to put in file
+            int count = 0;
+            ArrayList<String> tasks = new ArrayList<String>();
+            for (int i = 1; i < tasks_info.size(); i += 5) {
+                if (tasks_info.get(i + 2).equals("SDU") || tasks_info.get(i + 2).equals(cu)) {
+                    tasks.add(tasks_info.get(i - 1));   // Task ID
+                    tasks.add(tasks_info.get(i));       // Task
+                    tasks.add(tasks_info.get(i + 3));   // Billable or not
+                }
             }
-            sb.append(tasks_info.get(4) + ',');
-            sb.append(date_change + ',');
-            sb.append("8.25" + ',');
-            sb.append(current_week);
-            sb.append(',');
-            sb.append("N/A" + ',');
-            sb.append("N/A" + ',');
-            sb.append("N/A" + ',');
-            sb.append("N/A" + ',');
-            sb.append("0" + ',');
-            sb.append("N/A" + ',');
-            sb.append('\n');
-            // Second row
-            sb.append("MANA" + ',');
-            sb.append(usersinfo.get(0) + ',');
-            sb.append("N/A" + ',');
-            sb.append(tasks_info.get(5) + ',');
-            sb.append(tasks_info.get(6) + ',');
-            if (tasks_info.get(4).contains("ADMIN")) {
-                sb.append("0" + ',');
-                sb.append("0" + ',');
-                sb.append("0" + ',');
-            } else {
-                sb.append(networks_info.get(0) + ',');
-                sb.append(networks_info.get(5) + ',');
-                sb.append(networks_info.get(1) + ',');
+            while (count < 2) {
+                // Insert row
+                sb.append("MANA" + ',');                            // Region
+                sb.append(usersinfo.get(0) + ',');                  // Signum
+                sb.append("N/A" + ',');                             // Requestor
+                sb.append(tasks.get(0 + (count * 3)) + ',');          // Task ID
+                sb.append(tasks.get(1 + (count * 3)) + ',');          // Task
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
+                    sb.append("0" + ',');
+                    sb.append("0" + ',');
+                    sb.append("0" + ',');
+                } else {
+                    sb.append(networks_info.get(0) + ',');  // Network
+                    sb.append(networks_info.get(5) + ',');  // Subetwork
+                    sb.append(networks_info.get(1) + ',');  // Activity
+                }
+                sb.append(tasks.get(2 + (count * 3)) + ',');  // SAP
+                sb.append(date_change + ',');               // Date
+                sb.append("8.25" + ',');                    // Time
+                sb.append(current_week);                    // Week
+                sb.append(',');
+                sb.append("N/A" + ',');                     // FTR
+                sb.append("N/A" + ',');                     // On time
+                sb.append("N/A" + ',');                     // Failed ftr
+                sb.append("N/A" + ',');                     // Failed on time
+                sb.append("1" + ',');                       // Num of requests
+                sb.append("N/A" + ',');                     // Comments
+                sb.append('\n');
+                count += 1;
             }
-            sb.append(tasks_info.get(9) + ',');
-            sb.append(date_change + ',');
-            sb.append("8.25" + ',');
-            sb.append(current_week);
-            sb.append(',');
-            sb.append("N/A" + ',');
-            sb.append("N/A" + ',');
-            sb.append("N/A" + ',');
-            sb.append("N/A" + ',');
-            sb.append("0" + ',');
-            sb.append("N/A" + ',');
-            sb.append('\n');
-
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
             JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
@@ -2130,6 +2412,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void jBSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchActionPerformed
         // Button Search action
+        if (jTableSeeMetrics.getEditingRow() != -1) {
+            jTableSeeMetrics.getCellEditor().stopCellEditing();// In case there's selected a field in the table
+        }
+        metrics_for_ess.clear();
         jLabelLoading.setText("Loading...");
         DefaultTableModel dtm;
         jBDeleteRow1.setVisible(true);
@@ -2179,7 +2465,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                             sql_table = tables.get(j);
                         }
                         String sql = "SELECT id, Region, Signum, Requestor, Task_ID, "
-                                + "Task, Network, Subnetwork, Activity_code, SAP_Billing, date_format(Work_date, '%m/%d/%Y') AS Work_date, "
+                                + "Task, Network, Subnetwork, Activity_code, SAP_Billing, Work_date, "
                                 + "Logged_Time, Week, FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_requests, Comments "
                                 + "FROM " + sql_table + " "
                                 + "WHERE Signum=? AND " + qdate + " AND Task LIKE ? AND SAP_Billing LIKE ? ORDER BY Work_date ASC;";
@@ -2216,11 +2502,13 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                             Object[] rows = new Object[rsm.getColumnCount()];
                             for (int i = 0; i < rows.length; i++) {
                                 rows[i] = resultSet.getObject(i + 1);
+                                metrics_for_ess.add(resultSet.getString(i + 1));
                             }
                             data.add(rows);
 
                             String[] row = {resultSet.getString("id"), resultSet.getString("Signum"), resultSet.getString("Requestor"),
-                                resultSet.getString("Work_date"), resultSet.getString("Logged_Time"), resultSet.getString("Comments")};
+                                resultSet.getString("Work_date"), resultSet.getString("Logged_Time"), resultSet.getString("Week"),
+                                resultSet.getString("Comments")};
                             List<String> newList = Arrays.asList(row);
 
                             metrics_sourcing_info.addAll(newList);
@@ -2229,16 +2517,20 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
                         for (int i = 0; i < data.size(); i++) {
                             dtm.addRow(data.get(i));
+
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Sourcing_Time_Report.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                     j += 1;
                 }
                 try {
                     connection.close();
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Sourcing_Time_Report.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
                 //
                 jDLoading.dispose();
@@ -2278,61 +2570,110 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 String team = jcbTeam1.getSelectedItem().toString();
                 Connection connection;
                 CallableStatement callableStatement;
+                boolean error = false;
                 int rows = jTableSeeMetrics.getRowCount();
+
                 if (rows > 0) {
                     connection = SQL_connection.getConnection();
                     int id = 0;
 
                     ArrayList<String> compare = new ArrayList<>();
-                    String signum = null, date = null, requestor = null, comments = null, time = null;
+                    String failed = "";
 
                     for (int row = 0; row < rows; row++) {
-                        signum = (String) jTableSeeMetrics.getValueAt(row, 1);
-                        requestor = (String) jTableSeeMetrics.getValueAt(row, 2);
-                        date = (String) jTableSeeMetrics.getValueAt(row, 9);
-                        time = String.valueOf(jTableSeeMetrics.getValueAt(row, 10));
-                        comments = (String) jTableSeeMetrics.getValueAt(row, 17);
+                        String signum = (String) jTableSeeMetrics.getValueAt(row, 1);
+                        String requestor = (String) jTableSeeMetrics.getValueAt(row, 2);
+                        String date = String.valueOf(jTableSeeMetrics.getValueAt(row, 9));
+                        String time = String.valueOf(jTableSeeMetrics.getValueAt(row, 10));
+                        String week = String.valueOf(jTableSeeMetrics.getValueAt(row, 11));
+                        String comments = (String) jTableSeeMetrics.getValueAt(row, 17);
                         id = (Integer) jTableSeeMetrics.getModel().getValueAt(row, 0);
-                        System.out.println(signum + requestor + date + time + comments + id);
-                        if (time.equals("0") || time.equals("")) {
-                            JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Logged Time cannot be 0.0");
-                            jTableSeeMetrics.setValueAt("", row, 10);
+
+                        //Requestor format
+                        Pattern prequestor1 = Pattern.compile("^[a-zA-Z ]+$");          // Regular name
+                        Pattern prequestor2 = Pattern.compile("^([A-Za-z/]*)$");        // N/A
+                        Matcher mrequestor1 = prequestor1.matcher(requestor);
+                        Matcher mrequestor2 = prequestor2.matcher(requestor);
+                        boolean brequestor1 = mrequestor1.find();
+                        boolean brequestor2 = mrequestor2.find();
+                        //Date format
+                        Pattern pdate = Pattern.compile("^(([0-9][0-9][0-9][0-9]-)*([0-9][0-9]-)*([0-9][0-9]))$");  // Date format YYYY-MM-DD
+                        Matcher mdate = pdate.matcher(date);
+                        boolean bdate = mdate.find();
+                        //Time format
+                        Pattern ptime = Pattern.compile("^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$");
+                        Matcher mtime = ptime.matcher(time);
+                        boolean btime = mtime.find();
+                        // Week according to date
+                        SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date_ = new Date();
+                        try {
+                            date_ = dcn.parse(date);
+
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Sourcing_Time_Report.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("Error parsing date " + date);
+                        }
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date_);
+                        int correct_week = cal.get(Calendar.WEEK_OF_YEAR);
+
+                        // Validate data
+                        if (!brequestor1 && !brequestor2) {
+                            failed = "Requestor";
+                        }
+                        if (!bdate) {
+                            failed = "Date";
+                        }
+                        if (!btime) {
+                            failed = "Time";
+                        }
+                        if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date                                     
+                            System.out.println(week + "| Correct week:" + correct_week);
+                            failed = "Week";
+                        }
+                        if (comments.equals("") || comments.isEmpty()) {
+                            failed = "Comments";
+                        }
+                        // If something failed show where it did and finish flow
+                        if (!failed.equals("")) {
+                            JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Please verify your info near " + failed);
+                            error = true;
+                            System.out.println("Error near " + failed);
+                        }
+                        ////
+                        if (error) {
+                            System.out.println("Failed to update.");
                             jDLoading.dispose();
                             return;
                         }
-
                         // Check if there were any changes to only update those
                         compare.add(Integer.toString(id));
                         compare.add(signum);
                         compare.add(requestor);
-
-                        SimpleDateFormat dcn = new SimpleDateFormat("MM/dd/yyyy");
-                        Date new_date = null;
-                        try {
-                            new_date = dcn.parse(date);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(COP_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                        date = dcn1.format(new_date);
                         compare.add(date);
-
                         compare.add(time);
+                        compare.add(week);
                         compare.add(comments);
                     }
                     ArrayList<String> ids = new ArrayList<>();
                     int id_ch = 0;
-                    for (int i = 0; i < metrics_sourcing_info.size(); i += 6) {
+                    for (int i = 0; i < metrics_sourcing_info.size(); i += 7) {
                         System.out.println(metrics_sourcing_info.get(i) + " | " + compare.get(i));
                         if (metrics_sourcing_info.get(i).equals(compare.get(i))) {
-                            if (!(metrics_sourcing_info.get(i + 2).equals(compare.get(i + 2))) || !(metrics_sourcing_info.get(i + 4).equals(compare.get(i + 4)))
-                                    || !(metrics_sourcing_info.get(i + 5).equals(compare.get(i + 5)))) {
+                            if (!(metrics_sourcing_info.get(i + 2).equals(compare.get(i + 2))) // Requestor
+                                    || !(metrics_sourcing_info.get(i + 3).equals(compare.get(i + 3))) // Date
+                                    || !(metrics_sourcing_info.get(i + 4).equals(compare.get(i + 4))) // Time
+                                    || !(metrics_sourcing_info.get(i + 5).equals(compare.get(i + 5))) // Week
+                                    || !(metrics_sourcing_info.get(i + 6).equals(compare.get(i + 6)))) {    // Comments
                                 ids.add(compare.get(i));
                                 ids.add(compare.get(i + 1));
                                 ids.add(compare.get(i + 2));
                                 ids.add(compare.get(i + 3));
                                 ids.add(compare.get(i + 4));
                                 ids.add(compare.get(i + 5));
+                                ids.add(compare.get(i + 6));
                                 id_ch += 1;
                             }
                         }
@@ -2354,50 +2695,51 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     if (id_ch > 0) {
                         try {
                             callableStatement = connection.prepareCall("CALL " + sql
-                                    + "(?, ?, ?, ?, ?, ?);");
+                                    + "(?, ?, ?, ?, ?, ?, ?, ?);");
                             for (int row = 0; row < id_ch; row++) {
-                                callableStatement.setObject(1, ids.get(0 + 6 * row)); // id
-                                callableStatement.setObject(2, ids.get(1 + 6 * row)); // signum
-                                if (ids.get(2 + 6 * row).equals("")) {
-                                    callableStatement.setObject(3, "N/A");
+                                callableStatement.setObject(1, ids.get(0 + 6 * row));     // id
+                                callableStatement.setObject(2, ids.get(1 + 6 * row));     // signum
+                                callableStatement.setObject(3, ids.get(2 + 6 * row));     // requestor
+                                callableStatement.setObject(4, ids.get(3 + 6 * row));     // date
+                                callableStatement.setObject(5, ids.get(4 + 6 * row));     // time
+                                callableStatement.setObject(6, ids.get(5 + 6 * row));     // week
+                                callableStatement.setObject(7, ids.get(6 + 6 * row));     // comments
+
+                                callableStatement.registerOutParameter(8, java.sql.Types.INTEGER);
+                                callableStatement.executeUpdate();
+
+                                int result = callableStatement.getInt(8);
+                                if (result == 0) {
+                                    saved = "Unable to update one or more rows because it would exceed 24 hours.";
                                 } else {
-                                    callableStatement.setObject(3, ids.get(2 + 6 * row)); // requestor
+                                    saved = "Data saved successfully!";
                                 }
-                                callableStatement.setObject(4, ids.get(3 + 6 * row)); // date
-                                callableStatement.setObject(5, ids.get(4 + 6 * row)); // time
-                                if (ids.get(5 + 6 * row).equals("")) {
-                                    callableStatement.setObject(6, "N/A");
-                                } else {
-                                    callableStatement.setObject(6, ids.get(5 + 6 * row)); // comments
-                                }
-                                callableStatement.addBatch();
-                                System.out.println(callableStatement);
-                                callableStatement.executeBatch();
+                                System.out.println("Entered: " + callableStatement + "\nResult: " + result);
                             }
                             callableStatement.close();
                             connection.close();
-
-                            metrics_sourcing_info.clear();
                             compare.clear();
-                            DefaultTableModel tblModel = (DefaultTableModel) jTableSeeMetrics.getModel();
-                            tblModel.setRowCount(0);
-
-                            // Refresh total hours
-                            GetHours();
-                            Sourcing_Time_Report.this.setTitle("Sourcing               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
-                                    + "Hours: " + hours);
-                            saved = "Data saved successfully!";
                         } catch (SQLException e) {
                             System.out.println(e);
                             saved = "Something went wrong, please try again later.";
                         }
                     } else {
                         JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Nothing changed.");
+                        jDLoading.dispose();
+                        return;
                     }
                 }
                 GetDailyHours1();
-                jDLoading.dispose();
+                GetHours();
                 JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
+                metrics_sourcing_info.clear();
+                DefaultTableModel tblModel = (DefaultTableModel) jTableSeeMetrics.getModel();
+                tblModel.setRowCount(0);
+                jDLoading.dispose();
+                // Refresh total hours
+                Sourcing_Time_Report.this.setTitle("Sourcing               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
+                        + "Hours: " + hours);
+                saved = "Data saved successfully!";
             }
         }).start();
         jDLoading.setVisible(true);
@@ -2416,17 +2758,17 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         DefaultTableModel tblModel = (DefaultTableModel) jTableSeeMetrics.getModel();
                         Connection connection = SQL_connection.getConnection();
                         PreparedStatement preparedStatement;
-                        
+
                         int[] selected_rows = jTableSeeMetrics.getSelectedRows();
-                        for (int j=0; j < selected_rows.length; j++) {
+                        for (int j = 0; j < selected_rows.length; j++) {
                             // Compare to get selected row's id 
                             int row = selected_rows[j];
-                            if (j > 0){
+                            if (j > 0) {
                                 row = selected_rows[j] - 1;
                             }
-                            System.out.println("Selected row: "+ row);
+                            System.out.println("Selected row: " + row);
                             String id_ = jTableSeeMetrics.getModel().getValueAt(row, 0).toString();
-                            System.out.println("id_"+id_);
+                            System.out.println("id_" + id_);
                             int id = Integer.parseInt(id_);
                             System.out.println("ID to delete: " + id);
 
@@ -2434,8 +2776,16 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                             int i = metrics_sourcing_info.indexOf(id_);
                             int a = 0;
                             System.out.println("Index:" + i);
-                            while (a < 6) { // 6 elements in metrics_sourcing_info
+                            // Delete 6 elements in metrics_sourcing_info
+                            while (a < 6) { 
                                 metrics_sourcing_info.remove(i);
+                                a += 1;
+                            }
+                            // Delete 19 elements in metrics_for_ess
+                            int in = metrics_for_ess.indexOf(id_);
+                            a = 0;
+                            while (a < 19) { 
+                                metrics_for_ess.remove(in);
                                 a += 1;
                             }
                             String team = jcbTeam1.getSelectedItem().toString();
@@ -2456,19 +2806,22 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 System.out.println(preparedStatement);
                                 // Delete table row
                                 tblModel.removeRow(jTableSeeMetrics.getSelectedRow());
+
                             } catch (SQLException ex) {
-                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Sourcing_Time_Report.class
+                                        .getName()).log(Level.SEVERE, null, ex);
                             }
                         }// End for
                         try {
                             connection.close();
                         } catch (SQLException ex) {
-                            Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Sourcing_Time_Report.class
+                                    .getName()).log(Level.SEVERE, null, ex);
                         }
                         GetDailyHours1();
                         JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Row deleted.");
                         System.out.println("After delete row: " + metrics_sourcing_info);
-                    } 
+                    }
                 } else {
                     JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Select one row.");
                 }
@@ -2482,7 +2835,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         // SAP combobox action
         String sap = (String) jcbSAP.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
-        System.out.println("Look here: " + sap);
         jcbTask.removeAllItems();
         jcbTask.addItem("Select an activity...");
         for (int i = 0; i < tasks_info.size(); i++) {
@@ -2611,8 +2963,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
                     String s = String.valueOf(tableModel.getValueAt(i, j));
-                    s = s.replace(",", "");
-                    sb.append(s + ",");
+                    sb.append("\"" + s + "\"");
+                    sb.append(',');
                 }
                 sb.append("\n");
             }
@@ -2626,12 +2978,568 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void jBExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExportActionPerformed
         // Export button, save what's in table to csv
-        String week = jcbWeek1.getSelectedItem().toString();
-        String team = jcbTeam1.getSelectedItem().toString();
-        String fileName = usersinfo.get(0) + "_metrics_" + team + "_week_" + week;
-        TableModel model = jTableSeeMetrics.getModel();
-        SaveTableCSV(fileName, model);
+        int rows = jTableSeeMetrics.getRowCount();
+        if (rows > 0) {
+            String week = jcbWeek1.getSelectedItem().toString();
+            String team = jcbTeam1.getSelectedItem().toString();
+            String fileName = usersinfo.get(0) + "_metrics_" + team + "_week_" + week;
+            TableModel model = jTableSeeMetrics.getModel();
+            SaveTableCSV(fileName, model);
+        } else {
+            JOptionPane.showMessageDialog(this, "Table is empty!");
+        }
     }//GEN-LAST:event_jBExportActionPerformed
+
+    private void jBHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHistoryActionPerformed
+        // History button
+        // Initialize frame
+        jFrameHistory.setTitle("Search for period of time");
+        jFrameHistory.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
+        jFrameHistory.setSize(400, 300);
+        jFrameHistory.setResizable(false);
+        jFrameHistory.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        jFrameHistory.setVisible(true);
+        jFrameHistory.setLocationRelativeTo(null);
+
+        // Init jcombobox CU
+        String[] teams_ = usersinfo.get(7).split("@");
+        List<String> teams = new ArrayList<String>(Arrays.asList(teams_));
+        teams.add(usersinfo.get(3));
+        jcb_Team_history.addItem("Sourcing");
+        if (!usersinfo.get(7).equals("N/A")) {
+            for (int i = 0; i < teams.size(); i++) {
+                if (!teams.get(i).equals("Sourcing")) {
+                    jcb_Team_history.addItem(teams.get(i));
+                }
+            }
+        }
+        jcb_Team_history.addItem("All");
+        // Init jDataChoosers
+        JTextFieldDateEditor editor_start = (JTextFieldDateEditor) jDateChooser_Start.getDateEditor();
+        JTextFieldDateEditor editor_end = (JTextFieldDateEditor) jDateChooser_End.getDateEditor();
+        editor_start.setEditable(false);
+        editor_end.setEditable(false);
+        Date date = new Date();
+        jDateChooser_Start.setDate(date);
+        jDateChooser_End.setDate(date);
+    }//GEN-LAST:event_jBHistoryActionPerformed
+
+    private void jB_ExportDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_ExportDatesActionPerformed
+        // Export history button
+        jLabelLoading.setText("Loading...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Check selected team
+                List<String> teams = new ArrayList<>();
+                ArrayList<String> data = new ArrayList<>();
+                PreparedStatement preparedStatement;
+
+                if (jcb_Team_history.getSelectedItem().toString().equals("All")) {
+                    String[] teams_ = usersinfo.get(7).split("@");
+                    teams = new ArrayList<String>(Arrays.asList(teams_));
+                    teams.add(usersinfo.get(3)); // Add Sourcing
+                } else {
+                    teams.add(jcb_Team_history.getSelectedItem().toString());
+                }
+                String sql_table = "", sql = "";
+                for (int k = 0; k < teams.size(); k++) {
+                    sql_table = "metrics_" + teams.get(k).toLowerCase();
+                    Connection connection = SQL_connection.getConnection();
+                    ResultSet resultSet;
+
+                    sql = "SELECT Customer_Unit, Region, Market, Signum, Requestor, Task_ID, "
+                            + "Task, Network, Subnetwork, Activity_code, Technology, SAP_Billing, Work_date, "
+                            + "Logged_Time, Week, FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_requests, Comments "
+                            + "FROM " + sql_table + " "
+                            + "WHERE Signum=? AND Work_date BETWEEN ? AND ?;";
+
+                    try {
+                        preparedStatement = connection.prepareStatement(sql);
+
+                        SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
+                        String date_start = dcn.format(jDateChooser_Start.getDate());
+                        String date_end = dcn.format(jDateChooser_End.getDate());
+                        // Place parameters int query
+                        preparedStatement.setString(1, usersinfo.get(0));
+                        preparedStatement.setString(2, date_start);
+                        preparedStatement.setString(3, date_end);
+
+                        // Execute query
+                        System.out.println("History query: " + preparedStatement);
+                        resultSet = preparedStatement.executeQuery();
+                        // Fetch results   
+                        while (resultSet.next()) {
+                            for (int i = 0; i < 21; i++) {
+                                data.add(resultSet.getString(i + 1));
+                            }
+                        }
+                        connection.close();
+                        System.out.println("Data: " + data);
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Sourcing_Time_Report.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                // Create csv with data
+                String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\Result_reporting_time_" + usersinfo.get(0) + ".csv";
+                try (PrintWriter writer = new PrintWriter(new File(path))) {
+                    StringBuilder sb = new StringBuilder();
+                    // Header
+                    sb.append("Customer_Unit" + ',');
+                    sb.append("Region" + ',');
+                    sb.append("Market" + ',');
+                    sb.append("Signum" + ',');
+                    sb.append("Requestor" + ',');
+                    sb.append("Task_ID" + ',');
+                    sb.append("Task" + ',');
+                    sb.append("Network" + ',');
+                    sb.append("Subnetwork" + ',');
+                    sb.append("Activity_code" + ',');
+                    sb.append("Technology" + ',');
+                    sb.append("SAP_Billing" + ',');
+                    sb.append("Work_date" + ',');
+                    sb.append("Logged_Time" + ',');
+                    sb.append("Week" + ',');
+                    sb.append("FTR" + ',');
+                    sb.append("On_Time" + ',');
+                    sb.append("Failed_FTR_Category" + ',');
+                    sb.append("Failed_On_Time" + ',');
+                    sb.append("Number_of_requests" + ',');
+                    sb.append("Comments" + ',');
+                    sb.append('\n');
+                    // Fill rows
+                    for (int i = 1; i < data.size() + 1; i++) {
+                        sb.append("\"" + data.get(i - 1) + "\"");
+                        if (((i % 21) == 0)) {
+                            //sb.append(",");
+                            sb.append("\n");
+                        } else {
+                            sb.append(",");
+                        }
+                    }
+                    writer.write(sb.toString());
+                    System.out.println("File writed successfully");
+                    JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File writed successfully to " + path);
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Sourcing_Time_Report.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File could not be created");
+                    jDLoading.dispose();
+                    jFrameHistory.dispose();
+                    return;
+                }
+                jDLoading.dispose();
+            }
+        }
+        ).start();
+        jDLoading.setVisible(true);
+        jFrameHistory.dispose();
+    }//GEN-LAST:event_jB_ExportDatesActionPerformed
+
+    private void jMenuItemSaveTemplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveTemplateActionPerformed
+        // Menu to save table as template
+        if (jTableAddMetrics.getEditingRow() != -1) {
+            jTableAddMetrics.getCellEditor().stopCellEditing();// In case there's selected a field in the table
+        }
+        jLabelLoading.setText("Loading...");
+        if (jPanel1.isVisible()) {
+            int rows = jTableAddMetrics.getRowCount();
+            if (rows > 0) {
+                ArrayList data = new ArrayList<>();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Create csv with data
+                        String path = "C:\\Users\\ealloem\\Documents\\MRT\\54v3d_73mp1473_50urcin9.csv";
+                        try (PrintWriter writer = new PrintWriter(new File(path))) {
+                            StringBuilder sb = new StringBuilder();
+                            // Header
+                            sb.append("Region" + ',');
+                            sb.append("Signum" + ',');
+                            sb.append("Requestor" + ',');
+                            sb.append("Task_ID" + ',');
+                            sb.append("Task" + ',');
+                            sb.append("Network" + ',');
+                            sb.append("Subnetwork" + ',');
+                            sb.append("Activity_code" + ',');
+                            sb.append("SAP_Billing" + ',');
+                            sb.append("Work_date" + ',');
+                            sb.append("Logged_Time" + ',');
+                            sb.append("Week" + ',');
+                            sb.append("FTR" + ',');
+                            sb.append("On_Time" + ',');
+                            sb.append("Failed_FTR_Category" + ',');
+                            sb.append("Failed_On_Time" + ',');
+                            sb.append("Number_of_requests" + ',');
+                            sb.append("Comments" + ',');
+                            sb.append('\n');
+                            // Get info from table rows
+                            int i = 0;
+                            for (int row = 0; row < rows; row++) {
+                                // Get each row's info
+                                while (i <= 17) {
+                                    data.add((String) jTableAddMetrics.getValueAt(row, i));
+                                    i += 1;
+                                }
+                                i = 0;
+                            }
+
+                            // Fill rows
+                            for (int j = 1; j < data.size() + 1; j++) {
+                                sb.append(data.get(j - 1));
+                                if (((j % 18) == 0)) {
+                                    sb.append(",");
+                                    sb.append("\n");
+                                } else {
+                                    sb.append(",");
+                                }
+                            }
+                            writer.write(sb.toString());
+                            System.out.println("Template saved successfully");
+                            JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Templated saved successfully");
+
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(Sourcing_Time_Report.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Info could not be saved");
+                            jDLoading.dispose();
+                            return;
+                        }
+                        jDLoading.dispose();
+                    }
+                }).start();
+                jDLoading.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nothing to save!");
+            }
+        }
+    }//GEN-LAST:event_jMenuItemSaveTemplateActionPerformed
+
+    private void jMenuItem_SavedTemplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SavedTemplateActionPerformed
+        // Import previously saved template to table
+        jPanel1.setVisible(true);
+        jPanel2.setVisible(false);
+        jPanel3.setVisible(false);
+        DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
+        tblModel.setRowCount(0);
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\ealloem\\Documents\\MRT\\54v3d_73mp1473_50urcin9.csv"))) {
+            String line;
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                List<String> finalValues = new ArrayList<String>();
+                String full_task = "";
+                String full_comment = "";
+                int commas_size = values.length, j = 0;
+
+                for (int i = 0; i < commas_size; i++) {
+                    if (i < 4) {
+                        finalValues.add(values[i]);
+                        j = j + 1;
+                    } else {
+                        if (j == 4) {
+                            if (values[i + 1].matches("\\d+")) {
+                                full_task += values[i];
+                                full_task = full_task.replace("\"", "");
+                                finalValues.add(full_task);
+                                j += 1;
+                            } else {
+                                full_task += values[i] + ",";
+                            }
+                        } else if (j == 17) {
+                            if (i == commas_size - 1) {
+                                full_comment += values[i];
+                                full_comment = full_comment.replace("\"", "");
+                                finalValues.add(full_comment);
+                                j += 1;
+                            } else {
+                                full_comment += values[i] + ",";
+
+                            }
+                        } else {
+                            finalValues.add(values[i]);
+                            j = j + 1;
+                        }
+                    }
+                }
+                //Date format
+                Pattern pdate = Pattern.compile("^(([0-9][0-9][0-9][0-9]-)*([0-9][0-9]-)*([0-9][0-9]))$");  // Date format YYYY-MM-DD
+                Matcher mdate = pdate.matcher(finalValues.get(9));
+                boolean bdate = mdate.find();
+                if (!bdate) {
+                    // Change date format
+                    SimpleDateFormat dcn = new SimpleDateFormat("MM/dd/yyyy");
+                    Date new_date = null;
+                    System.out.println(finalValues.get(9));
+                    try {
+                        new_date = dcn.parse(finalValues.get(9));
+
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Sourcing_Time_Report.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                    SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
+                    finalValues.set(9, dcn1.format(new_date));
+                }
+                String[] row = new String[finalValues.size()];
+                finalValues.toArray(row);
+                tblModel.addRow(row);
+
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Sourcing_Time_Report.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "File does not exist!");
+
+        } catch (IOException ex) {
+            Logger.getLogger(Sourcing_Time_Report.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "File cannot be used!");
+        }
+    }//GEN-LAST:event_jMenuItem_SavedTemplateActionPerformed
+
+    private void jB_ESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_ESSActionPerformed
+        // Button to export in ESS format
+        int rows = jTableSeeMetrics.getRowCount();
+        String date = "";
+        if (jDateChooser2.isVisible() && !jCheckBoxWeek.isVisible()) {
+            date = String.valueOf(jDateChooser2.getDate());
+        } else {
+            date = "week_" + jcbWeek1.getSelectedItem().toString();
+        }
+        
+        if (rows > 0) {
+            // Create csv with data
+            String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_" + date + ".csv";
+            try (PrintWriter writer = new PrintWriter(new File(path))) {
+                StringBuilder sb = new StringBuilder();
+                // New line
+                sb.append("US format\n");
+                sb.append('\n');
+                // Header
+                sb.append("LOC" + ',');
+                sb.append("Act_Type" + ',');
+                sb.append("Rec_Order" + ',');
+                sb.append("Network" + ',');
+                sb.append("Activity" + ',');
+                sb.append("Sub_Op" + ',');
+                sb.append("Abs_or_Att_type" + ',');
+                sb.append("OT_Comp" + ',');
+                sb.append("Total" + ',');
+                sb.append("MO" + ',');
+                sb.append("TU" + ',');
+                sb.append("WE" + ',');
+                sb.append("TH" + ',');
+                sb.append("FR" + ',');
+                sb.append("SA" + ',');
+                sb.append("SU" + ',');
+                sb.append('\n');
+                // Fill rows
+                //System.out.println("ESS: " + metrics_for_ess);
+                Calendar c = Calendar.getInstance();
+                int dayOfWeek;
+                // Print with ',' .replace(".", ",")        //////////////////////////////////////////
+                for (int i = 4; i < metrics_for_ess.size() + 1; i += 19) {
+                    sb.append("HC" + ',');
+                    // Act Type ¿?
+                    sb.append("" + ',');
+                    sb.append("" + ',');
+                    // Network and Activity
+                    if (metrics_for_ess.get(i).contains("ADMIN")) {
+                        sb.append("" + ',');
+                        sb.append("" + ',');
+                    } else {
+                        sb.append(metrics_for_ess.get(i + 3) + ',');
+                        sb.append(usersinfo.get(10) + ',');
+                    }
+                    // Sub Op
+                    sb.append("" + ',');
+                    // Abs or Att type
+                    if (metrics_for_ess.get(i).contains("ADMIN")) {
+                        if (metrics_for_ess.get(i + 1).equals("Anual Leave")) {
+                            sb.append("Annual Leave (2000)" + ',');
+                        } else if (metrics_for_ess.get(i + 1).contains("meeting")) {
+                            sb.append("Meeting (1310)" + ',');
+                        } else if (metrics_for_ess.get(i + 1).contains("Training")) {
+                            sb.append("Training (1410)" + ',');
+                        }
+                    } else {    // Not ADMIN
+                        sb.append("Productive hours (1000)" + ',');
+                    }
+                    // OT Comp
+                    sb.append("" + ',');
+                    // Total
+                    sb.append("" + ',');
+                    // Hours per day
+                    try {
+                        c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(metrics_for_ess.get(i + 6)));
+
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Sourcing_Time_Report.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                    dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+                    // Check for day of the week
+                    if (dayOfWeek == 2) {    // if Monday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 3) {    // if Tuesday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 4) {    // if Wednesday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 5) {    // if Thursday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 6) {    // if Friday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 7) {    // if Saturday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 1) {    // if Sunday
+                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    // New line
+                    sb.append("\n");
+                }
+                // New line to separate formats
+                sb.append('\n');
+                sb.append('\n');
+                sb.append("MX format\n");
+                sb.append('\n');
+                sb.append("LOC" + ',');
+                sb.append("Act_Type" + ',');
+                sb.append("Rec_Order" + ',');
+                sb.append("Network" + ',');
+                sb.append("Activity" + ',');
+                sb.append("Sub_Op" + ',');
+                sb.append("Abs_or_Att_type" + ',');
+                sb.append("OT_Comp" + ',');
+                sb.append("Total" + ',');
+                sb.append("MO" + ',');
+                sb.append("TU" + ',');
+                sb.append("WE" + ',');
+                sb.append("TH" + ',');
+                sb.append("FR" + ',');
+                sb.append("SA" + ',');
+                sb.append("SU" + ',');
+                sb.append('\n');
+                // Print with '.'
+                for (int i = 4; i < metrics_for_ess.size() + 1; i += 19) {
+                    sb.append("HC" + ',');
+                    // Act Type ¿?
+                    sb.append("" + ',');
+                    sb.append("" + ',');
+                    // Network and Activity
+                    if (metrics_for_ess.get(i).contains("ADMIN")) {
+                        sb.append("" + ',');
+                        sb.append("" + ',');
+                    } else {
+                        sb.append(metrics_for_ess.get(i + 3) + ',');
+                        sb.append(usersinfo.get(10) + ',');
+                    }
+                    // Sub Op
+                    sb.append("" + ',');
+                    // Abs or Att type
+                    if (metrics_for_ess.get(i).contains("ADMIN")) {
+                        if (metrics_for_ess.get(i + 1).equals("Anual Leave")) {
+                            sb.append("Annual Leave (2000)" + ',');
+                        } else if (metrics_for_ess.get(i + 1).contains("meeting")) {
+                            sb.append("Meeting (1310)" + ',');
+                        } else if (metrics_for_ess.get(i + 1).contains("Training")) {
+                            sb.append("Training (1410)" + ',');
+                        }
+                    } else {    // Not ADMIN
+                        sb.append("Productive hours (1000)" + ',');
+                    }
+                    // OT Comp
+                    sb.append("" + ',');
+                    // Total
+                    sb.append("" + ',');
+                    // Hours per day
+                    try {
+                        c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(metrics_for_ess.get(i + 6)));
+
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Sourcing_Time_Report.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                    dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+                    // Check for day of the week
+                    if (dayOfWeek == 2) {    // if Monday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 3) {    // if Tuesday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 4) {    // if Wednesday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 5) {    // if Thursday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 6) {    // if Friday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 7) {    // if Saturday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    if (dayOfWeek == 1) {    // if Sunday
+                        sb.append(metrics_for_ess.get(i + 7));
+                    } else {
+                        sb.append("" + ',');
+                    }
+                    // New line
+                    sb.append("\n");
+                }
+                writer.write(sb.toString());
+                System.out.println("File writed successfully");
+                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File writed successfully to " + path);
+
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Sourcing_Time_Report.class
+                        .getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File could not be created");
+                jDLoading.dispose();
+                jFrameHistory.dispose();
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Table is empty!");
+        }
+    }//GEN-LAST:event_jB_ESSActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2690,13 +3598,19 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private javax.swing.JButton jBDeleteRow;
     private javax.swing.JButton jBDeleteRow1;
     private javax.swing.JButton jBExport;
-    private javax.swing.JButton jBInsert;
+    private javax.swing.JButton jBHistory;
     private javax.swing.JButton jBSearch;
     private javax.swing.JButton jBUpdate;
+    private javax.swing.JButton jB_ESS;
+    private javax.swing.JButton jB_ExportDates;
+    private javax.swing.JButton jB_Save;
     private javax.swing.JCheckBox jCheckBoxWeek;
     private javax.swing.JDialog jDLoading;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser_End;
+    private com.toedter.calendar.JDateChooser jDateChooser_Start;
+    private javax.swing.JFrame jFrameHistory;
     private javax.swing.JLabel jLActivity;
     private javax.swing.JLabel jLCU1;
     private javax.swing.JLabel jLComments;
@@ -2718,6 +3632,9 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private javax.swing.JLabel jLTime;
     private javax.swing.JLabel jLWeek;
     private javax.swing.JLabel jLWeek1;
+    private javax.swing.JLabel jL_EndDate;
+    private javax.swing.JLabel jL_StartDate;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelDagaz;
     private javax.swing.JLabel jLabelDescAbout;
     private javax.swing.JLabel jLabelDescDagaz;
@@ -2749,6 +3666,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemMRT;
     private javax.swing.JMenuItem jMenuItemOpen;
     private javax.swing.JMenuItem jMenuItemRecord;
+    private javax.swing.JMenuItem jMenuItemSaveTemplate;
+    private javax.swing.JMenuItem jMenuItem_SavedTemplate;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -2780,5 +3699,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbTask1;
     private javax.swing.JComboBox<String> jcbTeam1;
     private javax.swing.JComboBox<String> jcbWeek1;
+    private javax.swing.JComboBox<String> jcb_Team_history;
     // End of variables declaration//GEN-END:variables
 }

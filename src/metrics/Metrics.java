@@ -124,8 +124,8 @@ public class Metrics {
             String sql_user_team = " SELECT * FROM users WHERE Signum='" + user + "';";
             preparedStatement = connection.prepareStatement(sql_user_team);
             resultset = preparedStatement.executeQuery();
-            String last_name = null, name = null, cu = null, team = null, org = null, lm = null, access = null,
-                    supp_team = null, supp_cu = null;
+            String last_name = null, name = null, cu = null, team = null, org = null, lm = null, access = null, 
+                    job_stage = null, act_type = null, work_center = null, supp_team = null, supp_cu = null;
             while (resultset.next()) {
                 last_name = resultset.getString("Last_Name");
                 name = resultset.getString("Name");
@@ -136,17 +136,23 @@ public class Metrics {
                 access = resultset.getString("Access");
                 supp_team = resultset.getString("Supporting_Team");
                 supp_cu = resultset.getString("Supporting_CU");
+                job_stage = resultset.getString("Job_Stage");
+                act_type = resultset.getString("Act_Type");
+                work_center = resultset.getString("Work_center");
                 String full_name = last_name + " " + name;
 
-                usersinfo.add(user);
-                usersinfo.add(full_name);
-                usersinfo.add(cu);
-                usersinfo.add(team);
-                usersinfo.add(org);
-                usersinfo.add(lm);
-                usersinfo.add(access);
-                usersinfo.add(supp_team);
-                usersinfo.add(supp_cu);
+                usersinfo.add(user);        // 0
+                usersinfo.add(full_name);   // 1
+                usersinfo.add(cu);          // 2
+                usersinfo.add(team);        // 3
+                usersinfo.add(org);         // 4
+                usersinfo.add(lm);          // 5
+                usersinfo.add(access);      // 6
+                usersinfo.add(supp_team);   // 7
+                usersinfo.add(supp_cu);     // 8
+                usersinfo.add(job_stage);   // 9
+                usersinfo.add(act_type);    // 10
+                usersinfo.add(work_center); // 11
             }
         } catch (SQLException e) {
             System.out.println(e);
