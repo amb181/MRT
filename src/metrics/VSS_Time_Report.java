@@ -3242,13 +3242,13 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                             callableStatement = connection.prepareCall("CALL " + sql
                                     + "(?, ?, ?, ?, ?, ?, ?, ?);");
                             for (int row = 0; row < id_ch; row++) {
-                                callableStatement.setObject(1, ids.get(0 + 6 * row));     // id
-                                callableStatement.setObject(2, ids.get(1 + 6 * row));     // signum
-                                callableStatement.setObject(3, ids.get(2 + 6 * row));     // requestor
-                                callableStatement.setObject(4, ids.get(3 + 6 * row));     // date
-                                callableStatement.setObject(5, ids.get(4 + 6 * row));     // time
-                                callableStatement.setObject(6, ids.get(5 + 6 * row));     // week
-                                callableStatement.setObject(7, ids.get(6 + 6 * row));     // comments
+                                callableStatement.setObject(1, ids.get(0 + (6 + 1) * row));     // id
+                                callableStatement.setObject(2, ids.get(1 + (6 + 1) * row));     // signum
+                                callableStatement.setObject(3, ids.get(2 + (6 + 1) * row));     // requestor
+                                callableStatement.setObject(4, ids.get(3 + (6 + 1) * row));     // date
+                                callableStatement.setObject(5, ids.get(4 + (6 + 1) * row));     // time
+                                callableStatement.setObject(6, ids.get(5 + (6 + 1) * row));     // week
+                                callableStatement.setObject(7, ids.get(6 + (6 + 1) * row));     // comments
 
                                 callableStatement.registerOutParameter(8, java.sql.Types.INTEGER);
                                 callableStatement.executeUpdate();
@@ -3260,6 +3260,14 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                     saved = "Data saved successfully!";
                                 }
                                 System.out.println("Entered: " + callableStatement + "\nResult: " + result);
+                                // Update info in metrics_for_ess
+                                int i = metrics_for_ess.indexOf(ids.get(0 + (6 + 1) * row));
+                                System.out.println("ID for ESS: " + i);
+                                metrics_for_ess.set(i + 5 , ids.get(2 + (6 + 1) * row));      // Requestor
+                                metrics_for_ess.set(i + 13 , ids.get(3 + (6 + 1) * row));     // Date
+                                metrics_for_ess.set(i + 14 , ids.get(4 + (6 + 1) * row));     // Time
+                                metrics_for_ess.set(i + 15 , ids.get(5 + (6 + 1) * row));     // Week
+                                metrics_for_ess.set(i + 21 , ids.get(6 + (6 + 1) * row));     // Comments
                             }
                             callableStatement.close();
                             connection.close();
@@ -3275,9 +3283,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 GetDailyHours1();
                 GetHours();
                 JOptionPane.showMessageDialog(VSS_Time_Report.this, saved);
-                metrics_vss_info.clear();
-                DefaultTableModel tblModel = (DefaultTableModel) jTableSeeMetrics.getModel();
-                tblModel.setRowCount(0);
                 jDLoading.dispose();
                 // Refresh total hours
                 VSS_Time_Report.this.setTitle("VSS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
@@ -3319,7 +3324,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                             int i = metrics_vss_info.indexOf(id_);
                             int a = 0;
                             System.out.println("Index:" + i);
-                            // Delete 19 elements in metrics_cop_info
+                            // Delete 6 elements in metrics_cop_info
                             while (a < 6) { 
                                 metrics_vss_info.remove(i);
                                 a += 1;
