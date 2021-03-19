@@ -315,6 +315,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 return component;
             }
         };
+        jB_Export_Net_Catalog = new javax.swing.JButton();
         jFrameMarketsBulk = new javax.swing.JFrame();
         jPanelMarketBulk = new javax.swing.JPanel();
         jcbRegionBulk = new javax.swing.JComboBox<>();
@@ -520,15 +521,30 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTableCatalog);
 
+        jB_Export_Net_Catalog.setText("Download");
+        jB_Export_Net_Catalog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_Export_Net_CatalogActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jFrameCatalogLayout = new javax.swing.GroupLayout(jFrameCatalog.getContentPane());
         jFrameCatalog.getContentPane().setLayout(jFrameCatalogLayout);
         jFrameCatalogLayout.setHorizontalGroup(
             jFrameCatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE)
+            .addComponent(jScrollPane3)
+            .addGroup(jFrameCatalogLayout.createSequentialGroup()
+                .addGap(456, 456, 456)
+                .addComponent(jB_Export_Net_Catalog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 456, Short.MAX_VALUE))
         );
         jFrameCatalogLayout.setVerticalGroup(
             jFrameCatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+            .addGroup(jFrameCatalogLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jB_Export_Net_Catalog)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         jcbRegionBulk.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -1876,7 +1892,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE))
@@ -4754,6 +4770,23 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jB_ESSActionPerformed
 
+    private void jB_Export_Net_CatalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_Export_Net_CatalogActionPerformed
+        // Export networks catalog
+        int rows = jTableCatalog.getRowCount();
+        if (rows > 0) {
+            String team = jcbTeam1.getSelectedItem().toString();
+            String fileName = "networks_" + team + "_catalog";
+            TableModel model = jTableCatalog.getModel();
+            try {
+                SaveTableCSV(fileName, model);
+            } catch (IOException ex) {
+                Logger.getLogger(COP_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Table is empty!");
+        }
+    }//GEN-LAST:event_jB_Export_Net_CatalogActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -4817,6 +4850,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JButton jBSearch;
     private javax.swing.JButton jB_ESS;
     private javax.swing.JButton jB_ExportDates;
+    private javax.swing.JButton jB_Export_Net_Catalog;
     private javax.swing.JButton jB_Save;
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JCheckBox jCheckBoxWeek;
