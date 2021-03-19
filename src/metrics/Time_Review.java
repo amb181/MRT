@@ -56,7 +56,7 @@ public class Time_Review extends javax.swing.JFrame {
     int week = 0;
     String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     String[] monthSQL = {"2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12"};
-    int[] days = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     String tid;
     List<String> tasks = new ArrayList<String>();
     List<String> teams = new ArrayList<String>();
@@ -1409,7 +1409,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1246, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1234, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1428,7 +1428,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1648,6 +1648,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel22.setText("Technology:");
 
+        jCBNetTech.setEditable(true);
         jCBNetTech.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPNetEditLayout = new javax.swing.GroupLayout(jPNetEdit);
@@ -2043,7 +2044,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jCBMrktAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(734, Short.MAX_VALUE))
+                .addContainerGap(726, Short.MAX_VALUE))
         );
         jPMarketLayout.setVerticalGroup(
             jPMarketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2056,7 +2057,7 @@ public class Time_Review extends javax.swing.JFrame {
                 .addComponent(jPSearchMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(654, Short.MAX_VALUE))
+                .addContainerGap(647, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -2232,6 +2233,10 @@ public class Time_Review extends javax.swing.JFrame {
                 jCBFrom.addItem(String.valueOf(i));
             }
             jCBFrom.setSelectedIndex(week - 1);
+            jLYear.setVisible(false);
+            jLYearTo.setVisible(false);
+            jCBYearFrom.setVisible(false);
+            jCBYearTo.setVisible(false);
         }
     }//GEN-LAST:event_jRBWeekActionPerformed
 
@@ -2285,6 +2290,10 @@ public class Time_Review extends javax.swing.JFrame {
                 jCBFrom.addItem(months[i]);
             }
             jCBFrom.setSelectedIndex(0);
+            jLYear.setVisible(true);
+            jLYearTo.setVisible(true);
+            jCBYearFrom.setVisible(true);
+            jCBYearTo.setVisible(true);
         }
 
     }//GEN-LAST:event_jRBMonthActionPerformed
@@ -2297,6 +2306,10 @@ public class Time_Review extends javax.swing.JFrame {
                 jCBFrom.addItem(Integer.toString(i));
             }
             jCBFrom.setSelectedIndex(0);
+            jLYear.setVisible(true);
+            jLYearTo.setVisible(true);
+            jCBYearFrom.setVisible(true);
+            jCBYearTo.setVisible(true);
         }
     }//GEN-LAST:event_jRBQuarterActionPerformed
 
@@ -3218,7 +3231,7 @@ public class Time_Review extends javax.swing.JFrame {
     private void jBSaveMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveMrktActionPerformed
         // TODO add your handling code here:
         boolean flagNetwork = true;
-        
+        // Validar por equipo y cu que no se repita en esa Team - CU
         String mrktName = jTFMarket.getText();
         if (mrktName.equals(""))
             flagNetwork = false;
@@ -3642,9 +3655,9 @@ public class Time_Review extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        jCBNetCustomerActionPerformed(null);
-        jCBNetRegionActionPerformed(null);
-        jCBNetMarketActionPerformed(null);
+        //jCBNetCustomerActionPerformed(null);
+        //jCBNetRegionActionPerformed(null);
+        //jCBNetMarketActionPerformed(null);
     }
 
     private void GetAllUsers() {
@@ -4453,6 +4466,7 @@ public class Time_Review extends javax.swing.JFrame {
 
             int columnas = tableModel.getColumnCount();
             int filas = tableModel.getRowCount();
+            System.out.println("Row Count: " + filas);
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < columnas; j++) {
                 sb.append(tableModel.getColumnName(j) + ",");
@@ -4463,10 +4477,11 @@ public class Time_Review extends javax.swing.JFrame {
                     String s = String.valueOf(tableModel.getValueAt(i, j));
                     s = s.replace(",", " ");
                     s = s.replace("\n", " ");
-                    sb.append(s + ",");
+                    sb.append("\"" + s + "\"" + ",");
                 }
                 sb.append("\n");
             }
+            
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
             JOptionPane.showMessageDialog(this, "CSV file was saved to " + path + " successfully.");
@@ -4503,6 +4518,7 @@ public class Time_Review extends javax.swing.JFrame {
         team1 = team1.toLowerCase();
         String yearFrom1 = jCBYearFrom.getItemAt(jCBYearFrom.getSelectedIndex());
         String yearTo1 = jCBYearTo.getItemAt(jCBYearTo.getSelectedIndex());
+        int rowCounter = 0;
 
         if (jRBSignum.isSelected()) {
             parametros = parametros + "Signum, ";
@@ -4643,9 +4659,9 @@ public class Time_Review extends javax.swing.JFrame {
                         + "FROM metrics_cop UNION ALL "
                         + "SELECT Signum, Organization, Name, Task_ID, Task, Network, Subnetwork, SAP_Billing, Work_date, Logged_Time, Week "
                         + "FROM metrics_vss) LOGGEDTIME "
-                        + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden;
+                        + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " LIMIT 18446744073709551615;";
             } else {
-                query = "SELECT " + parametros + "SUM(Logged_Time) FROM metrics_" + team1 + " " + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden;
+                query = "SELECT " + parametros + "SUM(Logged_Time) FROM metrics_" + team1 + " " + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " LIMIT 18446744073709551615;";
             }
             System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
@@ -4682,6 +4698,7 @@ public class Time_Review extends javax.swing.JFrame {
                         }
                     }*/
                     }
+                    rowCounter += 1;
                     model.addRow(valores);
                 } while (rs.next());
             }
@@ -4690,6 +4707,7 @@ public class Time_Review extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("Total rows added: " + rowCounter);
         jTableShowMetrics.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTableShowMetrics.setModel(model);
         resizeColumnWidth(jTableShowMetrics);
@@ -4710,6 +4728,7 @@ public class Time_Review extends javax.swing.JFrame {
         String orgn1 = jCBOrgMetrics.getItemAt(jCBOrgMetrics.getSelectedIndex());
         String yearFrom1 = jCBYearFrom.getItemAt(jCBYearFrom.getSelectedIndex());
         String yearTo1 = jCBYearTo.getItemAt(jCBYearTo.getSelectedIndex());
+        int rowCounter = 0;
         String organization = new String();
         team1 = team1.toLowerCase();
 
@@ -4804,13 +4823,13 @@ public class Time_Review extends javax.swing.JFrame {
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_vss) METRICAS " + week + organization + name1 + ";";
+                        + "FROM metrics_vss) METRICAS " + week + organization + name1 + " LIMIT 18446744073709551615;";
             } else {
                 query = "SELECT Region, Organization, Signum, Name, Customer_Unit, "
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, "
-                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + ";";
+                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + " LIMIT 18446744073709551615;";
             }
             preparedStatement = connection.prepareStatement(query);
             System.out.println("Query: " + preparedStatement);
@@ -4834,6 +4853,7 @@ public class Time_Review extends javax.swing.JFrame {
                             valores[j - 1] = resultSet.getString(j);
                         }
                     }
+                    rowCounter += 1;
                     model.addRow(valores);
                 } while (resultSet.next());
             }
@@ -4842,6 +4862,7 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println(e);
             JOptionPane.showMessageDialog(this, "Something went wrong, please try again later...");
         }
+        System.out.println("Total row number: " + rowCounter);
         jTableShowMetrics.setModel(model);
         resizeColumnWidth(jTableShowMetrics);
         jTableShowMetrics.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

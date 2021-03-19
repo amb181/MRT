@@ -52,15 +52,25 @@ public class Metrics {
             System.out.println(dtf.format(now));
             String date = dtf.format(now);
             date = date.replace("/", "_").replace(" ", "_").replace(":", "_");
-            // Write log every time the program runs
-            /*File dir = new File ("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT");
-            if (! dir.exists()){
+            // Write log every time the program runs and create folder if not exists
+            File dir = new File("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT");
+            if (!dir.exists()) {
                 dir.mkdirs();
             }
-            PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\" + usersinfo.get(0) + "_" +date + ".log"));
+            // Find log files and delete them
+            File fList[] = dir.listFiles();
+            // Search .log files
+            for (int i = 0; i < fList.length; i++) {
+                if (fList[i].getName().endsWith(".log")) {
+                    // and deletes
+                    fList[i].delete();
+                }
+            }
+            // Print log
+            PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\" + usersinfo.get(0) + "_" + date + ".log"));
             System.setOut(out);
-            System.out.println("Java version: " + System.getProperty("java.version"));*/
-            
+            System.out.println("Java version: " + System.getProperty("java.version"));
+
             if (usersinfo.get(6).equals("1")) { // If user is admin
                 try {
                     log.dispose();
@@ -116,7 +126,7 @@ public class Metrics {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String user = System.getProperty("user.name");
-        // String user = "EISLLIN";
+        // String user = "ecesalm";
         System.out.println("Current user: " + user);
 
         try {
@@ -124,7 +134,7 @@ public class Metrics {
             String sql_user_team = " SELECT * FROM users WHERE Signum='" + user + "';";
             preparedStatement = connection.prepareStatement(sql_user_team);
             resultset = preparedStatement.executeQuery();
-            String last_name = null, name = null, cu = null, team = null, org = null, lm = null, access = null, 
+            String last_name = null, name = null, cu = null, team = null, org = null, lm = null, access = null,
                     job_stage = null, act_type = null, work_center = null, supp_team = null, supp_cu = null;
             while (resultset.next()) {
                 last_name = resultset.getString("Last_Name");
@@ -165,7 +175,7 @@ public class Metrics {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        localversion = "2.1"; //Version
+        localversion = "2.3"; //Version
         try {
             connection = SQL_connection.getConnection();
             String sql_version = "SELECT version FROM source_control ORDER BY version DESC LIMIT 1;";

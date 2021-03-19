@@ -7,6 +7,7 @@ package metrics;
 
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -1100,9 +1101,9 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 .addComponent(jBClearTable2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jB_ESS)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBExport)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBExport)
+                                .addGap(33, 33, 33)
                                 .addComponent(jBUpdate))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1370, Short.MAX_VALUE))
                         .addContainerGap())))
@@ -1136,7 +1137,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxWeek)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -1414,18 +1415,18 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     for (int i = 0; i < tasks_info.size(); i++) {
                         if (tasks_info.get(i).equals(task)) {
                             task_index = i;
-                            System.out.println("1st task index: " + i);
                             break;
                         }
                     }
-                    // Find subnet in networks_info
-                    int subnet_index = 0;
+                    // Find net in networks_info
+                    int net_index = 0;
                     for (int i = 0; i < networks_info.size(); i++) {
-                        if (networks_info.get(i).equals(subnet)) {
-                            subnet_index = i;
+                        if (networks_info.get(i).equals(net)) {
+                            net_index = i;
                             break;
                         }
                     }
+
                     //Date format
                     Pattern pdate = Pattern.compile("^(([0-9][0-9][0-9][0-9]-)*([0-9][0-9]-)*([0-9][0-9]))$");  // Date format YYYY-MM-DD
                     Matcher mdate = pdate.matcher(w_date);
@@ -1446,93 +1447,55 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(date_);
                     int correct_week = cal.get(Calendar.WEEK_OF_YEAR);
+
                     // List for ftr, on_time, f_ftr and f_on_time
                     List<String> ftr_list = Arrays.asList("N/A", "Yes", "No");
                     List<String> on_time_list = Arrays.asList("N/A", "Yes", "No");
                     List<String> f_ftr_list = Arrays.asList("N/A", "Human error", "Lack of process adhereance", "Missing training",
                             "Technical issues", "Tool related error", "Wrong inputs");
                     List<String> f_on_time_list = Arrays.asList("N/A", "Yes", "No");
+
                     // Requests format
                     Pattern prequests = Pattern.compile("^[0-9]");
                     Matcher mrequests = prequests.matcher(requests);
                     boolean brequests = mrequests.find();
-                    //System.out.println("Task id in table: " + task_id + "|Task id in array: " + tasks_info.get(task_index - 1) + "|");
-                    //System.out.println("Task in table: " + task + "|Task in array: " + tasks_info.get(task_index) + "|");
+
                     // Start validation
                     if (region.equals("") || !region.equals("MANA")) {                  // Region
                         failed = "Region " + region;
                     }
+
                     if (!(signum.equals(usersinfo.get(0))) || signum.equals("")) {      // Signum -> usersinfo
                         failed = "Signum " + signum;
                     }
-                    if (!brequestor1 || !brequestor2 || requestor.equals("")) {          // Requestor -> only alphabet characters    
-                        if (!brequestor1 && !requestor.equals("N/A")) {
-                            failed = "Requestor " + requestor;
-                        } else if (!brequestor2 || requestor.equals("")) {
-                            requestor = "N/A";
-                        }
+
+                    if ((!brequestor1 && !brequestor2) || requestor.equals("")) {          // Requestor -> only alphabet characters  
+                        failed = "Requestor " + requestor;
                     }
-                    if (!(task_id.equals(tasks_info.get(task_index - 1))) || task_id.equals("")) {      // Task_ID -> task_id associated with task found
-                        int new_index_task = ValidateTask_Save(task_index);
-                        // Validate again task id
-                        if (!(task_id.equals(tasks_info.get(new_index_task - 1))) || task_id.equals("")) {
-                            failed = "Task ID " + task_id;
-                        }
-                        //System.out.println("2 Task id in table: " + task_id + "|Task id in array: " + tasks_info.get(new_index_task - 1) + "|");
-                        //System.out.println("2 Task in table: " + task + "|Task in array: " + tasks_info.get(new_index_task) + "|");
+                    if (task_index > 0) {
+                        failed = Validate_task_net(task_index, net_index, task_id, task, sap, net, subnet, act);
+                    } else {
+                        failed = "Task: " + task;
                     }
-                    if (!(task.equals(tasks_info.get(task_index))) || task.equals("")) {            // Task -> task found
-                        String task_copy = tasks_info.get(task_index);
-                        // Check for tasks with "same name"
-                        if (task_copy.contains("  ")) {
-                            task_copy = task_copy.replace("  ", "");
-                        }
-                        // Validate again task
-                        if (!(task.equals(task_copy)) || task.equals("")) {
-                            failed = "Task " + task;
-                        }
-                    }
-                    if (!net.equals("0") || net.equals("")) {
-                        if (!(net.equals(networks_info.get(subnet_index - 5)))) {                   // Network -> network associated with subnet
-                            failed = "Network " + net;
-                        }
-                    } else if (net.equals("0")) {
-                        if (!tasks_info.get(task_index - 1).contains("ADMIN")) {
-                            failed = "Network " + net;
-                        }
-                    }
-                    if (!subnet.equals("0") || subnet.equals("")) {
-                        if (!(subnet.equals(networks_info.get(subnet_index)))) {                    // Subnetwork -> subnet found
-                            failed = "Subnetwork " + subnet;
-                        }
-                    } else if (subnet.equals("0")) {
-                        if (!tasks_info.get(task_index - 1).contains("ADMIN")) {
-                            failed = "Subnetwork " + subnet;
-                        }
-                    }
-                    if (!act.equals("0") || act.equals("")) {
-                        if (!(act.equals(networks_info.get(subnet_index - 4)))) {                   // Activity -> act associated with subnet
-                            failed = "Activity " + act;
-                        }
-                    } else if (act.equals("0")) {
-                        if (!tasks_info.get(task_index - 1).contains("ADMIN")) {
-                            failed = "Activity " + act;
-                        }
-                    }
-                    if (!(sap.equals(tasks_info.get(task_index + 3))) || sap.equals("")) {         // SAP -> sap associated with task
-                        failed = "SAP " + sap;
-                    }
+
                     if (!bdate || w_date.equals("")) {                                              // Date -> format YYYY-MM-DD
                         System.out.println("Date: " + w_date);
                         failed = "Date " + w_date;
                     }
+
                     if (!btime || time.equals("")) {                                                // Time -> decimal format
                         failed = "Time " + time;
                     }
-                    if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date                                      
-                        System.out.println(week + "| Correct week:" + correct_week);
+
+                    int dayOfWeek = Check_Day(w_date);
+                    if (dayOfWeek == 7) {
+                        correct_week = correct_week - 1;
+                    }
+                    System.out.println("Day " + dayOfWeek + " Week: " + correct_week);
+                    if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date 
                         failed = "Week " + week;
                     }
+
                     if (!ftr_list.contains(ftr) || ftr.equals("")) {                               // FTR -> Not empty or in list                                      
                         failed = "FTR " + ftr;
                     }
@@ -1545,17 +1508,18 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     if (!f_on_time_list.contains(f_on_time) || f_on_time.equals("")) {             // Failed On time -> Not empty or in list                                      // Week -> corresponding to date
                         failed = "Failed on time " + f_on_time;
                     }
+
                     if (!brequests || requests.equals("") || requests.equals("0")) {               // Requests -> Number format                                      // Week -> corresponding to date
                         failed = "Num of requests " + requests;
                     }
+
                     // If something failed show where it did
                     int current_row = row + 1;
                     if (!failed.equals("")) {
                         JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Please verify your info near " + failed + " in row " + current_row + ".");
                         error = true;
                         System.out.println("Error near " + failed + " in row " + current_row);
-                        jDLoading.dispose();
-                        return;
+                        break;
                     }
                     int res = 0;
                     if (error == false) { // If true if before this should handle it
@@ -1574,49 +1538,86 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         }
                     }
                 }
-
-                jDLoading.dispose();
                 // Refresh total hours
-
                 GetHours();
-
                 GetDailyHours();
-
-                System.out.println(
-                        "Total hours this week: " + hours);
-                Sourcing_Time_Report.this.setTitle(
-                        "SOURCING               " + usersinfo.get(0) + " | " + usersinfo.get(4)
+                System.out.println("Total hours this week: " + hours);
+                Sourcing_Time_Report.this.setTitle("SOURCING               " + usersinfo.get(0) + " | " + usersinfo.get(4)
                         + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | " + "Hours: " + hours);
-                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
+                jDLoading.dispose();
+                if (error) {
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
+                    ClearDataPanel1();
+                }
             }
-        }
-        ).start();
-
-        jDLoading.setVisible(
-                true);
+        }).start();
+        jDLoading.setVisible(true);
     }//GEN-LAST:event_jB_SaveActionPerformed
 
-    private int ValidateTask_Save(int old_task_index) {
-        // Check if there is a task with the same name
-        int new_task_index = 0;
-        String task_id = (String) jTableAddMetrics.getValueAt(0, 3);
-        String task = (String) jTableAddMetrics.getValueAt(0, 4);
-        // Look for task with same name
-        for (int i = old_task_index + 1; i < tasks_info.size(); i++) {
-            String task_copy = tasks_info.get(i);
-            // Check for tasks with "same name"
-            if (task_copy.contains("  ")) {
-                task_copy = task_copy.replace("  ", "");
-            }
-            // Update task index
-            if (task_copy.equals(task)) {
-                new_task_index = i;
-                //System.out.println("New task index: " + i);
-                break;
+    private String Validate_task_net(int task_index, int net_index, String task_id, String task, String sap, String net,
+            String subnet, String act) {
+        String failed = "";
+        // Related to task
+        if (!task_id.equals(tasks_info.get(task_index - 1))) {           // Task ID
+            task_index = ValidateTask_Save(task_id, task);
+            if ((task_index == 0) || (!task_id.equals(tasks_info.get(task_index - 1)))) {           // Task ID
+                return failed = "Task ID: " + task_id;
             }
         }
-        if (!(task_id.equals(tasks_info.get(new_task_index - 1))) || task_id.equals("")) {
-            new_task_index = ValidateTask_Save(new_task_index);
+        if (task_id.contains("ADMIN")) {
+            if (!net.equals("0")) {                                  // Network
+                return failed = "Network: " + net;
+            }
+            if (!subnet.equals("0")) {                               // Subnetwork
+                return failed = "Subnetwork: " + subnet;
+            }
+            if (!act.equals("0")) {                                  // Activity
+                return failed = "Activity: " + act;
+            }
+        } else {
+            if (!net.equals(networks_info.get(net_index))) {
+                return failed = "Network: " + net;
+            }
+            if (!subnet.equals(networks_info.get(net_index + 5))) {
+                return failed = "Subnetwork: " + subnet;
+            }
+            if (!act.equals(networks_info.get(net_index + 1))) {
+                return failed = "Activity: " + act;
+            }
+        }
+
+        if (!sap.equals(tasks_info.get(task_index + 3))) {            // SAP
+            return failed = "SAP: " + sap;
+        }
+
+        if (!task.equals(tasks_info.get(task_index))) {          // Task
+            String task_copy = tasks_info.get(task_index);
+            // Check for tasks with "same name"
+            if (task_copy.contains("  ")) {
+                task_copy = task_copy.replaceAll("  ", "");
+            }
+            // Validate again task
+            if (!(task.equals(task_copy))) {
+                return failed = "Task " + task;
+            }
+        }
+
+        return failed;
+    }
+
+    private int ValidateTask_Save(String task_id, String task) {
+        // Check if there is a task with the same name
+        int new_task_index = 0;
+        // Look for task with same name
+        for (int i = 1; i < tasks_info.size(); i++) {
+            String task_copy = tasks_info.get(i);
+            // Check for tasks with "same name"
+            if (task_copy.contains(task) && tasks_info.get(i - 1).equals(task_id)) {
+                new_task_index = i;
+                break;
+            }
         }
         return new_task_index;
     }
@@ -1691,9 +1692,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     }
 
     private void ClearDataPanel1() {
-        // Clear table
-        DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-        tblModel.setRowCount(0);
         // Clear fields
         jcbTask.setSelectedIndex(0);
         jcbSAP.setSelectedItem("Billable");
@@ -1824,6 +1822,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     }
 
     private void GetHours() {
+        // Get hours per week in frame title
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
@@ -1908,6 +1907,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     }
 
     private void GetDailyHours() {
+        // Display hours per day in jPanel
         try {
             int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
@@ -1915,12 +1915,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
                     + "FROM metrics_sourcing "
-                    + "WHERE Signum = ? AND Week = ? AND Work_date LIKE '" + year + "-%' "
+                    + "WHERE Signum = ? AND Week = '" + current_week + "' AND Work_date LIKE '" + year + "-%' "
                     + "GROUP BY Work_date ORDER BY Work_date;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, usersinfo.get(0));
-            preparedStatement.setInt(2, Integer.parseInt(jTextFieldWeek.getText()));
             System.out.println("Query: " + preparedStatement);
             resultSet = preparedStatement.executeQuery();
 
@@ -1990,7 +1989,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
         int entries = 1;
         boolean error = false;
-        jRSingle.setSelected(true);
         int validate_date = Integer.parseInt(jTextFieldWeek.getText());
         int thresh1 = current_week - 2;
         int thresh2 = current_week + 2;
@@ -2137,6 +2135,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void jBClearTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearTableActionPerformed
         // Clear table button
+        DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
+        tblModel.setRowCount(0);
         ClearDataPanel1();
         JOptionPane.showMessageDialog(this, "Table is empty.");
     }//GEN-LAST:event_jBClearTableActionPerformed
@@ -2343,9 +2343,17 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
-            JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "CSV created", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Desktop.getDesktop().open(new File(path));
+            } else {
+                JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
+            }
+
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItemGenerateActionPerformed
 
@@ -2629,10 +2637,15 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         if (!btime) {
                             failed = "Time";
                         }
-                        if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date                                     
-                            System.out.println(week + "| Correct week:" + correct_week);
-                            failed = "Week";
+                        int dayOfWeek = Check_Day(date);
+                        if (dayOfWeek == 7) {
+                            correct_week = correct_week - 1;
                         }
+                        System.out.println("Day " + dayOfWeek + " Week " + correct_week);
+                        if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date 
+                            failed = "Week " + week;
+                        }
+
                         if (comments.equals("") || comments.isEmpty()) {
                             failed = "Comments";
                         }
@@ -2692,7 +2705,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     } else if (team.equals("VSS")) {
                         sql = "update_metrics_vss";
                     }
-                    
+
                     if (id_ch > 0) {
                         try {
                             callableStatement = connection.prepareCall("CALL " + sql
@@ -2720,11 +2733,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 // Update info in metrics_for_ess
                                 int i = metrics_for_ess.indexOf(ids.get(0 + (6 + 1) * row));
                                 System.out.println("ID for ESS: " + i);
-                                metrics_for_ess.set(i + 3 , ids.get(2 + (6 + 1) * row));      // Requestor
-                                metrics_for_ess.set(i + 10 , ids.get(3 + (6 + 1) * row));     // Date
-                                metrics_for_ess.set(i + 11 , ids.get(4 + (6 + 1) * row));     // Time
-                                metrics_for_ess.set(i + 12 , ids.get(5 + (6 + 1) * row));     // Week
-                                metrics_for_ess.set(i + 18 , ids.get(6 + (6 + 1) * row));     // Comments
+                                metrics_for_ess.set(i + 3, ids.get(2 + (6 + 1) * row));      // Requestor
+                                metrics_for_ess.set(i + 10, ids.get(3 + (6 + 1) * row));     // Date
+                                metrics_for_ess.set(i + 11, ids.get(4 + (6 + 1) * row));     // Time
+                                metrics_for_ess.set(i + 12, ids.get(5 + (6 + 1) * row));     // Week
+                                metrics_for_ess.set(i + 18, ids.get(6 + (6 + 1) * row));     // Comments
                             }
                             callableStatement.close();
                             connection.close();
@@ -2739,14 +2752,14 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         return;
                     }
                 }
+                // Refresh total hours
                 GetDailyHours1();
                 GetHours();
-                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
-                jDLoading.dispose();
-                // Refresh total hours
                 Sourcing_Time_Report.this.setTitle("Sourcing               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
                         + "Hours: " + hours);
                 saved = "Data saved successfully!";
+                jDLoading.dispose();
+                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, saved);
             }
         }).start();
         jDLoading.setVisible(true);
@@ -2767,14 +2780,12 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         PreparedStatement preparedStatement;
 
                         int[] selected_rows = jTableSeeMetrics.getSelectedRows();
+                        int x = 0;
                         for (int j = 0; j < selected_rows.length; j++) {
                             // Compare to get selected row's id 
                             int row = selected_rows[j];
-                            if (j > 0) {
-                                row = selected_rows[j] - 1;
-                            }
-                            System.out.println("Selected row: " + row);
-                            String id_ = jTableSeeMetrics.getModel().getValueAt(row, 0).toString();
+                            System.out.println("Selected row: " + (row - x));
+                            String id_ = jTableSeeMetrics.getModel().getValueAt((row - x), 0).toString();
                             System.out.println("id_" + id_);
                             int id = Integer.parseInt(id_);
                             System.out.println("ID to delete: " + id);
@@ -2784,14 +2795,14 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                             int a = 0;
                             System.out.println("Index:" + i);
                             // Delete 6 elements in metrics_sourcing_info
-                            while (a < 6) { 
+                            while (a < 7) {
                                 metrics_sourcing_info.remove(i);
                                 a += 1;
                             }
                             // Delete 19 elements in metrics_for_ess
                             int in = metrics_for_ess.indexOf(id_);
                             a = 0;
-                            while (a < 19) { 
+                            while (a < 19) {
                                 metrics_for_ess.remove(in);
                                 a += 1;
                             }
@@ -2815,15 +2826,14 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 tblModel.removeRow(jTableSeeMetrics.getSelectedRow());
 
                             } catch (SQLException ex) {
-                                Logger.getLogger(Sourcing_Time_Report.class
-                                        .getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            x += 1;
                         }// End for
                         try {
                             connection.close();
                         } catch (SQLException ex) {
-                            Logger.getLogger(Sourcing_Time_Report.class
-                                    .getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         GetDailyHours1();
                         JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "Row deleted.");
@@ -2956,7 +2966,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jcbTeam1ActionPerformed
 
-    private void SaveTableCSV(String fileName, TableModel tableModel) {
+    private void SaveTableCSV(String fileName, TableModel tableModel) throws IOException {
         String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + fileName + ".csv";
         try (PrintWriter writer = new PrintWriter(new File(path))) {
 
@@ -2977,7 +2987,12 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
             writer.write(sb.toString());
             System.out.println("Metrics file saved successfully");
-            JOptionPane.showMessageDialog(this, "File was saved to " + path + " successfully.");
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "File created", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Desktop.getDesktop().open(new File(path));
+            } else {
+                JOptionPane.showMessageDialog(this, "File was saved to " + path);
+            }
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -2991,7 +3006,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             String team = jcbTeam1.getSelectedItem().toString();
             String fileName = usersinfo.get(0) + "_metrics_" + team + "_week_" + week;
             TableModel model = jTableSeeMetrics.getModel();
-            SaveTableCSV(fileName, model);
+            try {
+                SaveTableCSV(fileName, model);
+            } catch (IOException ex) {
+                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Table is empty!");
         }
@@ -3128,7 +3147,12 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     }
                     writer.write(sb.toString());
                     System.out.println("File writed successfully");
-                    JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File writed successfully to " + path);
+                    int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "History file created", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        Desktop.getDesktop().open(new File(path));
+                    } else {
+                        JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File was saved to " + path);
+                    }
 
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Sourcing_Time_Report.class
@@ -3137,6 +3161,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     jDLoading.dispose();
                     jFrameHistory.dispose();
                     return;
+                } catch (IOException ex) {
+                    Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 jDLoading.dispose();
             }
@@ -3160,7 +3186,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         // Create csv with data
-                        String path = "C:\\Users\\ealloem\\Documents\\MRT\\54v3d_73mp1473_50urcin9.csv";
+                        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\54v3d_73mp1473_50urcin9.csv";
                         try (PrintWriter writer = new PrintWriter(new File(path))) {
                             StringBuilder sb = new StringBuilder();
                             // Header
@@ -3232,7 +3258,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jPanel3.setVisible(false);
         DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
         tblModel.setRowCount(0);
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\ealloem\\Documents\\MRT\\54v3d_73mp1473_50urcin9.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\54v3d_73mp1473_50urcin9.csv"))) {
             String line;
             br.readLine();
 
@@ -3309,19 +3335,123 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem_SavedTemplateActionPerformed
 
-    private void jB_ESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_ESSActionPerformed
-        // Button to export in ESS format
-        int rows = jTableSeeMetrics.getRowCount();
-        String date = "";
-        if (jDateChooser2.isVisible() && !jCheckBoxWeek.isVisible()) {
-            date = String.valueOf(jDateChooser2.getDate());
-        } else {
-            date = "week_" + jcbWeek1.getSelectedItem().toString();
+    private int Check_Day(String date) {
+        // Get task worked day
+        Calendar c = Calendar.getInstance();
+        int dayOfWeek;
+        try {
+            c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+
+        } catch (ParseException ex) {
+            Logger.getLogger(Sourcing_Time_Report.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-        
+        dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+        dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+        if (dayOfWeek == 1) { // If Sunday
+            dayOfWeek = 7;
+        } else {
+            dayOfWeek = dayOfWeek - 1;
+        }
+
+        return dayOfWeek;
+    }
+
+    private void jB_ESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_ESSActionPerformed
+        // Button to export in ESS format, this function will only take into account "1" week
+        int rows = jTableSeeMetrics.getRowCount();
         if (rows > 0) {
+            String date = "";
+            if (jDateChooser2.isVisible() && !jCheckBoxWeek.isVisible()) {
+                date = String.valueOf(jDateChooser2.getDate());
+            } else {
+                date = "week_" + jcbWeek1.getSelectedItem().toString();
+            }
             // Create csv with data
-            String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_" + date + ".csv";
+            String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";
+            //System.out.println("ESS: " + metrics_for_ess);
+            // Sum time with same network and activity (Productive, Training, Meeting, etc)
+            ArrayList<String> sum_metrics = new ArrayList<>();
+            // Iterate every saved task in metrics_for_ess
+            int day;
+            String activity = "", task_ = "", subnet = "";
+
+            for (int i = 5; i < metrics_for_ess.size(); i += 19) {
+                day = Check_Day(metrics_for_ess.get(i + 5));
+                activity = "";
+                subnet = metrics_for_ess.get(i + 2);
+                task_ = metrics_for_ess.get(i);
+                // Add requested Abs from ESS (4)
+                if (task_.equals("Annual Leave")) {
+                    task_ = "Annual Leave (2000)";
+                } else if (task_.equals("Non-Operational meeting")) {
+                    task_ = "Meeting (1310)";
+                } else if (task_.equals("On the Job Training")) {
+                    task_ = "Training (1410)";
+                } else if (task_.equals("Marriage Leave")) {
+                    task_ = "Marriage Leave (2135)";
+                } else if (task_.equals("Paternity Leave")) {
+                    task_ = "Paternity Leave (2203)";
+                } else if (task_.equals("Funeral Leave")) {
+                    task_ = "Funeral Leave (2152)";
+                } else {    // Not ADMIN
+                    task_ = "Productive hours (1000)";
+                    activity = usersinfo.get(10);
+                }
+                if (subnet.equals("0")) {
+                    subnet = "";
+                }
+                // Add first task
+                if (sum_metrics.isEmpty()) {
+                    sum_metrics.add(subnet);    // Subnetwork
+                    sum_metrics.add(activity);                      // Activity
+                    sum_metrics.add(task_);                         // Task
+                    int z = 1;
+                    while (z < 8) {
+                        if (z != day) {
+                            sum_metrics.add("0");
+                        } else {
+                            sum_metrics.add(metrics_for_ess.get(i + 6));    // Time in right day
+                        }
+                        z += 1;
+                    }
+                    //System.out.println("\nPrimera: " + task_ + " time: " + metrics_for_ess.get(i + 6) + " day: " + day);
+                    //System.out.println("SUM: " + sum_metrics); // Print array contents
+                    continue;
+                }
+                // Check if task already in array and group activities
+                boolean new_task = true;
+                for (int j = 0; j < sum_metrics.size(); j += 10) {
+                    if (sum_metrics.get(j + 2).equals(task_) && sum_metrics.get(j).equals(subnet)) { // If same task
+                        //System.out.println("\nSumando: " + sum_metrics.get(j + 2) + " | " + task_ + " | day: " + day);
+                        String new_time = String.valueOf(Float.parseFloat(metrics_for_ess.get(i + 6)) + Float.parseFloat(sum_metrics.get(j + 2 + day)));
+                        sum_metrics.set(j + 2 + day, new_time);
+                        //System.out.println("SUM: " + sum_metrics); // Print array contents
+                        new_task = false;
+                        break;
+                    }
+                }
+                // New task in file
+                if (new_task) {
+                    sum_metrics.add(subnet);    // Subnetwork
+                    sum_metrics.add(activity);                      // Activity
+                    sum_metrics.add(task_);                         // Task
+                    int z = 1;
+                    while (z < 8) {
+                        if (z != day) {
+                            sum_metrics.add("0");
+                        } else {
+                            sum_metrics.add(metrics_for_ess.get(i + 6));    // Time in right day
+                        }
+                        z += 1;
+                    }
+                    //System.out.println("\nNueva: " + task_);
+                    //System.out.println("SUM: " + sum_metrics); // Print array contents
+                }
+            }
+
             try (PrintWriter writer = new PrintWriter(new File(path))) {
                 StringBuilder sb = new StringBuilder();
                 // New line
@@ -3346,89 +3476,35 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 sb.append("SU" + ',');
                 sb.append('\n');
                 // Fill rows
-                //System.out.println("ESS: " + metrics_for_ess);
-                Calendar c = Calendar.getInstance();
-                int dayOfWeek;
+
                 // Print with ',' .replace(".", ",")        //////////////////////////////////////////
-                for (int i = 4; i < metrics_for_ess.size() + 1; i += 19) {
+                for (int i = 0; i < sum_metrics.size(); i += 10) {
                     sb.append("HC" + ',');
-                    // Act Type ¿?
                     sb.append("" + ',');
                     sb.append("" + ',');
                     // Network and Activity
-                    if (metrics_for_ess.get(i).contains("ADMIN")) {
-                        sb.append("" + ',');
-                        sb.append("" + ',');
-                    } else {
-                        sb.append(metrics_for_ess.get(i + 3) + ',');
-                        sb.append(usersinfo.get(10) + ',');
-                    }
+                    sb.append(sum_metrics.get(i) + ',');
+                    sb.append(sum_metrics.get(i + 1) + ',');
                     // Sub Op
                     sb.append("" + ',');
                     // Abs or Att type
-                    if (metrics_for_ess.get(i).contains("ADMIN")) {
-                        if (metrics_for_ess.get(i + 1).equals("Anual Leave")) {
-                            sb.append("Annual Leave (2000)" + ',');
-                        } else if (metrics_for_ess.get(i + 1).contains("meeting")) {
-                            sb.append("Meeting (1310)" + ',');
-                        } else if (metrics_for_ess.get(i + 1).contains("Training")) {
-                            sb.append("Training (1410)" + ',');
-                        }
-                    } else {    // Not ADMIN
-                        sb.append("Productive hours (1000)" + ',');
-                    }
+                    sb.append(sum_metrics.get(i + 2) + ',');
                     // OT Comp
                     sb.append("" + ',');
                     // Total
                     sb.append("" + ',');
-                    // Hours per day
-                    try {
-                        c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(metrics_for_ess.get(i + 6)));
-
-                    } catch (ParseException ex) {
-                        Logger.getLogger(Sourcing_Time_Report.class
-                                .getName()).log(Level.SEVERE, null, ex);
-                    }
-                    dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-                    // Check for day of the week
-                    if (dayOfWeek == 2) {    // if Monday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 3) {    // if Tuesday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 4) {    // if Wednesday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 5) {    // if Thursday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 6) {    // if Friday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 7) {    // if Saturday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 1) {    // if Sunday
-                        sb.append("\"" + metrics_for_ess.get(i + 7).replace(".", ",") + "\"");
-                    } else {
-                        sb.append("" + ',');
-                    }
+                    // Week
+                    sb.append("\"" + sum_metrics.get(i + 3).replace(".", ",") + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 4).replace(".", ",") + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 5).replace(".", ",") + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 6).replace(".", ",") + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 7).replace(".", ",") + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 8).replace(".", ",") + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 9).replace(".", ",") + "\"" + ',');
                     // New line
                     sb.append("\n");
                 }
+
                 // New line to separate formats
                 sb.append('\n');
                 sb.append('\n');
@@ -3452,88 +3528,40 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 sb.append("SU" + ',');
                 sb.append('\n');
                 // Print with '.'
-                for (int i = 4; i < metrics_for_ess.size() + 1; i += 19) {
+                for (int i = 0; i < sum_metrics.size(); i += 10) {
                     sb.append("HC" + ',');
-                    // Act Type ¿?
                     sb.append("" + ',');
                     sb.append("" + ',');
                     // Network and Activity
-                    if (metrics_for_ess.get(i).contains("ADMIN")) {
-                        sb.append("" + ',');
-                        sb.append("" + ',');
-                    } else {
-                        sb.append(metrics_for_ess.get(i + 3) + ',');
-                        sb.append(usersinfo.get(10) + ',');
-                    }
+                    sb.append(sum_metrics.get(i) + ',');
+                    sb.append(sum_metrics.get(i + 1) + ',');
                     // Sub Op
                     sb.append("" + ',');
                     // Abs or Att type
-                    if (metrics_for_ess.get(i).contains("ADMIN")) {
-                        if (metrics_for_ess.get(i + 1).equals("Anual Leave")) {
-                            sb.append("Annual Leave (2000)" + ',');
-                        } else if (metrics_for_ess.get(i + 1).contains("meeting")) {
-                            sb.append("Meeting (1310)" + ',');
-                        } else if (metrics_for_ess.get(i + 1).contains("Training")) {
-                            sb.append("Training (1410)" + ',');
-                        }
-                    } else {    // Not ADMIN
-                        sb.append("Productive hours (1000)" + ',');
-                    }
+                    sb.append(sum_metrics.get(i + 2) + ',');
                     // OT Comp
                     sb.append("" + ',');
                     // Total
                     sb.append("" + ',');
-                    // Hours per day
-                    try {
-                        c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(metrics_for_ess.get(i + 6)));
-
-                    } catch (ParseException ex) {
-                        Logger.getLogger(Sourcing_Time_Report.class
-                                .getName()).log(Level.SEVERE, null, ex);
-                    }
-                    dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-                    // Check for day of the week
-                    if (dayOfWeek == 2) {    // if Monday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 3) {    // if Tuesday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 4) {    // if Wednesday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 5) {    // if Thursday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 6) {    // if Friday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 7) {    // if Saturday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
-                    if (dayOfWeek == 1) {    // if Sunday
-                        sb.append(metrics_for_ess.get(i + 7));
-                    } else {
-                        sb.append("" + ',');
-                    }
+                    // Week
+                    sb.append("\"" + sum_metrics.get(i + 3) + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 4) + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 5) + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 6) + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 7) + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 8) + "\"" + ',');
+                    sb.append("\"" + sum_metrics.get(i + 9) + "\"" + ',');
                     // New line
                     sb.append("\n");
                 }
                 writer.write(sb.toString());
                 System.out.println("File writed successfully");
-                JOptionPane.showMessageDialog(Sourcing_Time_Report.this, "File writed successfully to " + path);
+                int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "ESS template created", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    Desktop.getDesktop().open(new File(path));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
+                }
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Sourcing_Time_Report.class
@@ -3542,6 +3570,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 jDLoading.dispose();
                 jFrameHistory.dispose();
                 return;
+            } catch (IOException ex) {
+                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Table is empty!");
@@ -3581,7 +3611,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Sourcing_Time_Report.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
