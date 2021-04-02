@@ -615,7 +615,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, true
+                false, false, true, false, false, false, false, false, false, true, true, true, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1088,7 +1088,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                         .addGap(371, 371, 371)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                                .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jBHistory))
                                             .addComponent(jLabelHoursDaysH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -1137,7 +1137,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxWeek)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -1352,7 +1352,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE))
@@ -1384,7 +1384,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     // Get each row's info
                     String region = (String) jTableAddMetrics.getValueAt(0, 0);
                     String signum = (String) jTableAddMetrics.getValueAt(0, 1);
-                    signum = signum.toLowerCase(); // In case user has signum in uppercase
+                    signum = signum.toLowerCase(); // In case user has signum in lowercase
                     String requestor = (String) jTableAddMetrics.getValueAt(0, 2);
                     String task_id = (String) jTableAddMetrics.getValueAt(0, 3);
                     String task = (String) jTableAddMetrics.getValueAt(0, 4);
@@ -1494,6 +1494,12 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     System.out.println("Day " + dayOfWeek + " Week: " + correct_week);
                     if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date 
                         failed = "Week " + week;
+                    }
+                    int validate_date = Integer.parseInt(week);
+                    int thresh1 = current_week - 2;
+                    int thresh2 = current_week + 2;
+                    if (validate_date < thresh1 || validate_date > thresh2) {
+                        failed = "Week " + week + " (please contact your Line Manager)";
                     }
 
                     if (!ftr_list.contains(ftr) || ftr.equals("")) {                               // FTR -> Not empty or in list                                      
@@ -1807,6 +1813,39 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                         }
                                     }).start();
                                     jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("PSS")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                PSS_Time_Report time_r = new PSS_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit PSS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(Sourcing_Time_Report.class
+                                                        .getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
                                 }
                             } catch (Exception e) {
                                 System.out.println(e);
@@ -1972,12 +2011,12 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private void jBAddTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTableActionPerformed
         // Add info to jTable button
         // Validate data type in date, time, requestor and requests textfields
-        Pattern ptime = Pattern.compile("^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$");
+        Pattern ptime = Pattern.compile("\\d{0,2}(\\.\\d{1,2})?");
         String stime = jTextFieldTime.getText();
         Matcher mtime = ptime.matcher(stime);
         boolean btime = mtime.find();
         // Requests format
-        Pattern preq = Pattern.compile("[1-9]+");
+        Pattern preq = Pattern.compile("^[1-9][0-9]*$");
         String sreq = jTextFieldRequests.getText();
         Matcher mreq = preq.matcher(sreq);
         boolean breq = mreq.find();
@@ -2019,20 +2058,18 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             jTextFieldTime.setText("");
             error = true;
         }
-        if (!brequestor && !sreqtr.equals("")) {
-            JOptionPane.showMessageDialog(this, "Requestor must be a a name!");
-            jTextFieldRequestor.setText("");
+        if (!brequestor) {
+            if (!sreqtr.equals("N/A")) {
+                JOptionPane.showMessageDialog(this, "Requestor must be a a name or N/A!");
+                jTextFieldRequestor.setText("");
+                error = true;
+            }
+        }
+        if (validate_date < thresh1 || validate_date > thresh2) {
+            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2 + "\nplease contact your Line Manager.");
             error = true;
         }
-        if (validate_date < thresh1) {
-            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
-            error = true;
-        }
-        if (validate_date > thresh2) {
-            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
-            System.out.println("Not inserting because of date");
-            error = true;
-        }
+        
         if (!error) {
             // Get combo boxes values
             String sap = (String) jcbSAP.getSelectedItem();
@@ -2082,7 +2119,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 requests = String.valueOf(req);
                 time = new BigDecimal(jTextFieldTime.getText());
                 // Round to 2 decimals
-                time = time.divide(entries_bd, 2, RoundingMode.CEILING);
+                time = time.divide(entries_bd, 2, RoundingMode.FLOOR);
             }
             String time_added = String.valueOf(time);
             // Sourcing has only MANA as Region
@@ -2343,7 +2380,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
-            int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "CSV created", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "CSV created", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 Desktop.getDesktop().open(new File(path));
             } else {
@@ -2431,7 +2468,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
-        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss"};
+        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss"};
         for (int i = 0; i < strs.length; i++) {
             tables.add(strs[i]); // Check for every table
         }
@@ -2704,6 +2741,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         sql = "update_metrics_cop";
                     } else if (team.equals("VSS")) {
                         sql = "update_metrics_vss";
+                    } else if (team.equals("PSS")) {
+                        sql = "metrics_pss";
                     }
 
                     if (id_ch > 0) {
@@ -2814,6 +2853,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 sql = "metrics_cop";
                             } else if (team.equals("VSS")) {
                                 sql = "metrics_vss";
+                            } else if (team.equals("PSS")) {
+                                sql = "metrics_pss";
                             }
 
                             try {
@@ -2987,7 +3028,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             }
             writer.write(sb.toString());
             System.out.println("Metrics file saved successfully");
-            int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "File created", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "File created", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 Desktop.getDesktop().open(new File(path));
             } else {
@@ -3147,7 +3188,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     }
                     writer.write(sb.toString());
                     System.out.println("File writed successfully");
-                    int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "History file created", JOptionPane.YES_NO_OPTION);
+                    int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "History file created", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) {
                         Desktop.getDesktop().open(new File(path));
                     } else {
@@ -3556,7 +3597,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 }
                 writer.write(sb.toString());
                 System.out.println("File writed successfully");
-                int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "ESS template created", JOptionPane.YES_NO_OPTION);
+                int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "ESS template created", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     Desktop.getDesktop().open(new File(path));
                 } else {

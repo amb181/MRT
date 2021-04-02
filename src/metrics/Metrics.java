@@ -53,7 +53,10 @@ public class Metrics {
             String date = dtf.format(now);
             date = date.replace("/", "_").replace(" ", "_").replace(":", "_");
             // Write log every time the program runs and create folder if not exists
-            File dir = new File("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT");
+            String user_log = usersinfo.get(0);
+            //String user_log = "ealloem";
+            File dir = new File("C:\\Users\\" + user_log + "\\Documents\\MRT");
+            
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -67,8 +70,9 @@ public class Metrics {
                 }
             }
             // Print log
-            PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\" + usersinfo.get(0) + "_" + date + ".log"));
+            PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\" + user_log + "\\Documents\\MRT\\" + usersinfo.get(0) + "_" + date + ".log"));
             System.setOut(out);
+            
             System.out.println("Java version: " + System.getProperty("java.version"));
 
             if (usersinfo.get(6).equals("1")) { // If user is admin
@@ -106,6 +110,10 @@ public class Metrics {
                                 VSS_Time_Report time_r = new VSS_Time_Report();
                                 time_r.show();
                                 time_r.setLocationRelativeTo(null);
+                            } else if (usersinfo.get(3).equals("PSS")) {
+                                PSS_Time_Report time_r = new PSS_Time_Report();
+                                time_r.show();
+                                time_r.setLocationRelativeTo(null);
                             }
                             loading.dispose();
                         } catch (ParseException | IOException ex) {
@@ -126,7 +134,7 @@ public class Metrics {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String user = System.getProperty("user.name");
-        // String user = "ecesalm";
+        //String user = "EISLLIN";
         System.out.println("Current user: " + user);
 
         try {

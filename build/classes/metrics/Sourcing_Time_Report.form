@@ -1048,7 +1048,7 @@
                     <Column editable="false" title="On Time" type="java.lang.Object"/>
                     <Column editable="false" title="Failed FTR" type="java.lang.Object"/>
                     <Column editable="false" title="Failed On Time" type="java.lang.Object"/>
-                    <Column editable="false" title="Number of requests" type="java.lang.Object"/>
+                    <Column editable="true" title="Number of requests" type="java.lang.Object"/>
                     <Column editable="true" title="Comments" type="java.lang.Object"/>
                   </Table>
                 </Property>

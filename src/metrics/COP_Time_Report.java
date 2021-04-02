@@ -532,19 +532,21 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         jFrameCatalog.getContentPane().setLayout(jFrameCatalogLayout);
         jFrameCatalogLayout.setHorizontalGroup(
             jFrameCatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
             .addGroup(jFrameCatalogLayout.createSequentialGroup()
-                .addGap(456, 456, 456)
-                .addComponent(jB_Export_Net_Catalog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 456, Short.MAX_VALUE))
+                .addGroup(jFrameCatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrameCatalogLayout.createSequentialGroup()
+                        .addComponent(jB_Export_Net_Catalog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 906, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jFrameCatalogLayout.setVerticalGroup(
             jFrameCatalogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameCatalogLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jFrameCatalogLayout.createSequentialGroup()
                 .addComponent(jB_Export_Net_Catalog)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jcbRegionBulk.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -1074,7 +1076,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, true
+                false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1931,7 +1933,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                     String region = (String) jTableAddMetrics.getValueAt(0, 1);
                     String market = (String) jTableAddMetrics.getValueAt(0, 2);
                     String signum = (String) jTableAddMetrics.getValueAt(0, 3);
-                    signum = signum.toLowerCase(); // In case user has signum in uppercase
+                    signum = signum.toLowerCase(); // In case user has signum in lowercase
                     String requestor = (String) jTableAddMetrics.getValueAt(0, 4);
                     String task_id = (String) jTableAddMetrics.getValueAt(0, 5);
                     String task = (String) jTableAddMetrics.getValueAt(0, 6);
@@ -2039,6 +2041,12 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                     System.out.println("Day " + dayOfWeek + " Week: " + correct_week);
                     if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date 
                         failed = "Week " + week;
+                    }
+                    int validate_date = Integer.parseInt(week);
+                    int thresh1 = current_week - 2;
+                    int thresh2 = current_week + 2;
+                    if (validate_date < thresh1 || validate_date > thresh2) {
+                        failed = "Week " + week + " (please contact your Line Manager)";
                     }
 
                     if (!ftr_list.contains(ftr) || ftr.equals("")) {                               // FTR -> Not empty or in list                                      // Week -> corresponding to date
@@ -2206,10 +2214,6 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             String org = usersinfo.get(4);
             String name = usersinfo.get(1);
 
-            if (comments.isEmpty() || comments.equals("")) {
-                comments = "N/A";
-            }
-
             callableStatement.setObject(1, region);
             callableStatement.setObject(2, org);
             callableStatement.setObject(3, signum);
@@ -2355,6 +2359,37 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                                                     @Override
                                                     public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                                                         if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit VSS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("PSS")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                PSS_Time_Report time_r = new PSS_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit PSS",
                                                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                                                             time_r.dispose();
 
@@ -2532,12 +2567,12 @@ public final class COP_Time_Report extends javax.swing.JFrame {
     private void jBAddTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTableActionPerformed
         // Add button, info to jTable 
         // Validate data type in date, time, requestor and requests textfields
-        Pattern ptime = Pattern.compile("^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$");
+        Pattern ptime = Pattern.compile("\\d{0,2}(\\.\\d{1,2})?");
         String stime = jTextFieldTime.getText();
         Matcher mtime = ptime.matcher(stime);
         boolean btime = mtime.find();
         // Requests format
-        Pattern preq = Pattern.compile("[1-9]+");
+        Pattern preq = Pattern.compile("^[1-9][0-9]*$");
         String sreq = jTextFieldRequests.getText();
         Matcher mreq = preq.matcher(sreq);
         boolean breq = mreq.find();
@@ -2586,23 +2621,25 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             jTextFieldRequests.setText("");
             error = true;
         }
-        if (stime.equals("") || !btime) {
+        if (!btime) {
             JOptionPane.showMessageDialog(this, "Logged Time must be a number! \nEx: 2 or 8.25");
             jTextFieldTime.setText("");
             error = true;
+        }
+        if (!brequestor) {
+            if (!sreqtr.equals("N/A")) {
+                JOptionPane.showMessageDialog(this, "Requestor must be a a name or N/A!");
+                jTextFieldRequestor.setText("");
+                error = true;
+            }
         }
         if (jcbTech.isVisible() && jcbTech.getSelectedItem().toString().equals("Select a technology...")) {
             JOptionPane.showMessageDialog(this, "Choose a technology!");
             error = true;
         }
-        if (!brequestor && !sreqtr.equals("")) {
-            JOptionPane.showMessageDialog(this, "Requestor must be a a name!");
-            jTextFieldRequestor.setText("");
-            error = true;
-        }
         if (validate_date < thresh1 || validate_date > thresh2) {
-            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
-
+            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2 + "\nplease contact your Line Manager.");
+            error = true;
         }
         if (!error) {
             // Get combo boxes values
@@ -2640,9 +2677,6 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             String act = (String) jTextFieldActivity.getText();
             String comments = (String) jTextFieldComments.getText();
 
-            if (requestor.isEmpty() || requestor.equals("")) {
-                requestor = "N/A";
-            }
             // if bulk or single
             if (jRBulk.isSelected()) {
                 int req = 0;
@@ -2658,7 +2692,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                 requests = String.valueOf(req);
                 time = new BigDecimal(jTextFieldTime.getText());
                 // Round to 2 decimals
-                time = time.divide(entries_bd, 2, RoundingMode.CEILING);
+                time = time.divide(entries_bd, 2, RoundingMode.FLOOR);
             }
             String time_added = String.valueOf(time);
 
@@ -2944,7 +2978,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             }
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
-            int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "CSV created", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "CSV created", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 Desktop.getDesktop().open(new File(path));
             } else {
@@ -3002,7 +3036,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
-        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss"};
+        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss"};
         for (int i = 0; i < strs.length; i++) {
             tables.add(strs[i]); // Check for every table
         }
@@ -3267,6 +3301,8 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                         sql = "update_metrics_cop";
                     } else if (team.equals("VSS")) {
                         sql = "update_metrics_vss";
+                    } else if (team.equals("PSS")) {
+                        sql = "metrics_pss";
                     }
 
                     if (id_ch > 0) {
@@ -3377,6 +3413,8 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                                 sql = "metrics_cop";
                             } else if (team.equals("VSS")) {
                                 sql = "metrics_vss";
+                            } else if (team.equals("PSS")) {
+                                sql = "metrics_pss";
                             }
 
                             try {
@@ -3874,7 +3912,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             }
             writer.write(sb.toString());
             System.out.println("Metrics file saved successfully");
-            int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "File created", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "File created", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 Desktop.getDesktop().open(new File(path));
             } else {
@@ -4078,52 +4116,56 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             correct_flow = false;
         }
         // Validate num of requests field
-        Pattern preq = Pattern.compile("[^0-9]");
+        Pattern preq = Pattern.compile("^[1-9][0-9]*$");
         String sreq = jTextFieldNumReqMarketBulk.getText();
         Matcher mreq = preq.matcher(sreq);
         boolean breq = mreq.find();
 
-        if (jTextFieldNumReqMarketBulk.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Number of requests cannot be empty!");
-            correct_flow = false;
-        } else if (breq) {
+        if (!breq) {
             JOptionPane.showMessageDialog(this, "Number of requests must be a number!");
             jTextFieldNumReqMarketBulk.setText("");
             correct_flow = false;
         }
         // Validate logged time
-        Pattern ptime = Pattern.compile("[^0-9.0-9]");
+        Pattern ptime = Pattern.compile("\\d{0,2}(\\.\\d{1,2})?");
         String stime = jTextFieldTime_MarketBulk.getText();
         Matcher mtime = ptime.matcher(stime);
         boolean btime = mtime.find();
-        if (stime.equals("") || btime) {
+        if (!btime) {
             JOptionPane.showMessageDialog(this, "Logged Time must be a number! \nEx: 2 or 8.25");
             jTextFieldTime_MarketBulk.setText("");
             correct_flow = false;
-        } else if (Double.parseDouble(stime) > 24) {
+        } else if (Double.parseDouble(stime) > 24.00) {
             JOptionPane.showMessageDialog(this, "Logged Time cannot be higher than 24");
             jTextFieldTime_MarketBulk.setText("");
             correct_flow = false;
         }
         // Validate requestor
-        Pattern preqtr = Pattern.compile("[^A-Za-z ]");
+        Pattern preqtr = Pattern.compile("^[a-zA-Z ]+$");          // Regular name
         String sreqtr = jTextFieldRequestor_MarketBulk.getText();
         Matcher mreqtr = preqtr.matcher(sreqtr);
         boolean breqtr = mreqtr.find();
-        if (breqtr) {
-            JOptionPane.showMessageDialog(this, "Requestor must be a a name!");
-            jTextFieldRequestor_MarketBulk.setText("");
-            correct_flow = false;
+        if (!breqtr) {
+            if (!sreqtr.equals("N/A")) {
+                JOptionPane.showMessageDialog(this, "Requestor must be a a name or N/A!");
+                jTextFieldRequestor_MarketBulk.setText("");
+                correct_flow = false;
+            }
         }
         // Validate date
         int validate_date = Integer.parseInt(jTextFieldWeek_MarketBulk.getText());
-        int thresh1 = current_week - 3;
+        int thresh1 = current_week - 2;
         int thresh2 = current_week + 2;
         if (validate_date < thresh1 || validate_date > thresh2) {
-            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2);
+            JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2 + "\nplease contact your Line Manager.");
             correct_flow = false;
         }
         // //
+        // Validate comment
+        if (jTextFieldComments_MarketBulk.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add a comment!");
+            correct_flow = false;
+        }
 
         // Fill rows
         String cu = (String) jcbCU.getSelectedItem();
@@ -4146,9 +4188,6 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         String requests = (String) jTextFieldNumReqMarketBulk.getText();
         String comments = (String) jTextFieldComments_MarketBulk.getText();
 
-        if (requestor.isEmpty() || requestor.equals("")) {
-            requestor = "N/A";
-        }
         // Count rows to divide time
         int total_rows = 0;
         for (int z = 2; z < networks_info.size(); z += 8) {
@@ -4163,7 +4202,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         // Divide time by the number of entries
         BigDecimal entries_bd = new BigDecimal(total_rows);
         // Round to 2 decimals
-        time = time.divide(entries_bd, 2, RoundingMode.CEILING);
+        time = time.divide(entries_bd, 2, RoundingMode.FLOOR);
         String time_added = String.valueOf(time);
         // Insert into table
         if (correct_flow == true) {
@@ -4322,7 +4361,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                     }
                     writer.write(sb.toString());
                     System.out.println("File writed successfully");
-                    int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "History file created", JOptionPane.YES_NO_OPTION);
+                    int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "History file created", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) {
                         Desktop.getDesktop().open(new File(path));
                     } else {
@@ -4757,7 +4796,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                 }
                 writer.write(sb.toString());
                 System.out.println("File writed successfully");
-                int reply = JOptionPane.showConfirmDialog(null, "Do you want to see it?", "ESS template created", JOptionPane.YES_NO_OPTION);
+                int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "ESS template created", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     Desktop.getDesktop().open(new File(path));
                 } else {
