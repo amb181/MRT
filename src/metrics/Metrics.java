@@ -143,7 +143,7 @@ public class Metrics {
             preparedStatement = connection.prepareStatement(sql_user_team);
             resultset = preparedStatement.executeQuery();
             String last_name = null, name = null, cu = null, team = null, org = null, lm = null, access = null,
-                    job_stage = null, act_type = null, work_center = null, supp_team = null, supp_cu = null;
+                    job_stage = null, act_type = null, cats_number = null, supp_team = null, supp_cu = null;
             while (resultset.next()) {
                 last_name = resultset.getString("Last_Name");
                 name = resultset.getString("Name");
@@ -156,7 +156,7 @@ public class Metrics {
                 supp_cu = resultset.getString("Supporting_CU");
                 job_stage = resultset.getString("Job_Stage");
                 act_type = resultset.getString("Act_Type");
-                work_center = resultset.getString("Work_center");
+                cats_number = resultset.getString("CATS_Number");
                 String full_name = last_name + " " + name;
 
                 usersinfo.add(user);        // 0
@@ -170,7 +170,7 @@ public class Metrics {
                 usersinfo.add(supp_cu);     // 8
                 usersinfo.add(job_stage);   // 9
                 usersinfo.add(act_type);    // 10
-                usersinfo.add(work_center); // 11
+                usersinfo.add(cats_number); // 11
             }
         } catch (SQLException e) {
             System.out.println(e);
