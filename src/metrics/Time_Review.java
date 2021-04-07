@@ -1781,6 +1781,11 @@ public class Time_Review extends javax.swing.JFrame {
 
         jCBNetTech.setEditable(true);
         jCBNetTech.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBNetTech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBNetTechActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPNetEditLayout = new javax.swing.GroupLayout(jPNetEdit);
         jPNetEdit.setLayout(jPNetEditLayout);
@@ -2717,6 +2722,9 @@ public class Time_Review extends javax.swing.JFrame {
                                 if (team1.equals("VSS")) {
                                     customerunit1 = customerunit1.replace("V_", "");
                                 }
+                                if (team1.equals("PSS")) {
+                                    customerunit1 = customerunit1.replace("P_", "");
+                                }
 
                                 jTFSignum.setText(signum1);
                                 jTFName.setText(name1);
@@ -2736,7 +2744,8 @@ public class Time_Review extends javax.swing.JFrame {
                                     jCBJobStage.setSelectedIndex(3);
                                 else{
                                     jobStage1 = jobStage1.substring(jobStage1.length() - 1);
-                                    jCBJobStage.setSelectedIndex(Integer.parseInt(jobStage1) - 1);
+                                    System.out.println("Job Stage: " + jobStage1);
+                                    jCBJobStage.setSelectedItem(jobStage1);
                                 }
                                 jTFCATNum.setText(workCenter1);
                             }
@@ -3028,12 +3037,16 @@ public class Time_Review extends javax.swing.JFrame {
         jCBCustomerUnit.removeAllItems();
 
         String team1 = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
-        for (int i = 0; i < teamsAndCUs.size(); i++) {
-            if (i % 2 == 0) {
-                if (team1.equals(teamsAndCUs.get(i))) {
-                    jCBCustomerUnit.addItem(teamsAndCUs.get(i + 1));
+        try {
+            for (int i = 0; i < teamsAndCUs.size(); i++) {
+                if (i % 2 == 0) {
+                    if (team1.equals(teamsAndCUs.get(i))) {
+                        jCBCustomerUnit.addItem(teamsAndCUs.get(i + 1));
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
         }
     }//GEN-LAST:event_jCBTeamActionPerformed
 
@@ -3078,12 +3091,16 @@ public class Time_Review extends javax.swing.JFrame {
         jCBNetCustomer.removeAllItems();
         List<String> cus1 = new ArrayList<String>();
         String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
-        for (int i = 0; i < netTeamsAndCUs.size(); i++) {
-            if (i % 2 == 0) {
-                if (team1.equals(netTeamsAndCUs.get(i))) {
-                    cus1.add(netTeamsAndCUs.get(i + 1));
+        try {
+            for (int i = 0; i < netTeamsAndCUs.size(); i++) {
+                if (i % 2 == 0) {
+                    if (team1.equals(netTeamsAndCUs.get(i))) {
+                        cus1.add(netTeamsAndCUs.get(i + 1));
+                    }
                 }
             }
+        } catch (Exception e){
+            System.out.println("Error: " + e);
         }
         Collections.sort(cus1);
         for (int i = 0; i < cus1.size(); i++)
@@ -3095,7 +3112,9 @@ public class Time_Review extends javax.swing.JFrame {
         List<String> regions1 = new ArrayList<String>();
         String reg1 = "";
         jCBNetRegion.removeAllItems();
+        
         if (jCBNetCustomer.getItemCount() != 0) {
+            try {
             String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
             String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
             for (int i = 0; i < netTeamCURegMark.size(); i++) {// Team, CU, Region, Market, Technology
@@ -3110,6 +3129,9 @@ public class Time_Review extends javax.swing.JFrame {
                     }
                 }
             }
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
             Collections.sort(regions1);
             for (int i = 0; i < regions1.size(); i++)
                 jCBNetRegion.addItem(regions1.get(i));
@@ -3122,20 +3144,24 @@ public class Time_Review extends javax.swing.JFrame {
         String mar1 = "";
         jCBNetMarket.removeAllItems();
         if (jCBNetRegion.getItemCount() != 0) {
-            String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
-            String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
-            String reg1 = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
-            for (int i = 0; i < netTeamCURegMark.size(); i++) {
-                if (i % 4 == 0) {
-                    mar1 = netTeamCURegMark.get(i + 3);
-                    if (team1.equals(netTeamCURegMark.get(i)) && cu1.equals(netTeamCURegMark.get(i + 1)) && reg1.equals(netTeamCURegMark.get(i + 2))) {// Team, CU, Region, Market, Technology
-                        if (markets1.isEmpty()) 
-                            markets1.add(mar1);
-                        else 
-                            if (!markets1.contains(mar1)) 
+            try {
+                String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
+                String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
+                String reg1 = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
+                for (int i = 0; i < netTeamCURegMark.size(); i++) {
+                    if (i % 4 == 0) {
+                        mar1 = netTeamCURegMark.get(i + 3);
+                        if (team1.equals(netTeamCURegMark.get(i)) && cu1.equals(netTeamCURegMark.get(i + 1)) && reg1.equals(netTeamCURegMark.get(i + 2))) {// Team, CU, Region, Market, Technology
+                            if (markets1.isEmpty()) 
                                 markets1.add(mar1);
+                            else 
+                                if (!markets1.contains(mar1)) 
+                                    markets1.add(mar1);
+                        }
                     }
-                }
+                } 
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
             }
             Collections.sort(markets1);
             for (int i = 0; i < markets1.size(); i++)
@@ -3149,27 +3175,31 @@ public class Time_Review extends javax.swing.JFrame {
         String tech1 = "";
         jCBNetTech.removeAllItems();
         if (jCBNetMarket.getItemCount() != 0) {
-            String mar1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
-            for (int i = 0; i < netMrktTech.size(); i++) {
-                if (i % 2 == 0) {
-                    tech1 = netMrktTech.get(i + 1);
-                    if (mar1.equals(netMrktTech.get(i))) {
-                        if (techs1.isEmpty())
-                            techs1.add(tech1);
-                        else 
-                            if (!techs1.contains(tech1))
+            try {
+                String mar1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
+                for (int i = 0; i < netMrktTech.size(); i++) {
+                    if (i % 2 == 0) {
+                        tech1 = netMrktTech.get(i + 1);
+                        if (mar1.equals(netMrktTech.get(i))) {
+                            if (techs1.isEmpty())
                                 techs1.add(tech1);
+                            else 
+                                if (!techs1.contains(tech1))
+                                    techs1.add(tech1);
+                        }
                     }
                 }
-            }
-            if (techs1.isEmpty()){
-                jCBNetTech.addItem("N/A");
-                techs1.add("N/A");
-            }
-            else{
-                Collections.sort(techs1);
-                for (int i = 0; i < techs1.size(); i++)
-                    jCBNetTech.addItem(techs1.get(i));
+                if (techs1.isEmpty()){
+                    jCBNetTech.addItem("N/A");
+                    techs1.add("N/A");
+                }
+                else{
+                    Collections.sort(techs1);
+                    for (int i = 0; i < techs1.size(); i++)
+                        jCBNetTech.addItem(techs1.get(i));
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
             }
         }
     }//GEN-LAST:event_jCBNetMarketActionPerformed
@@ -3391,14 +3421,16 @@ public class Time_Review extends javax.swing.JFrame {
         String regionName = jCBRegionMrkt.getItemAt(jCBRegionMrkt.getSelectedIndex());
         String mrktName = jCBMarketList.getItemAt(jCBMarketList.getSelectedIndex());
         
-        if (mrktName.equals(""))
+        System.out.println("Market: " + mrktName);
+        if (mrktName != null)
             flagNetwork = false;
-        else
+        else {
+            String mrktNameText = String.valueOf(jCBMarketList.getEditor().getItem());
             for (int i = 0; i < marketTeamCU.size(); i++)
                 if (i % 5 == 0)
-                    if (mrktName.equals(marketTeamCU.get(i + 1)) && regionName.equals(marketTeamCU.get(i + 2)) && teamName.equals(marketTeamCU.get(i + 3)) && cuName.equals(marketTeamCU.get(i + 4)))
+                    if (mrktNameText.equals(marketTeamCU.get(i + 1)) && regionName.equals(marketTeamCU.get(i + 2)) && teamName.equals(marketTeamCU.get(i + 3)) && cuName.equals(marketTeamCU.get(i + 4)))
                         flagNetwork = false;
-        
+        }
         if (flagNetwork) {
             jLLoading.setText("Saving market into database...");
             new Thread(new Runnable() {
@@ -3691,6 +3723,10 @@ public class Time_Review extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jCBRegionMrktActionPerformed
+
+    private void jCBNetTechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetTechActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBNetTechActionPerformed
 
     private void GetTasks() {
         Connection connection;
@@ -3987,6 +4023,7 @@ public class Time_Review extends javax.swing.JFrame {
             //jTUsersList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             connection.close();
         } catch (SQLException e) {
+            System.out.println("Error in GetAllUsers");
             System.out.println(e);
         }
     }
@@ -4210,10 +4247,11 @@ public class Time_Review extends javax.swing.JFrame {
         //ResultSet resultset;
         try {
             String region = jCBRegionMrkt.getItemAt(jCBRegionMrkt.getSelectedIndex());
-            String marketName = jCBMarketList.getItemAt(jCBMarketList.getSelectedIndex());
+            String marketName = String.valueOf(jCBMarketList.getEditor().getItem());
             String teamMarket = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
             String cuMarket = jCBCUMrkt.getItemAt(jCBCUMrkt.getSelectedIndex());
             String id = "";
+            
             String cu1 = cuMarket.replace("&", "").replace("-","");
             id = region.substring(0,3).toUpperCase() + "-" + teamMarket.substring(0,3).toUpperCase() + "-" + cu1.substring(0, 3).toUpperCase() + "-" + marketName.substring(0, 3).toUpperCase();
             int contador = 1;
