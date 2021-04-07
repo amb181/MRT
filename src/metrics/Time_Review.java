@@ -439,6 +439,7 @@ public class Time_Review extends javax.swing.JFrame {
         jMISourcing = new javax.swing.JMenuItem();
         jMICOP = new javax.swing.JMenuItem();
         jMIVSS = new javax.swing.JMenuItem();
+        jMIPSS = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
         jMEditUsers = new javax.swing.JMenuItem();
         jMEditTask = new javax.swing.JMenuItem();
@@ -1034,7 +1035,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTFSupTeam)
                             .addComponent(jTFSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3485, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBSaveNewUser)
                 .addContainerGap())
         );
@@ -2252,6 +2253,14 @@ public class Time_Review extends javax.swing.JFrame {
         });
         jMenuTeams.add(jMIVSS);
 
+        jMIPSS.setText("PSS");
+        jMIPSS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIPSSActionPerformed(evt);
+            }
+        });
+        jMenuTeams.add(jMIPSS);
+
         jMenuView.add(jMenuTeams);
 
         jMenuBar1.add(jMenuView);
@@ -2313,7 +2322,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1892, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1892, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -3728,6 +3737,44 @@ public class Time_Review extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBNetTechActionPerformed
 
+    private void jMIPSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPSSActionPerformed
+        // TODO add your handling code here:
+        StartDialog starting = new StartDialog();
+        JDialog loading = starting.GetLoadingDialog();
+        loading.setModal(true);
+        loading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        loading.toFront();
+        loading.requestFocus();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    PSS_Time_Report time_r = new PSS_Time_Report();
+                    time_r.show();
+                    time_r.setLocationRelativeTo(null);
+                    loading.dispose();
+                    // Confirm exit window
+                    time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                    time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                            if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit VSS",
+                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                time_r.dispose();
+
+                            }
+                        }
+                    });
+                } catch (ParseException | IOException ex) {
+                    Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
+        loading.toFront();
+        loading.requestFocus();
+        loading.setVisible(true);
+    }//GEN-LAST:event_jMIPSSActionPerformed
+
     private void GetTasks() {
         Connection connection;
         PreparedStatement preparedStatement;
@@ -5060,7 +5107,9 @@ public class Time_Review extends javax.swing.JFrame {
                         + "SELECT Signum, Organization, Name, Task_ID, Task, Network, Subnetwork, SAP_Billing, Work_date, Logged_Time, Week "
                         + "FROM metrics_cop UNION ALL "
                         + "SELECT Signum, Organization, Name, Task_ID, Task, Network, Subnetwork, SAP_Billing, Work_date, Logged_Time, Week "
-                        + "FROM metrics_vss) LOGGEDTIME "
+                        + "FROM metrics_vss UNION ALL "
+                        + "SELECT Signum, Organization, Name, Task_ID, Task, Network, Subnetwork, SAP_Billing, Work_date, Logged_Time, Week "
+                        + "FROM metrics_pss) LOGGEDTIME "
                         + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " LIMIT 18446744073709551615;";
             } else {
                 query = "SELECT " + parametros + "SUM(Logged_Time) FROM metrics_" + team1 + " " + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " LIMIT 18446744073709551615;";
@@ -5225,7 +5274,12 @@ public class Time_Review extends javax.swing.JFrame {
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_vss) METRICAS " + week + organization + name1 + " LIMIT 18446744073709551615;";
+                        + "FROM metrics_vss UNION ALL "
+                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
+                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
+                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
+                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
+                        + "FROM metrics_pss) METRICAS " + week + organization + name1 + " LIMIT 18446744073709551615;";
             } else {
                 query = "SELECT Region, Organization, Signum, Name, Customer_Unit, "
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
@@ -5487,6 +5541,7 @@ public class Time_Review extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMEditTask;
     private javax.swing.JMenuItem jMEditUsers;
     private javax.swing.JMenuItem jMICOP;
+    private javax.swing.JMenuItem jMIPSS;
     private javax.swing.JMenuItem jMISourcing;
     private javax.swing.JMenuItem jMIVSS;
     private javax.swing.JMenuItem jMReview;
