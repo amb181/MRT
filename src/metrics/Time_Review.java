@@ -2308,7 +2308,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1892, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1892, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -2689,7 +2689,7 @@ public class Time_Review extends javax.swing.JFrame {
                         ResultSet resultset;
                         try {
                             String sql = "";
-                            sql = "SELECT Signum, Name, Last_Name, Organization, Team, Customer_Unit, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Work_center FROM users WHERE Last_Name = '" + lastName1 + "';";
+                            sql = "SELECT Signum, Name, Last_Name, Organization, Team, Customer_Unit, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, CATS_Number FROM users WHERE Last_Name = '" + lastName1 + "';";
                             System.out.println(sql);
                             connection = SQL_connection.getConnection();
                             preparedStatement = connection.prepareStatement(sql);
@@ -2708,7 +2708,7 @@ public class Time_Review extends javax.swing.JFrame {
                                 String access1 = resultset.getString("Access");
                                 String supportingTeam1 = resultset.getString("Supporting_Team");
                                 String supportingCU1 = resultset.getString("Supporting_CU");
-                                String workCenter1 = resultset.getString("Work_center");
+                                String workCenter1 = resultset.getString("CATS_Number");
                                 String jobStage1 = resultset.getString("Job_Stage");
 
                                 if (team1.equals("COP")) {
@@ -3386,13 +3386,17 @@ public class Time_Review extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean flagNetwork = true;
         // Validar por equipo y cu que no se repita en esa Team - CU
+        String teamName = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
+        String cuName = jCBCUMrkt.getItemAt(jCBCUMrkt.getSelectedIndex());
+        String regionName = jCBRegionMrkt.getItemAt(jCBRegionMrkt.getSelectedIndex());
         String mrktName = jCBMarketList.getItemAt(jCBMarketList.getSelectedIndex());
+        
         if (mrktName.equals(""))
             flagNetwork = false;
         else
             for (int i = 0; i < marketTeamCU.size(); i++)
                 if (i % 5 == 0)
-                    if (mrktName.equals(marketTeamCU.get(i + 1)))
+                    if (mrktName.equals(marketTeamCU.get(i + 1)) && regionName.equals(marketTeamCU.get(i + 2)) && teamName.equals(marketTeamCU.get(i + 3)) && cuName.equals(marketTeamCU.get(i + 4)))
                         flagNetwork = false;
         
         if (flagNetwork) {
@@ -3919,7 +3923,7 @@ public class Time_Review extends javax.swing.JFrame {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        String[] column = {"Signum", "Last_Name", "Name", "Customer_Unit", "Team", "Organization", "Line_Manager", "Access", "Supporting_Team", "Supporting_CU", "Job_Stage", "Act_Type", "Work_center"};
+        String[] column = {"Signum", "Last_Name", "Name", "Customer_Unit", "Team", "Organization", "Line_Manager", "Access", "Supporting_Team", "Supporting_CU", "Job_Stage", "Act_Type", "CATS_Number"};
         String[] row = new String[13];
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(column);
@@ -3928,7 +3932,7 @@ public class Time_Review extends javax.swing.JFrame {
             String sql, org1, cu1, team1, name1, name2;
             String[] organi;
             List<String> orgs = new ArrayList<String>();
-            sql = "SELECT Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, Work_center"
+            sql = "SELECT Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number"
                     + " FROM users ORDER BY Last_Name asc;";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -4345,7 +4349,7 @@ public class Time_Review extends javax.swing.JFrame {
                 js1 = "Job Stage " + js1;
             
             connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO users (Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, Work_center) "
+            preparedStatement = connection.prepareStatement("INSERT INTO users (Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             preparedStatement.setObject(1, jTFSignum.getText());
@@ -4401,7 +4405,7 @@ public class Time_Review extends javax.swing.JFrame {
                 js1 = "Job Stage " + js1;
 
             connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement("UPDATE users SET Customer_Unit = ?, Team = ?, Organization = ?, Line_Manager = ?, Access = ?, Supporting_Team = ?, Supporting_CU = ?, Job_Stage = ?, Act_type = ?, Work_center = ? "
+            preparedStatement = connection.prepareStatement("UPDATE users SET Customer_Unit = ?, Team = ?, Organization = ?, Line_Manager = ?, Access = ?, Supporting_Team = ?, Supporting_CU = ?, Job_Stage = ?, Act_type = ?, CATS_Number = ? "
                     + "WHERE Last_Name = ?");
             preparedStatement.setObject(1, cu1);
             preparedStatement.setObject(2, team1);
