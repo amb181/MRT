@@ -43,6 +43,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import static metrics.Metrics.usersinfo;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.awt.Desktop;
 
 /**
  *
@@ -240,6 +241,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLMetricTeams = new javax.swing.JLabel();
         jLMetricOrg = new javax.swing.JLabel();
         jCBOrgMetrics = new javax.swing.JComboBox<>();
+        jLabel39 = new javax.swing.JLabel();
         jPEdit = new javax.swing.JPanel();
         jPUser = new javax.swing.JPanel();
         jLSignum = new javax.swing.JLabel();
@@ -743,6 +745,8 @@ public class Time_Review extends javax.swing.JFrame {
 
         jCBOrgMetrics.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
+        jLabel39.setText("Filters");
+
         javax.swing.GroupLayout jPViewLayout = new javax.swing.GroupLayout(jPView);
         jPView.setLayout(jPViewLayout);
         jPViewLayout.setHorizontalGroup(
@@ -759,37 +763,41 @@ public class Time_Review extends javax.swing.JFrame {
                                     .addComponent(jRBName)
                                     .addComponent(jLMetricTeams))
                                 .addGap(55, 55, 55)
-                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCBOrgMetrics, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCBMetricTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jCBUser, 0, 180, Short.MAX_VALUE)
+                                    .addComponent(jCBMetricTeam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCBOrgMetrics, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
                         .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPViewLayout.createSequentialGroup()
-                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRBNetwork)
-                                    .addComponent(jRBSignum))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jRBNetwork)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRBSubnetwork)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRBSAPBilling)
+                                .addGap(26, 26, 26))
+                            .addGroup(jPViewLayout.createSequentialGroup()
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRBSubnetwork)
                                     .addGroup(jPViewLayout.createSequentialGroup()
+                                        .addComponent(jRBSignum)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jRBTask)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jRBTaskID))))
-                            .addComponent(jRBSAPBilling))
-                        .addGap(37, 37, 37)
+                                        .addComponent(jRBTaskID))
+                                    .addComponent(jLabel39))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jBShowMetrics)
-                            .addComponent(jBShowPreview))
+                        .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jBShowMetrics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBShowPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLFileName)
                         .addGap(18, 18, 18)
                         .addComponent(jTFFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBGenerateCSV)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jBGenerateCSV)))
                 .addContainerGap())
         );
         jPViewLayout.setVerticalGroup(
@@ -805,21 +813,19 @@ public class Time_Review extends javax.swing.JFrame {
                             .addGroup(jPViewLayout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRBSignum)
                                     .addComponent(jRBName)
                                     .addComponent(jCBUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jRBTask)
-                                    .addComponent(jRBTaskID))
+                                    .addComponent(jLabel39))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jCBMetricTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLMetricTeams))
+                                        .addComponent(jRBSignum)
+                                        .addComponent(jRBTask)
+                                        .addComponent(jRBTaskID))
                                     .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jRBSubnetwork)
-                                        .addComponent(jRBNetwork)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRBSAPBilling))
+                                        .addComponent(jCBMetricTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLMetricTeams)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPViewLayout.createSequentialGroup()
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jBShowPreview)
@@ -828,12 +834,17 @@ public class Time_Review extends javax.swing.JFrame {
                                     .addComponent(jLFileName))
                                 .addGap(18, 18, 18)
                                 .addComponent(jBShowMetrics)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLMetricOrg)
-                                    .addComponent(jCBOrgMetrics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jRBSubnetwork)
+                                        .addComponent(jRBNetwork))
+                                    .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLMetricOrg)
+                                        .addComponent(jCBOrgMetrics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jRBSAPBilling)))))
                         .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1312,28 +1323,26 @@ public class Time_Review extends javax.swing.JFrame {
             .addGroup(jPSearchTaskLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPSearchTaskLayout.createSequentialGroup()
-                        .addComponent(jLTaskSearch)
+                    .addGroup(jPSearchTaskLayout.createSequentialGroup()
+                        .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLTaskSearch1)
+                            .addComponent(jLTaskSearch))
                         .addGap(18, 18, 18)
-                        .addComponent(jCBTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPSearchTaskLayout.createSequentialGroup()
+                                .addComponent(jCBTeamTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel38)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBCUTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCBTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPSearchTaskLayout.createSequentialGroup()
                         .addComponent(jBSearchTask)
                         .addGap(18, 18, 18)
                         .addComponent(jBClearTask)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(jBDeleteTask))
-                    .addGroup(jPSearchTaskLayout.createSequentialGroup()
-                        .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPSearchTaskLayout.createSequentialGroup()
-                                .addComponent(jLTaskSearch1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBTeamTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPSearchTaskLayout.createSequentialGroup()
-                                .addComponent(jLabel38)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBCUTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jBDeleteTask)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPSearchTaskLayout.setVerticalGroup(
             jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1341,19 +1350,19 @@ public class Time_Review extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLTaskSearch1)
-                    .addComponent(jCBTeamTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCBTeamTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel38)
                     .addComponent(jCBCUTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLTaskSearch)
+                    .addComponent(jCBTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPSearchTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBDeleteTask)
                     .addComponent(jBClearTask)
-                    .addComponent(jLTaskSearch)
-                    .addComponent(jBSearchTask)
-                    .addComponent(jCBTaskSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jBSearchTask))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPTasks.setBackground(new java.awt.Color(255, 255, 255));
@@ -1397,6 +1406,11 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel21.setText("CU:");
 
         jCBTaskCU.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBTaskCU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTaskCUActionPerformed(evt);
+            }
+        });
 
         jLTask1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask1.setText("Deliverable:");
@@ -1421,7 +1435,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBSaveTask))
                     .addGroup(jPTasksLayout.createSequentialGroup()
-                        .addGroup(jPTasksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPTasksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPTasksLayout.createSequentialGroup()
                                 .addComponent(jLTaskType)
                                 .addGap(18, 18, 18)
@@ -1439,21 +1453,17 @@ public class Time_Review extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCBTaskCU, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPTasksLayout.createSequentialGroup()
-                                .addComponent(jLTask1)
+                                .addGroup(jPTasksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLTask2)
+                                    .addComponent(jLTask1)
+                                    .addComponent(jLTask3)
+                                    .addComponent(jLTask4))
                                 .addGap(18, 18, 18)
-                                .addComponent(jCBDeliverable, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPTasksLayout.createSequentialGroup()
-                                .addComponent(jLTask2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBServicePN, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPTasksLayout.createSequentialGroup()
-                                .addComponent(jLTask3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBProjectSuppDom, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPTasksLayout.createSequentialGroup()
-                                .addComponent(jLTask4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTFLOE, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPTasksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jCBServicePN, 0, 353, Short.MAX_VALUE)
+                                    .addComponent(jCBDeliverable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCBProjectSuppDom, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTFLOE))))
                         .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1541,7 +1551,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1234, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1559,7 +1569,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 290, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2322,7 +2332,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1892, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1892, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -2529,11 +2539,15 @@ public class Time_Review extends javax.swing.JFrame {
             jPSearchTask.setVisible(false);
             jCBTaskType.setEnabled(true);
             jTFTaskName.setEditable(true);
+            jCBTaskTeam.setEnabled(true);
+            jCBTaskCU.setEnabled(true);
             ResetTaskFields();
         } else {
             jPSearchTask.setVisible(true);
             jCBTaskType.setEnabled(false);
             jTFTaskName.setEditable(false);
+            jCBTaskTeam.setEnabled(false);
+            jCBTaskCU.setEnabled(false);
             ResetTaskFields();
         }
     }//GEN-LAST:event_jCBTaskEditActionPerformed
@@ -2591,7 +2605,11 @@ public class Time_Review extends javax.swing.JFrame {
         String fileName = jTFFileName.getText();
         TableModel model = jTableShowMetrics.getModel();
         if (!jTFFileName.getText().equals("")) {
-            SaveTableCSV(fileName, model);
+            try {
+                SaveTableCSV(fileName, model);
+            } catch (IOException ex) {
+                Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Please type a name for the CSV file.");
         }
@@ -2900,14 +2918,22 @@ public class Time_Review extends javax.swing.JFrame {
         // TODO add your handling code here:
         String fileName = "Metrics Users";
         TableModel model = jTUsersList.getModel();
-        SaveTableCSV(fileName, model);
+        try {
+            SaveTableCSV(fileName, model);
+        } catch (IOException ex) {
+            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBExportUserCSVActionPerformed
 
     private void jBExportTaskCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExportTaskCSVActionPerformed
         // TODO add your handling code here:
         String fileName = "Metrics Tasks";
         TableModel model = jTTasksList.getModel();
-        SaveTableCSV(fileName, model);
+        try {
+            SaveTableCSV(fileName, model);
+        } catch (IOException ex) {
+            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBExportTaskCSVActionPerformed
 
     private void jBNetDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNetDeleteActionPerformed
@@ -2967,9 +2993,9 @@ public class Time_Review extends javax.swing.JFrame {
             }
         }
         
-        if (team1.equals("SDU"))
+        if (team1.equals("SDU") && jCBTaskEdit.getSelectedIndex() == 0)
             jCBTaskType.setSelectedIndex(0);
-        else
+        else if (!team1.equals("SDU") && jCBTaskEdit.getSelectedIndex() == 0)
             jCBTaskType.setSelectedIndex(1);
     }//GEN-LAST:event_jCBTaskTeamActionPerformed
 
@@ -3466,7 +3492,11 @@ public class Time_Review extends javax.swing.JFrame {
         // TODO add your handling code here:
         String fileName = "Networks table";
         TableModel model = jTableNetworks.getModel();
-        SaveTableCSV(fileName, model);
+        try {
+            SaveTableCSV(fileName, model);
+        } catch (IOException ex) {
+            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBNetTableCSVActionPerformed
 
     private void jCBMarTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMarTeamActionPerformed
@@ -3661,18 +3691,21 @@ public class Time_Review extends javax.swing.JFrame {
 
     private void jCBCUTaskSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCUTaskSearchActionPerformed
         // TODO add your handling code here:
+        List<String> tasks1 = new ArrayList<String>();
         jCBTaskSearch.removeAllItems();
-        System.out.println("Array: " + teamsCUSTasks);
         String team1 = jCBTeamTaskSearch.getItemAt(jCBTeamTaskSearch.getSelectedIndex());
         String cu1 = jCBCUTaskSearch.getItemAt(jCBCUTaskSearch.getSelectedIndex());
         try {
                 for (int i = 0; i < teamsCUSTasks.size(); i++) {
                 if (i % 3 == 0) {
                     if (team1.equals(teamsCUSTasks.get(i)) && cu1.equals(teamsCUSTasks.get(i+1))) {
-                        jCBTaskSearch.addItem(teamsCUSTasks.get(i + 2));
+                        tasks1.add(teamsCUSTasks.get(i + 2));
                     }
                 }
             }
+            Collections.sort(tasks1);
+            for (int i = 0; i < tasks1.size(); i++)
+                jCBTaskSearch.addItem(tasks1.get(i));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -3774,6 +3807,10 @@ public class Time_Review extends javax.swing.JFrame {
         loading.requestFocus();
         loading.setVisible(true);
     }//GEN-LAST:event_jMIPSSActionPerformed
+
+    private void jCBTaskCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTaskCUActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTaskCUActionPerformed
 
     private void GetTasks() {
         Connection connection;
@@ -4435,7 +4472,7 @@ public class Time_Review extends javax.swing.JFrame {
             
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO users (Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             preparedStatement.setObject(1, jTFSignum.getText());
             preparedStatement.setObject(2, jTFLastName.getText());
@@ -4491,7 +4528,7 @@ public class Time_Review extends javax.swing.JFrame {
 
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE users SET Customer_Unit = ?, Team = ?, Organization = ?, Line_Manager = ?, Access = ?, Supporting_Team = ?, Supporting_CU = ?, Job_Stage = ?, Act_type = ?, CATS_Number = ? "
-                    + "WHERE Last_Name = ?");
+                    + "WHERE Signum = ?");
             preparedStatement.setObject(1, cu1);
             preparedStatement.setObject(2, team1);
             preparedStatement.setObject(3, jCBOrganization.getItemAt(jCBOrganization.getSelectedIndex()));
@@ -4499,10 +4536,10 @@ public class Time_Review extends javax.swing.JFrame {
             preparedStatement.setObject(5, access);
             preparedStatement.setObject(6, supportingTeam);
             preparedStatement.setObject(7, supportingCU);
-            preparedStatement.setObject(8, jTFSignum.getText());
-            preparedStatement.setObject(9, js1);
-            preparedStatement.setObject(10, acttype1);
-            preparedStatement.setObject(11, cat1);
+            preparedStatement.setObject(8, js1);
+            preparedStatement.setObject(9, acttype1);
+            preparedStatement.setObject(10, cat1);
+            preparedStatement.setObject(11, jTFSignum.getText());
             preparedStatement.executeUpdate();
             System.out.println("Query: " + preparedStatement);
             connection.close();
@@ -4666,7 +4703,7 @@ public class Time_Review extends javax.swing.JFrame {
                 psd = resultSet.getString("Project_Support_Domain");
                 loe = resultSet.getString("LoE");
 
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 21; i++) {
                     if (tid.startsWith(jCBTaskType.getItemAt(i))) {
                         jCBTaskType.setSelectedIndex(i);
                     }
@@ -4906,9 +4943,13 @@ public class Time_Review extends javax.swing.JFrame {
         jCBTaskType.setSelectedIndex(0);
         jTFTaskName.setText("");
         jCBTaskTeam.setSelectedIndex(0);
+        jCBServicePN.setSelectedIndex(0);
+        jCBDeliverable.setSelectedIndex(0);
+        jCBProjectSuppDom.setSelectedIndex(0);
+        jTFLOE.setText("");
     }
 
-    private void SaveTableCSV(String fileName, TableModel tableModel) {
+    private void SaveTableCSV(String fileName, TableModel tableModel) throws IOException {
         String user = System.getProperty("user.name");
         String path = "C:\\Users\\" + user + "\\Documents\\" + fileName + ".csv";
         try (PrintWriter writer = new PrintWriter(new File(path))) {
@@ -4933,7 +4974,13 @@ public class Time_Review extends javax.swing.JFrame {
             
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
-            JOptionPane.showMessageDialog(this, "CSV file was saved to " + path + " successfully.");
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "CSV created", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Desktop.getDesktop().open(new File(path));
+            } else {
+                JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
+            }
+            //JOptionPane.showMessageDialog(this, "CSV file was saved to " + path + " successfully.");
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -5530,6 +5577,7 @@ public class Time_Review extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

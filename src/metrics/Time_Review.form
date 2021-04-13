@@ -345,38 +345,43 @@
                                       <Component id="jLMetricTeams" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jCBOrgMetrics" min="-2" pref="177" max="-2" attributes="0"/>
-                                      <Component id="jCBMetricTeam" min="-2" pref="123" max="-2" attributes="0"/>
-                                      <Component id="jCBUser" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jCBUser" pref="180" max="32767" attributes="0"/>
+                                      <Component id="jCBMetricTeam" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jCBOrgMetrics" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jRBNetwork" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRBSignum" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="jRBNetwork" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jRBSubnetwork" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="jRBSAPBilling" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jRBSubnetwork" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jRBSignum" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jRBTask" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="jRBTaskID" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jRBSAPBilling" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jBShowMetrics" min="-2" max="-2" attributes="0"/>
-                              <Component id="jBShowPreview" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jBShowMetrics" max="32767" attributes="0"/>
+                              <Component id="jBShowPreview" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLFileName" min="-2" max="-2" attributes="0"/>
@@ -384,7 +389,6 @@
                           <Component id="jTFFileName" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jBGenerateCSV" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -396,7 +400,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
@@ -405,25 +409,23 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jRBSignum" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRBName" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jCBUser" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRBTask" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRBTaskID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel39" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="jRBSignum" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRBTask" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRBTaskID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jCBMetricTeam" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLMetricTeams" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                          <Component id="jRBSubnetwork" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jRBNetwork" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRBSAPBilling" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
@@ -434,17 +436,24 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jBShowMetrics" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLMetricOrg" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCBOrgMetrics" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="jRBSubnetwork" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRBNetwork" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLMetricOrg" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jCBOrgMetrics" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRBSAPBilling" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jScrollPane1" pref="740" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="736" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -1017,6 +1026,11 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel39">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Filters"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -1786,7 +1800,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jBExportTaskCSV" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane3" pref="1234" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="784" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -1808,7 +1822,7 @@
                           <Component id="jPSearchTask" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPTasks" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="290" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane3" pref="838" max="32767" attributes="0"/>
                   </Group>
@@ -1858,34 +1872,32 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLTaskSearch" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLTaskSearch1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLTaskSearch" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jCBTaskSearch" min="-2" pref="200" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jBSearchTask" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jBClearTask" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="72" max="32767" attributes="0"/>
-                              <Component id="jBDeleteTask" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jLTaskSearch1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jCBTeamTaskSearch" min="-2" pref="130" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jCBCUTaskSearch" min="-2" pref="180" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jCBTaskSearch" min="-2" pref="505" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jBSearchTask" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jBClearTask" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jBDeleteTask" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1896,21 +1908,21 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLTaskSearch1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jCBTeamTaskSearch" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jCBCUTaskSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLTaskSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCBTaskSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jBDeleteTask" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBClearTask" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLTaskSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBSearchTask" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCBTaskSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -2055,7 +2067,7 @@
                               <Component id="jBSaveTask" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLTaskType" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -2076,24 +2088,19 @@
                                       <Component id="jCBTaskCU" min="-2" pref="180" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLTask1" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLTask2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLTask1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLTask3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLTask4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jCBDeliverable" min="-2" pref="200" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLTask2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jCBServicePN" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLTask3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jCBProjectSuppDom" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLTask4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jTFLOE" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jCBServicePN" pref="353" max="32767" attributes="0"/>
+                                          <Component id="jCBDeliverable" max="32767" attributes="0"/>
+                                          <Component id="jCBProjectSuppDom" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jTFLOE" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
@@ -2264,6 +2271,9 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCBTaskCUActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
