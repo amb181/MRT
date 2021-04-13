@@ -71,7 +71,8 @@ public class Time_Review extends javax.swing.JFrame {
     List<String> netTeams = new ArrayList<String>();
     List<String> technologies = new ArrayList<String>();
     List<String> networks = new ArrayList<String>();
-    String[] LMSignums = {"QIVAALC", "TIMAFCC", "EMAUHER", "EOSCLUG", "EPANVIC", "EJOSEBL"};
+    String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EOSCLUG", "EPANVIC"};
+    String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 5", "BNEW SAN SAB SDU MX MANA", "BNEW SAN SAB SDU MX MANA Project Supp 1", "BNEW SAN SAB SDU MX MANA Project Supp 4", "BNEW SAN SAB SDU MX MANA Project Supp 2", "BNEW SAN SAB SDU MX MANA Project Supp 3"};
     String[] ActTypes = {"6000", "6001", "6002", "N/A"};
 
     ArrayList<String> teamsAndCUs = new ArrayList<>();
@@ -132,7 +133,7 @@ public class Time_Review extends javax.swing.JFrame {
         jTFSupCU.setEditable(false);
         jCBYearTo.setEnabled(false);
         AutoCompleteDecorator.decorate(jCBTaskSearch);
-        AutoCompleteDecorator.decorate(jCBOrganization);
+        AutoCompleteDecorator.decorate(jCBLineManager);
         AutoCompleteDecorator.decorate(jCBTeam);
         AutoCompleteDecorator.decorate(jCBCustomerUnit);
         AutoCompleteDecorator.decorate(jCBSupportedCU);
@@ -250,8 +251,6 @@ public class Time_Review extends javax.swing.JFrame {
         jTFName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTFLastName = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jCBOrganization = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jCBTeam = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
@@ -870,11 +869,6 @@ public class Time_Review extends javax.swing.JFrame {
 
         jTFLastName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLabel3.setText("Organization:");
-
-        jCBOrganization.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-
         jLabel4.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel4.setText("Team:");
 
@@ -974,7 +968,7 @@ public class Time_Review extends javax.swing.JFrame {
             }
         });
 
-        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Campos Aldo", "Hernandez Mauricio", "Lugo Oscar", "Pantoja Victor" }));
+        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Lugo Oscar", "Pantoja Victor" }));
 
         javax.swing.GroupLayout jPUserLayout = new javax.swing.GroupLayout(jPUser);
         jPUser.setLayout(jPUserLayout);
@@ -984,29 +978,26 @@ public class Time_Review extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPUserLayout.createSequentialGroup()
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLSignum)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPUserLayout.createSequentialGroup()
+                                .addComponent(jLSignum)
+                                .addGap(59, 59, 59)
                                 .addComponent(jTFSignum, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTFName, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jCBOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
+                            .addGroup(jPUserLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCBLineManager, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(56, 56, 56)
                         .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPUserLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTFLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCBLineManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel37)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTFCATNum, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1046,7 +1037,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTFSupTeam)
                             .addComponent(jTFSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3662, Short.MAX_VALUE)
                 .addComponent(jBSaveNewUser)
                 .addContainerGap())
         );
@@ -1061,21 +1052,20 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jTFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jTFLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
                     .addComponent(jBSaveNewUser)
                     .addComponent(jLabel37)
-                    .addComponent(jTFCATNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBLineManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFCATNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jCBOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jCBTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jCBCustomerUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel36)
-                    .addComponent(jCBJobStage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBJobStage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jCBLineManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLAccess)
@@ -1551,7 +1541,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1569,7 +1559,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 284, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2756,7 +2746,7 @@ public class Time_Review extends javax.swing.JFrame {
                                 jTFSignum.setText(signum1);
                                 jTFName.setText(name1);
                                 jTFLastName.setText(lastname1);
-                                jCBOrganization.setSelectedItem(organization1);
+                                //jCBOrganization.setSelectedItem(organization1);
                                 jCBTeam.setSelectedItem(team1);
                                 jCBTeamActionPerformed(null);
                                 jCBCustomerUnit.setSelectedItem(customerunit1);
@@ -2802,28 +2792,20 @@ public class Time_Review extends javax.swing.JFrame {
         Matcher matcherSignum = onewordPattern.matcher(signumEdit);
         boolean flagSignum = matcherSignum.find();
         int reply;
-        if (signumEdit.equals("")) {
-            JOptionPane.showMessageDialog(this, "The field is empty! Please type a signum to start editing.");
-        } else {
-            if (flagSignum) {
-                JOptionPane.showMessageDialog(this, "Signum must contain only letters!");
-            } else {
-                reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + signumEdit + "?", "Delete?", JOptionPane.YES_NO_OPTION);
-                if (reply == JOptionPane.YES_OPTION) {
-                    jLLoading.setText("Deleting user from database...");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            DeleteUserDB();
-                            ResetUserFields();
-                            jLLoading.setText("Updating user's local table...");
-                            GetAllUsers();
-                            jDLoading.dispose();
-                        }
-                    }).start();
-                    jDLoading.setVisible(true);
+        reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + signumEdit + "?", "Delete?", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            jLLoading.setText("Deleting user from database...");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DeleteUserDB();
+                    ResetUserFields();
+                    jLLoading.setText("Updating user's local table...");
+                    GetAllUsers();
+                    jDLoading.dispose();
                 }
-            }
+            }).start();
+            jDLoading.setVisible(true);
         }
     }//GEN-LAST:event_jBDeleteActionPerformed
 
@@ -3833,7 +3815,7 @@ public class Time_Review extends javax.swing.JFrame {
         }
     }
 
-    private void GetOrganization() {
+    /*private void GetOrganization() {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
@@ -3850,7 +3832,7 @@ public class Time_Review extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-    }
+    }*/
 
     private void GetTeam() {
         Connection connection;
@@ -4077,7 +4059,7 @@ public class Time_Review extends javax.swing.JFrame {
                     jCBUser.addItem(name1);
                     jCBSearchUser.addItem(name2);
                 }
-                if (!organizations.isEmpty()) {
+                /*if (!organizations.isEmpty()) {
                     if (!organizations.contains(org1)) {
                         organizations.add(org1);
                         jCBOrganization.addItem(org1);
@@ -4092,7 +4074,7 @@ public class Time_Review extends javax.swing.JFrame {
                     organi = org1.split("MX ");
                     System.out.println("Org: " + organi[1]);
                     orgs.add(organi[1]);
-                }
+                }*/
                 model.addRow(row);
             }
             Collections.sort(orgs);
@@ -4459,6 +4441,7 @@ public class Time_Review extends javax.swing.JFrame {
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
             String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
+            String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
             
             if (team1.equals("COP")) {
@@ -4479,7 +4462,7 @@ public class Time_Review extends javax.swing.JFrame {
             preparedStatement.setObject(3, jTFName.getText());
             preparedStatement.setObject(4, cu1);
             preparedStatement.setObject(5, team1);
-            preparedStatement.setObject(6, jCBOrganization.getItemAt(jCBOrganization.getSelectedIndex()));
+            preparedStatement.setObject(6, org1);
             preparedStatement.setObject(7, lmsignum1);
             preparedStatement.setObject(8, access);
             preparedStatement.setObject(9, supportingTeam);
@@ -4515,6 +4498,7 @@ public class Time_Review extends javax.swing.JFrame {
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
             String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
+            String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
             
             if (team1.equals("COP")) {
@@ -4531,7 +4515,7 @@ public class Time_Review extends javax.swing.JFrame {
                     + "WHERE Signum = ?");
             preparedStatement.setObject(1, cu1);
             preparedStatement.setObject(2, team1);
-            preparedStatement.setObject(3, jCBOrganization.getItemAt(jCBOrganization.getSelectedIndex()));
+            preparedStatement.setObject(3, org1);
             preparedStatement.setObject(4, lmsignum1);
             preparedStatement.setObject(5, access);
             preparedStatement.setObject(6, supportingTeam);
@@ -4913,7 +4897,7 @@ public class Time_Review extends javax.swing.JFrame {
         jTFSignum.setText("");
         jTFName.setText("");
         jTFLastName.setText("");
-        jCBOrganization.setSelectedIndex(0);
+        //jCBOrganization.setSelectedIndex(0);
         jCBTeam.setSelectedIndex(0);
         jCBCustomerUnit.setSelectedIndex(0);
         jCBLineManager.setSelectedIndex(0);
@@ -5501,7 +5485,6 @@ public class Time_Review extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBNetTeamSearch;
     private javax.swing.JComboBox<String> jCBNetTech;
     private javax.swing.JComboBox<String> jCBOrgMetrics;
-    private javax.swing.JComboBox<String> jCBOrganization;
     private javax.swing.JComboBox<String> jCBProjectSuppDom;
     private javax.swing.JComboBox<String> jCBRegionMrkt;
     private javax.swing.JComboBox<String> jCBSearchUser;
@@ -5567,7 +5550,6 @@ public class Time_Review extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
