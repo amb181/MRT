@@ -437,10 +437,10 @@ public class Time_Review extends javax.swing.JFrame {
         jMenuView = new javax.swing.JMenu();
         jMReview = new javax.swing.JMenuItem();
         jMenuTeams = new javax.swing.JMenu();
-        jMISourcing = new javax.swing.JMenuItem();
         jMICOP = new javax.swing.JMenuItem();
-        jMIVSS = new javax.swing.JMenuItem();
         jMIPSS = new javax.swing.JMenuItem();
+        jMISourcing = new javax.swing.JMenuItem();
+        jMIVSS = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
         jMEditUsers = new javax.swing.JMenuItem();
         jMEditTask = new javax.swing.JMenuItem();
@@ -754,7 +754,9 @@ public class Time_Review extends javax.swing.JFrame {
             .addGroup(jPViewLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addGroup(jPViewLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1905, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(56, Short.MAX_VALUE))
                     .addGroup(jPViewLayout.createSequentialGroup()
                         .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLMetricOrg)
@@ -770,13 +772,12 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPViewLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jRBNetwork)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jRBSubnetwork)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRBSAPBilling)
-                                .addGap(26, 26, 26))
+                                .addGap(32, 32, 32))
                             .addGroup(jPViewLayout.createSequentialGroup()
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPViewLayout.createSequentialGroup()
@@ -795,10 +796,10 @@ public class Time_Review extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLFileName)
                         .addGap(18, 18, 18)
-                        .addComponent(jTFFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBGenerateCSV)))
-                .addContainerGap())
+                        .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTFFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBGenerateCSV))
+                        .addGap(151, 151, 151))))
         );
         jPViewLayout.setVerticalGroup(
             jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -829,22 +830,21 @@ public class Time_Review extends javax.swing.JFrame {
                             .addGroup(jPViewLayout.createSequentialGroup()
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jBShowPreview)
-                                    .addComponent(jBGenerateCSV)
                                     .addComponent(jTFFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLFileName))
                                 .addGap(18, 18, 18)
-                                .addComponent(jBShowMetrics)
+                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jBShowMetrics)
+                                    .addComponent(jBGenerateCSV))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jRBSubnetwork)
-                                        .addComponent(jRBNetwork))
-                                    .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLMetricOrg)
-                                        .addComponent(jCBOrgMetrics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jRBSAPBilling)))))
+                                .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLMetricOrg)
+                                    .addComponent(jCBOrgMetrics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jRBSAPBilling)
+                                    .addComponent(jRBNetwork)
+                                    .addComponent(jRBSubnetwork))))
                         .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1235,7 +1235,7 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jBExportUserCSV))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1558,7 +1558,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1576,8 +1576,8 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 226, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE))
+                        .addGap(0, 264, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1945,7 +1945,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBNetTableCSV))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1454, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1962,7 +1962,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPNetEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBNetTableCSV))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2244,15 +2244,6 @@ public class Time_Review extends javax.swing.JFrame {
         jMenuTeams.setText("Record Working Time");
         jMenuTeams.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
-        jMISourcing.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jMISourcing.setText("Sourcing");
-        jMISourcing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMISourcingActionPerformed(evt);
-            }
-        });
-        jMenuTeams.add(jMISourcing);
-
         jMICOP.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMICOP.setText("COP");
         jMICOP.addActionListener(new java.awt.event.ActionListener() {
@@ -2262,15 +2253,6 @@ public class Time_Review extends javax.swing.JFrame {
         });
         jMenuTeams.add(jMICOP);
 
-        jMIVSS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jMIVSS.setText("VSS");
-        jMIVSS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIVSSActionPerformed(evt);
-            }
-        });
-        jMenuTeams.add(jMIVSS);
-
         jMIPSS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMIPSS.setText("PSS");
         jMIPSS.addActionListener(new java.awt.event.ActionListener() {
@@ -2279,6 +2261,24 @@ public class Time_Review extends javax.swing.JFrame {
             }
         });
         jMenuTeams.add(jMIPSS);
+
+        jMISourcing.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMISourcing.setText("Sourcing");
+        jMISourcing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMISourcingActionPerformed(evt);
+            }
+        });
+        jMenuTeams.add(jMISourcing);
+
+        jMIVSS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMIVSS.setText("VSS");
+        jMIVSS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIVSSActionPerformed(evt);
+            }
+        });
+        jMenuTeams.add(jMIVSS);
 
         jMenuView.add(jMenuTeams);
 
@@ -2342,16 +2342,16 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1894, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 5198, Short.MAX_VALUE))
+                .addComponent(jPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 5224, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPEditTask, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3276, Short.MAX_VALUE)))
+                    .addGap(0, 3304, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -2361,11 +2361,11 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPNetworks, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
+                .addComponent(jPNetworks, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
+            .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
+                .addComponent(jPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPEditTask, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2504,6 +2504,7 @@ public class Time_Review extends javax.swing.JFrame {
         jPEdit.setVisible(false);
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(false);
+        jPMarket.setVisible(false);
         this.setTitle("MRT - Audit & Report - Review Metrics");
         //this.setSize(jPView.getPreferredSize());
     }//GEN-LAST:event_jMReviewActionPerformed

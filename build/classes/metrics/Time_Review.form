@@ -119,17 +119,6 @@
                 </Property>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMISourcing">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Ericsson Hilda" size="18" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Sourcing"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMISourcingActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jMICOP">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -141,17 +130,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMICOPActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMIVSS">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Ericsson Hilda" size="18" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="VSS"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIVSSActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jMIPSS">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -161,6 +139,28 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIPSSActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMISourcing">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ericsson Hilda" size="18" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Sourcing"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMISourcingActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMIVSS">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Ericsson Hilda" size="18" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="VSS"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIVSSActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
@@ -275,18 +275,18 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPView" pref="1894" max="32767" attributes="0"/>
+              <Component id="jPView" pref="1920" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPNetworks" min="-2" pref="3295" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="jPEdit" alignment="0" pref="5198" max="32767" attributes="0"/>
+              <Component id="jPEdit" alignment="0" pref="5224" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPEditTask" min="-2" pref="1920" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="3276" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="3304" max="32767" attributes="0"/>
               </Group>
           </Group>
           <Group type="103" rootIndex="3" groupAlignment="0" attributes="0">
@@ -301,12 +301,12 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="jPNetworks" pref="949" max="32767" attributes="0"/>
+              <Component id="jPNetworks" pref="939" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="jPView" pref="965" max="32767" attributes="0"/>
+          <Component id="jPView" pref="955" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="jPEdit" alignment="0" pref="965" max="32767" attributes="0"/>
+              <Component id="jPEdit" alignment="0" pref="955" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -341,10 +341,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="1905" max="-2" attributes="0"/>
+                          <EmptySpace pref="56" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLMetricOrg" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -364,13 +367,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="jRBNetwork" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jRBSubnetwork" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jRBSAPBilling" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -395,12 +397,13 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLFileName" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTFFileName" min="-2" pref="200" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jBGenerateCSV" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jTFFileName" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="jBGenerateCSV" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -439,23 +442,21 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jBShowPreview" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jBGenerateCSV" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jTFFileName" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLFileName" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jBShowMetrics" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jBShowMetrics" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jBGenerateCSV" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace pref="12" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                          <Component id="jRBSubnetwork" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jRBNetwork" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLMetricOrg" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCBOrgMetrics" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jRBSAPBilling" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLMetricOrg" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jCBOrgMetrics" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRBSAPBilling" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRBNetwork" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRBSubnetwork" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1106,7 +1107,7 @@
                       <Component id="jBExportUserCSV" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="201" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="438" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -1805,7 +1806,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jBExportTaskCSV" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane3" pref="784" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="1254" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -1827,9 +1828,9 @@
                           <Component id="jPSearchTask" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPTasks" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="226" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="264" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane3" pref="838" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="876" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -2456,7 +2457,7 @@
                       </Group>
                       <Component id="jPNetSearch" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="1454" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -2478,7 +2479,7 @@
                       <Component id="jBNetTableCSV" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane4" pref="358" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" pref="579" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -3186,7 +3187,7 @@
                   <Component id="jPSearchMrkt" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="649" max="32767" attributes="0"/>
+                  <EmptySpace pref="609" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
