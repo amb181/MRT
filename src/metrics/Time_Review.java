@@ -744,6 +744,7 @@ public class Time_Review extends javax.swing.JFrame {
 
         jCBOrgMetrics.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
+        jLabel39.setFont(new java.awt.Font("Ericsson Hilda", 1, 14)); // NOI18N
         jLabel39.setText("Filters");
 
         javax.swing.GroupLayout jPViewLayout = new javax.swing.GroupLayout(jPView);
@@ -957,17 +958,20 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel36.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel36.setText("Job Stage:");
 
+        jCBJobStage.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
         jCBJobStage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "4", "5", "N/A" }));
 
         jLabel37.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel37.setText("CAT's Number:");
 
+        jTFCATNum.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jTFCATNum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFCATNumActionPerformed(evt);
             }
         });
 
+        jCBLineManager.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
         jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Lugo Oscar", "Pantoja Victor" }));
 
         javax.swing.GroupLayout jPUserLayout = new javax.swing.GroupLayout(jPUser);
@@ -1037,7 +1041,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTFSupTeam)
                             .addComponent(jTFSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3662, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jBSaveNewUser)
                 .addContainerGap())
         );
@@ -1132,6 +1136,8 @@ public class Time_Review extends javax.swing.JFrame {
 
         jLSignumEdit.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLSignumEdit.setText("Name:");
+
+        jCBSearchUser.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPSearchLayout = new javax.swing.GroupLayout(jPSearch);
         jPSearch.setLayout(jPSearchLayout);
@@ -1229,7 +1235,7 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jBExportUserCSV))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1292,6 +1298,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLTaskSearch1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTaskSearch1.setText("Team:");
 
+        jCBTeamTaskSearch.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
         jCBTeamTaskSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBTeamTaskSearchActionPerformed(evt);
@@ -1301,6 +1308,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel38.setText("CU:");
 
+        jCBCUTaskSearch.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
         jCBCUTaskSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBCUTaskSearchActionPerformed(evt);
@@ -1406,14 +1414,22 @@ public class Time_Review extends javax.swing.JFrame {
         jLTask1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask1.setText("Deliverable:");
 
+        jCBServicePN.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
+
         jLTask2.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask2.setText("Service Package Name:");
+
+        jCBDeliverable.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
 
         jLTask3.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask3.setText("Project Support Domain:");
 
         jLTask4.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask4.setText("Level of Effort:");
+
+        jTFLOE.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jCBProjectSuppDom.setFont(new java.awt.Font("Ericsson Hilda", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPTasksLayout = new javax.swing.GroupLayout(jPTasks);
         jPTasks.setLayout(jPTasksLayout);
@@ -1542,7 +1558,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1560,8 +1576,8 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 284, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE))
+                        .addGap(0, 248, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1929,7 +1945,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBNetTableCSV))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1454, Short.MAX_VALUE))
+                .addContainerGap(1463, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2186,7 +2202,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jCBMrktAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(726, Short.MAX_VALUE))
+                .addContainerGap(767, Short.MAX_VALUE))
         );
         jPMarketLayout.setVerticalGroup(
             jPMarketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2199,7 +2215,7 @@ public class Time_Review extends javax.swing.JFrame {
                 .addComponent(jPSearchMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(649, Short.MAX_VALUE))
+                .addContainerGap(685, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -2224,6 +2240,7 @@ public class Time_Review extends javax.swing.JFrame {
         });
         jMenuView.add(jMReview);
 
+        jMenuTeams.setBackground(new java.awt.Color(255, 255, 255));
         jMenuTeams.setText("Record Working Time");
         jMenuTeams.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
@@ -2254,6 +2271,7 @@ public class Time_Review extends javax.swing.JFrame {
         });
         jMenuTeams.add(jMIVSS);
 
+        jMIPSS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMIPSS.setText("PSS");
         jMIPSS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2306,6 +2324,7 @@ public class Time_Review extends javax.swing.JFrame {
         jMenuEdit.add(jMEditNetworks);
 
         jMEditMarkets.setBackground(new java.awt.Color(255, 255, 255));
+        jMEditMarkets.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMEditMarkets.setText("Edit Markets");
         jMEditMarkets.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2323,7 +2342,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1892, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1894, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -2342,7 +2361,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPNetworks, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
+                .addComponent(jPNetworks, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
