@@ -183,7 +183,7 @@ public class Metrics {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        localversion = "2.3"; //Version
+        localversion = "3.0"; //Version
         try {
             connection = SQL_connection.getConnection();
             String sql_version = "SELECT version FROM source_control ORDER BY version DESC LIMIT 1;";

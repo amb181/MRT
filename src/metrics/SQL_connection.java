@@ -23,15 +23,15 @@ public class SQL_connection {
             String user = "root";
             String password = "";*/
             
-            // Test environment
+            /*// Test environment
             String connectionURL = "jdbc:mysql://146.250.85.96:3306/testing_metrics_db?userTimezone=true&serverTimezone=UTC";
             String user = "sourcing";
-            String password = "S0urc1ngT3@m";
+            String password = "S0urc1ngT3@m";*/
             
-            /*// Production environment
+            // Production environment
             String connectionURL = "jdbc:mysql://146.250.85.96:3306/metrics_db?userTimezone=true&serverTimezone=UTC";
             String user = "sourcing";
-            String password = "S0urc1ngT3@m";*/
+            String password = "S0urc1ngT3@m";
             
             connection = DriverManager.getConnection(connectionURL, user, password);
             System.out.println("Successful connection to the database.");

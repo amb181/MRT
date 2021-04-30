@@ -348,7 +348,6 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jTextFieldComments_MarketBulk = new javax.swing.JTextArea();
         jLabelMarketsBulk = new javax.swing.JLabel();
         jBAddBulkMarket = new javax.swing.JButton();
-        jLabelWarning_MarketBulk = new javax.swing.JLabel();
         jBCancel_MarketBulk = new javax.swing.JButton();
         jFrameHistory = new javax.swing.JFrame();
         jDateChooser_Start = new com.toedter.calendar.JDateChooser();
@@ -663,9 +662,6 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
         });
 
-        jLabelWarning_MarketBulk.setFont(new java.awt.Font("Ericsson Hilda", 1, 14)); // NOI18N
-        jLabelWarning_MarketBulk.setText("*T-Mobile: If 'National' is selected, network 98359897 will be selected");
-
         jBCancel_MarketBulk.setBackground(new java.awt.Color(255, 1, 1));
         jBCancel_MarketBulk.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jBCancel_MarketBulk.setForeground(new java.awt.Color(255, 255, 255));
@@ -744,13 +740,12 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                         .addComponent(jLTask_MarketBulk)
                         .addGap(18, 18, 18)
                         .addComponent(jcbTask_MarketBulk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
                     .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
                         .addComponent(jLComments_MarketBulk)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
-                        .addComponent(jLabelWarning_MarketBulk)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBAddBulkMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -783,9 +778,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(177, 177, 177)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabelWarning_MarketBulk)
-                                    .addComponent(jBAddBulkMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jBAddBulkMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(77, 77, 77))
                             .addComponent(jPanelMarketSelection, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
@@ -4890,7 +4883,6 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTeam;
     private javax.swing.JLabel jLabelTeam1;
     private javax.swing.JLabel jLabelVersion;
-    private javax.swing.JLabel jLabelWarning_MarketBulk;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
