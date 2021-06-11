@@ -73,8 +73,9 @@ public class Metrics {
             PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\" + user_log + "\\Documents\\MRT\\" + usersinfo.get(0) + "_" + date + ".log"));
             System.setOut(out);
             
-            System.out.println("Java version: " + System.getProperty("java.version"));
-
+            // System.out.println("Java version: " + System.getProperty("java.version"));
+            System.out.println("MRT version: " + localversion);
+            
             if (usersinfo.get(6).equals("1")) { // If user is admin
                 try {
                     log.dispose();
