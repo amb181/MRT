@@ -106,16 +106,20 @@ public class Time_Review extends javax.swing.JFrame {
         Date date = new Date();
         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
         String date_change = dcn.format(date);
-        int i;
         Date date_ = dcn.parse(date_change);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date_);
-        week = cal.get(Calendar.WEEK_OF_YEAR);
-        week = 52;
-        for (i = 1; i <= week; i++) {
-            jCBFrom.addItem(String.valueOf(i));
+        week = cal.get(Calendar.WEEK_OF_YEAR) - 1;
+        //System.out.println("Current week: " + week + ". Current year: " + Calendar.getInstance().get(Calendar.YEAR));
+        //week = 52;
+        for (int i = 1; i <= 52; i++) {
+            jCBFrom.addItem(String.valueOf(i));  
         }
-        jCBFrom.setSelectedIndex(week - 1);
+        System.out.println("Number of items: " + jCBFrom.getItemCount());
+        //jCBFrom.setSelectedIndex(week);
+        jCBYearFrom.setSelectedItem(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        jCBYearTo.setSelectedItem(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        
         jTableShowMetrics.setEnabled(false);
         jTUsersList.setEnabled(false);
         jTTasksList.setEnabled(false);
@@ -756,7 +760,7 @@ public class Time_Review extends javax.swing.JFrame {
                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPViewLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1905, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(56, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPViewLayout.createSequentialGroup()
                         .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLMetricOrg)
@@ -844,7 +848,7 @@ public class Time_Review extends javax.swing.JFrame {
                                     .addComponent(jRBNetwork)
                                     .addComponent(jRBSubnetwork))))
                         .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -982,6 +986,28 @@ public class Time_Review extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPUserLayout.createSequentialGroup()
+                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLCUSupported)
+                            .addComponent(jLTeamSupp))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jCBSupportedTeam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCBSupportedCU, 0, 226, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jBDeleteCUSupp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBAddSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLSuppTeams)
+                            .addComponent(jLSuppCUs))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTFSupTeam)
+                            .addComponent(jTFSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBSaveNewUser))
+                    .addGroup(jPUserLayout.createSequentialGroup()
                         .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPUserLayout.createSequentialGroup()
                                 .addComponent(jLSignum)
@@ -1020,30 +1046,8 @@ public class Time_Review extends javax.swing.JFrame {
                     .addGroup(jPUserLayout.createSequentialGroup()
                         .addComponent(jLAccess)
                         .addGap(18, 18, 18)
-                        .addComponent(jCBAccess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPUserLayout.createSequentialGroup()
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLCUSupported)
-                            .addComponent(jLTeamSupp))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jCBSupportedTeam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCBSupportedCU, 0, 226, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jBDeleteCUSupp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBAddSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLSuppTeams)
-                            .addComponent(jLSuppCUs))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTFSupTeam)
-                            .addComponent(jTFSupCU, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBSaveNewUser)
-                .addContainerGap())
+                        .addComponent(jCBAccess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPUserLayout.setVerticalGroup(
             jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1056,7 +1060,6 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jTFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jTFLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBSaveNewUser)
                     .addComponent(jLabel37)
                     .addComponent(jTFCATNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -1088,8 +1091,9 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jCBSupportedCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBDeleteCUSupp)
                     .addComponent(jLSuppCUs)
-                    .addComponent(jTFSupCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addComponent(jTFSupCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBSaveNewUser))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel7.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -1203,21 +1207,18 @@ public class Time_Review extends javax.swing.JFrame {
             .addGroup(jPEditLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPEditLayout.createSequentialGroup()
-                        .addGroup(jPEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPEditLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPEditLayout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBExportUserCSV)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCBAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPEditLayout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBExportUserCSV))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1911, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(1100, Short.MAX_VALUE))
         );
         jPEditLayout.setVerticalGroup(
             jPEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1234,8 +1235,8 @@ public class Time_Review extends javax.swing.JFrame {
                 .addGroup(jPEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jBExportUserCSV))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1962,7 +1963,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPNetEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBNetTableCSV))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1976,7 +1977,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel28.setText("Team: ");
 
         jCBMarTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBMarTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sourcing", "COP", "VSS" }));
+        jCBMarTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sourcing", "COP", "VSS", "PSS" }));
         jCBMarTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBMarTeamActionPerformed(evt);
@@ -2433,8 +2434,9 @@ public class Time_Review extends javax.swing.JFrame {
             inicial = 0;
         }
         if (jRBWeek.isSelected()) {
-            for (int i = inicial + 1; i < week + 1; i++) {
+            for (int i = inicial + 1; i < 52 + 1; i++) {
                 jCBTo.addItem(Integer.toString(i));
+                jCBTo.setSelectedIndex(jCBFrom.getSelectedIndex());
             }
         }
 
@@ -2565,9 +2567,17 @@ public class Time_Review extends javax.swing.JFrame {
 
     private void jBSaveTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTaskActionPerformed
         // TODO add your handling code here:
-        if (jTFTaskName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Task field is empty! Please type a task name to save it.");
-        } else {
+        String loe1 = jTFLOE.getText();
+        Pattern decimalPattern = Pattern.compile("^-?[0-9](?:\\.[0-9]{1,3})?$");
+        Matcher matcherLOE = decimalPattern.matcher(loe1);
+        boolean flagLOE = matcherLOE.find();
+        if (jTFTaskName.getText().equals("") && jTFLOE.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Task field and/or LOE is empty! Please fill the fields.");
+        } 
+        else if (flagLOE){
+            JOptionPane.showMessageDialog(this, "LOE is not a number! Please type a number with maximum two decimals.");
+        }
+        else {
             jLLoading.setText("Saving task into database...");
             new Thread(new Runnable() {
                 @Override
@@ -2672,11 +2682,11 @@ public class Time_Review extends javax.swing.JFrame {
                         UpdateNetworksDB();
                     }
                     netTeamsAndCUs = new ArrayList<>();
-                    netTeamCURegMark = new ArrayList<>();
+                    //netTeamCURegMark = new ArrayList<>();
                     netwTeamSubn = new ArrayList<>();
                     
                     GetNetworksSearch();
-                    //ResetNetworkFields();
+                    ResetNetworkFields();
                     jDLoading.dispose();
                 }
             }).start();
@@ -2900,9 +2910,11 @@ public class Time_Review extends javax.swing.JFrame {
                             InsertIntoUserDB();
                         } else {
                             UpdateUserDB();
+                            //JOptionPane.showMessageDialog(this, "There's an empty field! Please fill every text field in order to save the user.");
                         }
                         jLLoading.setText("Updating user's local table...");
                         GetAllUsers();
+                        ResetUserFields();
                         jDLoading.dispose();
                     }
                 }).start();
@@ -2948,7 +2960,7 @@ public class Time_Review extends javax.swing.JFrame {
                 DeleteNetwork();
                 jLLoading.setText("Updating network's local table...");
                 netTeamsAndCUs = new ArrayList<>();
-                netTeamCURegMark = new ArrayList<>();
+                //netTeamCURegMark = new ArrayList<>();
                 netwTeamSubn = new ArrayList<>();
                 GetNetworksSearch();
                 jDLoading.dispose();
@@ -4432,8 +4444,7 @@ public class Time_Review extends javax.swing.JFrame {
                 if (i % 5 == 0)
                     if (marketName.equals(marketTeamCU.get(i + 1)) && regMrkt.equals(marketTeamCU.get(i + 2)) && teamMrkt.equals(marketTeamCU.get(i + 3)) && cuMrkt.equals(marketTeamCU.get(i + 4)))
                         id = marketTeamCU.get(i);
-                
-            
+
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("DELETE FROM markets "
                     + "WHERE id = ?");
@@ -4442,6 +4453,16 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println("Query: " + preparedStatement);
             connection.close();
 
+            for (int i = 0; i < netTeamCURegMark.size(); i++){
+                if (i % 4 == 0){
+                    if (teamMrkt.equals(netTeamCURegMark.get(i)) && cuMrkt.equals(netTeamCURegMark.get(i + 1)) && regMrkt.equals(netTeamCURegMark.get(i + 2)) && marketName.equals(netTeamCURegMark.get(i + 3))){
+                        for (int j = 0; j < 4; j++)
+                            netTeamCURegMark.remove(i);
+                        System.out.println("Deleting...");
+                    }
+                }
+            }
+            
             JOptionPane.showMessageDialog(this, "Market deleted successfully.");
         } catch (SQLException e) {
             System.out.println(e);
@@ -4533,7 +4554,7 @@ public class Time_Review extends javax.swing.JFrame {
 
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE users SET Customer_Unit = ?, Team = ?, Organization = ?, Line_Manager = ?, Access = ?, Supporting_Team = ?, Supporting_CU = ?, Job_Stage = ?, Act_type = ?, CATS_Number = ? "
-                    + "WHERE Signum = ?");
+                    + "WHERE Signum = ?;");
             preparedStatement.setObject(1, cu1);
             preparedStatement.setObject(2, team1);
             preparedStatement.setObject(3, org1);
@@ -4601,28 +4622,22 @@ public class Time_Review extends javax.swing.JFrame {
             }
 
             connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT COUNT(Task_ID) AS counter, Task_ID FROM tasks "
+            preparedStatement = connection.prepareStatement("SELECT Task_ID FROM tasks "// COUNT(Task_ID) AS counter,
                     + "WHERE Task_ID LIKE '" + type + "%' ORDER BY Task_ID DESC LIMIT 1;");
             System.out.println("Query: " + preparedStatement);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 ID = resultSet.getString("Task_ID");
-                countID = resultSet.getString("counter");
+                //countID = resultSet.getString("counter");
             }
             int indexID = ID.lastIndexOf("-");
             String idd2 = ID.substring(indexID + 1);
+            System.out.println("Length of ID: " + idd2.length());
             System.out.println("Latest Task_ID: " + ID);
             idd = Integer.valueOf(idd2) + 1;
-            countidd = Integer.valueOf(countID);
-            if (countidd > 100 && idd < 10) {
-                ID = type + "-000" + String.valueOf(idd);
-            } else if ((countidd < 100 && idd < 10) || (countidd > 100 && idd > 10 && idd < 100)) {
-                ID = type + "-00" + String.valueOf(idd);
-            } else if ((countidd < 100 && idd > 10) || (countidd > 100 && idd > 100 && idd < 100)) {
-                ID = type + "-0" + String.valueOf(idd);
-            } else if (countidd > 100 && idd > 1000) {
-                ID = type + "-" + String.valueOf(idd); 
-            }
+            System.out.println("Length of Integer ID: " + String.valueOf(idd).length());
+            ID = type + "-" + new String(new char[idd2.length() - String.valueOf(idd).length()]).replace("\0", "0") + idd;
+            System.out.println("New ID: " + ID);
             // connection.close();
 
             // connection = SQL_connection.getConnection();
@@ -4658,17 +4673,25 @@ public class Time_Review extends javax.swing.JFrame {
         try {
             String task = jCBTaskSearch.getItemAt(jCBTaskSearch.getSelectedIndex());
             String team = jCBTaskTeam.getItemAt(jCBTaskTeam.getSelectedIndex());
+            String spn = jCBServicePN.getItemAt(jCBServicePN.getSelectedIndex());
+            String deliv = jCBDeliverable.getItemAt(jCBDeliverable.getSelectedIndex());
+            String psd = jCBProjectSuppDom.getItemAt(jCBProjectSuppDom.getSelectedIndex());
+            String loe = jTFLOE.getText();
 
             connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement("UPDATE tasks SET Team = ? "
+            preparedStatement = connection.prepareStatement("UPDATE tasks SET Team = ?, Service_Package_Name = ?, Deliverable = ?, Project_Support_Domain = ?, LoE = ? "
                     + "WHERE Task = ?");
             preparedStatement.setObject(1, team);
-            preparedStatement.setObject(2, task);
+            preparedStatement.setObject(2, spn);
+            preparedStatement.setObject(3, deliv);
+            preparedStatement.setObject(4, psd);
+            preparedStatement.setObject(5, loe);
+            preparedStatement.setObject(6, task);
             preparedStatement.executeUpdate();
             System.out.println("Query: " + preparedStatement);
             connection.close();
 
-            JOptionPane.showMessageDialog(this, "Task saved successfully.");
+            JOptionPane.showMessageDialog(this, "Task updated successfully.");
             ResetTaskFields();
         } catch (SQLException e) {
             System.out.println(e);
@@ -4765,8 +4788,8 @@ public class Time_Review extends javax.swing.JFrame {
             String customer = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
             String subnetwork = jTFSubnetwork.getText();
             String team = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
-            String technology = jCBNetTech.getItemAt(jCBNetTech.getSelectedIndex());
-
+            String technology = jCBNetTech.getSelectedItem().toString();
+            System.out.println("Technology: " + technology);
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO networks (PD, Network, Activity_code, Region, Market, Customer, Responsible, Subnetwork, Team, Technology) "
                     + "VALUES (?,?,?,?,?,?,?,?,?,?);");
@@ -4874,9 +4897,9 @@ public class Time_Review extends javax.swing.JFrame {
             String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
             String reg1 = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
             String mark1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
-            String tech1 = jCBNetTech.getItemAt(jCBNetTech.getSelectedIndex());
             String net1 = jTFNetwork.getText();
             String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
+            String technology = jCBNetTech.getSelectedItem().toString();
 
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE networks SET Activity_code = ?, Responsible = ?, "
@@ -4888,7 +4911,7 @@ public class Time_Review extends javax.swing.JFrame {
             preparedStatement.setObject(4, cu1);
             preparedStatement.setObject(5, reg1);
             preparedStatement.setObject(6, mark1);
-            preparedStatement.setObject(7, tech1);
+            preparedStatement.setObject(7, technology);
             preparedStatement.setObject(8, net1);
             preparedStatement.setObject(9, team1);
             System.out.println("Query: " + preparedStatement);
@@ -4908,10 +4931,9 @@ public class Time_Review extends javax.swing.JFrame {
 
         if (!jTFPD.getText().equals("") && !jTFNetwork.getText().equals("")
                 && !jTFResponsible.getText().equals("") && !jTFSubnetwork.getText().equals("")) {
-            return true;
-        } else {
-            return flag;
-        }
+            flag = true;
+        } 
+        return flag;
     }
 
     private void ResetUserFields() {
@@ -4935,7 +4957,7 @@ public class Time_Review extends javax.swing.JFrame {
         jCBNetActCode.setSelectedIndex(0);
         jTFResponsible.setText("");
         jTFSubnetwork.setText("");
-        jCBNetTeam.setSelectedIndex(0);
+        //jCBNetTeam.setSelectedIndex(0);
         //jCBNetCustomer.setSelectedIndex(0);
         //jCBNetRegion.setSelectedIndex(0);
         //jCBNetMarket.setSelectedIndex(0);
@@ -5075,11 +5097,11 @@ public class Time_Review extends javax.swing.JFrame {
             String weekTo = jCBTo.getItemAt(jCBTo.getSelectedIndex());
 
             if (!jRBTo.isSelected()) {
-                week = "WHERE Week = " + weekFrom;
-                fileName = fileName + "Week " + weekFrom;
+                week = "WHERE Week = " + weekFrom + " AND YEAR(Work_date) = " + yearFrom1;
+                fileName = fileName + "Week " + weekFrom + " Year " + yearFrom1;
             } else {
-                week = "WHERE Week BETWEEN " + weekFrom + " AND " + weekTo;
-                fileName = fileName + "From Week " + weekFrom + " TO " + weekTo;
+                week = "WHERE (Week BETWEEN " + weekFrom + " AND " + weekTo + ") AND (YEAR(Work_date) BETWEEN " + yearFrom1 + " AND " + yearTo1 + ")";
+                fileName = fileName + "From Week " + weekFrom + " TO " + weekTo + " Year Between " + yearFrom1 + " and " + yearTo1;
             }
 
         }
