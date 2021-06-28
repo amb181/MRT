@@ -4553,7 +4553,11 @@ public class Time_Review extends javax.swing.JFrame {
                 js1 = "Job Stage " + js1;
 
             connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement("UPDATE users SET Customer_Unit = ?, Team = ?, Organization = ?, Line_Manager = ?, Access = ?, Supporting_Team = ?, Supporting_CU = ?, Job_Stage = ?, Act_type = ?, CATS_Number = ? "
+            preparedStatement = connection.prepareStatement("UPDATE users SET "
+                    + "Customer_Unit = ?, Team = ?, Organization = ?, "
+                    + "Line_Manager = ?, Access = ?, Supporting_Team = ?, "
+                    + "Supporting_CU = ?, Job_Stage = ?, Act_type = ?, "
+                    + "CATS_Number = ? "
                     + "WHERE Signum = ?;");
             preparedStatement.setObject(1, cu1);
             preparedStatement.setObject(2, team1);
@@ -4566,8 +4570,9 @@ public class Time_Review extends javax.swing.JFrame {
             preparedStatement.setObject(9, acttype1);
             preparedStatement.setObject(10, cat1);
             preparedStatement.setObject(11, jTFSignum.getText());
-            preparedStatement.executeUpdate();
             System.out.println("Query: " + preparedStatement);
+            preparedStatement.executeUpdate();
+            
             connection.close();
 
             //JOptionPane.showMessageDialog(this, "User saved successfully.");
