@@ -84,7 +84,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
     ArrayList<String> metrics_cop_info = new ArrayList<>();
     ArrayList<String> mrkts_bulk = new ArrayList<>();
     ArrayList<String> metrics_for_ess = new ArrayList<>();
-    int current_week = 0, times_in_edit = 0, edit_week = 0;
+    int current_week = 0, times_in_edit = 0;
     float hours = 0;
     boolean all_markets_checkbox = false;
     String saved = "Data saved successfully!";
@@ -166,7 +166,6 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         cal.setTime(date_1);
         cal.setTime(date_2);
         week = cal.get(Calendar.WEEK_OF_YEAR);
-        edit_week = week;
         jTextFieldWeek.setText(String.valueOf(week));
         jTextFieldWeek_MarketBulk.setText(String.valueOf(week));
         // Update week number every time user clics new date
@@ -188,11 +187,6 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                     week = week - 1;
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
-                // If week changes update hours per day table
-                if (week != edit_week){
-                    edit_week = week;
-                    GetDailyHours();
-                }
             }
         });
         jcbSubnet.addItem("Select a subnetwork...");
@@ -200,15 +194,13 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
         if (usersinfo.get(2).equals("C_AT&T") || usersinfo.get(2).equals("C_Sprint") || usersinfo.get(2).equals("C_T-Mobile")
-                || usersinfo.get(2).equals("C_Verizon") || usersinfo.get(2).equals("C_Bell Canada") 
-                || usersinfo.get(2).equals("C_Rogers") || usersinfo.get(2).equals("C_RCIS")) {
+                || usersinfo.get(2).equals("C_Verizon")) {
             cu = usersinfo.get(2).replace("C_", "");
             jcbCU.addItem(cu);
         }
         for (int i = 0; i < cus.length; i++) {
             if (cus[i].equals("C_AT&T") || cus[i].equals("C_Sprint") || cus[i].equals("C_T-Mobile")
-                || cus[i].equals("C_Verizon") || cus[i].equals("C_Bell Canada") 
-                || cus[i].equals("C_Rogers") || cus[i].equals("C_RCIS")) {
+                    || cus[i].equals("C_Verizon")) {
                 cu = cus[i].replace("C_", "");
                 jcbCU.addItem(cu);
             }
@@ -1979,20 +1971,12 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                         }
                     }
                     // Find net in networks_info
-                    Pattern pnet = Pattern.compile("^9[0-9]{7}$");  // 8 numbers starting with 9
-                    Matcher mnet = pnet.matcher((net));
-                    boolean bnet = mnet.find();
                     int net_index = 0;
-                    boolean found = false;
                     for (int i = 0; i < networks_info.size(); i++) {
-                        if (networks_info.get(i).equals(net) && bnet) {
+                        if (networks_info.get(i).equals(net)) {
                             net_index = i;
-                            found = true;
                             break;
                         }
-                    }
-                    if (!found) {
-                        failed = "Network: " + net;
                     }
 
                     //Date format
@@ -2524,10 +2508,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
-            // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
-            if (current_week != edit_week){
-                current_week = edit_week;
-            }
+
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
                     + "FROM metrics_cop "
                     + "WHERE Signum = ? AND Week = '" + current_week + "' AND Work_date LIKE '" + year + "-%'"
@@ -2547,8 +2528,6 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             jLabelHoursDaysH1.setText("<html><pre>Mon\tTue\tWed\tThu\tFri\tSat\tSun</pre></html>");
             jLabelHoursDaysB1.setText("<html><pre>" + time[0] + time[1] + time[2] + time[3] + time[4] + time[5] + time[6] + "</pre></html>");
 
-            Calendar now = Calendar.getInstance();
-            current_week = now.get(Calendar.WEEK_OF_YEAR);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -4650,8 +4629,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
+                } else if (task_.equals("On the Job Training")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";
