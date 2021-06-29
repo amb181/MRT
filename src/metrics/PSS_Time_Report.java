@@ -2381,6 +2381,37 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                                         }
                                     }).start();
                                     jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("Scoping")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                Scoping_Time_Report time_r = new Scoping_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit VSS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
                                 }
                             } catch (Exception e) {
                                 System.out.println(e);
@@ -3271,7 +3302,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     String sql = null;
                     if (team.equals("Sourcing")) {
                         sql = "update_metrics_sourcing";
-                    } else if (team.equals("COP")) {
+                    } else if (team.equals("Scoping")) {
+                        sql = "update_metrics_scoping";
+                    }else if (team.equals("COP")) {
                         sql = "update_metrics_cop";
                     } else if (team.equals("VSS")) {
                         sql = "update_metrics_vss";
@@ -3383,6 +3416,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                             String sql = null;
                             if (team.equals("Sourcing")) {
                                 sql = "metrics_sourcing";
+                            } else if (team.equals("Scoping")) {
+                                sql = "metrics_scoping";
                             } else if (team.equals("COP")) {
                                 sql = "metrics_cop";
                             } else if (team.equals("VSS")) {
