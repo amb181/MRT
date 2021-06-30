@@ -193,14 +193,12 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         // Populate jcbCU with possible CUs for this team
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
-        if (usersinfo.get(2).equals("C_AT&T") || usersinfo.get(2).equals("C_Sprint") || usersinfo.get(2).equals("C_T-Mobile")
-                || usersinfo.get(2).equals("C_Verizon")) {
+        if (usersinfo.get(2).startsWith("C_")) {
             cu = usersinfo.get(2).replace("C_", "");
             jcbCU.addItem(cu);
         }
         for (int i = 0; i < cus.length; i++) {
-            if (cus[i].equals("C_AT&T") || cus[i].equals("C_Sprint") || cus[i].equals("C_T-Mobile")
-                    || cus[i].equals("C_Verizon")) {
+            if (cus[i].startsWith("C_")) {
                 cu = cus[i].replace("C_", "");
                 jcbCU.addItem(cu);
             }

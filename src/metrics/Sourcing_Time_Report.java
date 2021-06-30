@@ -75,7 +75,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     ArrayList<String> networks_info = new ArrayList<>();
     ArrayList<String> metrics_sourcing_info = new ArrayList<>();
     ArrayList<String> metrics_for_ess = new ArrayList<>();
-    int current_week = 0, times_in_edit = 0;
+    int current_week = 0, times_in_edit = 0, edit_week = 0;
     float hours = 0;
     String saved = "Data saved successfully!";
 
@@ -148,6 +148,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         cal.setTime(date_);
         cal.setTime(date_1);
         week = cal.get(Calendar.WEEK_OF_YEAR);
+        edit_week = week;
         jTextFieldWeek.setText(String.valueOf(week));
         // Update week number every time user clics new date panel 1
         jDateChooser1.addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -168,6 +169,11 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     week = week - 1;
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
+                // If week changes update hours per day table
+                if (week != edit_week){
+                    edit_week = week;
+                    GetDailyHours();
+                }
             }
         });
         // Populate jcbCU with possible CUs for this team
@@ -1984,6 +1990,10 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
+            // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
+            if (current_week != edit_week){
+                current_week = edit_week;
+            }
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
                     + "FROM metrics_sourcing "

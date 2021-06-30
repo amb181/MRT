@@ -199,17 +199,13 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
         // Populate jcbCU with possible CUs for this team
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
-        if (usersinfo.get(2).equals("CSP_AT&T") || usersinfo.get(2).equals("CSP_T-Mobile")
-                || usersinfo.get(2).equals("CSP_Verizon") || usersinfo.get(2).equals("CSP_Bell Canada") 
-                || usersinfo.get(2).equals("CSP_Rogers") || usersinfo.get(2).equals("CSP_RCIS")) {
-            cu = usersinfo.get(2).replace("C_", "");
+        if (usersinfo.get(2).startsWith("SCP_")){
+            cu = usersinfo.get(2).replace("SCP_", "");
             jcbCU.addItem(cu);
         }
         for (int i = 0; i < cus.length; i++) {
-            if (cus[i].equals("CSP_AT&T") || cus[i].equals("CSP_T-Mobile")
-                || cus[i].equals("CSP_Verizon") || cus[i].equals("CSP_Bell Canada") 
-                || cus[i].equals("CSP_Rogers") || cus[i].equals("CSP_RCIS")) {
-                cu = cus[i].replace("C_", "");
+            if (cus[i].startsWith("SCP_")) {
+                cu = cus[i].replace("SCP_", "");
                 jcbCU.addItem(cu);
             }
         }
@@ -2623,7 +2619,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
         Pattern ptime = Pattern.compile("\\d{0,2}(\\.\\d{1,2})?");
         String stime = jTextFieldTime.getText();
         Matcher mtime = ptime.matcher(stime);
-        boolean btime = mtime.find();
+        boolean btime = mtime.matches();
         // Requests format
         Pattern preq = Pattern.compile("^[1-9][0-9]*$");
         String sreq = jTextFieldRequests.getText();
