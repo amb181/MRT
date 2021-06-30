@@ -84,7 +84,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
     ArrayList<String> metrics_pss_info = new ArrayList<>();
     ArrayList<String> mrkts_bulk = new ArrayList<>();
     ArrayList<String> metrics_for_ess = new ArrayList<>();
-    int current_week = 0, times_in_edit = 0;
+    int current_week = 0, times_in_edit = 0, edit_week = 0;
     float hours = 0;
     boolean all_markets_checkbox = false;
     String saved = "Data saved successfully!";
@@ -166,6 +166,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         cal.setTime(date_1);
         cal.setTime(date_2);
         week = cal.get(Calendar.WEEK_OF_YEAR);
+        edit_week = week;
         jTextFieldWeek.setText(String.valueOf(week));
         jTextFieldWeek_MarketBulk.setText(String.valueOf(week));
         // Update week number every time user clics new date
@@ -187,24 +188,24 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     week = week - 1;
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
+                // If week changes update hours per day table
+                if (week != edit_week){
+                    edit_week = week;
+                    GetDailyHours();
+                }
+                
             }
         });
         jcbSubnet.addItem("Select a subnetwork...");
         // Populate jcbCU with possible CUs for this team
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
-        if (usersinfo.get(2).equals("P_AT&T") || usersinfo.get(2).equals("P_CTL") || usersinfo.get(2).equals("P_EFS")
-                || usersinfo.get(2).equals("P_ISE") || usersinfo.get(2).equals("P_MCO") || usersinfo.get(2).equals("P_NAT")
-                || usersinfo.get(2).equals("P_RCIS") || usersinfo.get(2).equals("P_RGR") || usersinfo.get(2).equals("P_Sprint")
-                || usersinfo.get(2).equals("P_T-Mobile") || usersinfo.get(2).equals("P_TELUS") || usersinfo.get(2).equals("P_Verizon")) {
+        if (usersinfo.get(2).startsWith("P_")) {
             cu = usersinfo.get(2).replace("P_", "");
             jcbCU.addItem(cu);
         }
         for (int i = 0; i < cus.length; i++) {
-            if (cus[i].equals("P_AT&T") || cus[i].equals("P_CTL") || cus[i].equals("P_EFS")
-                    || cus[i].equals("P_ISE") || cus[i].equals("P_MCO") || cus[i].equals("P_NAT")
-                    || cus[i].equals("P_RCIS") || cus[i].equals("P_RGR") || cus[i].equals("P_Sprint")
-                    || cus[i].equals("P_T-Mobile") || cus[i].equals("P_TELUS") || cus[i].equals("P_Verizon")) {
+            if (cus[i].startsWith("P_")) {
                 cu = cus[i].replace("P_", "");
                 jcbCU.addItem(cu);
             }
@@ -2514,6 +2515,10 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
+            // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
+            if (current_week != edit_week){
+                current_week = edit_week;
+            }
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
                     + "FROM metrics_pss "
@@ -2577,7 +2582,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         Pattern ptime = Pattern.compile("\\d{0,2}(\\.\\d{1,2})?");
         String stime = jTextFieldTime.getText();
         Matcher mtime = ptime.matcher(stime);
-        boolean btime = mtime.find();
+        boolean btime = mtime.matches();
         // Requests format
         Pattern preq = Pattern.compile("^[1-9][0-9]*$");
         String sreq = jTextFieldRequests.getText();
