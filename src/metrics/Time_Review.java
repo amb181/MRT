@@ -1236,7 +1236,7 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jBExportUserCSV))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2338,7 +2338,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1922, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -4536,11 +4536,15 @@ public class Time_Review extends javax.swing.JFrame {
             String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
             
-            if (team1.equals("COP")) {
-                cu1 = "C_" + cu1;
-            } else if (team1.equals("VSS")) {
-                cu1 = "V_" + cu1;
-            }
+            HashMap<String, String> CU_list = new HashMap<String, String>();
+
+            // Add keys and values (Team name, Prefix)
+            CU_list.put("COP", "C_");
+            CU_list.put("VSS", "V_");
+            CU_list.put("PSS", "P_");
+            CU_list.put("Scoping", "SCP_");        
+            
+            cu1 = CU_list.get(team1) + cu1; 
             
             if (!js1.equals("N/A"))
                 js1 = "Job Stage " + js1;
