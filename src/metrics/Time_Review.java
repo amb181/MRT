@@ -1218,7 +1218,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jBExportUserCSV))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1911, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(1100, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPEditLayout.setVerticalGroup(
             jPEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1236,7 +1236,7 @@ public class Time_Review extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jBExportUserCSV))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1406,11 +1406,6 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel21.setText("CU:");
 
         jCBTaskCU.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTaskCU.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTaskCUActionPerformed(evt);
-            }
-        });
 
         jLTask1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask1.setText("Deliverable:");
@@ -1559,7 +1554,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1577,7 +1572,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 264, Short.MAX_VALUE))
+                        .addGap(0, 286, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1946,7 +1941,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBNetTableCSV))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1454, Short.MAX_VALUE))
+                .addContainerGap(1463, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2203,7 +2198,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jCBMrktAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(726, Short.MAX_VALUE))
+                .addContainerGap(767, Short.MAX_VALUE))
         );
         jPMarketLayout.setVerticalGroup(
             jPMarketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2216,7 +2211,7 @@ public class Time_Review extends javax.swing.JFrame {
                 .addComponent(jPSearchMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(649, Short.MAX_VALUE))
+                .addContainerGap(685, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -2343,7 +2338,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1922, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -2362,7 +2357,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPNetworks, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
+                .addComponent(jPNetworks, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2996,7 +2991,7 @@ public class Time_Review extends javax.swing.JFrame {
     }//GEN-LAST:event_jBShowMetricsActionPerformed
 
     private void jCBTaskTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTaskTeamActionPerformed
-        // TODO add your handling code here:
+        // If team in combobox changes actions
         jCBTaskCU.removeAllItems();
 
         String team1 = jCBTaskTeam.getItemAt(jCBTaskTeam.getSelectedIndex());
@@ -3083,14 +3078,14 @@ public class Time_Review extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBSupportedTeamActionPerformed
 
     private void jCBTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeamActionPerformed
-        // TODO add your handling code here:
+        // Add team to user's assignment
         jCBCustomerUnit.removeAllItems();
 
-        String team1 = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
+        String team = jCBTeam.getSelectedItem().toString();
         try {
             for (int i = 0; i < teamsAndCUs.size(); i++) {
                 if (i % 2 == 0) {
-                    if (team1.equals(teamsAndCUs.get(i))) {
+                    if (team.equals(teamsAndCUs.get(i))) {
                         jCBCustomerUnit.addItem(teamsAndCUs.get(i + 1));
                     }
                 }
@@ -3823,10 +3818,6 @@ public class Time_Review extends javax.swing.JFrame {
         loading.setVisible(true);
     }//GEN-LAST:event_jMIPSSActionPerformed
 
-    private void jCBTaskCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTaskCUActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTaskCUActionPerformed
-
     private void GetTasks() {
         Connection connection;
         PreparedStatement preparedStatement;
@@ -4131,13 +4122,15 @@ public class Time_Review extends javax.swing.JFrame {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        String[] column = {"Task_ID", "Task", "Team", "Customer Unit", "Service Package Name", "Deliverable", "Project Support Domain", "LoE"};
+        String[] column = {"Task_ID", "Task", "Team", "Customer Unit", "Service Package Name", 
+            "Deliverable", "Project Support Domain", "LoE"};
         String[] row = new String[8];
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(column);
         try {
             String sql, taskid1, task1, team1, cu1;
-            sql = "SELECT Task_ID, Task, Team, Customer_Unit, Service_Package_Name, Deliverable, Project_Support_Domain, LoE FROM tasks ORDER BY Task_ID asc;";
+            sql = "SELECT Task_ID, Task, Team, Customer_Unit, Service_Package_Name, Deliverable, "
+                    + "Project_Support_Domain, LoE FROM tasks ORDER BY Task_ID asc;";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery();
@@ -4246,7 +4239,7 @@ public class Time_Review extends javax.swing.JFrame {
                         teamsCUSTasks.addAll(newList2);
                     }
                 }
-                
+                System.out.println("HEEREE: " + team1);
                 if (!teams.isEmpty()) {
                     if (!teams.contains(team1)) {
                         teams.add(team1);

@@ -275,7 +275,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPView" pref="1920" max="32767" attributes="0"/>
+              <Component id="jPView" pref="1922" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPNetworks" min="-2" pref="3295" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -301,7 +301,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="jPNetworks" pref="939" max="32767" attributes="0"/>
+              <Component id="jPNetworks" pref="949" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="jPView" pref="955" max="32767" attributes="0"/>
@@ -1102,7 +1102,7 @@
                       <Component id="jBExportUserCSV" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="232" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="266" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -1801,7 +1801,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jBExportTaskCSV" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane3" pref="1254" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="1285" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -1823,7 +1823,7 @@
                           <Component id="jPSearchTask" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPTasks" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="264" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="286" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane3" pref="876" max="32767" attributes="0"/>
                   </Group>
@@ -2278,9 +2278,6 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCBTaskCUActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -2452,7 +2449,7 @@
                       </Group>
                       <Component id="jPNetSearch" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="1454" max="32767" attributes="0"/>
+                  <EmptySpace pref="1463" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -3166,7 +3163,7 @@
                       </Group>
                       <Component id="jPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="726" max="32767" attributes="0"/>
+                  <EmptySpace pref="767" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -3182,7 +3179,7 @@
                   <Component id="jPSearchMrkt" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="649" max="32767" attributes="0"/>
+                  <EmptySpace pref="685" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
