@@ -53,8 +53,8 @@ public class Metrics {
             String date = dtf.format(now);
             date = date.replace("/", "_").replace(" ", "_").replace(":", "_");
             // Write log every time the program runs and create folder if not exists
-            String user_log = usersinfo.get(0);
-            //String user_log = "ealloem";
+            //String user_log = usersinfo.get(0);
+            String user_log = "ealloem";
             File dir = new File("C:\\Users\\" + user_log + "\\Documents\\MRT");
             
             if (!dir.exists()) {
@@ -114,6 +114,10 @@ public class Metrics {
                                 PSS_Time_Report time_r = new PSS_Time_Report();
                                 time_r.show();
                                 time_r.setLocationRelativeTo(null);
+                            } else if (usersinfo.get(3).equals("Scoping")) {
+                                Scoping_Time_Report time_r = new Scoping_Time_Report();
+                                time_r.show();
+                                time_r.setLocationRelativeTo(null);
                             }
                             loading.dispose();
                         } catch (ParseException | IOException ex) {
@@ -134,7 +138,7 @@ public class Metrics {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String user = System.getProperty("user.name");
-        //String user = "EISLLIN";
+        // String user = "egabizq";
         System.out.println("Current user: " + user);
 
         try {

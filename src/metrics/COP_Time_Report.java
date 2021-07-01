@@ -3076,7 +3076,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
-        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss"};
+        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping"};
         for (int i = 0; i < strs.length; i++) {
             tables.add(strs[i]); // Check for every table
         }
