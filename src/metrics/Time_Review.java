@@ -446,6 +446,7 @@ public class Time_Review extends javax.swing.JFrame {
         jMenuTeams = new javax.swing.JMenu();
         jMICOP = new javax.swing.JMenuItem();
         jMIPSS = new javax.swing.JMenuItem();
+        jMIScoping = new javax.swing.JMenuItem();
         jMISourcing = new javax.swing.JMenuItem();
         jMIVSS = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
@@ -851,7 +852,7 @@ public class Time_Review extends javax.swing.JFrame {
                                     .addComponent(jRBNetwork)
                                     .addComponent(jRBSubnetwork))))
                         .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1403,11 +1404,6 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel21.setText("CU:");
 
         jCBTaskCU.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTaskCU.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTaskCUActionPerformed(evt);
-            }
-        });
 
         jLTask1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTask1.setText("Deliverable:");
@@ -2261,6 +2257,15 @@ public class Time_Review extends javax.swing.JFrame {
         });
         jMenuTeams.add(jMIPSS);
 
+        jMIScoping.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMIScoping.setText("Scoping");
+        jMIScoping.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIScopingActionPerformed(evt);
+            }
+        });
+        jMenuTeams.add(jMIScoping);
+
         jMISourcing.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMISourcing.setText("Sourcing");
         jMISourcing.addActionListener(new java.awt.event.ActionListener() {
@@ -2565,17 +2570,15 @@ public class Time_Review extends javax.swing.JFrame {
 
     private void jBSaveTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTaskActionPerformed
         // TODO add your handling code here:
-        String loe1 = jTFLOE.getText();
-        Pattern decimalPattern = Pattern.compile("^-?[0-9](?:\\.[0-9]{1,3})?$");
-        Matcher matcherLOE = decimalPattern.matcher(loe1);
-        boolean flagLOE = matcherLOE.find();
-        if (jTFTaskName.getText().equals("") && jTFLOE.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Task field and/or LOE is empty! Please fill the fields.");
-        } 
-        else if (flagLOE){
+        String loe = jTFLOE.getText();
+        Pattern decimalPattern = Pattern.compile("^-?\\d{0,2}(\\.\\d{1,2})?");
+        Matcher matcherLOE = decimalPattern.matcher(loe);
+        boolean flagLOE = matcherLOE.matches();
+        if (jTFTaskName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Task field is empty!");
+        } else if (!flagLOE && !loe.equals("")){
             JOptionPane.showMessageDialog(this, "LOE is not a number! Please type a number with maximum two decimals.");
-        }
-        else {
+        } else {
             jLLoading.setText("Saving task into database...");
             new Thread(new Runnable() {
                 @Override
@@ -3005,8 +3008,34 @@ public class Time_Review extends javax.swing.JFrame {
         for (int i = 0; i < customers.size(); i ++){
             jCBTaskCU.addItem(customers.get(i));
         }
+        // Update task id
+        jCBTaskType.removeAllItems();
+        UpdateTaskType(team);
     }//GEN-LAST:event_jCBTaskTeamActionPerformed
 
+    private void UpdateTaskType(String team){
+         // Update task id in Add Task panel
+        String _team = "  "; 
+        
+        HashMap<String, String> list_teams = new HashMap<String, String>();
+        list_teams.put("COP", "COP");
+        list_teams.put("PSS", "NAT");
+        list_teams.put("Scoping", "SCP");
+        list_teams.put("SDU", "ADMIN");
+        list_teams.put("Sourcing", "SE");
+        list_teams.put("VSS", "VSS");
+        
+        if (team.equals("Sourcing")){            
+            _team = "ST";                    
+        }        
+        for (int i = 0; i < tasktypes.size(); i++){
+            if (tasktypes.get(i).contains(list_teams.get(team)) || tasktypes.get(i).contains(_team)){
+                System.out.println("SI ENTRAAAA  " + tasktypes.get(i));
+                jCBTaskType.addItem(tasktypes.get(i));
+            }
+        }        
+    }
+    
     private void jBDeleteCUSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteCUSuppActionPerformed
         // TODO add your handling code here:
         String normalTeam = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
@@ -3816,29 +3845,43 @@ public class Time_Review extends javax.swing.JFrame {
         loading.setVisible(true);
     }//GEN-LAST:event_jMIPSSActionPerformed
 
-    private void jCBTaskCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTaskCUActionPerformed
-        // Update task type combobox according to CU
-        jCBTaskType.removeAllItems();
-        ArrayList<String> types = new ArrayList<>();
-        String team = jCBTaskTeam.getSelectedItem().toString();
-        String cu = "", c_cu  = "";
-        if (jCBTaskCU.getItemCount() != 0){
-         cu = jCBTaskCU.getSelectedItem().toString();
-            if (cu.equals("AT&T")){
-                c_cu = "ATT";
+    private void jMIScopingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIScopingActionPerformed
+        // Open Scoping frame       
+        StartDialog starting = new StartDialog();
+        JDialog loading = starting.GetLoadingDialog();
+        loading.setModal(true);
+        loading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        loading.toFront();
+        loading.requestFocus();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Scoping_Time_Report time_r = new Scoping_Time_Report();
+                    time_r.show();
+                    time_r.setLocationRelativeTo(null);
+                    // Confirm exit window
+                    time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                    time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                            if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit Scoping",
+                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                time_r.dispose();
+
+                            }
+                        }
+                    });
+                    loading.dispose();
+                } catch (ParseException | IOException ex) {
+                    Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-        for (int i = 0; i < tasktypes.size(); i++) {
-            System.out.println(cu + " - " + c_cu);
-            if (tasktypes.get(i).contains(team) && (tasktypes.get(i).contains(cu) || tasktypes.get(i).contains(c_cu))) {
-                types.add(tasktypes.get(i));
-            }
-        }
-        Collections.sort(types);
-        for (int i = 0; i < types.size(); i ++){
-            jCBTaskType.addItem(types.get(i));
-        }
-    }//GEN-LAST:event_jCBTaskCUActionPerformed
+        }).start();
+        loading.toFront();
+        loading.requestFocus();
+        loading.setVisible(true);
+    }//GEN-LAST:event_jMIScopingActionPerformed
 
     private void GetTaskTypes() {
         // Get different task ids
@@ -4090,6 +4133,7 @@ public class Time_Review extends javax.swing.JFrame {
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery();
+            ArrayList<String> _teams = new ArrayList<>();
             while (resultset.next()) {
                 String[] row1 = {resultset.getString("Team"), resultset.getString("Customer_Unit")};
                 // If task has same name but different task_id
@@ -4194,23 +4238,18 @@ public class Time_Review extends javax.swing.JFrame {
                         List<String> newList2 = Arrays.asList(row2);
                         teamsCUSTasks.addAll(newList2);
                     }
-                }
-                if (!teams.isEmpty()) {
-                    if (!teams.contains(team1)) {
-                        teams.add(team1);
-                        jCBTaskTeam.addItem(team1);
-                        jCBTeam.addItem(team1);
-                        jCBSupportedTeam.addItem(team1);
-                        jCBTeamTaskSearch.addItem(team1);
-                    }
-                } else {
-                    teams.add(team1);
-                    jCBTaskTeam.addItem(team1);
-                    jCBTeam.addItem(team1);
-                    jCBSupportedTeam.addItem(team1);
-                    jCBTeamTaskSearch.addItem(team1);
-                }
+                }                
+                if (!_teams.contains(team1)){
+                   _teams.add(team1);
+                }                              
                 model.addRow(row);
+            }
+            for (int i = 0; i < _teams.size(); i++){
+                teams.add(_teams.get(i));
+                jCBTaskTeam.addItem(_teams.get(i));
+                jCBTeam.addItem(_teams.get(i));
+                jCBSupportedTeam.addItem(_teams.get(i));
+                jCBTeamTaskSearch.addItem(_teams.get(i));
             }
             Collections.sort(tasks);
             //for (int i = 0; i<tasks.size(); i++)
@@ -4497,7 +4536,8 @@ public class Time_Review extends javax.swing.JFrame {
             CU_list.put("COP", "C_");
             CU_list.put("VSS", "V_");
             CU_list.put("PSS", "P_");
-            CU_list.put("Scoping", "SCP_");        
+            CU_list.put("Scoping", "SCP_");  
+            CU_list.put("Sourcing", "");
             
             cu1 = CU_list.get(team1) + cu1; 
             
@@ -4595,9 +4635,9 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println("Length of Integer ID: " + String.valueOf(idd).length());
             ID = type + "-" + new String(new char[idd2.length() - String.valueOf(idd).length()]).replace("\0", "0") + idd;
             System.out.println("New ID: " + ID);
-            // connection.close();
-
-            // connection = SQL_connection.getConnection();
+            if (loe.equals("")){
+                loe = "-1.00";
+            }
             preparedStatement = connection.prepareStatement("INSERT INTO tasks (Task_ID, Task, Team, Customer_Unit, SAP_Billable, Service_Package_Name, Deliverable, Project_Support_Domain, LoE) "
                     + "VALUES (?,?,?,?,?,?,?,?,?);");
             preparedStatement.setObject(1, ID);
@@ -4661,12 +4701,13 @@ public class Time_Review extends javax.swing.JFrame {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         try {
-            String taskid1 = "";
-            String tname = jCBTaskSearch.getItemAt(jCBTaskSearch.getSelectedIndex());
+            String task_id = "";
+            String task = jCBTaskSearch.getSelectedItem().toString();
+            //Get task id
             for (int i = 0; i < taskIDandTasks.size(); i++){
                 if (i%2 == 0){
-                    if (tname.equals(taskIDandTasks.get(i+1))){
-                        taskid1 = taskIDandTasks.get(i);
+                    if (task.equals(taskIDandTasks.get(i+1))){
+                        task_id = taskIDandTasks.get(i);
                     }
                 }
             }
@@ -4675,7 +4716,7 @@ public class Time_Review extends javax.swing.JFrame {
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("SELECT Task_ID, Task, Team, Customer_Unit, Service_Package_Name, Deliverable, Project_Support_Domain, LoE FROM tasks "
                     + "WHERE Task_ID = ?;");
-            preparedStatement.setObject(1, taskid1);
+            preparedStatement.setObject(1, task_id);
             System.out.println("Query: " + preparedStatement);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -4687,15 +4728,13 @@ public class Time_Review extends javax.swing.JFrame {
                 deliv = resultSet.getString("Deliverable");
                 psd = resultSet.getString("Project_Support_Domain");
                 loe = resultSet.getString("LoE");
-
-                for (int i = 0; i < 21; i++) {
-                    if (tid.startsWith(jCBTaskType.getItemAt(i))) {
-                        jCBTaskType.setSelectedIndex(i);
-                    }
-                }
+                
+                int index = tid.lastIndexOf("-");
+                String task_type = tid.substring(index);
+                System.out.println(tid + taskname + team + cu + spn + deliv + psd + loe);
                 jTFTaskName.setText(taskname);
                 jCBTaskTeam.setSelectedItem(team);
-                jCBTaskTeamActionPerformed(null);
+                jCBTaskType.setSelectedItem(task_type);
                 jCBTaskCU.setSelectedItem(cu);
                 jCBServicePN.setSelectedItem(spn);
                 jCBDeliverable.setSelectedItem(deliv);
@@ -5572,6 +5611,7 @@ public class Time_Review extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMEditUsers;
     private javax.swing.JMenuItem jMICOP;
     private javax.swing.JMenuItem jMIPSS;
+    private javax.swing.JMenuItem jMIScoping;
     private javax.swing.JMenuItem jMISourcing;
     private javax.swing.JMenuItem jMIVSS;
     private javax.swing.JMenuItem jMReview;

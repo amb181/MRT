@@ -1718,7 +1718,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jLabelDescAbout.setText("<html>The idea of taking nordic runes to create the MRT logo comes from the Bluetooth logo since it is the most<br/>famous patent of Ericsson so, we decided to relate this desktop app to it.<br/><br/>MRT stands for \"Metrics Recording Tool\" and we can find those initials in the logo.<br/> <br/>This logo is formed with the three runes shown above, this runes resemblance to the letters M, R and T.<br/>They come from the Elder Futhark Runic alphabet and their meanings form the philosophy of this tool. <br/><br/>This philosophy is to meet the need of recording your daily journey. </html>");
 
         jLabelSupport.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLabelSupport.setText("<html>Support:<br/>alejandro.molina.bermudez@ericsson.com<br/>rafael.gomez.sanchez@ericsson.com</html>");
+        jLabelSupport.setText("<html>Support:<br/>alejandro.molina.bermudez@ericsson.com<br/>dulce.cao@ericsson.com</html>");
 
         jLabelVersion.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabelVersion.setText("Version: ");
