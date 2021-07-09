@@ -3030,7 +3030,6 @@ public class Time_Review extends javax.swing.JFrame {
         }        
         for (int i = 0; i < tasktypes.size(); i++){
             if (tasktypes.get(i).contains(list_teams.get(team)) || tasktypes.get(i).contains(_team)){
-                System.out.println("SI ENTRAAAA  " + tasktypes.get(i));
                 jCBTaskType.addItem(tasktypes.get(i));
             }
         }        
