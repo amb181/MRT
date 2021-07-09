@@ -4672,7 +4672,8 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-                } else if (task_.equals("On the Job Training")) {
+               } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
+                        task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";
