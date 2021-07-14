@@ -2761,14 +2761,16 @@ public class Time_Review extends javax.swing.JFrame {
                                 String workCenter1 = resultset.getString("CATS_Number");
                                 String jobStage1 = resultset.getString("Job_Stage");
 
-                                if (team1.equals("COP")) {
-                                    customerunit1 = customerunit1.replace("C_", "");
-                                }
-                                if (team1.equals("VSS")) {
-                                    customerunit1 = customerunit1.replace("V_", "");
-                                }
-                                if (team1.equals("PSS")) {
-                                    customerunit1 = customerunit1.replace("P_", "");
+                                HashMap<String, String> CU_list = new HashMap<String, String>();
+
+                                // Add keys and values (Team name, Prefix)
+                                CU_list.put("COP", "C_");
+                                CU_list.put("VSS", "V_");
+                                CU_list.put("PSS", "P_");
+                                CU_list.put("Scoping", "SCP_");                               
+
+                                if (CU_list.containsKey(team1)) {
+                                    customerunit1 = customerunit1.replace(CU_list.get(team1), "");                                    
                                 }
 
                                 jTFSignum.setText(signum1);
@@ -4497,19 +4499,26 @@ public class Time_Review extends javax.swing.JFrame {
             int access = jCBAccess.getSelectedIndex();
             String supportingCU = jTFSupCU.getText();
             String supportingTeam = jTFSupTeam.getText();
-            String team1 = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
-            String cu1 = jCBCustomerUnit.getItemAt(jCBCustomerUnit.getSelectedIndex());
+            String team1 = jCBTeam.getSelectedItem().toString();
+            String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
             String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
             String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
             
-            if (team1.equals("COP")) {
-                cu1 = "C_" + cu1;
-            } else if (team1.equals("VSS")) {
-                cu1 = "V_" + cu1;
-            }
+            HashMap<String, String> team_list = new HashMap<String, String>();
+
+            // Add keys and values (Team name, Prefix)
+            team_list.put("COP", "C_");
+            team_list.put("VSS", "V_");
+            team_list.put("PSS", "P_");
+            team_list.put("Scoping", "SCP_");  
+            team_list.put("Sourcing", "");
+            
+            if (!team1.equals("SDU") && !cu1.equals("")){
+                cu1 = team_list.get(team1) + cu1;                
+            }           
             
             if (!js1.equals("N/A"))
                 js1 = "Job Stage " + js1;
@@ -4554,8 +4563,8 @@ public class Time_Review extends javax.swing.JFrame {
             int access = jCBAccess.getSelectedIndex();
             String supportingCU = jTFSupCU.getText();
             String supportingTeam = jTFSupTeam.getText();
-            String team1 = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
-            String cu1 = jCBCustomerUnit.getItemAt(jCBCustomerUnit.getSelectedIndex());
+            String team1 = jCBTeam.getSelectedItem().toString();
+            String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
             String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
@@ -4571,7 +4580,9 @@ public class Time_Review extends javax.swing.JFrame {
             CU_list.put("Scoping", "SCP_");  
             CU_list.put("Sourcing", "");
             
-            cu1 = CU_list.get(team1) + cu1; 
+            if (!team1.equals("SDU") && !cu1.equals("")){
+                cu1 = CU_list.get(team1) + cu1;                
+            }             
             
             if (!js1.equals("N/A"))
                 js1 = "Job Stage " + js1;
