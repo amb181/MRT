@@ -1553,7 +1553,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1571,7 +1571,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 248, Short.MAX_VALUE))
+                        .addGap(0, 286, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2525,7 +2525,7 @@ public class Time_Review extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPEditTask.setVisible(true);
         jPMarket.setVisible(false);
-        ResetTaskFields();
+        // ResetTaskFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Tasks");
         //this.setSize(jPEditTask.getPreferredSize());
     }//GEN-LAST:event_jMEditTaskActionPerformed
@@ -3010,6 +3010,9 @@ public class Time_Review extends javax.swing.JFrame {
         }
         // Update task id
         jCBTaskType.removeAllItems();
+        jCBServicePN.removeAllItems();
+        jCBDeliverable.removeAllItems();
+        jCBProjectSuppDom.removeAllItems();
         UpdateTaskType(team);
     }//GEN-LAST:event_jCBTaskTeamActionPerformed
 
@@ -3027,12 +3030,37 @@ public class Time_Review extends javax.swing.JFrame {
         
         if (team.equals("Sourcing")){            
             _team = "ST";                    
-        }        
+        }
+        // Fill task type
         for (int i = 0; i < tasktypes.size(); i++){
             if (tasktypes.get(i).contains(list_teams.get(team)) || tasktypes.get(i).contains(_team)){
                 jCBTaskType.addItem(tasktypes.get(i));
             }
-        }        
+        }
+        // Fill service package name
+        for (int i = 0; i < servicePackageNames.size(); i++){
+            int _index_team = servicePackageNames.get(i).lastIndexOf("#");
+            String aux_team = servicePackageNames.get(i).substring(_index_team);
+            if (aux_team.replace("#", "").equals(team)){
+                jCBServicePN.addItem(servicePackageNames.get(i).substring(0, _index_team));
+            }
+        }
+        // Fill deliverable
+        for (int i = 0; i < deliverableList.size(); i++){
+            int _index_team = deliverableList.get(i).lastIndexOf("#");
+            String aux_team = deliverableList.get(i).substring(_index_team);
+            if (aux_team.replace("#", "").equals(team)){
+                jCBDeliverable.addItem(deliverableList.get(i).substring(0, _index_team));
+            }
+        }
+        // Fill project support domain
+        for (int i = 0; i < projectSupportNames.size(); i++){
+            int _index_team = projectSupportNames.get(i).lastIndexOf("#");
+            String aux_team = projectSupportNames.get(i).substring(_index_team);
+            if (aux_team.replace("#", "").equals(team)){
+                jCBProjectSuppDom.addItem(projectSupportNames.get(i).substring(0, _index_team));
+            }
+        }
     }
     
     private void jBDeleteCUSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteCUSuppActionPerformed
@@ -4043,7 +4071,6 @@ public class Time_Review extends javax.swing.JFrame {
     }
 
     private void GetAllUsers() {
-        System.out.println("Testing...");
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
@@ -4117,6 +4144,9 @@ public class Time_Review extends javax.swing.JFrame {
     }
 
     private void GetAllTasks() {
+        servicePackageNames.clear();
+        deliverableList.clear();
+        projectSupportNames.clear();
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
@@ -4154,36 +4184,37 @@ public class Time_Review extends javax.swing.JFrame {
                     }
                 }
                 
-                if (servicePackageNames.isEmpty()){
-                    servicePackageNames.add(resultset.getString("Service_Package_Name"));
-                    jCBServicePN.addItem(resultset.getString("Service_Package_Name"));
+                String spn = resultset.getString("Service_Package_Name");
+                spn +="#" + resultset.getString("Team");
+                if (servicePackageNames.size() == 0){
+                    servicePackageNames.add(spn);
                 } else {
-                    if (!servicePackageNames.contains(resultset.getString("Service_Package_Name"))){
-                        servicePackageNames.add(resultset.getString("Service_Package_Name"));
-                        jCBServicePN.addItem(resultset.getString("Service_Package_Name"));
+                    if (!servicePackageNames.contains(spn)) {
+                        servicePackageNames.add(spn);
                     }
                 }
                 
-                if (deliverableList.isEmpty()){
-                    deliverableList.add(resultset.getString("Deliverable"));
-                    jCBDeliverable.addItem(resultset.getString("Deliverable"));
+                String deliv = resultset.getString("Deliverable");
+                deliv += "#" + resultset.getString("Team");
+                if (deliverableList.size() == 0){
+                    deliverableList.add(deliv);
                 } else {
-                    if (!deliverableList.contains(resultset.getString("Deliverable"))){
-                        deliverableList.add(resultset.getString("Deliverable"));
-                        jCBDeliverable.addItem(resultset.getString("Deliverable"));
+                    if (!deliverableList.contains(deliv)) {
+                        deliverableList.add(deliv);
                     }
                 }
                 
-                if (projectSupportNames.isEmpty()){
-                    projectSupportNames.add(resultset.getString("Project_Support_Domain"));
-                    jCBProjectSuppDom.addItem(resultset.getString("Project_Support_Domain"));
+                String psd = resultset.getString("Project_Support_Domain");
+                psd += "#" + resultset.getString("Team");
+                if (projectSupportNames.size() == 0){
+                    projectSupportNames.add(psd);
                 } else {
-                    if (!projectSupportNames.contains(resultset.getString("Project_Support_Domain"))){
-                        projectSupportNames.add(resultset.getString("Project_Support_Domain"));
-                        jCBProjectSuppDom.addItem(resultset.getString("Project_Support_Domain"));
+                    if (!projectSupportNames.contains(psd)) {
+                        projectSupportNames.add(psd);
                     }
                 }
-
+                
+                
                 for (int i = 0; i < 8; i++) {
                     row[i] = resultset.getString(i + 1);
                 }
@@ -4251,6 +4282,9 @@ public class Time_Review extends javax.swing.JFrame {
                 jCBTeamTaskSearch.addItem(_teams.get(i));
             }
             Collections.sort(tasks);
+            Collections.sort(servicePackageNames);
+            Collections.sort(deliverableList);
+            Collections.sort(projectSupportNames);
             //for (int i = 0; i<tasks.size(); i++)
             //    jCBTaskSearch.addItem(tasks.get(i));
             jTTasksList.setModel(model);
@@ -4260,7 +4294,6 @@ public class Time_Review extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        System.out.println(teamsAndCUs);
     }
     
     private void GetAllMarkets(){
