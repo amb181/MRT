@@ -143,6 +143,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         editor2.setEditable(false);
         Calendar now = Calendar.getInstance();
         current_week = now.get(Calendar.WEEK_OF_YEAR);
+            if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                current_week = current_week - 1;
+            }
         // Set current week panel 2
         for (int i = 1; i <= current_week; i++) {
             jcbWeek1.addItem(String.valueOf(i));
@@ -165,7 +168,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         cal.setTime(date_);
         cal.setTime(date_1);
         cal.setTime(date_2);
-        week = cal.get(Calendar.WEEK_OF_YEAR);
+        week = current_week;
         edit_week = week;
         jTextFieldWeek.setText(String.valueOf(week));
         jTextFieldWeek_MarketBulk.setText(String.valueOf(week));
@@ -967,6 +970,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jLRequests.setText("Number of requests:");
 
         jTextFieldRequests.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jTextFieldRequests.setText("1");
 
         jLComments.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLComments.setText("Comments:");
@@ -1008,6 +1012,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
         jcbFTR.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jcbFTR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N/A", "Yes", "No" }));
+        jcbFTR.setSelectedIndex(1);
 
         jLFTR.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLFTR.setText("FTR:");
@@ -1020,6 +1025,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
         jcbOnTime.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jcbOnTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N/A", "Yes", "No" }));
+        jcbOnTime.setSelectedIndex(1);
 
         jLOnTime.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLOnTime.setText("On Time:");
@@ -1906,7 +1912,6 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 System.out.println("Rows to insert: " + rows);
                 boolean error = false;
                 DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-
                 // Validate jAddMetrics table's info
                 for (int row = 0; row < rows; row++) {
                     String cu = (String) jTableAddMetrics.getValueAt(0, 0);
@@ -2047,11 +2052,10 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     }
 
                     // If something failed show where it did
-                    int current_row = row + 1;
                     if (!failed.equals("")) {
-                        JOptionPane.showMessageDialog(PSS_Time_Report.this, "Please verify your info near " + failed + " in row " + current_row + ".");
+                        JOptionPane.showMessageDialog(PSS_Time_Report.this, "Please verify your info near " + failed + " in row 1");
                         error = true;
-                        System.out.println("Error near " + failed + " in row " + current_row);
+                        System.out.println("Error near " + failed + " in row 1");
                         break;
                     }
                     int res = 0;
@@ -2238,7 +2242,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
             int result = callableStatement.getInt(24);
             if (result == 0) {
-                saved = "Unable to save " + task + " with time " + time + ".\nYou may have exceeded 24 hours.\nPlease verify rows were saved before this one.";
+                saved = "Unable to save " + task + " with time " + time + ".\nYou may have exceeded 24 hours.\nPlease verify rows saved before this one.";
             } else {
                 saved = "Data saved successfully!";
             }
@@ -2267,8 +2271,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jTextFieldNetwork.setText("");
         jTextFieldActivity.setText("");
         jTextFieldRequestor.setText("");
-        jcbFTR.setSelectedIndex(0);
-        jcbOnTime.setSelectedIndex(0);
+        jcbFTR.setSelectedIndex(1);
+        jcbOnTime.setSelectedIndex(1);
         jcbFailedFTR.setSelectedIndex(0);
         jcbFailedOnTime.setSelectedIndex(0);
         jTextFieldRequests.setText("");
@@ -2736,8 +2740,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             jTextFieldRequests.setText("");
             jTextFieldRequestor.setText("");
             jTextFieldComments.setText("");
-            jcbFTR.setSelectedIndex(0);
-            jcbOnTime.setSelectedIndex(0);
+            jcbFTR.setSelectedIndex(1);
+            jcbOnTime.setSelectedIndex(1);
             jcbFailedFTR.setSelectedIndex(0);
             jcbFailedOnTime.setSelectedIndex(0);
             jRSingle.setSelected(true);
@@ -2778,9 +2782,13 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
     private void jBClearTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearTableActionPerformed
         // Clear table button
         DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-        tblModel.setRowCount(0);
-        ClearDataPanel1();
-        JOptionPane.showMessageDialog(this, "Table is empty.");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear the table?", "Warning", dialogButton);
+        if (dialogResult == 0) { // If 'YES'
+            tblModel.setRowCount(0);
+            JOptionPane.showMessageDialog(this, "Table is empty.");
+            ClearDataPanel1();
+        }
     }//GEN-LAST:event_jBClearTableActionPerformed
 
     private void jcbTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTaskActionPerformed
@@ -2966,41 +2974,47 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
             while (count < 2) {
                 // Insert row
-                if (tasks.get(0).contains("ADMIN")) {
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")){
                     sb.append("SDU" + ',');                             // CU
                     sb.append("SDU" + ',');                             // Region
                     sb.append("SDU" + ',');                             // Market
                 } else {
-                    sb.append(cu + ',');
-                    sb.append(nets.get(5 + (count * 6)) + ',');
-                    sb.append(nets.get(4 + (count * 6)) + ',');
+                    sb.append(cu + ',');                                    // CU
+                    sb.append(nets.get(5 + (count * 6)) + ',');             // Region
+                    sb.append(nets.get(4 + (count * 6)) + ',');             // Market
                 }
                 sb.append(usersinfo.get(0) + ',');                      // Signum
                 sb.append("N/A" + ',');                                 // Requestor
                 sb.append(tasks.get(0 + (count * 3)) + ',');            // Task ID
                 sb.append(tasks.get(1 + (count * 3)) + ',');            // Task
-                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
-                    sb.append("0" + ',');
-                    sb.append("0" + ',');
-                    sb.append("0" + ',');
-                    sb.append("N/A" + ',');
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")){
+                    sb.append("0" + ',');             // Network
+                    sb.append("0" + ',');             // Subetwork
+                    sb.append("0" + ',');             // Activity
+                    sb.append("N/A" + ',');             // Technology
+                    sb.append("Not Billable" + ',');            // SAP
                 } else {
-                    sb.append(nets.get(0 + (count * 6)) + ',');  // Network
-                    sb.append(nets.get(1 + (count * 6)) + ',');  // Subetwork
-                    sb.append(nets.get(2 + (count * 6)) + ',');  // Activity
-                    sb.append(nets.get(3 + (count * 6)) + ',');      // Technology
+                    sb.append(nets.get(0 + (count * 6)) + ',');             // Network
+                    sb.append(nets.get(1 + (count * 6)) + ',');             // Subetwork
+                    sb.append(nets.get(2 + (count * 6)) + ',');             // Activity
+                    sb.append(nets.get(3 + (count * 6)) + ',');             // Technology
+                    sb.append(tasks.get(2 + (count * 3)) + ',');            // SAP
                 }
-                sb.append(tasks.get(2 + (count * 3)) + ',');    // SAP
-                sb.append(date_change + ',');                   // Date
-                sb.append("8.25" + ',');                        // Time
-                sb.append(current_week);                        // Week
+                sb.append(date_change + ',');                           // Date
+                sb.append("8.25" + ',');                                // Time
+                sb.append(current_week);                                // Week
                 sb.append(',');
-                sb.append("N/A" + ',');                         // FTR
-                sb.append("N/A" + ',');                         // On time
-                sb.append("N/A" + ',');                         // Failed ftr
-                sb.append("N/A" + ',');                         // Failed on time
-                sb.append("1" + ',');                           // Num of requests
-                sb.append("N/A" + ',');                         // Comments
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")){
+                    sb.append("N/A" + ',');                                 // FTR
+                    sb.append("N/A" + ',');                                 // On time
+                } else {
+                    sb.append("Yes" + ',');                                 // FTR
+                    sb.append("Yes" + ',');                                 // On time
+                }
+                sb.append("N/A" + ',');                                 // Failed ftr
+                sb.append("N/A" + ',');                                 // Failed on time
+                sb.append("1" + ',');                                   // Num of requests
+                sb.append("N/A" + ',');                                 // Comments
                 sb.append('\n');
                 count += 1;
             }
@@ -3049,6 +3063,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         ClearDataPanel1();
         GetHours();
         GetDailyHours();
+        // Clear table
+        DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
+        tblModel.setRowCount(0);
     }//GEN-LAST:event_jMenuItemRecordActionPerformed
 
     private void jBSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchActionPerformed

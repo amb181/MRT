@@ -598,7 +598,7 @@ public class Time_Review extends javax.swing.JFrame {
         jCBUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         jCBMetricTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBMetricTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Sourcing", "COP", "VSS", "PSS" }));
+        jCBMetricTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "COP", "PSS", "Scoping", "Sourcing", "VSS" }));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 130, 240), 1, true));
@@ -2346,7 +2346,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1922, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))

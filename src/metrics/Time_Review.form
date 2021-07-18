@@ -737,12 +737,13 @@
               <Font name="Ericsson Hilda" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="6">
                 <StringItem index="0" value="All"/>
-                <StringItem index="1" value="Sourcing"/>
-                <StringItem index="2" value="COP"/>
-                <StringItem index="3" value="VSS"/>
-                <StringItem index="4" value="PSS"/>
+                <StringItem index="1" value="COP"/>
+                <StringItem index="2" value="PSS"/>
+                <StringItem index="3" value="Scoping"/>
+                <StringItem index="4" value="Sourcing"/>
+                <StringItem index="5" value="VSS"/>
               </StringArray>
             </Property>
           </Properties>
