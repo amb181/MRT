@@ -3504,7 +3504,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jcbTask.addItem("Select an activity...");
         ArrayList<String> check_list = new ArrayList<>();
         String task = null;
-
+        jTextFieldRequests.setText("1");
         if (sap.equals("Not Billable")) {
             jcbRegion.removeAllItems();
             jcbRegion.addItem("SDU");
