@@ -2799,9 +2799,13 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
     private void jBClearTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearTableActionPerformed
         // Clear table button
         DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-        tblModel.setRowCount(0);
-        ClearDataPanel1();
-        JOptionPane.showMessageDialog(this, "Table is empty.");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear the table?", "Warning", dialogButton);
+        if (dialogResult == 0) { // If 'YES'
+            tblModel.setRowCount(0);
+            JOptionPane.showMessageDialog(this, "Table is empty.");
+            ClearDataPanel1();
+        }
     }//GEN-LAST:event_jBClearTableActionPerformed
 
     private void jcbTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTaskActionPerformed
