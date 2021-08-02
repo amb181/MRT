@@ -2590,6 +2590,7 @@ public class Time_Review extends javax.swing.JFrame {
                     }
                     jLLoading.setText("Updating task's local table...");
                     GetAllTasks();
+                    
                     jDLoading.dispose();
                 }
             }).start();
@@ -4146,6 +4147,7 @@ public class Time_Review extends javax.swing.JFrame {
     }
 
     private void GetAllTasks() {
+        tasks.clear();
         servicePackageNames.clear();
         deliverableList.clear();
         projectSupportNames.clear();
@@ -4287,8 +4289,9 @@ public class Time_Review extends javax.swing.JFrame {
             Collections.sort(servicePackageNames);
             Collections.sort(deliverableList);
             Collections.sort(projectSupportNames);
-            //for (int i = 0; i<tasks.size(); i++)
-            //    jCBTaskSearch.addItem(tasks.get(i));
+            /*for (int i = 0; i < tasks.size(); i++) {
+                jCBTaskSearch.addItem(tasks.get(i));
+            }*/
             jTTasksList.setModel(model);
             resizeColumnWidth(jTTasksList);
             //jTTasksList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
