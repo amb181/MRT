@@ -2087,6 +2087,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(PSS_Time_Report.this, saved);
                     ClearDataPanel1();
+                    jTextFieldRequests.setText("1");
                 }
             }
         }).start();
