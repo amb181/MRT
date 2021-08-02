@@ -3296,6 +3296,9 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                         if (!week.equals(String.valueOf(correct_week)) || week.equals("")) {           // Week -> Validate week for date 
                             failed = "Week " + week;
                         }
+                        if (!(Integer.parseInt(week) >= current_week - 2 && Integer.parseInt(week) <= current_week + 2)) {
+                            failed = "Week " + week;
+                        }
                         if (comments.equals("") || comments.isEmpty()) {
                             failed = "Comments";
                         }
@@ -3493,6 +3496,9 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                             Logger.getLogger(Scoping_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         GetDailyHours1();
+                        GetHours();
+                        Scoping_Time_Report.this.setTitle("Scoping               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
+                                + "Hours: " + hours);
                         JOptionPane.showMessageDialog(Scoping_Time_Report.this, "Row deleted.");
                         System.out.println("After delete row: " + metrics_scoping_info);
                     }
