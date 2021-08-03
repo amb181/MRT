@@ -2133,7 +2133,16 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 return failed = "Region: " + region;
             }
             if (!market.equals(networks_info.get(net_index + 3))) {
-                return failed = "Market: " + market;
+                String _network = networks_info.get(net_index);
+                boolean found = false;
+                for (int i = 0; i < networks_info.size(); i++){
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 3).equals(subnet)){
+                       found = true; 
+                    }
+                }
+                if (found == false){
+                    return failed = "Market: " + market;
+                }
             }
             if (!subnet.equals(networks_info.get(net_index + 5))) {
                 String _network = networks_info.get(net_index);
