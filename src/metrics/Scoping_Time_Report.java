@@ -3622,15 +3622,18 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
 
     private void jcbSubnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSubnetActionPerformed
         // Subnetwork combobox
-        String network = (String) jcbSubnet.getSelectedItem();
+        String subnet = (String) jcbSubnet.getSelectedItem();
+        String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            String network_list_item = networks_info.get(i);
-            if (network_list_item.equals(network)) {
+            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu) 
+                    && networks_info.get(i + 1).equals("Scoping")) {
                 //System.out.println(i);
-                int a = i - 5;
-                jTextFieldNetwork.setText(networks_info.get(a));
-                int b = i - 4;
-                jTextFieldActivity.setText(networks_info.get(b));
+                int net = i - 5;
+                jTextFieldNetwork.setText(networks_info.get(net));
+                int act = i - 4;
+                jTextFieldActivity.setText(networks_info.get(act));
+            } else {
+                continue;
             }
         }
         if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {

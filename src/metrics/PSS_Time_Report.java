@@ -229,7 +229,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }
         // Get hours per day in label
         GetDailyHours();
-
+        
         // Fit images in ABOUT option
         ImageIcon logo_ = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/MRT_logo.png")));
         Image logo_cast = logo_.getImage();
@@ -2823,6 +2823,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         if (jcbTask.getSelectedIndex() == 0) {
             jTextFieldTask_ID.setText("");
         }
+        jcbTask.setToolTipText("<html><h3>" + jcbTask.getSelectedItem().toString() + "</h3></html>");
     }//GEN-LAST:event_jcbTaskActionPerformed
 
     private void jRSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRSingleActionPerformed
@@ -3631,15 +3632,18 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
     private void jcbSubnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSubnetActionPerformed
         // Subnetwork combobox
-        String network = (String) jcbSubnet.getSelectedItem();
+        String subnet = (String) jcbSubnet.getSelectedItem();
+        String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            String network_list_item = networks_info.get(i);
-            if (network_list_item.equals(network)) {
+            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu) 
+                    && networks_info.get(i + 1).equals("PSS")) {
                 //System.out.println(i);
-                int a = i - 5;
-                jTextFieldNetwork.setText(networks_info.get(a));
-                int b = i - 4;
-                jTextFieldActivity.setText(networks_info.get(b));
+                int net = i - 5;
+                jTextFieldNetwork.setText(networks_info.get(net));
+                int act = i - 4;
+                jTextFieldActivity.setText(networks_info.get(act));
+            } else {
+                continue;
             }
         }
         if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
