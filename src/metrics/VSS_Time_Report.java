@@ -3473,7 +3473,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         } catch (SQLException ex) {
                             Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        GetDailyHours1();                        
+                        GetDailyHours1();
                         JOptionPane.showMessageDialog(VSS_Time_Report.this, "Row deleted.");
                         System.out.println("After delete row: " + metrics_vss_info);
                         GetHours();
@@ -3603,7 +3603,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         String subnet = (String) jcbSubnet.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu) 
+            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu)
                     && networks_info.get(i + 1).equals("VSS")) {
                 //System.out.println(i);
                 int net = i - 5;
@@ -3613,12 +3613,13 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             } else {
                 continue;
             }
-        if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
-            jTextFieldNetwork.setText("0");
-            jTextFieldActivity.setText("0");
-        } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
-            jTextFieldNetwork.setText("");
-            jTextFieldActivity.setText("");
+            if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
+                jTextFieldNetwork.setText("0");
+                jTextFieldActivity.setText("0");
+            } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
+                jTextFieldNetwork.setText("");
+                jTextFieldActivity.setText("");
+            }
         }
     }//GEN-LAST:event_jcbSubnetActionPerformed
 
@@ -4670,8 +4671,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-               } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
+                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday")
+                        || task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";

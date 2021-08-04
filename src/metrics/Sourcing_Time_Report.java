@@ -170,7 +170,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
                 // If week changes update hours per day table
-                if (week != edit_week){
+                if (week != edit_week) {
                     edit_week = week;
                     GetDailyHours();
                 }
@@ -1991,7 +1991,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
             // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
-            if (current_week != edit_week){
+            if (current_week != edit_week) {
                 current_week = edit_week;
             }
 
@@ -2112,7 +2112,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2 + "\nplease contact your Line Manager.");
             error = true;
         }
-        
+
         if (!error) {
             // Get combo boxes values
             String sap = (String) jcbSAP.getSelectedItem();
@@ -3001,7 +3001,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         String subnet = (String) jcbSubnet.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu) 
+            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu)
                     && networks_info.get(i + 1).equals("Sourcing")) {
                 //System.out.println(i);
                 int net = i - 5;
@@ -3011,12 +3011,13 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             } else {
                 continue;
             }
-        if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
-            jTextFieldNetwork.setText("0");
-            jTextFieldActivity.setText("0");
-        } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
-            jTextFieldNetwork.setText("");
-            jTextFieldActivity.setText("");
+            if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
+                jTextFieldNetwork.setText("0");
+                jTextFieldActivity.setText("0");
+            } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
+                jTextFieldNetwork.setText("");
+                jTextFieldActivity.setText("");
+            }
         }
     }//GEN-LAST:event_jcbSubnetActionPerformed
 
@@ -3487,8 +3488,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
+                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday")
+                        || task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";
