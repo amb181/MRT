@@ -2823,7 +2823,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         if (jcbTask.getSelectedIndex() == 0) {
             jTextFieldTask_ID.setText("");
         }
-        jcbTask.setToolTipText("<html><h3>" + jcbTask.getSelectedItem().toString() + "</h3></html>");
+        if (jcbTask.getItemCount() != 0) {
+            jcbTask.setToolTipText("<html><h3>" + jcbTask.getSelectedItem().toString() + "</h3></html>");
+        }
     }//GEN-LAST:event_jcbTaskActionPerformed
 
     private void jRSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRSingleActionPerformed
