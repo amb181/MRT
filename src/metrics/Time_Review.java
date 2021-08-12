@@ -73,7 +73,7 @@ public class Time_Review extends javax.swing.JFrame {
     List<String> netTeams = new ArrayList<String>();
     List<String> technologies = new ArrayList<String>();
     List<String> networks = new ArrayList<String>();
-    String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EOSCLUG", "EPANVIC"};
+    String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EEDNPRE", "EPANVIC"};
     String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 5", "BNEW SAN SAB SDU MX MANA", "BNEW SAN SAB SDU MX MANA Project Supp 1", "BNEW SAN SAB SDU MX MANA Project Supp 4", "BNEW SAN SAB SDU MX MANA Project Supp 2", "BNEW SAN SAB SDU MX MANA Project Supp 3"};
     String[] ActTypes = {"6000", "6001", "6002", "N/A"};
 
@@ -980,7 +980,12 @@ public class Time_Review extends javax.swing.JFrame {
         });
 
         jCBLineManager.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Lugo Oscar", "Pantoja Victor" }));
+        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Preciado Edna", "Pantoja Victor" }));
+        jCBLineManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBLineManagerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPUserLayout = new javax.swing.GroupLayout(jPUser);
         jPUser.setLayout(jPUserLayout);
@@ -2346,7 +2351,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1922, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -3912,6 +3917,10 @@ public class Time_Review extends javax.swing.JFrame {
         loading.requestFocus();
         loading.setVisible(true);
     }//GEN-LAST:event_jMIScopingActionPerformed
+
+    private void jCBLineManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBLineManagerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBLineManagerActionPerformed
 
     private void GetTaskTypes() {
         // Get different task ids
