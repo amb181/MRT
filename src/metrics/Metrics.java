@@ -163,7 +163,7 @@ public class Metrics {
                 cats_number = resultset.getString("CATS_Number");
                 String full_name = last_name + " " + name;
 
-                usersinfo.add(user);        // 0
+                usersinfo.add(user.toLowerCase());        // 0
                 usersinfo.add(full_name);   // 1
                 usersinfo.add(cu);          // 2
                 usersinfo.add(team);        // 3
@@ -187,7 +187,7 @@ public class Metrics {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        localversion = "3.2"; //Version
+        localversion = "3.3"; //Version
         try {
             connection = SQL_connection.getConnection();
             String sql_version = "SELECT version FROM source_control ORDER BY version DESC LIMIT 1;";

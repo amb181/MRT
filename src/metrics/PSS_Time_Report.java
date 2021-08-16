@@ -2294,7 +2294,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jcbOnTime.setSelectedIndex(1);
         jcbFailedFTR.setSelectedIndex(0);
         jcbFailedOnTime.setSelectedIndex(0);
-        jTextFieldRequests.setText("");
+        jTextFieldRequests.setText("1");
         jRSingle.setSelected(true);
         jRBulk.setSelected(false);
         // Populate jcbTask1 with Billable default
@@ -3966,7 +3966,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jFrameMarketsBulk.setTitle("Bulk for markets");
         jFrameMarketsBulk.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
         jFrameMarketsBulk.setSize(1300, 600);
-        jFrameMarketsBulk.setResizable(false);
+        //jFrameMarketsBulk.setResizable(false);
         jFrameMarketsBulk.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jFrameMarketsBulk.setVisible(true);
         jFrameMarketsBulk.setLocationRelativeTo(null);
