@@ -3583,6 +3583,8 @@ public final class COP_Time_Report extends javax.swing.JFrame {
         jcbSubnet.removeAllItems();
         if (jcbSAP.getSelectedIndex() == 0) {
             jcbSubnet.addItem("Select a subnetwork...");
+            jTextFieldNetwork.setText("");
+            jTextFieldActivity.setText("");
             for (int i = 5; i < networks_info.size(); i += 8) {
                 if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
                     if (networks_info.get(i - 3).equals(jcbRegion.getSelectedItem().toString())) {
@@ -3594,6 +3596,8 @@ public final class COP_Time_Report extends javax.swing.JFrame {
             }
         } else {
             jcbSubnet.addItem("0");
+            jTextFieldNetwork.setText("0");
+            jTextFieldActivity.setText("0");
         }
 
     }//GEN-LAST:event_jcbSAPActionPerformed

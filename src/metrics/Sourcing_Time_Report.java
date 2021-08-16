@@ -194,7 +194,9 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         // Populate jcbNetwork with Billable default
         jcbSubnet.addItem("Select a subnetwork...");
         for (int i = 0; i < networks_info.size(); i += 7) {
-            jcbSubnet.addItem(networks_info.get(i + 5));
+            if (networks_info.get(i + 4).equals(jcbCU.getSelectedItem().toString())){
+                jcbSubnet.addItem(networks_info.get(i + 5));
+            }
         }
         // Get hours per day in label
         GetDailyHours();
@@ -2974,11 +2976,17 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jcbSubnet.removeAllItems();
         if (jcbSAP.getSelectedIndex() == 0) {
             jcbSubnet.addItem("Select a subnetwork...");
+            jTextFieldNetwork.setText("");
+            jTextFieldActivity.setText("");
             for (int i = 0; i < networks_info.size(); i += 7) {
-                jcbSubnet.addItem(networks_info.get(i + 5));
+                if (networks_info.get(i + 4).equals(jcbCU.getSelectedItem().toString())){
+                    jcbSubnet.addItem(networks_info.get(i + 5));
+                }
             }
         } else {
             jcbSubnet.addItem("0");
+            jTextFieldNetwork.setText("0");
+            jTextFieldActivity.setText("0");
         }
 
     }//GEN-LAST:event_jcbSAPActionPerformed
@@ -2998,6 +3006,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void jcbSubnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSubnetActionPerformed
         // Subnetwork combobox
+        System.out.println("H E R E : " + networks_info);
         String subnet = (String) jcbSubnet.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
@@ -3011,7 +3020,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
             } else {
                 continue;
             }
-            if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
+            if (jcbSubnet.getSelectedItem().toString().equals("0") && jcbSAP.getSelectedItem().toString().equals("Not Billable")) {
                 jTextFieldNetwork.setText("0");
                 jTextFieldActivity.setText("0");
             } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
