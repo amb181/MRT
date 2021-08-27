@@ -74,7 +74,15 @@ public class Time_Review extends javax.swing.JFrame {
     List<String> technologies = new ArrayList<String>();
     List<String> networks = new ArrayList<String>();
     String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EEDNPRE", "EPANVIC"};
-    String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 5", "BNEW SAN SAB SDU MX MANA", "BNEW SAN SAB SDU MX MANA Project Supp 1", "BNEW SAN SAB SDU MX MANA Project Supp 4", "BNEW SAN SAB SDU MX MANA Project Supp 2", "BNEW SAN SAB SDU MX MANA Project Supp 3"};
+    String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 1",
+                                "BNEW SAN SAB SDU MX MANA Project Supp 2", 
+                                "BNEW SAN SAB SDU MX MANA Project Supp 3",
+                                "BNEW SAN SAB SDU MX MANA Project Supp 4",
+                                "BNEW SAN SAB SDU MX MANA Project Supp 5", 
+                                "BNEW SAN SAB SDU MX MANA",
+                                "BNEW SAN SAB SDU MX MELA Site Eng 2",
+                                "BNEW SAN SAS SDU Mexico VAS2"
+                                };
     String[] ActTypes = {"6000", "6001", "6002", "N/A"};
 
     ArrayList<String> teamsAndCUs = new ArrayList<>();
@@ -4093,7 +4101,7 @@ public class Time_Review extends javax.swing.JFrame {
         try {
 
             String sql, org1, cu1, team1, name1, name2;
-            String[] organi;
+            String[] organi = new String[100];;
             List<String> orgs = new ArrayList<String>();
             sql = "SELECT Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number"
                     + " FROM users ORDER BY Last_Name asc;";
@@ -4124,7 +4132,11 @@ public class Time_Review extends javax.swing.JFrame {
                     if (!organizations.contains(org1)) {
                         organizations.add(org1);
                         //jCBOrganization.addItem(org1);
-                        organi = org1.split("MX ");
+                        if (org1.contains("MX")){
+                            organi = org1.split("MX ");
+                        } else if (org1.contains("Mexico")){
+                            organi = org1.split("Mexico ");
+                        }
                         //if (organi.length > 1)
                         System.out.println("Org: " + organi[1] + ".");
                         orgs.add(organi[1]);
