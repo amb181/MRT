@@ -2087,7 +2087,6 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(PSS_Time_Report.this, saved);
                     ClearDataPanel1();
-                    jTextFieldRequests.setText("1");
                 }
             }
         }).start();
@@ -2671,7 +2670,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }
         if (!breq) {
             JOptionPane.showMessageDialog(this, "Number of requests must be a number!");
-            jTextFieldRequests.setText("");
+            jTextFieldRequests.setText("1");
             error = true;
         }
         if (!btime) {
@@ -2752,11 +2751,17 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
 
             for (int i = 0; i < entries; i++) {
+                // Check if division sums the original quantity, if not tweak it
+                if (time.multiply(BigDecimal.valueOf(entries)) != BigDecimal.valueOf((Integer.valueOf(jTextFieldTime.getText())))){
+                    if (i == entries - 1) {
+                        data[13] = time.add(BigDecimal.valueOf(0.01)).toString();
+                    }
+                }
                 tblModel.addRow(data);
             }
             // Set all indices to 0
             jTextFieldTime.setText("");
-            jTextFieldRequests.setText("");
+            jTextFieldRequests.setText("1");
             jTextFieldRequestor.setText("");
             jTextFieldComments.setText("");
             jcbFTR.setSelectedIndex(1);
@@ -4647,7 +4652,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
                 } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Admin Support") || task_.equals("National Holiday") || task_.equals("Web Learning")) {
+                        task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";
@@ -4655,6 +4660,12 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     task_ = "Paternity Leave (2203)";
                 } else if (task_.equals("Funeral Leave")) {
                     task_ = "Funeral Leave (2152)";
+                } else if (task_.equals("Admin Support")) {
+                    task_ = "Administration (1210)";
+                } else if (task_.equals("National Holiday")) {
+                    task_ = "";
+                } else if (task_.equals("Sickness")) {
+                    task_ = "Sickness (2100)";
                 } else {    // Not ADMIN
                     task_ = "Productive hours (1000)";
                     activity = usersinfo.get(10);
