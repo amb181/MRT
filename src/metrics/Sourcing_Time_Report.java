@@ -2178,7 +2178,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 // Check if division sums the original quantity, if not tweak it
                 if (time.multiply(BigDecimal.valueOf(entries)) != BigDecimal.valueOf((Integer.valueOf(jTextFieldTime.getText())))){
                     if (i == entries - 1) {
-                        data[13] = time.add(BigDecimal.valueOf(0.01)).toString();
+                        data[10] = time.add(BigDecimal.valueOf(0.01)).toString();
                     }
                 }
                 tblModel.addRow(data);
