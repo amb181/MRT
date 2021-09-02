@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  *
  * @author efgaorm
  */
-public class Time_Review extends javax.swing.JFrame {
+public class Time_Management extends javax.swing.JFrame {
 
     private Map hiddenColumns;
     Connection connection;
@@ -73,7 +73,6 @@ public class Time_Review extends javax.swing.JFrame {
     List<String> netTeams = new ArrayList<String>();
     List<String> technologies = new ArrayList<String>();
     List<String> networks = new ArrayList<String>();
-    String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EEDNPRE", "EPANVIC"};
     String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 1",
                                 "BNEW SAN SAB SDU MX MANA Project Supp 2", 
                                 "BNEW SAN SAB SDU MX MANA Project Supp 3",
@@ -86,12 +85,15 @@ public class Time_Review extends javax.swing.JFrame {
     String[] ActTypes = {"6000", "6001", "6002", "N/A"};
 
     ArrayList<String> teamsAndCUs = new ArrayList<>();
+    ArrayList<String> LMSignums = new ArrayList<>();
     ArrayList<String> taskIDandTasks = new ArrayList<>();
-    ArrayList<String> netTeamsAndCUs = new ArrayList<>();
+    ArrayList<String> networksinfo = new ArrayList<>();
+    ArrayList<String> marketsinfo = new ArrayList<>();
     ArrayList<String> netTeamCURegMark = new ArrayList<>(); // Team, CU, Reg, Market
     ArrayList<String> netMrktTech = new ArrayList<>(); // Market, Technology
     ArrayList<String> netwTeamSubn = new ArrayList<>(); // Team, Customer, Market, Network, Subnetwork
-    ArrayList<String> marketTeamCU = new ArrayList<>(); //id, Market, Region, Team, CU
+    ArrayList<String> marketTeamCU = new ArrayList<>(); //teams
+    ArrayList<String> markTeams = new ArrayList<>(); //teams
     ArrayList<String> servicePackageNames = new ArrayList<>();
     ArrayList<String> deliverableList = new ArrayList<>();
     ArrayList<String> projectSupportNames = new ArrayList<>();
@@ -100,7 +102,7 @@ public class Time_Review extends javax.swing.JFrame {
     /**
      * Creates new form Time_Review
      */
-    public Time_Review() throws ParseException {
+    public Time_Management() throws ParseException {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         setLookAndFeel();
@@ -123,13 +125,13 @@ public class Time_Review extends javax.swing.JFrame {
         //System.out.println("Current week: " + week + ". Current year: " + Calendar.getInstance().get(Calendar.YEAR));
         //week = 52;
         for (int i = 1; i <= 52; i++) {
-            jCBFrom.addItem(String.valueOf(i));  
+            jCBFrom.addItem(String.valueOf(i));
         }
         System.out.println("Number of items: " + jCBFrom.getItemCount());
         //jCBFrom.setSelectedIndex(week);
         jCBYearFrom.setSelectedItem(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
         jCBYearTo.setSelectedItem(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-        
+
         jTableShowMetrics.setEnabled(false);
         jTUsersList.setEnabled(false);
         jTTasksList.setEnabled(false);
@@ -157,6 +159,7 @@ public class Time_Review extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(jCBMetricTeam);
         AutoCompleteDecorator.decorate(jCBNetTeam);
         AutoCompleteDecorator.decorate(jCBNetCustomer);
+        AutoCompleteDecorator.decorate(jCBMarTeam);
         AutoCompleteDecorator.decorate(jCBNetRegion);
         AutoCompleteDecorator.decorate(jCBNetMarket);
         AutoCompleteDecorator.decorate(jCBNetTech);
@@ -180,6 +183,7 @@ public class Time_Review extends javax.swing.JFrame {
         GetAllTasks();
         GetNetworksSearch();
         GetAllMarkets();
+        GetManagerInfo();
         jDLoading.dispose();
         JTableHeader header = jTableShowMetrics.getTableHeader();
         JTableHeader header1 = jTUsersList.getTableHeader();
@@ -405,6 +409,7 @@ public class Time_Review extends javax.swing.JFrame {
         jCBNetCustomer = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
         jCBNetTech = new javax.swing.JComboBox<>();
+        jCBTeam_editnet = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableNetworks = new javax.swing.JTable(){
             @Override
@@ -502,8 +507,6 @@ public class Time_Review extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(1400, 915));
-        setPreferredSize(new java.awt.Dimension(1493, 718));
 
         jPView.setBackground(new java.awt.Color(255, 255, 255));
         jPView.setMaximumSize(new java.awt.Dimension(1400, 915));
@@ -988,7 +991,6 @@ public class Time_Review extends javax.swing.JFrame {
         });
 
         jCBLineManager.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Preciado Edna", "Pantoja Victor" }));
         jCBLineManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBLineManagerActionPerformed(evt);
@@ -1317,6 +1319,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLTaskSearch1.setText("Team:");
 
         jCBTeamTaskSearch.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBTeamTaskSearch.setToolTipText("");
         jCBTeamTaskSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBTeamTaskSearchActionPerformed(evt);
@@ -1598,7 +1601,8 @@ public class Time_Review extends javax.swing.JFrame {
         jLNetAction.setText("Choose action:");
 
         jCBNetAction.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBNetAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Add a new network", "Edit an existing network" }));
+        jCBNetAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select...", "Add a new network", "Edit an existing network" }));
+        jCBNetAction.setToolTipText("");
         jCBNetAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBNetActionActionPerformed(evt);
@@ -1731,6 +1735,11 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel8.setText("PD:");
 
         jTFPD.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jTFPD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFPDActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel10.setText("Network: ");
@@ -1744,6 +1753,11 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel12.setText("Responsible:");
 
         jTFResponsible.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jTFResponsible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFResponsibleActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel13.setText("Subnetwork:");
@@ -1772,6 +1786,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel17.setText("Customer Unit:");
 
+        jCBNetActCode.setEditable(true);
         jCBNetActCode.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
         jCBNetTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -1813,6 +1828,13 @@ public class Time_Review extends javax.swing.JFrame {
             }
         });
 
+        jCBTeam_editnet.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBTeam_editnet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTeam_editnetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPNetEditLayout = new javax.swing.GroupLayout(jPNetEdit);
         jPNetEdit.setLayout(jPNetEditLayout);
         jPNetEditLayout.setHorizontalGroup(
@@ -1835,9 +1857,11 @@ public class Time_Review extends javax.swing.JFrame {
                             .addGroup(jPNetEditLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
+                                .addComponent(jCBTeam_editnet, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPNetEditLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
@@ -1853,6 +1877,7 @@ public class Time_Review extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel13))
                             .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addGap(136, 136, 136)
                                 .addComponent(jLabel17)
                                 .addGap(18, 18, 18)
                                 .addComponent(jCBNetCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1865,8 +1890,7 @@ public class Time_Review extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCBNetMarket, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jTFSubnetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jTFSubnetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPNetEditLayout.setVerticalGroup(
@@ -1890,7 +1914,8 @@ public class Time_Review extends javax.swing.JFrame {
                 .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
-                        .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBTeam_editnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
@@ -1970,7 +1995,7 @@ public class Time_Review extends javax.swing.JFrame {
                         .addComponent(jPNetEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBNetTableCSV))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1984,7 +2009,6 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel28.setText("Team: ");
 
         jCBMarTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBMarTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sourcing", "COP", "VSS", "PSS" }));
         jCBMarTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBMarTeamActionPerformed(evt);
@@ -2051,9 +2075,9 @@ public class Time_Review extends javax.swing.JFrame {
                 .addComponent(jCBMarTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel29)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCBMarCU, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jCBMarCU, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel30)
                 .addGap(18, 18, 18)
                 .addComponent(jCBMarRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2093,7 +2117,7 @@ public class Time_Review extends javax.swing.JFrame {
         jLabel27.setText("Choose an action: ");
 
         jCBMrktAction.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBMrktAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Add a new market", "Edit an existing market" }));
+        jCBMrktAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select...", "Add a new market", "Edit an existing market" }));
         jCBMrktAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBMrktActionActionPerformed(evt);
@@ -2130,7 +2154,6 @@ public class Time_Review extends javax.swing.JFrame {
         });
 
         jCBTeamMrkt.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeamMrkt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sourcing", "COP", "VSS", "PSS" }));
         jCBTeamMrkt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBTeamMrktActionPerformed(evt);
@@ -2148,6 +2171,11 @@ public class Time_Review extends javax.swing.JFrame {
         });
 
         jCBMarketList.setEditable(true);
+        jCBMarketList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBMarketListActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -2359,7 +2387,7 @@ public class Time_Review extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPView, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, Short.MAX_VALUE)
+                .addComponent(jPView, javax.swing.GroupLayout.DEFAULT_SIZE, 1922, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 3295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -2589,7 +2617,7 @@ public class Time_Review extends javax.swing.JFrame {
         boolean flagLOE = matcherLOE.matches();
         if (jTFTaskName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Task field is empty!");
-        } else if (!flagLOE && !loe.equals("")){
+        } else if (!flagLOE && !loe.equals("")) {
             JOptionPane.showMessageDialog(this, "LOE is not a number! Please type a number with maximum two decimals.");
         } else {
             jLLoading.setText("Saving task into database...");
@@ -2603,7 +2631,7 @@ public class Time_Review extends javax.swing.JFrame {
                     }
                     jLLoading.setText("Updating task's local table...");
                     GetAllTasks();
-                    
+
                     jDLoading.dispose();
                 }
             }).start();
@@ -2640,7 +2668,7 @@ public class Time_Review extends javax.swing.JFrame {
             try {
                 SaveTableCSV(fileName, model);
             } catch (IOException ex) {
-                Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please type a name for the CSV file.");
@@ -2663,18 +2691,47 @@ public class Time_Review extends javax.swing.JFrame {
 
     private void jCBNetActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetActionActionPerformed
         // TODO add your handling code here:
-        if (jCBNetAction.getSelectedIndex() == 0) {
+        if (jCBNetAction.getSelectedItem().toString().equals("Add a new network")) {
             jPNetSearch.setVisible(false);
             jTFNetwork.setEditable(true);
             jCBNetTeam.setEnabled(true);
+            jCBNetTeam.setVisible(true);
+            jCBTeam_editnet.setVisible(false);
             jTFPD.setEditable(true);
-            ResetNetworkFields();
+            // Fill Team in Add new network
+            jCBNetTeam.removeAllItems();
+            jCBNetTeam.addItem("Select a team");          
+            ArrayList<String> _teams = new ArrayList<String>();
+            for (int i = 0; i < networksinfo.size(); i= i+10){
+                if (!_teams.contains(networksinfo.get(i))){
+                    _teams.add(networksinfo.get(i));
+                }            
+            }
+            Collections.sort(_teams);
+            for (int i = 0; i < _teams.size(); i++){
+                jCBNetTeam.addItem(_teams.get(i));
+            }
+            
         } else {
             jPNetSearch.setVisible(true);
             jTFNetwork.setEditable(false);
             jCBNetTeam.setEnabled(false);
-            jTFPD.setEditable(false);
-            ResetNetworkFields();
+            jCBNetTeam.setVisible(false);
+            jCBTeam_editnet.setVisible(true);
+            jTFPD.setEditable(false);            
+            // Fill teams in Edit network
+            jCBNetTeamSearch.removeAllItems();
+            jCBNetTeamSearch.addItem("Select a team");
+            ArrayList<String> _teams1 = new ArrayList<String>();
+            for (int i = 0; i < networksinfo.size(); i= i+10){
+                if (!_teams1.contains(networksinfo.get(i))){
+                    _teams1.add(networksinfo.get(i));
+                }            
+            }
+            Collections.sort(_teams1);
+            for (int i = 0; i < _teams1.size(); i++){
+                jCBNetTeamSearch.addItem(_teams1.get(i));
+            }
         }
     }//GEN-LAST:event_jCBNetActionActionPerformed
 
@@ -2687,17 +2744,14 @@ public class Time_Review extends javax.swing.JFrame {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (jCBNetAction.getSelectedIndex() == 0) {
+                    networksinfo.clear();
+                    if (jCBNetAction.getSelectedIndex() == 1) {
                         InsertIntoNetworkDB();
                     } else {
                         UpdateNetworksDB();
-                    }
-                    netTeamsAndCUs = new ArrayList<>();
-                    //netTeamCURegMark = new ArrayList<>();
-                    netwTeamSubn = new ArrayList<>();
-                    
+                    }                                       
+
                     GetNetworksSearch();
-                    ResetNetworkFields();
                     jDLoading.dispose();
                 }
             }).start();
@@ -2708,8 +2762,38 @@ public class Time_Review extends javax.swing.JFrame {
     }//GEN-LAST:event_jBSaveNetActionPerformed
 
     private void jBNetworkSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNetworkSearchActionPerformed
-        // TODO add your handling code here:
-        jLLoading.setText("Fetching network from database...");
+        // Search button in Edit Network        
+        String team = jCBNetTeamSearch.getSelectedItem().toString();
+        String cu = jCBCUSearch.getSelectedItem().toString();
+        String market = jCBMarketSearch.getSelectedItem().toString();
+        String network = jCBNetSearch.getSelectedItem().toString(); 
+        
+        
+        for (int i=4; i < networksinfo.size(); i += 10 ){
+            if (networksinfo.get(i).equals(network) && (networksinfo.get(i-4).equals(team) && (networksinfo.get(i-3).equals(cu)) && (networksinfo.get(i-1).equals(market)))){
+                jCBTeam_editnet.addItem(networksinfo.get(i-4));
+                //Clean comboboxes                
+                jCBNetTeam.removeAllItems();
+                jCBNetCustomer.removeAllItems();
+                jCBNetRegion.removeAllItems();
+                jCBNetMarket.removeAllItems();
+                jCBNetActCode.removeAllItems();
+                jCBNetTech.removeAllItems();
+                // Fill with new information                
+                jCBNetCustomer.addItem(networksinfo.get(i-3));
+                jCBNetRegion.addItem(networksinfo.get(i-2));
+                jCBNetMarket.addItem(networksinfo.get(i-1));
+                jTFNetwork.setText(networksinfo.get(i));
+                jTFSubnetwork.setText(networksinfo.get(i+1));
+                jCBNetActCode.addItem(networksinfo.get(i+2));
+                jCBNetTech.addItem(networksinfo.get(i+3));
+                jTFPD.setText(networksinfo.get(i+4));
+                jTFResponsible.setText(networksinfo.get(i+5));                  
+            }
+        }
+        
+        
+        /*jLLoading.setText("Fetching network from database...");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -2717,12 +2801,12 @@ public class Time_Review extends javax.swing.JFrame {
                 jDLoading.dispose();
             }
         }).start();
-        jDLoading.setVisible(true);
+        jDLoading.setVisible(true);*/
     }//GEN-LAST:event_jBNetworkSearchActionPerformed
 
     private void jBNetSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNetSearchActionPerformed
         // TODO add your handling code here:
-        ResetNetworkFields();
+        ResetNetworkFields();        
     }//GEN-LAST:event_jBNetSearchActionPerformed
 
     private void jCBTaskSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTaskSearchActionPerformed
@@ -2759,7 +2843,7 @@ public class Time_Review extends javax.swing.JFrame {
                             preparedStatement = connection.prepareStatement(sql);
                             resultset = preparedStatement.executeQuery();
                             if (!resultset.next()) {
-                                JOptionPane.showMessageDialog(Time_Review.this, "Signum not found!");
+                                JOptionPane.showMessageDialog(Time_Management.this, "Signum not found!");
                                 jCBSearchUser.setSelectedIndex(0);
                             } else {
                                 String signum1 = resultset.getString("Signum");
@@ -2781,10 +2865,10 @@ public class Time_Review extends javax.swing.JFrame {
                                 CU_list.put("COP", "C_");
                                 CU_list.put("VSS", "V_");
                                 CU_list.put("PSS", "P_");
-                                CU_list.put("Scoping", "SCP_");                               
+                                CU_list.put("Scoping", "SCP_");
 
                                 if (CU_list.containsKey(team1)) {
-                                    customerunit1 = customerunit1.replace(CU_list.get(team1), "");                                    
+                                    customerunit1 = customerunit1.replace(CU_list.get(team1), "");
                                 }
 
                                 jTFSignum.setText(signum1);
@@ -2794,16 +2878,17 @@ public class Time_Review extends javax.swing.JFrame {
                                 jCBTeam.setSelectedItem(team1);
                                 jCBTeamActionPerformed(null);
                                 jCBCustomerUnit.setSelectedItem(customerunit1);
-                                for (int i = 0; i<5; i++){
-                                    if (LMSignums[i].equals(linemanager1))
+                                for (int i = 0; i < 5; i++) {
+                                    if (LMSignums.contains(linemanager1)) {
                                         jCBLineManager.setSelectedIndex(i);
+                                    }
                                 };
                                 jCBAccess.setSelectedIndex(Integer.parseInt(access1));
                                 jTFSupTeam.setText(supportingTeam1);
                                 jTFSupCU.setText(supportingCU1);
-                                if (jobStage1.equals("N/A"))
+                                if (jobStage1.equals("N/A")) {
                                     jCBJobStage.setSelectedIndex(3);
-                                else{
+                                } else {
                                     jobStage1 = jobStage1.substring(jobStage1.length() - 1);
                                     System.out.println("Job Stage: " + jobStage1);
                                     jCBJobStage.setSelectedItem(jobStage1);
@@ -2813,7 +2898,7 @@ public class Time_Review extends javax.swing.JFrame {
                             connection.close();
 
                         } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(Time_Review.this, "An error ocurred during the look up! Please try again...");
+                            JOptionPane.showMessageDialog(Time_Management.this, "An error ocurred during the look up! Please try again...");
                         }
 
                         jDLoading.dispose();
@@ -2883,16 +2968,16 @@ public class Time_Review extends javax.swing.JFrame {
         String name = jTFName.getText();
         String lastName = jTFLastName.getText();
         String catsNumber = jTFCATNum.getText();
-        
+
         Pattern onewordPattern = Pattern.compile("[^A-Za-z]");
         Pattern lettersPattern = Pattern.compile("[^A-Za-z]->[A-Za-z]");
         Pattern numberPattern = Pattern.compile("[^0-9]");
-        
+
         Matcher matcherSignum = onewordPattern.matcher(signum);
         Matcher matcherName = lettersPattern.matcher(name);
         Matcher matcherLastName = lettersPattern.matcher(lastName);
         Matcher matcherCATsNumber = numberPattern.matcher(catsNumber);
-        
+
         boolean flagSignum = matcherSignum.find();
         boolean flagName = matcherName.find();
         boolean flagLastName = matcherLastName.find();
@@ -2908,10 +2993,10 @@ public class Time_Review extends javax.swing.JFrame {
             } else if (flagLastName) {
                 JOptionPane.showMessageDialog(this, "Last name must contain only letters!");
                 jTFLastName.setText("");
-            } else if (flagCATsNumber){
+            } else if (flagCATsNumber) {
                 JOptionPane.showMessageDialog(this, "CATs Number must contain only numbers!");
                 jTFCATNum.setText("");
-            } else if (catsNumber.length() != 8){
+            } else if (catsNumber.length() != 8) {
                 JOptionPane.showMessageDialog(this, "CATs Number must contain 8 digits!");
                 jTFCATNum.setText("");
             } else {
@@ -2949,7 +3034,7 @@ public class Time_Review extends javax.swing.JFrame {
         try {
             SaveTableCSV(fileName, model);
         } catch (IOException ex) {
-            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBExportUserCSVActionPerformed
 
@@ -2960,7 +3045,7 @@ public class Time_Review extends javax.swing.JFrame {
         try {
             SaveTableCSV(fileName, model);
         } catch (IOException ex) {
-            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBExportTaskCSVActionPerformed
 
@@ -2972,12 +3057,10 @@ public class Time_Review extends javax.swing.JFrame {
             public void run() {
                 DeleteNetwork();
                 jLLoading.setText("Updating network's local table...");
-                netTeamsAndCUs = new ArrayList<>();
-                //netTeamCURegMark = new ArrayList<>();
-                netwTeamSubn = new ArrayList<>();
+                networksinfo.clear();
                 GetNetworksSearch();
                 jDLoading.dispose();
-            }
+            }       
         }).start();
         jDLoading.setVisible(true);
     }//GEN-LAST:event_jBNetDeleteActionPerformed
@@ -3021,7 +3104,7 @@ public class Time_Review extends javax.swing.JFrame {
             }
         }
         Collections.sort(customers);
-        for (int i = 0; i < customers.size(); i ++){
+        for (int i = 0; i < customers.size(); i++) {
             jCBTaskCU.addItem(customers.get(i));
         }
         // Update task id
@@ -3032,10 +3115,10 @@ public class Time_Review extends javax.swing.JFrame {
         UpdateTaskType(team);
     }//GEN-LAST:event_jCBTaskTeamActionPerformed
 
-    private void UpdateTaskType(String team){
-         // Update task id in Add Task panel
-        String _team = "  "; 
-        
+    private void UpdateTaskType(String team) {
+        // Update task id in Add Task panel
+        String _team = "  ";
+
         HashMap<String, String> list_teams = new HashMap<String, String>();
         list_teams.put("COP", "COP");
         list_teams.put("PSS", "NAT");
@@ -3043,42 +3126,42 @@ public class Time_Review extends javax.swing.JFrame {
         list_teams.put("SDU", "ADMIN");
         list_teams.put("Sourcing", "SE");
         list_teams.put("VSS", "VSS");
-        
-        if (team.equals("Sourcing")){            
-            _team = "ST";                    
+
+        if (team.equals("Sourcing")) {
+            _team = "ST";
         }
         // Fill task type
-        for (int i = 0; i < tasktypes.size(); i++){
-            if (tasktypes.get(i).contains(list_teams.get(team)) || tasktypes.get(i).contains(_team)){
+        for (int i = 0; i < tasktypes.size(); i++) {
+            if (tasktypes.get(i).contains(list_teams.get(team)) || tasktypes.get(i).contains(_team)) {
                 jCBTaskType.addItem(tasktypes.get(i));
             }
         }
         // Fill service package name
-        for (int i = 0; i < servicePackageNames.size(); i++){
+        for (int i = 0; i < servicePackageNames.size(); i++) {
             int _index_team = servicePackageNames.get(i).lastIndexOf("#");
             String aux_team = servicePackageNames.get(i).substring(_index_team);
-            if (aux_team.replace("#", "").equals(team)){
+            if (aux_team.replace("#", "").equals(team)) {
                 jCBServicePN.addItem(servicePackageNames.get(i).substring(0, _index_team));
             }
         }
         // Fill deliverable
-        for (int i = 0; i < deliverableList.size(); i++){
+        for (int i = 0; i < deliverableList.size(); i++) {
             int _index_team = deliverableList.get(i).lastIndexOf("#");
             String aux_team = deliverableList.get(i).substring(_index_team);
-            if (aux_team.replace("#", "").equals(team)){
+            if (aux_team.replace("#", "").equals(team)) {
                 jCBDeliverable.addItem(deliverableList.get(i).substring(0, _index_team));
             }
         }
         // Fill project support domain
-        for (int i = 0; i < projectSupportNames.size(); i++){
+        for (int i = 0; i < projectSupportNames.size(); i++) {
             int _index_team = projectSupportNames.get(i).lastIndexOf("#");
             String aux_team = projectSupportNames.get(i).substring(_index_team);
-            if (aux_team.replace("#", "").equals(team)){
+            if (aux_team.replace("#", "").equals(team)) {
                 jCBProjectSuppDom.addItem(projectSupportNames.get(i).substring(0, _index_team));
             }
         }
     }
-    
+
     private void jBDeleteCUSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteCUSuppActionPerformed
         // TODO add your handling code here:
         String normalTeam = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
@@ -3202,86 +3285,79 @@ public class Time_Review extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAddSupCUActionPerformed
 
     private void jCBNetTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetTeamActionPerformed
-        // TODO add your handling code here:
+        // Add CU in add new network
         jCBNetCustomer.removeAllItems();
-        List<String> cus1 = new ArrayList<String>();
-        String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
-        try {
-            for (int i = 0; i < netTeamsAndCUs.size(); i++) {
-                if (i % 2 == 0) {
-                    if (team1.equals(netTeamsAndCUs.get(i))) {
-                        cus1.add(netTeamsAndCUs.get(i + 1));
-                    }
+        ArrayList<String> CU_list = new ArrayList<>();
+        String team = "";
+        if (jCBNetTeam.getItemCount() != 0){
+            team = jCBNetTeam.getSelectedItem().toString();
+        }        
+        jCBNetCustomer.removeAllItems();
+        for (int i = 1; i < networksinfo.size(); i = i + 10) {
+            if (!CU_list.contains(networksinfo.get(i))) {
+                if (networksinfo.get(i - 1).equals(team)) {
+                    CU_list.add(networksinfo.get(i));
                 }
             }
-        } catch (Exception e){
-            System.out.println("Error: " + e);
         }
-        Collections.sort(cus1);
-        for (int i = 0; i < cus1.size(); i++)
-            jCBNetCustomer.addItem(cus1.get(i));
+        Collections.sort(CU_list);
+        for (int i = 0; i < CU_list.size(); i++) {
+            jCBNetCustomer.addItem(CU_list.get(i));
+        }
     }//GEN-LAST:event_jCBNetTeamActionPerformed
 
     private void jCBNetCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetCustomerActionPerformed
-        // TODO add your handling code here:
-        List<String> regions1 = new ArrayList<String>();
-        String reg1 = "";
+        //Fill Customer Unit in Add new network
+        ArrayList<String> regions1 = new ArrayList<String>();
         jCBNetRegion.removeAllItems();
+        String team = "", cu1 = "";        
         
-        if (jCBNetCustomer.getItemCount() != 0) {
-            try {
-            String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
-            String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
-            for (int i = 0; i < netTeamCURegMark.size(); i++) {// Team, CU, Region, Market, Technology
-                if (i % 4 == 0) {
-                    if (team1.equals(netTeamCURegMark.get(i)) && cu1.equals(netTeamCURegMark.get(i + 1))) {
-                        reg1 = netTeamCURegMark.get(i + 2);
-                        if (regions1.isEmpty()) 
-                            regions1.add(reg1);
-                        else 
-                            if (!regions1.contains(reg1)) 
-                                regions1.add(reg1);
-                    }
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0){
+            team = jCBNetTeam.getSelectedItem().toString();  
+            cu1 = jCBNetCustomer.getSelectedItem().toString();
+        }                
+        for (int i = 0; i < networksinfo.size(); i = i + 10) {// Team, CU, Region, Market, Technology
+            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
+                if (!regions1.contains(networksinfo.get(i + 2))) {
+                    regions1.add(networksinfo.get(i + 2));
                 }
             }
-            } catch (Exception e) {
-                System.out.println("Error: " + e);
-            }
-            Collections.sort(regions1);
-            for (int i = 0; i < regions1.size(); i++)
-                jCBNetRegion.addItem(regions1.get(i));
+        
+        }
+        Collections.sort(regions1);
+        for (int i = 0; i < regions1.size(); i++) {
+            jCBNetRegion.addItem(regions1.get(i));
         }
     }//GEN-LAST:event_jCBNetCustomerActionPerformed
 
     private void jCBNetRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetRegionActionPerformed
         // TODO add your handling code here:
         List<String> markets1 = new ArrayList<String>();
-        String mar1 = "";
         jCBNetMarket.removeAllItems();
-        if (jCBNetRegion.getItemCount() != 0) {
-            try {
-                String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
-                String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
-                String reg1 = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
-                for (int i = 0; i < netTeamCURegMark.size(); i++) {
-                    if (i % 4 == 0) {
-                        mar1 = netTeamCURegMark.get(i + 3);
-                        if (team1.equals(netTeamCURegMark.get(i)) && cu1.equals(netTeamCURegMark.get(i + 1)) && reg1.equals(netTeamCURegMark.get(i + 2))) {// Team, CU, Region, Market, Technology
-                            if (markets1.isEmpty()) 
-                                markets1.add(mar1);
-                            else 
-                                if (!markets1.contains(mar1)) 
-                                    markets1.add(mar1);
-                        }
-                    }
-                } 
-            } catch (Exception e) {
-                System.out.println("Error: " + e);
-            }
-            Collections.sort(markets1);
-            for (int i = 0; i < markets1.size(); i++)
-                jCBNetMarket.addItem(markets1.get(i));
+        String mar1 = "", team1 = "", cu1 = "", reg1 = "";
+        
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0 && jCBNetRegion.getItemCount() != 0) {
+            team1 = jCBNetTeam.getSelectedItem().toString();
+            cu1 = jCBNetCustomer.getSelectedItem().toString();
+            reg1 = jCBNetRegion.getSelectedItem().toString();
         }
+              
+        for (int i = 0; i < networksinfo.size(); i = i + 10) {
+            if (team1.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1)) && reg1.equals(networksinfo.get(i + 2))) {// Team, CU, Region, Market, Technology
+                mar1 = networksinfo.get(i + 3);
+                if (markets1.isEmpty()) {
+                    markets1.add(mar1);
+                } else if (!markets1.contains(mar1)) {
+                    markets1.add(mar1);
+                }
+            }
+        }
+    
+        Collections.sort(markets1);
+        for (int i = 0; i < markets1.size(); i++) {
+            jCBNetMarket.addItem(markets1.get(i));
+        }
+        
     }//GEN-LAST:event_jCBNetRegionActionPerformed
 
     private void jCBNetMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetMarketActionPerformed
@@ -3292,26 +3368,26 @@ public class Time_Review extends javax.swing.JFrame {
         if (jCBNetMarket.getItemCount() != 0) {
             try {
                 String mar1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
-                for (int i = 0; i < netMrktTech.size(); i++) {
+                for (int i = 7; i < networksinfo.size(); i = i + 10) {
                     if (i % 2 == 0) {
                         tech1 = netMrktTech.get(i + 1);
                         if (mar1.equals(netMrktTech.get(i))) {
-                            if (techs1.isEmpty())
+                            if (techs1.isEmpty()) {
                                 techs1.add(tech1);
-                            else 
-                                if (!techs1.contains(tech1))
-                                    techs1.add(tech1);
+                            } else if (!techs1.contains(tech1)) {
+                                techs1.add(tech1);
+                            }
                         }
                     }
                 }
-                if (techs1.isEmpty()){
+                if (techs1.isEmpty()) {
                     jCBNetTech.addItem("N/A");
                     techs1.add("N/A");
-                }
-                else{
+                } else {
                     Collections.sort(techs1);
-                    for (int i = 0; i < techs1.size(); i++)
+                    for (int i = 0; i < techs1.size(); i++) {
                         jCBNetTech.addItem(techs1.get(i));
+                    }
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e);
@@ -3435,32 +3511,28 @@ public class Time_Review extends javax.swing.JFrame {
 
     private void jCBNetTeamSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetTeamSearchActionPerformed
         // TODO add your handling code here:
-        List<String> cus1 = new ArrayList<String>();
-        String cu1 = "";
-        jCBCUSearch.removeAllItems();
-        if (jCBNetTeamSearch.getItemCount() != 0) {
-            String team1 = jCBNetTeamSearch.getItemAt(jCBNetTeamSearch.getSelectedIndex());
-            for (int i = 0; i < netwTeamSubn.size(); i++) {
-                if (i % 5 == 0) {
-                    cu1 = netwTeamSubn.get(i + 1);
-                    if (team1.equals(netwTeamSubn.get(i))) {
-                        if (cus1.isEmpty()) 
-                            cus1.add(cu1);
-                        else 
-                            if (!cus1.contains(cu1))
-                                cus1.add(cu1);
-                    }
+        List<String> CU_list = new ArrayList<String>();
+        String team = "";
+        if (jCBNetTeamSearch.getItemCount() != 0){
+           team = jCBNetTeamSearch.getSelectedItem().toString(); 
+        }        
+        jCBCUSearch.removeAllItems();        
+        for (int i = 1; i < networksinfo.size(); i = i + 10) {
+            if (!CU_list.contains(networksinfo.get(i))) {
+                if (networksinfo.get(i - 1).equals(team)) {
+                    CU_list.add(networksinfo.get(i));
                 }
             }
-            Collections.sort(cus1);
-            for (int i = 0; i < cus1.size(); i++)
-                jCBCUSearch.addItem(cus1.get(i));
+        }
+        Collections.sort(CU_list);
+        for (int i = 0; i < CU_list.size(); i++) {
+            jCBCUSearch.addItem(CU_list.get(i));
         }
     }//GEN-LAST:event_jCBNetTeamSearchActionPerformed
 
     private void jCBNetSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetSearchActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jCBNetSearchActionPerformed
 
     private void jCBCUSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCUSearchActionPerformed
@@ -3469,50 +3541,46 @@ public class Time_Review extends javax.swing.JFrame {
         String market1 = "";
         jCBMarketSearch.removeAllItems();
         if (jCBCUSearch.getItemCount() != 0) {
-            String cu1 = jCBCUSearch.getItemAt(jCBCUSearch.getSelectedIndex());
-            String team1 = jCBNetTeamSearch.getItemAt(jCBNetTeamSearch.getSelectedIndex());
-            for (int i = 0; i < netwTeamSubn.size(); i++) {
-                if (i % 5 == 0) {
-                    market1 = netwTeamSubn.get(i + 2);
-                    if (team1.equals(netwTeamSubn.get(i)) && cu1.equals(netwTeamSubn.get(i + 1))) {
-                        if (markets1.isEmpty())
+            String cu1 = jCBCUSearch.getSelectedItem().toString();
+            String team1 = jCBNetTeamSearch.getSelectedItem().toString();
+            for (int i = 0; i < networksinfo.size(); i = i + 10) {
+                if (team1.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
+                    market1 = networksinfo.get(i + 3);
+                    if (markets1.isEmpty()) {
+                        markets1.add(market1);
+                    } else {
+                        if (!markets1.contains(market1)) {
                             markets1.add(market1);
-                        else 
-                            if (!markets1.contains(market1)) 
-                                markets1.add(market1);
+                        }
                     }
                 }
             }
             Collections.sort(markets1);
-            for (int i = 0; i < markets1.size(); i++)
+            for (int i = 0; i < markets1.size(); i++) {
                 jCBMarketSearch.addItem(markets1.get(i));
+            }
         }
     }//GEN-LAST:event_jCBCUSearchActionPerformed
 
     private void jCBMarketSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMarketSearchActionPerformed
-        // TODO add your handling code here:
-        List<String> nets1 = new ArrayList<String>();
-        String net1 = "";
+        // To ADD networks in Edit Networks
+        List<String> networks = new ArrayList<String>();
         jCBNetSearch.removeAllItems();
         if (jCBMarketSearch.getItemCount() != 0) {
-            String cu1 = jCBCUSearch.getItemAt(jCBCUSearch.getSelectedIndex());
-            String team1 = jCBNetTeamSearch.getItemAt(jCBNetTeamSearch.getSelectedIndex());
-            String mar1 = jCBMarketSearch.getItemAt(jCBMarketSearch.getSelectedIndex());
-            for (int i = 0; i < netwTeamSubn.size(); i++) {
-                if (i % 5 == 0) {
-                    net1 = netwTeamSubn.get(i + 3);
-                    if (team1.equals(netwTeamSubn.get(i)) && cu1.equals(netwTeamSubn.get(i + 1)) && mar1.equals(netwTeamSubn.get(i + 2))) {
-                        if (nets1.isEmpty()) 
-                            nets1.add(net1);
-                        else 
-                            if (!nets1.contains(net1)) 
-                                nets1.add(net1);
+            String cu1 = jCBCUSearch.getSelectedItem().toString();
+            String team1 = jCBNetTeamSearch.getSelectedItem().toString();
+            String mar1 = jCBMarketSearch.getSelectedItem().toString();
+            for (int i = 4; i < networksinfo.size(); i = i + 10) {
+                if (team1.equals(networksinfo.get(i - 4)) && cu1.equals(networksinfo.get(i - 3)) && mar1.equals(networksinfo.get(i - 1))) {
+                    if (!networks.contains(networksinfo.get(i))) {
+                        networks.add(networksinfo.get(i));
                     }
                 }
             }
-            Collections.sort(nets1);
-            for (int i = 0; i < nets1.size(); i++)
-                jCBNetSearch.addItem(nets1.get(i));
+            Collections.sort(networks);
+            for (int i = 0; i < networks.size(); i++) {
+                jCBNetSearch.addItem(networks.get(i));
+            }
         }
     }//GEN-LAST:event_jCBMarketSearchActionPerformed
 
@@ -3528,35 +3596,37 @@ public class Time_Review extends javax.swing.JFrame {
     }//GEN-LAST:event_jMEditMarketsActionPerformed
 
     private void jBSaveMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveMrktActionPerformed
-        // TODO add your handling code here:
+        // Save new market:
         boolean flagNetwork = true;
-        // Validar por equipo y cu que no se repita en esa Team - CU
+        // Validar por equipo y cu que no se repita en ese Team - CU
         String teamName = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
         String cuName = jCBCUMrkt.getItemAt(jCBCUMrkt.getSelectedIndex());
         String regionName = jCBRegionMrkt.getItemAt(jCBRegionMrkt.getSelectedIndex());
-        String mrktName = jCBMarketList.getItemAt(jCBMarketList.getSelectedIndex());
-        
-        System.out.println("Market: " + mrktName);
-        if (mrktName != null)
+        String mrktName = jCBMarketList.getSelectedItem().toString();
+
+        if (mrktName == null) {
             flagNetwork = false;
-        else {
+        } else {
             String mrktNameText = String.valueOf(jCBMarketList.getEditor().getItem());
-            for (int i = 0; i < marketTeamCU.size(); i++)
-                if (i % 5 == 0)
-                    if (mrktNameText.equals(marketTeamCU.get(i + 1)) && regionName.equals(marketTeamCU.get(i + 2)) && teamName.equals(marketTeamCU.get(i + 3)) && cuName.equals(marketTeamCU.get(i + 4)))
-                        flagNetwork = false;
+            System.out.println("Market en el field: " + mrktNameText);
+            for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+                if (mrktNameText.equals(marketsinfo.get(i + 1)) && regionName.equals(marketsinfo.get(i + 2)) && teamName.equals(marketsinfo.get(i + 3)) && cuName.equals(marketsinfo.get(i + 4))) {
+                    flagNetwork = false;
+                }
+            }
         }
+        System.out.println("la falg " + flagNetwork);
         if (flagNetwork) {
             jLLoading.setText("Saving market into database...");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (jCBMrktAction.getSelectedIndex() == 0) {
+                    if (jCBMrktAction.getSelectedIndex() == 1) {
                         InsertIntoMarketDB();
                     } else {
                         UpdateMarketsDB();
                     }
-                    marketTeamCU = new ArrayList<>();
+                    marketsinfo = new ArrayList<>();
                     jCBTeamMrkt.setSelectedIndex(0);
                     GetAllMarkets();
                     jDLoading.dispose();
@@ -3575,33 +3645,27 @@ public class Time_Review extends javax.swing.JFrame {
         try {
             SaveTableCSV(fileName, model);
         } catch (IOException ex) {
-            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBNetTableCSVActionPerformed
 
     private void jCBMarTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMarTeamActionPerformed
-        // TODO add your handling code here:
-        List<String> cus1 = new ArrayList<String>();
-        String cu1 = "";
+        // Add CU in Edit market
         jCBMarCU.removeAllItems();
-        if (jCBMarTeam.getItemCount() > 0){
-            String team1 = jCBMarTeam.getItemAt(jCBMarTeam.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i%5 == 0){
-                    cu1 = marketTeamCU.get(i + 4);
-                    if (team1.equals(marketTeamCU.get(i + 3))) {
-                        if (cus1.isEmpty()) {
-                            jCBMarCU.addItem(cu1);
-                            cus1.add(cu1);
-                        } else {
-                            if (!cus1.contains(cu1)) {
-                                jCBMarCU.addItem(cu1);
-                                cus1.add(cu1);
-                            }
-                        }
-                    }
-                }
-            }
+        ArrayList<String> cu = new ArrayList<>();
+        String team = "";
+        if (jCBMarTeam.getItemCount() != 0){
+            team = jCBMarTeam.getSelectedItem().toString();
+        }      
+        
+        for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+            if (marketsinfo.get(i + 3).equals(team))
+                if (!cu.contains(marketsinfo.get(i + 4)))                  
+                    cu.add(marketsinfo.get(i + 4));    
+        }
+        Collections.sort(cu);
+        for (int i = 0; i < cu.size(); i++) {
+            jCBMarCU.addItem(cu.get(i));
         }
     }//GEN-LAST:event_jCBMarTeamActionPerformed
 
@@ -3610,22 +3674,18 @@ public class Time_Review extends javax.swing.JFrame {
         List<String> regs = new ArrayList<String>();
         String reg1 = "";
         jCBMarRegion.removeAllItems();
-        if (jCBMarCU.getItemCount() > 0){
-            String team1 = jCBMarTeam.getItemAt(jCBMarTeam.getSelectedIndex());
-            String cu1 = jCBMarCU.getItemAt(jCBMarCU.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i%5 == 0){
-                    reg1 = marketTeamCU.get(i + 2);
-                    if (team1.equals(marketTeamCU.get(i + 3)) && cu1.equals(marketTeamCU.get(i + 4))) {
-                        if (regs.isEmpty()) {
-                            jCBMarRegion.addItem(reg1);
-                            regs.add(reg1);
-                        } else {
-                            if (!regs.contains(reg1)) {
-                                jCBMarRegion.addItem(reg1);
-                                regs.add(reg1);
-                            }
-                        }
+        String team1 = jCBMarTeam.getItemAt(jCBMarTeam.getSelectedIndex());
+        String cu1 = jCBMarCU.getItemAt(jCBMarCU.getSelectedIndex());
+        for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+            reg1 = marketsinfo.get(i + 2);
+            if (team1.equals(marketsinfo.get(i + 3)) && cu1.equals(marketsinfo.get(i + 4))) {
+                if (regs.isEmpty()) {
+                    jCBMarRegion.addItem(reg1);
+                    regs.add(reg1);
+                } else {
+                    if (!regs.contains(reg1)) {
+                        jCBMarRegion.addItem(reg1);
+                        regs.add(reg1);
                     }
                 }
             }
@@ -3641,14 +3701,14 @@ public class Time_Review extends javax.swing.JFrame {
         List<String> mars = new ArrayList<String>();
         String mar1 = "";
         jCBMarMrkt.removeAllItems();
-        if (jCBMarRegion.getItemCount() > 0){
+        if (jCBMarRegion.getItemCount() > 0) {
             String team1 = jCBMarTeam.getItemAt(jCBMarTeam.getSelectedIndex());
             String cu1 = jCBMarCU.getItemAt(jCBMarCU.getSelectedIndex());
             String reg1 = jCBMarRegion.getItemAt(jCBMarRegion.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i%5 == 0){
-                    mar1 = marketTeamCU.get(i + 1);
-                    if (reg1.equals(marketTeamCU.get(i + 2)) && team1.equals(marketTeamCU.get(i + 3)) && cu1.equals(marketTeamCU.get(i + 4))) {
+            for (int i = 0; i < marketsinfo.size(); i++) {
+                if (i % 5 == 0) {
+                    mar1 = marketsinfo.get(i + 1);
+                    if (reg1.equals(marketsinfo.get(i + 2)) && team1.equals(marketsinfo.get(i + 3)) && cu1.equals(marketsinfo.get(i + 4))) {
                         if (mars.isEmpty()) {
                             jCBMarMrkt.addItem(mar1);
                             mars.add(mar1);
@@ -3666,43 +3726,65 @@ public class Time_Review extends javax.swing.JFrame {
 
     private void jCBMrktActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMrktActionActionPerformed
         // TODO add your handling code here:
-        if (jCBMrktAction.getSelectedIndex() == 0){
+        if (jCBMrktAction.getSelectedIndex() == 1) {
             jPSearchMrkt.setVisible(false);
             jCBRegionMrkt.setEnabled(true);
             jCBTeamMrkt.setEnabled(true);
             jCBCUMrkt.setEnabled(true);
-        }
-        else{
+            //Fill combobox Team
+            jCBTeamMrkt.removeAllItems();
+            jCBTeamMrkt.addItem("Select a team");
+            ArrayList<String> _teams = new ArrayList<String>();
+            for (int i = 0; i < networksinfo.size(); i=i + 10){
+                if (!_teams.contains(networksinfo.get(i))){
+                    _teams.add(networksinfo.get(i));
+                }            
+            }
+            Collections.sort(_teams);
+            for (int i = 0; i < _teams.size(); i++){
+                jCBTeamMrkt.addItem(_teams.get(i));
+            }
+            
+        } else {
             jPSearchMrkt.setVisible(true);
             jCBRegionMrkt.setEnabled(false);
             jCBTeamMrkt.setEnabled(false);
             jCBCUMrkt.setEnabled(false);
+            //Add team in Edit Market
+            jCBMarTeam.removeAllItems();
+            jCBMarTeam.addItem("Select a team");
+            ArrayList<String> _teams = new ArrayList<String>();
+            for (int i = 0; i < networksinfo.size(); i=i + 10){
+                if (!_teams.contains(networksinfo.get(i))){
+                    _teams.add(networksinfo.get(i));
+                }            
+            }
+            Collections.sort(_teams);
+            for (int i = 0; i < _teams.size(); i++){
+                jCBMarTeam.addItem(_teams.get(i));
+            }
         }
     }//GEN-LAST:event_jCBMrktActionActionPerformed
 
     private void jCBTeamMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeamMrktActionPerformed
-        // TODO add your handling code here:
-        List<String> cus1 = new ArrayList<String>();
-        String cu1 = "";
+        // Add CU in Add new market
         jCBCUMrkt.removeAllItems();
-        if (jCBTeamMrkt.getItemCount() > 0){
-            String team1 = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i%5 == 0){
-                    cu1 = marketTeamCU.get(i + 4);
-                    if (team1.equals(marketTeamCU.get(i + 3))) {
-                        if (cus1.isEmpty()) {
-                            jCBCUMrkt.addItem(cu1);
-                            cus1.add(cu1);
-                        } else {
-                            if (!cus1.contains(cu1)) {
-                                jCBCUMrkt.addItem(cu1);
-                                cus1.add(cu1);
-                            }
-                        }
-                    }
+        ArrayList<String> cu_list = new ArrayList<>();
+        String team = "";
+        if (jCBTeamMrkt.getItemCount() != 0){
+            team = jCBTeamMrkt.getSelectedItem().toString();
+        }        
+        jCBNetCustomer.removeAllItems();
+        for (int i = 1; i < networksinfo.size(); i = i + 10) {
+            if (!cu_list .contains(networksinfo.get(i))) {
+                if (networksinfo.get(i - 1).equals(team)) {
+                    cu_list .add(networksinfo.get(i));
                 }
             }
+        }
+        Collections.sort(cu_list);
+        for (int i = 0; i < cu_list.size(); i++) {
+            jCBCUMrkt.addItem(cu_list.get(i));
         }
     }//GEN-LAST:event_jCBTeamMrktActionPerformed
 
@@ -3722,7 +3804,7 @@ public class Time_Review extends javax.swing.JFrame {
     private void jCBDeleteMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeleteMrktActionPerformed
         // TODO add your handling code here:
         boolean flagNetwork = true;
-        
+
         //flagNetwork = jTFMarket.getText();
         if (flagNetwork) {
             jLLoading.setText("Deleting market from database...");
@@ -3730,7 +3812,7 @@ public class Time_Review extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     DeleteMarketDB();
-                    marketTeamCU = new ArrayList<>();
+                    marketsinfo = new ArrayList<>();
                     jCBTeamMrkt.setSelectedIndex(0);
                     GetAllMarkets();
                     jDLoading.dispose();
@@ -3750,15 +3832,15 @@ public class Time_Review extends javax.swing.JFrame {
         // TODO add your handling code here:
         jCBCUTaskSearch.removeAllItems();
         List<String> cus1 = new ArrayList<String>();
-        String team1 = jCBTeamTaskSearch.getItemAt(jCBTeamTaskSearch.getSelectedIndex());
+        String team1 = jCBTeamTaskSearch.getSelectedItem().toString();
         for (int i = 0; i < teamsCUSTasks.size(); i++) {
             if (i % 3 == 0) {
                 if (team1.equals(teamsCUSTasks.get(i))) {
-                    if (cus1.isEmpty()){
+                    if (cus1.isEmpty()) {
                         jCBCUTaskSearch.addItem(teamsCUSTasks.get(i + 1));
                         cus1.add(teamsCUSTasks.get(i + 1));
                     } else {
-                        if (!cus1.contains(teamsCUSTasks.get(i + 1))){
+                        if (!cus1.contains(teamsCUSTasks.get(i + 1))) {
                             jCBCUTaskSearch.addItem(teamsCUSTasks.get(i + 1));
                             cus1.add(teamsCUSTasks.get(i + 1));
                         }
@@ -3776,78 +3858,90 @@ public class Time_Review extends javax.swing.JFrame {
         String team1 = jCBTeamTaskSearch.getItemAt(jCBTeamTaskSearch.getSelectedIndex());
         String cu1 = jCBCUTaskSearch.getItemAt(jCBCUTaskSearch.getSelectedIndex());
         try {
-                for (int i = 0; i < teamsCUSTasks.size(); i++) {
+            for (int i = 0; i < teamsCUSTasks.size(); i++) {
                 if (i % 3 == 0) {
-                    if (team1.equals(teamsCUSTasks.get(i)) && cu1.equals(teamsCUSTasks.get(i+1))) {
+                    if (team1.equals(teamsCUSTasks.get(i)) && cu1.equals(teamsCUSTasks.get(i + 1))) {
                         tasks1.add(teamsCUSTasks.get(i + 2));
                     }
                 }
             }
             Collections.sort(tasks1);
-            for (int i = 0; i < tasks1.size(); i++)
+            for (int i = 0; i < tasks1.size(); i++) {
                 jCBTaskSearch.addItem(tasks1.get(i));
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
     }//GEN-LAST:event_jCBCUTaskSearchActionPerformed
 
     private void jCBCUMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCUMrktActionPerformed
-        // TODO add your handling code here:
-        List<String> regs = new ArrayList<String>();
-        String reg1 = "";
+        // Add Regions in Add market
         jCBRegionMrkt.removeAllItems();
-        if (jCBCUMrkt.getItemCount() > 0){
-            String team1 = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
-            String cu1 = jCBCUMrkt.getItemAt(jCBCUMrkt.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i%5 == 0){
-                    reg1 = marketTeamCU.get(i + 2);
-                    if (team1.equals(marketTeamCU.get(i + 3)) && cu1.equals(marketTeamCU.get(i + 4))) {
-                        if (regs.isEmpty()) {
-                            jCBRegionMrkt.addItem(reg1);
-                            regs.add(reg1);
-                        } else {
-                            if (!regs.contains(reg1)) {
-                                jCBRegionMrkt.addItem(reg1);
-                                regs.add(reg1);
-                            }
-                        }
-                    }
-                }
-            }
+        ArrayList<String> regions = new ArrayList<>();
+        String team = "", cu = "";
+        if (jCBTeamMrkt.getItemCount() != 0 && jCBCUMrkt.getItemCount() != 0){
+            team = jCBTeamMrkt.getSelectedItem().toString();
+            cu = jCBCUMrkt.getSelectedItem().toString();
+        }      
+        
+        for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+            if (marketsinfo.get(i + 3).equals(team) && marketsinfo.get(i + 4).equals(cu))
+                if (!regions.contains(marketsinfo.get(i + 2)))                  
+                    regions.add(marketsinfo.get(i + 2));    
+        }
+        Collections.sort(regions);
+        for (int i = 0; i < regions.size(); i++) {
+            jCBRegionMrkt.addItem(regions.get(i));
         }
     }//GEN-LAST:event_jCBCUMrktActionPerformed
 
     private void jCBRegionMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBRegionMrktActionPerformed
-        // TODO add your handling code here:
-        List<String> mars = new ArrayList<String>();
-        String mar1 = "";
+        // Add markets in Add market
         jCBMarketList.removeAllItems();
-        if (jCBRegionMrkt.getItemCount() > 0){
-            String team1 = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
-            String cu1 = jCBCUMrkt.getItemAt(jCBCUMrkt.getSelectedIndex());
-            String reg1 = jCBRegionMrkt.getItemAt(jCBRegionMrkt.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i%5 == 0){
-                    mar1 = marketTeamCU.get(i + 1);
-                    if (reg1.equals(marketTeamCU.get(i + 2)) && team1.equals(marketTeamCU.get(i + 3)) && cu1.equals(marketTeamCU.get(i + 4))) {
-                        if (mars.isEmpty()) {
-                            jCBMarketList.addItem(mar1);
-                            mars.add(mar1);
-                        } else {
-                            if (!mars.contains(mar1)) {
-                                jCBMarketList.addItem(mar1);
-                                mars.add(mar1);
-                            }
-                        }
-                    }
-                }
-            }
+        ArrayList<String> markets = new ArrayList<>();
+        String team = "", cu = "", reg = "";
+        if (jCBTeamMrkt.getItemCount() != 0 && jCBCUMrkt.getItemCount() != 0 && jCBRegionMrkt.getItemCount() != 0){
+            team = jCBTeamMrkt.getSelectedItem().toString();
+            cu = jCBCUMrkt.getSelectedItem().toString();
+            reg = jCBRegionMrkt.getSelectedItem().toString();
+        }      
+        
+        for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+            if (marketsinfo.get(i + 3).equals(team) && marketsinfo.get(i + 4).equals(cu) && marketsinfo.get(i + 2).equals(reg))
+                if (!markets.contains(marketsinfo.get(i + 1)))                  
+                    markets.add(marketsinfo.get(i + 1));    
+        }
+        Collections.sort(markets);
+        for (int i = 0; i < markets.size(); i++) {
+            jCBMarketList.addItem(markets.get(i));
         }
     }//GEN-LAST:event_jCBRegionMrktActionPerformed
 
     private void jCBNetTechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetTechActionPerformed
-        // TODO add your handling code here:
+        // Fill activity code in Add new network
+        ArrayList<String> activity_code = new ArrayList<String>();
+        jCBNetActCode.removeAllItems();
+        String team = "", cu1 = "", reg = "", market = "";        
+        
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0 && jCBNetRegion.getItemCount() != 0 && jCBNetMarket.getItemCount() != 0){
+            team = jCBNetTeam.getSelectedItem().toString();  
+            cu1 = jCBNetCustomer.getSelectedItem().toString();
+            reg = jCBNetRegion.getSelectedItem().toString();
+            market = jCBNetMarket.getSelectedItem().toString();
+        }                
+        for (int i = 0; i < networksinfo.size(); i = i + 10) {// Team, CU, Region, Market, Technology
+            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1)) && (reg.equals(networksinfo.get(i + 2)) && (market.equals(networksinfo.get(i + 3))))) {
+                if (!activity_code.contains(networksinfo.get(i + 6))) {
+                    activity_code.add(networksinfo.get(i + 6));
+                }
+            }
+        
+        }
+        Collections.sort(activity_code);
+        for (int i = 0; i < activity_code.size(); i++) {
+            jCBNetActCode.addItem(activity_code.get(i));
+        }
+        
     }//GEN-LAST:event_jCBNetTechActionPerformed
 
     private void jMIPSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPSSActionPerformed
@@ -3927,8 +4021,24 @@ public class Time_Review extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIScopingActionPerformed
 
     private void jCBLineManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBLineManagerActionPerformed
-        // TODO add your handling code here:
+        // Show LM
     }//GEN-LAST:event_jCBLineManagerActionPerformed
+
+    private void jCBMarketListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMarketListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBMarketListActionPerformed
+
+    private void jTFPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFPDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFPDActionPerformed
+
+    private void jTFResponsibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFResponsibleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFResponsibleActionPerformed
+
+    private void jCBTeam_editnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editnetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTeam_editnetActionPerformed
 
     private void GetTaskTypes() {
         // Get different task ids
@@ -3951,7 +4061,7 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println(e);
         }
         // Remove numbers from task id
-        for (int i = 0; i < tasktypes.size(); i++){
+        for (int i = 0; i < tasktypes.size(); i++) {
             String task_id = tasktypes.get(i);
             // Replace numbers
             int sub = task_id.lastIndexOf("-");
@@ -3961,8 +4071,7 @@ public class Time_Review extends javax.swing.JFrame {
         }
         tasktypes = tasktypes.stream().distinct().collect(Collectors.toList());
     }
-    
-    
+
     private void GetNetworksSearch() {
         String netHeader[] = {"PD", "Network", "Activity Code", "Region", "Market", "Team", "Customer Unit", "Responsible", "Subnetwork", "Technology"};
         DefaultTableModel model = new DefaultTableModel();
@@ -3970,121 +4079,46 @@ public class Time_Review extends javax.swing.JFrame {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        String subnet, actcode, reg, markt, team, tech;
+        String actcode, team, subnet, reg, markt, tech;
         String[] row = new String[10];
         try {
             String sql = "";
             sql = "SELECT PD, Network, Activity_Code, "
                     + "Region, Market, Team, Customer, "
-                    + "Responsible, Subnetwork, Technology FROM networks ORDER BY Network asc;";
+                    + "Responsible, Subnetwork, Technology FROM networks ORDER BY Team asc;";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            resultset = preparedStatement.executeQuery();
+            resultset = preparedStatement.executeQuery();            
             while (resultset.next()) {
-                String[] row1 = {resultset.getString("Team"), resultset.getString("Customer")};
-                String[] row2 = {resultset.getString("Market"), resultset.getString("Technology")};
-                String[] row3 = {resultset.getString("Team"), resultset.getString("Customer"), resultset.getString("Market"), resultset.getString("Network"), resultset.getString("Subnetwork")};
+                String[] row1 = {resultset.getString("Team"), resultset.getString("Customer"), resultset.getString("Region"), resultset.getString("Market"), resultset.getString("Network"),
+                    resultset.getString("Subnetwork"), resultset.getString("Activity_code"), resultset.getString("Technology"), resultset.getString("PD"), resultset.getString("Responsible")};
+                List<String> newList1 = Arrays.asList(row1);
+
+                networksinfo.addAll(newList1);
+
                 for (int i = 0; i < 10; i++) {
                     row[i] = resultset.getString(i + 1);
                 }
-                if (netTeamsAndCUs.isEmpty()) {
-                    List<String> newList = Arrays.asList(row1);
-                    netTeamsAndCUs.addAll(newList);
-                } else {
-                    int noRepeats = 0;
-                    for (int i = 0; i < netTeamsAndCUs.size(); i++) {
-                        if (i % 2 == 0) {
-                            if (netTeamsAndCUs.get(i).equals(row1[0]) && netTeamsAndCUs.get(i + 1).equals(row1[1])) {
-                                noRepeats += 1;
-                            }
-                        }
-                    }
-                    if (noRepeats == 0) {
-                        List<String> newList = Arrays.asList(row1);
-                        netTeamsAndCUs.addAll(newList);
-                    }
-                }
-                
-
                 if (networks.isEmpty()) {
                     networks.add(resultset.getString("Network"));
                 } else {
                     if (!networks.contains(resultset.getString("Network"))) {
                         networks.add(resultset.getString("Network"));
                     }
-                }
-
-                if (netwTeamSubn.isEmpty()) {
-                    List<String> newList1 = Arrays.asList(row3);
-                    netwTeamSubn.addAll(newList1);
-                } else {
-                    int numbRep = 0;
-                    for (int i = 0; i < netwTeamSubn.size(); i++) {
-                        if (i % 5 == 0) {
-                            if (netwTeamSubn.get(i).equals(row3[0]) && netwTeamSubn.get(i + 1).equals(row3[1]) && netwTeamSubn.get(i + 2).equals(2) && netwTeamSubn.get(i + 3).equals(row3[3]) && netwTeamSubn.get(i + 4).equals(4)) {
-                                numbRep += 1;
-                            }
-                        }
-                    }
-                    if (numbRep == 0) {
-                        List<String> newList1 = Arrays.asList(row3);
-                        netwTeamSubn.addAll(newList1);
-                    }
-                }
+                }             
                 
-                if (netMrktTech.isEmpty()) {
-                    List<String> newList1 = Arrays.asList(row2);
-                    netMrktTech.addAll(newList1);
-                } else {
-                    int numbRep = 0;
-                    for (int i = 0; i < netMrktTech.size(); i++) {
-                        if (i % 2 == 0) {
-                            if (netMrktTech.get(i).equals(row2[0]) && netMrktTech.get(i + 1).equals(row2[1])) {
-                                numbRep += 1;
-                            }
-                        }
-                    }
-                    if (numbRep == 0) {
-                        List<String> newList1 = Arrays.asList(row2);
-                        netMrktTech.addAll(newList1);
-                    }
-                }
-
-                subnet = resultset.getString("Subnetwork");
-                actcode = resultset.getString("Activity_code");
-                reg = resultset.getString("Region");
-                markt = resultset.getString("Market");
-                team = resultset.getString("Team");
-                tech = resultset.getString("Technology");
-
-                if (!act_codes.isEmpty()) {
-                    if (!act_codes.contains(actcode)) {
-                        act_codes.add(actcode);
-                        jCBNetActCode.addItem(actcode);
-                    }
-                } else {
-                    act_codes.add(actcode);
-                    jCBNetActCode.addItem(actcode);
-                }
-                if (!netTeams.isEmpty()) {
-                    if (!netTeams.contains(team)) {
-                        netTeams.add(team);
-                        jCBNetTeam.addItem(team);
-                        jCBNetTeamSearch.addItem(team);
-                    }
-                } else {
-                    netTeams.add(team);
-                    jCBNetTeam.addItem(team);
-                    jCBNetTeamSearch.addItem(team);
-                }
+                
+                
                 model.addRow(row);
             }
+                       
             jTableNetworks.setModel(model);
             resizeColumnWidth(jTableNetworks);
             connection.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
+
         //jCBNetCustomerActionPerformed(null);
         //jCBNetRegionActionPerformed(null);
         //jCBNetMarketActionPerformed(null);
@@ -4101,7 +4135,7 @@ public class Time_Review extends javax.swing.JFrame {
         try {
 
             String sql, org1, cu1, team1, name1, name2;
-            String[] organi = new String[100];;
+            String[] organi = new String[100];
             List<String> orgs = new ArrayList<String>();
             sql = "SELECT Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number"
                     + " FROM users ORDER BY Last_Name asc;";
@@ -4134,7 +4168,7 @@ public class Time_Review extends javax.swing.JFrame {
                         //jCBOrganization.addItem(org1);
                         if (org1.contains("MX")){
                             organi = org1.split("MX ");
-                        } else if (org1.contains("Mexico")){
+                        } else if (org1.contains("Mexico")) {
                             organi = org1.split("Mexico ");
                         }
                         //if (organi.length > 1)
@@ -4151,11 +4185,12 @@ public class Time_Review extends javax.swing.JFrame {
                 model.addRow(row);
             }
             Collections.sort(orgs);
-            for (int i = 0; i<orgs.size(); i++){
-                if (!orgs.get(i).equals("MANA"))
+            for (int i = 0; i < orgs.size(); i++) {
+                if (!orgs.get(i).equals("MANA")) {
                     jCBOrgMetrics.addItem(orgs.get(i));
-                else
+                } else {
                     jCBOrgMetrics.addItem("All");
+                }
             }
             jTUsersList.setModel(model);
             resizeColumnWidth(jTUsersList);
@@ -4163,6 +4198,43 @@ public class Time_Review extends javax.swing.JFrame {
             connection.close();
         } catch (SQLException e) {
             System.out.println("Error in GetAllUsers");
+            System.out.println(e);
+        }
+    }
+
+    private void GetManagerInfo() {
+        Connection connection;
+        PreparedStatement preparedStatement;
+        ResultSet resultset;
+        String[] column = {"Signum", "Last_Name", "Name", "Customer_Unit", "Team", "Organization", "Line_Manager", "Access", "Supporting_Team", "Supporting_CU", "Job_Stage", "Act_Type", "CATS_Number"};
+        String[] row = new String[13];
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(column);
+        try {
+
+            String sql, signum, name;
+            List<String> lm_names = new ArrayList<String>();
+            sql = "SELECT Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number"
+                    + " FROM users WHERE Team = 'SDLM'";
+            connection = SQL_connection.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultset = preparedStatement.executeQuery();
+            while (resultset.next()) {
+                signum = resultset.getString("Signum");
+                name = resultset.getString("Last_Name") + " " + resultset.getString("Name");
+                lm_names.add(name);
+                if (LMSignums.isEmpty()) {
+                    LMSignums.add(signum);
+                }
+                model.addRow(row);
+            }
+            for (int x = 0; x < lm_names.size(); x++) {
+                jCBLineManager.addItem(lm_names.get(x));
+
+            }
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error in GetManagersInfo");
             System.out.println(e);
         }
     }
@@ -4175,7 +4247,7 @@ public class Time_Review extends javax.swing.JFrame {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        String[] column = {"Task_ID", "Task", "Team", "Customer Unit", "Service Package Name", 
+        String[] column = {"Task_ID", "Task", "Team", "Customer Unit", "Service Package Name",
             "Deliverable", "Project Support Domain", "LoE"};
         String[] row = new String[8];
         DefaultTableModel model = new DefaultTableModel();
@@ -4208,38 +4280,37 @@ public class Time_Review extends javax.swing.JFrame {
                         teamsAndCUs.addAll(newList);
                     }
                 }
-                
+
                 String spn = resultset.getString("Service_Package_Name");
-                spn +="#" + resultset.getString("Team");
-                if (servicePackageNames.size() == 0){
+                spn += "#" + resultset.getString("Team");
+                if (servicePackageNames.size() == 0) {
                     servicePackageNames.add(spn);
                 } else {
                     if (!servicePackageNames.contains(spn)) {
                         servicePackageNames.add(spn);
                     }
                 }
-                
+
                 String deliv = resultset.getString("Deliverable");
                 deliv += "#" + resultset.getString("Team");
-                if (deliverableList.size() == 0){
+                if (deliverableList.size() == 0) {
                     deliverableList.add(deliv);
                 } else {
                     if (!deliverableList.contains(deliv)) {
                         deliverableList.add(deliv);
                     }
                 }
-                
+
                 String psd = resultset.getString("Project_Support_Domain");
                 psd += "#" + resultset.getString("Team");
-                if (projectSupportNames.size() == 0){
+                if (projectSupportNames.size() == 0) {
                     projectSupportNames.add(psd);
                 } else {
                     if (!projectSupportNames.contains(psd)) {
                         projectSupportNames.add(psd);
                     }
                 }
-                
-                
+
                 for (int i = 0; i < 8; i++) {
                     row[i] = resultset.getString(i + 1);
                 }
@@ -4256,15 +4327,14 @@ public class Time_Review extends javax.swing.JFrame {
                     } else {
                         task1 = task1 + "  ";
                         int flag = 0;
-                        while (flag == 0){
-                            if (!tasks.contains(task1)){
+                        while (flag == 0) {
+                            if (!tasks.contains(task1)) {
                                 tasks.add(task1);
                                 String[] taskk = {taskid1, task1};
                                 List<String> newList = Arrays.asList(taskk);
                                 taskIDandTasks.addAll(newList);
                                 flag = 1;
-                            }
-                            else {
+                            } else {
                                 task1 = task1 + "  ";
                             }
                         }
@@ -4275,7 +4345,7 @@ public class Time_Review extends javax.swing.JFrame {
                     List<String> newList = Arrays.asList(taskk);
                     taskIDandTasks.addAll(newList);
                 }
-                
+
                 String[] row2 = {resultset.getString("Team"), resultset.getString("Customer_Unit"), task1};
                 if (teamsCUSTasks.isEmpty()) {
                     List<String> newList2 = Arrays.asList(row2);
@@ -4293,13 +4363,13 @@ public class Time_Review extends javax.swing.JFrame {
                         List<String> newList2 = Arrays.asList(row2);
                         teamsCUSTasks.addAll(newList2);
                     }
-                }                
-                if (!_teams.contains(team1)){
-                   _teams.add(team1);
-                }                              
+                }
+                if (!_teams.contains(team1)) {
+                    _teams.add(team1);
+                }
                 model.addRow(row);
             }
-            for (int i = 0; i < _teams.size(); i++){
+            for (int i = 0; i < _teams.size(); i++) {
                 teams.add(_teams.get(i));
                 jCBTaskTeam.addItem(_teams.get(i));
                 jCBTeam.addItem(_teams.get(i));
@@ -4321,18 +4391,18 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
-    private void GetAllMarkets(){
+
+    private void GetAllMarkets() {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String markID1, mrkt1, reg1, team1, cu1;
-        try{
+        try {
             String sql = "SELECT id, Market, Region, Team, Customer_Unit FROM markets;";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            resultset = preparedStatement.executeQuery();
-            while (resultset.next()){
+            resultset = preparedStatement.executeQuery();            
+            while (resultset.next()) {
                 markID1 = resultset.getString("id");
                 mrkt1 = resultset.getString("Market");
                 reg1 = resultset.getString("Region");
@@ -4340,73 +4410,48 @@ public class Time_Review extends javax.swing.JFrame {
                 cu1 = resultset.getString("Customer_Unit");
                 //marketTeamCU
                 String[] row1 = {markID1, mrkt1, reg1, team1, cu1};
-                String[] row2 = {team1, cu1, reg1, mrkt1};
-                if (marketTeamCU.isEmpty()) {
-                    List<String> newList = Arrays.asList(row1);
-                    marketTeamCU.addAll(newList);
-                } else {
-                    int noRepeats = 0;
-                    for (int i = 0; i < marketTeamCU.size(); i++) {
-                        if (i % 4 == 0) {
-                            if (marketTeamCU.get(i).equals(row1[0]) && marketTeamCU.get(i + 1).equals(row1[1]) && marketTeamCU.get(i + 2).equals(row1[2]) && marketTeamCU.get(i + 3).equals(row1[3])) {
-                                noRepeats += 1;
-                            }
-                        }
-                    }
-                    if (noRepeats == 0) {
-                        List<String> newList = Arrays.asList(row1);
-                        marketTeamCU.addAll(newList);
-                    }
-                }
                 
-                if (netTeamCURegMark.isEmpty()) {
-                    List<String> newList1 = Arrays.asList(row2);
-                    netTeamCURegMark.addAll(newList1);
-                } else {
-                    int nuRepeats = 0;
-                    for (int i = 0; i < netTeamCURegMark.size(); i++) {
-                        if (i % 4 == 0) {
-                            if (netTeamCURegMark.get(i).equals(row2[0]) && netTeamCURegMark.get(i + 1).equals(row2[1]) && netTeamCURegMark.get(i + 2).equals(row2[2]) && netTeamCURegMark.get(i + 3).equals(row2[3])) {
-                                nuRepeats += 1;
-                            }
-                        }
-                    }
-                    if (nuRepeats == 0) {
-                        List<String> newList1 = Arrays.asList(row2);
-                        netTeamCURegMark.addAll(newList1);
-                    }
-                }
-                
+                List<String> newList = Arrays.asList(row1);
+                marketsinfo.addAll(newList);
+
                 
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
     }
-    
+
     private void InsertIntoMarketDB() {
         Connection connection;
         PreparedStatement preparedStatement;
         //ResultSet resultset;
         try {
-            String region = jCBRegionMrkt.getItemAt(jCBRegionMrkt.getSelectedIndex());
+            String region = jCBRegionMrkt.getSelectedItem().toString();
             String marketName = String.valueOf(jCBMarketList.getEditor().getItem());
-            String teamMarket = jCBTeamMrkt.getItemAt(jCBTeamMrkt.getSelectedIndex());
-            String cuMarket = jCBCUMrkt.getItemAt(jCBCUMrkt.getSelectedIndex());
-            String id = "";
+            String teamMarket = jCBTeamMrkt.getSelectedItem().toString();
+            String cuMarket = jCBCUMrkt.getSelectedItem().toString();
+            String id = "", id_market = "";
             
-            String cu1 = cuMarket.replace("&", "").replace("-","");
-            id = region.substring(0,3).toUpperCase() + "-" + teamMarket.substring(0,3).toUpperCase() + "-" + cu1.substring(0, 3).toUpperCase() + "-" + marketName.substring(0, 3).toUpperCase();
+
+            String cu1 = cuMarket.replace("&", "").replace("-", "");
+            int lenght_market = marketName.length();            
+            if (lenght_market < 3){
+               id_market = marketName.substring(0, 2).toUpperCase(); 
+            } else{
+                id_market = marketName.substring(0, 3).toUpperCase();
+            }
+                
+            id = region.substring(0, 3).toUpperCase() + "-" + teamMarket.substring(0, 3).toUpperCase() + "-" + cu1.substring(0, 3).toUpperCase() + "-" + id_market;
             int contador = 1;
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i % 5 == 0){
-                    if (marketTeamCU.get(i).equals(id + String.valueOf(contador)))
-                        contador ++;
+            for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+                if (marketsinfo.get(i).equals(id + String.valueOf(contador))) {
+                    contador++;
                 }
             }
+
             id = id + String.valueOf(contador);
-            
+
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO markets (id, Market, Region, Team, Customer_Unit) "
                     + "VALUES (?, ?, ?, ?, ?)");
@@ -4430,7 +4475,7 @@ public class Time_Review extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Something went wrong, please try again later.");
         }
     }
-    
+
     private void UpdateMarketsDB() {
         Connection connection;
         PreparedStatement preparedStatement;
@@ -4441,10 +4486,11 @@ public class Time_Review extends javax.swing.JFrame {
             String teamMarket = jCBMarTeam.getItemAt(jCBMarTeam.getSelectedIndex());
             String cuMarket = jCBMarCU.getItemAt(jCBMarCU.getSelectedIndex());
             String id = "";
-            for (int i = 0; i < marketTeamCU.size(); i++){
-                if (i % 5 == 0){
-                    if (marketName.equals(marketTeamCU.get(i + 1)) && region.equals(marketTeamCU.get(i + 2)) && teamMarket.equals(marketTeamCU.get(i + 3)) && cuMarket.equals(marketTeamCU.get(i + 4)))
-                        id = marketTeamCU.get(i);
+            for (int i = 0; i < marketsinfo.size(); i++) {
+                if (i % 5 == 0) {
+                    if (marketName.equals(marketsinfo.get(i + 1)) && region.equals(marketsinfo.get(i + 2)) && teamMarket.equals(marketsinfo.get(i + 3)) && cuMarket.equals(marketsinfo.get(i + 4))) {
+                        id = marketsinfo.get(i);
+                    }
                 }
             }
 
@@ -4463,19 +4509,19 @@ public class Time_Review extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Something went wrong, please try again later.");
         }
     }
-    
+
     private void SearchMarketkDB() {
         String region = jCBMarRegion.getItemAt(jCBMarRegion.getSelectedIndex());
         String marketName = jCBMarMrkt.getItemAt(jCBMarMrkt.getSelectedIndex());
         String teamMarket = jCBMarTeam.getItemAt(jCBMarTeam.getSelectedIndex());
         String cuMarket = jCBMarCU.getItemAt(jCBMarCU.getSelectedIndex());
-        
+
         jCBTeamMrkt.setSelectedItem(teamMarket);
         jCBCUMrkt.setSelectedItem(cuMarket);
         jCBRegionMrkt.setSelectedItem(region);
         jCBMarketList.setSelectedItem(marketName);
     }
-    
+
     private void DeleteMarketDB() {
         Connection connection;
         PreparedStatement preparedStatement;
@@ -4485,10 +4531,13 @@ public class Time_Review extends javax.swing.JFrame {
             String cuMrkt = jCBMarCU.getItemAt(jCBMarCU.getSelectedIndex());
             String regMrkt = jCBMarRegion.getItemAt(jCBMarRegion.getSelectedIndex());
             String marketName = jCBMarMrkt.getItemAt(jCBMarMrkt.getSelectedIndex());
-            for (int i = 0; i < marketTeamCU.size(); i++)
-                if (i % 5 == 0)
-                    if (marketName.equals(marketTeamCU.get(i + 1)) && regMrkt.equals(marketTeamCU.get(i + 2)) && teamMrkt.equals(marketTeamCU.get(i + 3)) && cuMrkt.equals(marketTeamCU.get(i + 4)))
-                        id = marketTeamCU.get(i);
+            for (int i = 0; i < marketsinfo.size(); i++) {
+                if (i % 5 == 0) {
+                    if (marketName.equals(marketsinfo.get(i + 1)) && regMrkt.equals(marketsinfo.get(i + 2)) && teamMrkt.equals(marketsinfo.get(i + 3)) && cuMrkt.equals(marketsinfo.get(i + 4))) {
+                        id = marketsinfo.get(i);
+                    }
+                }
+            }
 
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("DELETE FROM markets "
@@ -4498,16 +4547,17 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println("Query: " + preparedStatement);
             connection.close();
 
-            for (int i = 0; i < netTeamCURegMark.size(); i++){
-                if (i % 4 == 0){
-                    if (teamMrkt.equals(netTeamCURegMark.get(i)) && cuMrkt.equals(netTeamCURegMark.get(i + 1)) && regMrkt.equals(netTeamCURegMark.get(i + 2)) && marketName.equals(netTeamCURegMark.get(i + 3))){
-                        for (int j = 0; j < 4; j++)
+            for (int i = 0; i < netTeamCURegMark.size(); i++) {
+                if (i % 4 == 0) {
+                    if (teamMrkt.equals(netTeamCURegMark.get(i)) && cuMrkt.equals(netTeamCURegMark.get(i + 1)) && regMrkt.equals(netTeamCURegMark.get(i + 2)) && marketName.equals(netTeamCURegMark.get(i + 3))) {
+                        for (int j = 0; j < 4; j++) {
                             netTeamCURegMark.remove(i);
+                        }
                         System.out.println("Deleting...");
                     }
                 }
             }
-            
+
             JOptionPane.showMessageDialog(this, "Market deleted successfully.");
         } catch (SQLException e) {
             System.out.println(e);
@@ -4527,26 +4577,27 @@ public class Time_Review extends javax.swing.JFrame {
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
-            String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
+            String lmsignum1 = LMSignums.get(jCBLineManager.getSelectedIndex());
             String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
-            
+
             HashMap<String, String> team_list = new HashMap<String, String>();
 
             // Add keys and values (Team name, Prefix)
             team_list.put("COP", "C_");
             team_list.put("VSS", "V_");
             team_list.put("PSS", "P_");
-            team_list.put("Scoping", "SCP_");  
+            team_list.put("Scoping", "SCP_");
             team_list.put("Sourcing", "");
-            
-            if (!team1.equals("SDU") && !cu1.equals("")){
-                cu1 = team_list.get(team1) + cu1;                
-            }           
-            
-            if (!js1.equals("N/A"))
+
+            if (!team1.equals("SDU") && !cu1.equals("")) {
+                cu1 = team_list.get(team1) + cu1;
+            }
+
+            if (!js1.equals("N/A")) {
                 js1 = "Job Stage " + js1;
-            
+            }
+
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO users (Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -4591,25 +4642,26 @@ public class Time_Review extends javax.swing.JFrame {
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
-            String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
+            String lmsignum1 = LMSignums.get(jCBLineManager.getSelectedIndex());
             String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
-            
+
             HashMap<String, String> CU_list = new HashMap<String, String>();
 
             // Add keys and values (Team name, Prefix)
             CU_list.put("COP", "C_");
             CU_list.put("VSS", "V_");
             CU_list.put("PSS", "P_");
-            CU_list.put("Scoping", "SCP_");  
+            CU_list.put("Scoping", "SCP_");
             CU_list.put("Sourcing", "");
-            
-            if (!team1.equals("SDU") && !cu1.equals("")){
-                cu1 = CU_list.get(team1) + cu1;                
-            }             
-            
-            if (!js1.equals("N/A"))
+
+            if (!team1.equals("SDU") && !cu1.equals("")) {
+                cu1 = CU_list.get(team1) + cu1;
+            }
+
+            if (!js1.equals("N/A")) {
                 js1 = "Job Stage " + js1;
+            }
 
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE users SET "
@@ -4631,7 +4683,7 @@ public class Time_Review extends javax.swing.JFrame {
             preparedStatement.setObject(11, jTFSignum.getText());
             System.out.println("Query: " + preparedStatement);
             preparedStatement.executeUpdate();
-            
+
             connection.close();
 
             //JOptionPane.showMessageDialog(this, "User saved successfully.");
@@ -4702,7 +4754,7 @@ public class Time_Review extends javax.swing.JFrame {
             System.out.println("Length of Integer ID: " + String.valueOf(idd).length());
             ID = type + "-" + new String(new char[idd2.length() - String.valueOf(idd).length()]).replace("\0", "0") + idd;
             System.out.println("New ID: " + ID);
-            if (loe.equals("")){
+            if (loe.equals("")) {
                 loe = "-1.00";
             }
             preparedStatement = connection.prepareStatement("INSERT INTO tasks (Task_ID, Task, Team, Customer_Unit, SAP_Billable, Service_Package_Name, Deliverable, Project_Support_Domain, LoE) "
@@ -4771,9 +4823,9 @@ public class Time_Review extends javax.swing.JFrame {
             String task_id = "";
             String task = jCBTaskSearch.getSelectedItem().toString();
             //Get task id
-            for (int i = 0; i < taskIDandTasks.size(); i++){
-                if (i%2 == 0){
-                    if (task.equals(taskIDandTasks.get(i+1))){
+            for (int i = 0; i < taskIDandTasks.size(); i++) {
+                if (i % 2 == 0) {
+                    if (task.equals(taskIDandTasks.get(i + 1))) {
                         task_id = taskIDandTasks.get(i);
                     }
                 }
@@ -4795,7 +4847,7 @@ public class Time_Review extends javax.swing.JFrame {
                 deliv = resultSet.getString("Deliverable");
                 psd = resultSet.getString("Project_Support_Domain");
                 loe = resultSet.getString("LoE");
-                
+
                 int index = tid.lastIndexOf("-");
                 String task_type = tid.substring(index);
                 System.out.println(tid + taskname + team + cu + spn + deliv + psd + loe);
@@ -4901,9 +4953,11 @@ public class Time_Review extends javax.swing.JFrame {
                 region = resultSet.getString("Region");
                 market = resultSet.getString("Market");
                 customer = resultSet.getString("Customer");
+                System.out.println("Customer found  " + customer);
                 responsible = resultSet.getString("Responsible");
                 subnetwork = resultSet.getString("Subnetwork");
                 team = resultSet.getString("Team");
+                System.out.println("Team found  " + team);
                 tech = resultSet.getString("Technology");
 
                 jTFPD.setText(pd);
@@ -4961,9 +5015,10 @@ public class Time_Review extends javax.swing.JFrame {
             String reg1 = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
             String mark1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
             String net1 = jTFNetwork.getText();
-            String team1 = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
+            String team1 = jCBTeam_editnet.getSelectedItem().toString();
             String technology = jCBNetTech.getSelectedItem().toString();
-
+            
+            System.out.println("El team " + team1);
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE networks SET Activity_code = ?, Responsible = ?, "
                     + "Subnetwork = ?,  Customer = ?, Region = ?, Market = ?, Technology = ? "
@@ -4995,7 +5050,7 @@ public class Time_Review extends javax.swing.JFrame {
         if (!jTFPD.getText().equals("") && !jTFNetwork.getText().equals("")
                 && !jTFResponsible.getText().equals("") && !jTFSubnetwork.getText().equals("")) {
             flag = true;
-        } 
+        }
         return flag;
     }
 
@@ -5017,7 +5072,7 @@ public class Time_Review extends javax.swing.JFrame {
     private void ResetNetworkFields() {
         jTFPD.setText("");
         jTFNetwork.setText("");
-        jCBNetActCode.setSelectedIndex(0);
+        //jCBNetActCode.setSelectedIndex(0);
         jTFResponsible.setText("");
         jTFSubnetwork.setText("");
         //jCBNetTeam.setSelectedIndex(0);
@@ -5025,7 +5080,7 @@ public class Time_Review extends javax.swing.JFrame {
         //jCBNetRegion.setSelectedIndex(0);
         //jCBNetMarket.setSelectedIndex(0);
         //jCBNetTech.setSelectedIndex(0);
-        jCBNetTeamSearch.setSelectedIndex(0);
+        //jCBNetTeamSearch.setSelectedIndex(0);
     }
 
     private void ResetTaskFields() {
@@ -5061,7 +5116,7 @@ public class Time_Review extends javax.swing.JFrame {
                 }
                 sb.append("\n");
             }
-            
+
             writer.write(sb.toString());
             System.out.println("Template generated successfully");
             int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "CSV created", JOptionPane.YES_NO_OPTION);
@@ -5181,7 +5236,7 @@ public class Time_Review extends javax.swing.JFrame {
                     mTo = i + 1;
                 }
             }
-            date1 =  yearFrom1 + "-" + String.valueOf(mFrom) + "-01";
+            date1 = yearFrom1 + "-" + String.valueOf(mFrom) + "-01";
             if (jRBTo.isSelected()) {
                 date2 = yearTo1 + "-" + String.valueOf(mTo) + "-" + String.valueOf(days[mTo - 1]);
                 fileName = fileName + "From " + monthFrom + " To " + monthTo;
@@ -5214,8 +5269,8 @@ public class Time_Review extends javax.swing.JFrame {
             orden = "MONTH(Work_date), " + orden;
             week = "WHERE Work_date BETWEEN '" + date1 + "' AND '" + date2 + "'";
         }
-        
-        if (orgn1 != "All"){
+
+        if (orgn1 != "All") {
             organization = " AND Organization LIKE '%" + orgn1 + "'";
         }
 
@@ -5293,7 +5348,7 @@ public class Time_Review extends javax.swing.JFrame {
             jTFFileName.setText(fileName);
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Total rows added: " + rowCounter);
         jTableShowMetrics.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -5383,8 +5438,8 @@ public class Time_Review extends javax.swing.JFrame {
             orden = "MONTH(Work_date), " + orden;
             week = "WHERE Work_date BETWEEN '" + date1 + "' AND '" + date2 + "'";
         }
-        
-        if (!orgn1.equals("All")){
+
+        if (!orgn1.equals("All")) {
             organization = " AND Organization LIKE '%" + orgn1 + "'";
         }
 
@@ -5516,23 +5571,26 @@ public class Time_Review extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Time_Review.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Time_Management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Time_Review.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Time_Management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Time_Review.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Time_Management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Time_Review.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Time_Management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Time_Review().setVisible(true);
+                    new Time_Management().setVisible(true);
                 } catch (ParseException ex) {
-                    Logger.getLogger(Time_Review.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -5605,6 +5663,7 @@ public class Time_Review extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBTeam;
     private javax.swing.JComboBox<String> jCBTeamMrkt;
     private javax.swing.JComboBox<String> jCBTeamTaskSearch;
+    private javax.swing.JComboBox<String> jCBTeam_editnet;
     private javax.swing.JComboBox<String> jCBTo;
     private javax.swing.JComboBox<String> jCBUser;
     private javax.swing.JComboBox<String> jCBYearFrom;

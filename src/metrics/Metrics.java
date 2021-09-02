@@ -78,9 +78,9 @@ public class Metrics {
             if (usersinfo.get(6).equals("1")) { // If user is admin
                 try {
                     log.dispose();
-                    Time_Review t_rev = new Time_Review();
-                    t_rev.show();
-                    t_rev.setLocationRelativeTo(null);
+                    Time_Management t_manage = new Time_Management();
+                    t_manage.show();
+                    t_manage.setLocationRelativeTo(null);
 
                 } catch (ParseException ex) {
                     Logger.getLogger(Metrics.class.getName()).log(Level.SEVERE, null, ex);
