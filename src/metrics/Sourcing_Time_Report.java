@@ -2174,11 +2174,14 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 sap, date, time_added, week, ftr, on_time, fail_ftr, fail_on_time, requests, comments};
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
 
+            BigDecimal total_time = BigDecimal.valueOf((Integer.valueOf(jTextFieldTime.getText())));
+            BigDecimal mult_time = time.multiply(BigDecimal.valueOf(entries));
             for (int i = 0; i < entries; i++) {
                 // Check if division sums the original quantity, if not tweak it
-                if (time.multiply(BigDecimal.valueOf(entries)) != BigDecimal.valueOf((Integer.valueOf(jTextFieldTime.getText())))){
+                if (mult_time != total_time){
                     if (i == entries - 1) {
-                        data[10] = time.add(BigDecimal.valueOf(0.01)).toString();
+                        BigDecimal missing_time = total_time.subtract(mult_time);
+                        data[10] = time.add(missing_time).toString();
                     }
                 }
                 tblModel.addRow(data);

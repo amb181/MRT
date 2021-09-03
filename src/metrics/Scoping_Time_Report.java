@@ -2749,7 +2749,16 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                 tech, sap, date, time_added, week, ftr, on_time, fail_ftr, fail_on_time, requests, comments};
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
 
+            BigDecimal total_time = BigDecimal.valueOf((Integer.valueOf(jTextFieldTime.getText())));
+            BigDecimal mult_time = time.multiply(BigDecimal.valueOf(entries));
             for (int i = 0; i < entries; i++) {
+                // Check if division sums the original quantity, if not tweak it
+                if (mult_time != total_time){
+                    if (i == entries - 1) {
+                        BigDecimal missing_time = total_time.subtract(mult_time);
+                        data[13] = time.add(missing_time).toString();
+                    }
+                }
                 tblModel.addRow(data);
             }
             // Set all indices to 0
