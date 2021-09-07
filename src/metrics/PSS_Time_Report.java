@@ -2728,6 +2728,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             String comments = (String) jTextFieldComments.getText();
 
             // if bulk or single
+            boolean b_bulk = false;
             if (jRBulk.isSelected()) {
                 int req = 0;
                 entries = (int) jSpinnerBulk.getValue();
@@ -2743,6 +2744,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 time = new BigDecimal(jTextFieldTime.getText());
                 // Round to 2 decimals
                 time = time.divide(entries_bd, 2, RoundingMode.FLOOR);
+                b_bulk = true;
             }
             String time_added = String.valueOf(time);
 
@@ -2750,11 +2752,11 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 tech, sap, date, time_added, week, ftr, on_time, fail_ftr, fail_on_time, requests, comments};
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
 
-            BigDecimal total_time = BigDecimal.valueOf((Integer.valueOf(jTextFieldTime.getText())));
+            BigDecimal total_time = BigDecimal.valueOf((Float.valueOf(jTextFieldTime.getText())));
             BigDecimal mult_time = time.multiply(BigDecimal.valueOf(entries));
             for (int i = 0; i < entries; i++) {
                 // Check if division sums the original quantity, if not tweak it
-                if (mult_time != total_time){
+                if (b_bulk == true && mult_time != total_time){
                     if (i == entries - 1) {
                         BigDecimal missing_time = total_time.subtract(mult_time);
                         data[13] = time.add(missing_time).toString();
