@@ -453,6 +453,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jCBCUMrkt = new javax.swing.JComboBox<>();
         jCBMarketList = new javax.swing.JComboBox<>();
+        jCBTeam_editmarket = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuView = new javax.swing.JMenu();
         jMReview = new javax.swing.JMenuItem();
@@ -1569,7 +1570,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1587,7 +1588,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 286, Short.MAX_VALUE))
+                        .addGap(0, 248, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1978,7 +1979,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBNetTableCSV))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1463, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2177,6 +2178,13 @@ public class Time_Management extends javax.swing.JFrame {
             }
         });
 
+        jCBTeam_editmarket.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBTeam_editmarket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTeam_editmarketActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -2191,17 +2199,24 @@ public class Time_Management extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel34)
                         .addGap(18, 18, 18)
-                        .addComponent(jCBTeamMrkt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jCBTeamMrkt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBTeam_editmarket, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel33)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBMarketList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(149, 149, 149)
+                        .addComponent(jLabel33))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel35)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBCUMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel35)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jCBMarketList, 0, 355, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jCBCUMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
                 .addComponent(jBSaveMrkt)
                 .addContainerGap())
@@ -2215,7 +2230,8 @@ public class Time_Management extends javax.swing.JFrame {
                     .addComponent(jLabel34)
                     .addComponent(jCBTeamMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel35)
-                    .addComponent(jCBCUMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBCUMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBTeam_editmarket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
@@ -2238,7 +2254,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jCBMrktAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(767, Short.MAX_VALUE))
+                .addContainerGap(686, Short.MAX_VALUE))
         );
         jPMarketLayout.setVerticalGroup(
             jPMarketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2251,7 +2267,7 @@ public class Time_Management extends javax.swing.JFrame {
                 .addComponent(jPSearchMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(685, Short.MAX_VALUE))
+                .addContainerGap(645, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -2698,6 +2714,7 @@ public class Time_Management extends javax.swing.JFrame {
             jCBNetTeam.setVisible(true);
             jCBTeam_editnet.setVisible(false);
             jTFPD.setEditable(true);
+            ResetNetworkFields();
             // Fill Team in Add new network
             jCBNetTeam.removeAllItems();
             jCBNetTeam.addItem("Select a team");          
@@ -2718,7 +2735,7 @@ public class Time_Management extends javax.swing.JFrame {
             jCBNetTeam.setEnabled(false);
             jCBNetTeam.setVisible(false);
             jCBTeam_editnet.setVisible(true);
-            jTFPD.setEditable(false);            
+            jTFPD.setEditable(false); 
             // Fill teams in Edit network
             jCBNetTeamSearch.removeAllItems();
             jCBNetTeamSearch.addItem("Select a team");
@@ -3316,10 +3333,10 @@ public class Time_Management extends javax.swing.JFrame {
             team = jCBNetTeam.getSelectedItem().toString();  
             cu1 = jCBNetCustomer.getSelectedItem().toString();
         }                
-        for (int i = 0; i < networksinfo.size(); i = i + 10) {// Team, CU, Region, Market, Technology
-            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
-                if (!regions1.contains(networksinfo.get(i + 2))) {
-                    regions1.add(networksinfo.get(i + 2));
+        for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+            if (team.equals(marketsinfo.get(i + 3)) && cu1.equals(marketsinfo.get(i + 4))) {
+                if (!regions1.contains(marketsinfo.get(i + 2))) {
+                    regions1.add(marketsinfo.get(i + 2));
                 }
             }
         
@@ -3332,7 +3349,7 @@ public class Time_Management extends javax.swing.JFrame {
 
     private void jCBNetRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetRegionActionPerformed
         // TODO add your handling code here:
-        List<String> markets1 = new ArrayList<String>();
+        List<String> markets = new ArrayList<String>();
         jCBNetMarket.removeAllItems();
         String mar1 = "", team1 = "", cu1 = "", reg1 = "";
         
@@ -3342,20 +3359,19 @@ public class Time_Management extends javax.swing.JFrame {
             reg1 = jCBNetRegion.getSelectedItem().toString();
         }
               
-        for (int i = 0; i < networksinfo.size(); i = i + 10) {
-            if (team1.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1)) && reg1.equals(networksinfo.get(i + 2))) {// Team, CU, Region, Market, Technology
-                mar1 = networksinfo.get(i + 3);
-                if (markets1.isEmpty()) {
-                    markets1.add(mar1);
-                } else if (!markets1.contains(mar1)) {
-                    markets1.add(mar1);
+        for (int i = 0; i < marketsinfo.size(); i = i + 5) {
+            if (team1.equals(marketsinfo.get(i + 3)) && cu1.equals(marketsinfo.get(i + 4)) && reg1.equals(marketsinfo.get(i + 2))) {
+                mar1 = marketsinfo.get(i + 3);
+                if (!markets.contains(marketsinfo.get(i+1))) {
+                    markets.add(marketsinfo.get(i+1));
+                
                 }
             }
         }
     
-        Collections.sort(markets1);
-        for (int i = 0; i < markets1.size(); i++) {
-            jCBNetMarket.addItem(markets1.get(i));
+        Collections.sort(markets);
+        for (int i = 0; i < markets.size(); i++) {
+            jCBNetMarket.addItem(markets.get(i));
         }
         
     }//GEN-LAST:event_jCBNetRegionActionPerformed
@@ -3730,6 +3746,7 @@ public class Time_Management extends javax.swing.JFrame {
             jPSearchMrkt.setVisible(false);
             jCBRegionMrkt.setEnabled(true);
             jCBTeamMrkt.setEnabled(true);
+            jCBTeam_editmarket.setVisible(false);
             jCBCUMrkt.setEnabled(true);
             //Fill combobox Team
             jCBTeamMrkt.removeAllItems();
@@ -3749,6 +3766,8 @@ public class Time_Management extends javax.swing.JFrame {
             jPSearchMrkt.setVisible(true);
             jCBRegionMrkt.setEnabled(false);
             jCBTeamMrkt.setEnabled(false);
+            jCBTeamMrkt.setVisible(false);
+            jCBTeam_editmarket.setVisible(true);
             jCBCUMrkt.setEnabled(false);
             //Add team in Edit Market
             jCBMarTeam.removeAllItems();
@@ -3789,16 +3808,32 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBTeamMrktActionPerformed
 
     private void jBSearchMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchMrktActionPerformed
-        // TODO add your handling code here:
-        jLLoading.setText("Fetching market from database...");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SearchMarketkDB();
-                jDLoading.dispose();
+        // Button search, edit market
+        String team = jCBMarTeam.getSelectedItem().toString();
+        String cu = jCBMarCU.getSelectedItem().toString();
+        String region = jCBMarRegion.getSelectedItem().toString();
+        String market = jCBMarMrkt.getSelectedItem().toString();
+        
+        for (int i = 0; i < marketsinfo.size(); i += 5){
+            if (marketsinfo.get(i + 3).equals(team) && (marketsinfo.get(i + 4).equals(cu) && (marketsinfo.get(i + 2).equals(region)) && (marketsinfo.get(i + 1).equals(market)))){
+                jCBTeam_editmarket.addItem(marketsinfo.get(i + 3));
+                jCBCUMrkt.addItem(marketsinfo.get(i + 4));
+                jCBRegionMrkt.addItem(marketsinfo.get(i + 2));
+                jCBMarketList.addItem(marketsinfo.get(i + 1));
+                
             }
-        }).start();
-        jDLoading.setVisible(true);
+                
+        }  
+      
+//        jLLoading.setText("Fetching market from database...");
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                SearchMarketkDB();
+//                jDLoading.dispose();
+//            }
+//        }).start();
+//        jDLoading.setVisible(true);
     }//GEN-LAST:event_jBSearchMrktActionPerformed
 
     private void jCBDeleteMrktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeleteMrktActionPerformed
@@ -4039,6 +4074,10 @@ public class Time_Management extends javax.swing.JFrame {
     private void jCBTeam_editnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editnetActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBTeam_editnetActionPerformed
+
+    private void jCBTeam_editmarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editmarketActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTeam_editmarketActionPerformed
 
     private void GetTaskTypes() {
         // Get different task ids
@@ -5583,6 +5622,10 @@ public class Time_Management extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -5663,6 +5706,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBTeam;
     private javax.swing.JComboBox<String> jCBTeamMrkt;
     private javax.swing.JComboBox<String> jCBTeamTaskSearch;
+    private javax.swing.JComboBox<String> jCBTeam_editmarket;
     private javax.swing.JComboBox<String> jCBTeam_editnet;
     private javax.swing.JComboBox<String> jCBTo;
     private javax.swing.JComboBox<String> jCBUser;
