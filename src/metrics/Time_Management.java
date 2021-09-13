@@ -73,6 +73,7 @@ public class Time_Management extends javax.swing.JFrame {
     List<String> netTeams = new ArrayList<String>();
     List<String> technologies = new ArrayList<String>();
     List<String> networks = new ArrayList<String>();
+    String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EEDNPRE", "EPANVIC"};
     String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 1",
                                 "BNEW SAN SAB SDU MX MANA Project Supp 2", 
                                 "BNEW SAN SAB SDU MX MANA Project Supp 3",
@@ -85,9 +86,9 @@ public class Time_Management extends javax.swing.JFrame {
     String[] ActTypes = {"6000", "6001", "6002", "N/A"};
 
     ArrayList<String> teamsAndCUs = new ArrayList<>();
-    ArrayList<String> LMSignums = new ArrayList<>();
     ArrayList<String> taskIDandTasks = new ArrayList<>();
     ArrayList<String> networksinfo = new ArrayList<>();
+    ArrayList<String> users_info = new ArrayList<>();
     ArrayList<String> marketsinfo = new ArrayList<>();
     ArrayList<String> netTeamCURegMark = new ArrayList<>(); // Team, CU, Reg, Market
     ArrayList<String> netMrktTech = new ArrayList<>(); // Market, Technology
@@ -183,7 +184,6 @@ public class Time_Management extends javax.swing.JFrame {
         GetAllTasks();
         GetNetworksSearch();
         GetAllMarkets();
-        GetManagerInfo();
         jDLoading.dispose();
         JTableHeader header = jTableShowMetrics.getTableHeader();
         JTableHeader header1 = jTUsersList.getTableHeader();
@@ -992,6 +992,7 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBLineManager.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Preciado Edna", "Pantoja Victor" }));
         jCBLineManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBLineManagerActionPerformed(evt);
@@ -1570,7 +1571,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1588,7 +1589,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 248, Short.MAX_VALUE))
+                        .addGap(0, 286, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1979,7 +1980,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBNetTableCSV))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1463, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2267,7 +2268,7 @@ public class Time_Management extends javax.swing.JFrame {
                 .addComponent(jPSearchMrkt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(645, Short.MAX_VALUE))
+                .addContainerGap(685, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -2895,8 +2896,8 @@ public class Time_Management extends javax.swing.JFrame {
                                 jCBTeam.setSelectedItem(team1);
                                 jCBTeamActionPerformed(null);
                                 jCBCustomerUnit.setSelectedItem(customerunit1);
-                                for (int i = 0; i < 5; i++) {
-                                    if (LMSignums.contains(linemanager1)) {
+                                for (int i = 0; i < 6; i++) {
+                                    if (LMSignums[i].equals(linemanager1)) {
                                         jCBLineManager.setSelectedIndex(i);
                                     }
                                 };
@@ -2956,7 +2957,7 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDeleteActionPerformed
 
     private void jCBActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBActionActionPerformed
-        // TODO add your handling code here:
+        // Action Button in user view
         if (jCBAction.getSelectedIndex() == 0) {
             jPUser.setVisible(true);
             jPSearch.setVisible(false);
@@ -3965,7 +3966,7 @@ public class Time_Management extends javax.swing.JFrame {
             market = jCBNetMarket.getSelectedItem().toString();
         }                
         for (int i = 0; i < networksinfo.size(); i = i + 10) {// Team, CU, Region, Market, Technology
-            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1)) && (reg.equals(networksinfo.get(i + 2)) && (market.equals(networksinfo.get(i + 3))))) {
+            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
                 if (!activity_code.contains(networksinfo.get(i + 6))) {
                     activity_code.add(networksinfo.get(i + 6));
                 }
@@ -4181,7 +4182,8 @@ public class Time_Management extends javax.swing.JFrame {
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery();
-            while (resultset.next()) {
+            while (resultset.next()) {               
+                
                 for (int i = 0; i < 13; i++) {
                     row[i] = resultset.getString(i + 1);
                 }
@@ -4237,43 +4239,6 @@ public class Time_Management extends javax.swing.JFrame {
             connection.close();
         } catch (SQLException e) {
             System.out.println("Error in GetAllUsers");
-            System.out.println(e);
-        }
-    }
-
-    private void GetManagerInfo() {
-        Connection connection;
-        PreparedStatement preparedStatement;
-        ResultSet resultset;
-        String[] column = {"Signum", "Last_Name", "Name", "Customer_Unit", "Team", "Organization", "Line_Manager", "Access", "Supporting_Team", "Supporting_CU", "Job_Stage", "Act_Type", "CATS_Number"};
-        String[] row = new String[13];
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(column);
-        try {
-
-            String sql, signum, name;
-            List<String> lm_names = new ArrayList<String>();
-            sql = "SELECT Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number"
-                    + " FROM users WHERE Team = 'SDLM'";
-            connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            resultset = preparedStatement.executeQuery();
-            while (resultset.next()) {
-                signum = resultset.getString("Signum");
-                name = resultset.getString("Last_Name") + " " + resultset.getString("Name");
-                lm_names.add(name);
-                if (LMSignums.isEmpty()) {
-                    LMSignums.add(signum);
-                }
-                model.addRow(row);
-            }
-            for (int x = 0; x < lm_names.size(); x++) {
-                jCBLineManager.addItem(lm_names.get(x));
-
-            }
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println("Error in GetManagersInfo");
             System.out.println(e);
         }
     }
@@ -4616,7 +4581,7 @@ public class Time_Management extends javax.swing.JFrame {
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
-            String lmsignum1 = LMSignums.get(jCBLineManager.getSelectedIndex());
+            String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
             String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
 
@@ -4681,7 +4646,7 @@ public class Time_Management extends javax.swing.JFrame {
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
-            String lmsignum1 = LMSignums.get(jCBLineManager.getSelectedIndex());
+            String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
             String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
 
@@ -5100,7 +5065,7 @@ public class Time_Management extends javax.swing.JFrame {
         //jCBOrganization.setSelectedIndex(0);
         jCBTeam.setSelectedIndex(0);
         jCBCustomerUnit.setSelectedIndex(0);
-        jCBLineManager.setSelectedIndex(0);
+//        jCBLineManager.setSelectedIndex(0);
         jCBSupportedCU.setSelectedIndex(0);
         //jTFSignumEdit.setText("");
         jTFSupTeam.setText("N/A");

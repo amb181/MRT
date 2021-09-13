@@ -53,8 +53,8 @@ public class Metrics {
             String date = dtf.format(now);
             date = date.replace("/", "_").replace(" ", "_").replace(":", "_");
             // Write log every time the program runs and create folder if not exists
-            String user_log = usersinfo.get(0);
-            //String user_log = "ealloem";
+            //String user_log = usersinfo.get(0);
+            String user_log = "ecrmdlc";
             File dir = new File("C:\\Users\\" + user_log + "\\Documents\\MRT");
             
             if (!dir.exists()) {
@@ -137,8 +137,8 @@ public class Metrics {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        String user = System.getProperty("user.name");
-        //String user = "EESCCON";
+        //String user = System.getProperty("user.name");
+        String user = "EKARORT";
         System.out.println("Current user: " + user);
 
         try {
