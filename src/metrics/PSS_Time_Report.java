@@ -200,6 +200,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
         });
         jcbSubnet.addItem("Select a subnetwork...");
+        jcbProjectName.addItem("Select a project...");
         // Populate jcbCU with possible CUs for this team
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
@@ -418,6 +419,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jTextFieldComments = new javax.swing.JTextArea();
         jLabelTeam = new javax.swing.JLabel();
         jBMarketsBulk = new javax.swing.JButton();
+        jcbProjectName = new javax.swing.JComboBox<>();
+        jLProjectName = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLTask1 = new javax.swing.JLabel();
         jcbTask1 = new javax.swing.JComboBox<>();
@@ -516,11 +519,11 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
             },
             new String [] {
-                "PD", "Network", "Activity code", "Region", "Market", "Customer", "Responsible", "Subnetwork", "Team", "Technology"
+                "PD", "Network", "Activity code", "Region", "Market", "Customer", "Responsible", "Subnetwork", "Team", "Technology", "Project Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1189,6 +1192,16 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
         });
 
+        jcbProjectName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jcbProjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProjectNameActionPerformed(evt);
+            }
+        });
+
+        jLProjectName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jLProjectName.setText("Project Name: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1196,58 +1209,17 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcbSAP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLCU, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLSAP_Billing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLTaskID)
-                                    .addComponent(jTextFieldTask_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(7, 7, 7)
-                                        .addComponent(jcbTask, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLTask)
-                                        .addGap(350, 350, 350)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLDate))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextFieldTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLHoursForLoggedTime))
-                                    .addComponent(jLTime)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jcbCU, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelRegion)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcbRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelMarket)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcbMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLWeek))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLRequestor)
-                        .addContainerGap(420, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLComments)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBAddTable)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jTextFieldRequestor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1291,21 +1263,66 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jSpinnerBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jBCatalog)
-                                        .addGap(44, 44, 44)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jcbSAP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jLCU, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLSAP_Billing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLTaskID)
+                                                    .addComponent(jTextFieldTask_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGap(7, 7, 7)
+                                                        .addComponent(jcbTask, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18))
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLTask)
+                                                        .addGap(350, 350, 350)))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLDate))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLHoursForLoggedTime))
+                                                    .addComponent(jLTime))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jTextFieldWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLWeek))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLRequestor))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jcbCU, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabelRegion)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jcbRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabelMarket)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jcbMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLProjectName)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jcbProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)))))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jBCatalog)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jLabelHoursDaysH1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabelHoursDaysB1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jBMarketsBulk)
-                                        .addGap(0, 62, Short.MAX_VALUE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLComments)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBAddTable)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addGap(0, 62, Short.MAX_VALUE)))))
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1332,7 +1349,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     .addComponent(jLabelRegion)
                     .addComponent(jcbMarket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMarket)
-                    .addComponent(jBCatalog))
+                    .addComponent(jBCatalog)
+                    .addComponent(jcbProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLProjectName))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2286,6 +2305,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jTextFieldTask_ID.setText("");
         jTextFieldTime.setText("");
         jcbSubnet.setSelectedIndex(0);
+        jcbProjectName.setSelectedIndex(0);
         jTextFieldNetwork.setText("");
         jTextFieldActivity.setText("");
         jTextFieldRequestor.setText("");
@@ -2540,7 +2560,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             while (resultset.next()) {
                 String[] row = {resultset.getString("Network"), resultset.getString("Activity_code"),
                     resultset.getString("Region"), resultset.getString("Market"), resultset.getString("Customer"),
-                    resultset.getString("Subnetwork"), resultset.getString("Team"), resultset.getString("Technology")};
+                    resultset.getString("Subnetwork"), resultset.getString("Team"), resultset.getString("Technology"),
+                    resultset.getString("Project")};
                 List<String> newList = Arrays.asList(row);
 
                 networks_info.addAll(newList);
@@ -2646,6 +2667,10 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }
         if (jcbSubnet.getSelectedItem().equals("Select a subnetwork...")) {
             JOptionPane.showMessageDialog(this, "Choose a subnetwork!");
+            error = true;
+        }
+        if (jcbProjectName.getSelectedItem().equals("Select a project...")) {
+            JOptionPane.showMessageDialog(this, "Choose a project!");
             error = true;
         }
         if (jcbRegion.getSelectedItem().equals("Select a region...")) {
@@ -2994,7 +3019,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     tasks.add(tasks_info.get(i + 3));   // Billable or not
                 }
             }
-            for (int i = 5; i < networks_info.size(); i += 8) {
+            for (int i = 5; i < networks_info.size(); i += 9) {
                 if (networks_info.get(i - 1).equals(cu)) {
                     nets.add(networks_info.get(i - 5));   // Net
                     nets.add(networks_info.get(i));       // Subnet
@@ -3575,7 +3600,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             jcbRegion.addItem("Select a region...");
 
             ArrayList<String> regions = new ArrayList<>();
-            for (int i = 2; i < networks_info.size(); i += 8) {
+            for (int i = 2; i < networks_info.size(); i += 9) {
                 if (!regions.contains(networks_info.get(i))) {
                     if (networks_info.get(i + 2).equals(jcbCU.getSelectedItem().toString())) {
                         regions.add(networks_info.get(i));
@@ -3595,7 +3620,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 region = jcbRegion.getSelectedItem().toString();
             }
             ArrayList<String> mrkts = new ArrayList<>();
-            for (int i = 3; i < networks_info.size(); i += 8) {
+            for (int i = 3; i < networks_info.size(); i += 9) {
                 if (!mrkts.contains(networks_info.get(i))) {
                     if (networks_info.get(i + 1).equals(jcbCU.getSelectedItem().toString())) {
                         if (networks_info.get(i - 1).equals(region)) {
@@ -3612,19 +3637,23 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
         // Refresh jcbSubnetwork
         jcbSubnet.removeAllItems();
+        jcbProjectName.removeAllItems();
         if (jcbSAP.getSelectedIndex() == 0) {
             jcbSubnet.addItem("Select a subnetwork...");
-            for (int i = 5; i < networks_info.size(); i += 8) {
+            jcbProjectName.addItem("Select a project...");
+            for (int i = 5; i < networks_info.size(); i += 9) {
                 if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
                     if (networks_info.get(i - 3).equals(jcbRegion.getSelectedItem().toString())) {
                         if (networks_info.get(i - 2).equals(jcbMarket.getSelectedItem().toString())) {
                             jcbSubnet.addItem(networks_info.get(i));
+                            jcbProjectName.addItem(networks_info.get(i + 3));
                         }
                     }
                 }
             }
         } else {
             jcbSubnet.addItem("0");
+            jcbProjectName.addItem("N/A");
         }
 
     }//GEN-LAST:event_jcbSAPActionPerformed
@@ -3654,6 +3683,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 jTextFieldNetwork.setText(networks_info.get(net));
                 int act = i - 4;
                 jTextFieldActivity.setText(networks_info.get(act));
+                jcbProjectName.getModel().setSelectedItem(networks_info.get(i + 3));
             } else {
                 continue;
             }
@@ -3679,7 +3709,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             jcbRegion.addItem("Select a region...");
 
             ArrayList<String> regions = new ArrayList<>();
-            for (int i = 2; i < networks_info.size(); i += 8) {
+            for (int i = 2; i < networks_info.size(); i += 9) {
                 if (!regions.contains(networks_info.get(i))) {
                     if (networks_info.get(i + 2).equals(jcbCU.getSelectedItem().toString())) {
                         regions.add(networks_info.get(i));
@@ -3691,7 +3721,14 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             for (int i = 0; i < regions.size(); i++) {
                 jcbRegion.addItem(regions.get(i));
             }
-
+            // Show project name if T-Mobile or Verizon
+            if (jcbCU.getSelectedItem().toString().equals("T-Mobile") ||jcbCU.getSelectedItem().toString().equals("Verizon")) {
+                jcbProjectName.setVisible(true);
+                jLProjectName.setVisible(true);
+            } else {
+                jcbProjectName.setVisible(false);
+                jLProjectName.setVisible(false);
+            }
             // Fill tasks
             String sap = (String) jcbSAP.getSelectedItem();
             jcbTask.removeAllItems();
@@ -3826,7 +3863,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jFrameCatalog.setTitle("Networks Catalog");
         jFrameCatalog.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
         jFrameCatalog.setLocationRelativeTo(null);
-        jFrameCatalog.setSize(1300, 600);
+        jFrameCatalog.setSize(1500, 600);
         JTableHeader header = jTableCatalog.getTableHeader();
         header.setBackground(new Color(0, 130, 240));
         header.setForeground(Color.white);
@@ -3868,7 +3905,6 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
     private void jcbMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMarketActionPerformed
         // Populate subnetwork
-
         String market = null;
         String region = null;
         if (jcbMarket.getItemCount() != 0) {
@@ -3879,19 +3915,23 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }
         // Refresh jcbSubnetwork
         jcbSubnet.removeAllItems();
+        jcbProjectName.removeAllItems();
         if (jcbSAP.getSelectedIndex() == 0) {
             jcbSubnet.addItem("Select a subnetwork...");
-            for (int i = 5; i < networks_info.size(); i += 8) {
+            jcbProjectName.addItem("Select a project...");
+            for (int i = 5; i < networks_info.size(); i += 9) {
                 if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
                     if (networks_info.get(i - 3).equals(region)) {
                         if (networks_info.get(i - 2).equals(market)) {
                             jcbSubnet.addItem(networks_info.get(i));
+                            jcbProjectName.addItem(networks_info.get(i + 3));
                         }
                     }
                 }
             }
         } else {
             jcbSubnet.addItem("0");
+            jcbProjectName.addItem("N/A");
         }
     }//GEN-LAST:event_jcbMarketActionPerformed
 
@@ -3905,7 +3945,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             region = jcbRegion.getSelectedItem().toString();
         }
         ArrayList<String> mrkts = new ArrayList<>();
-        for (int i = 3; i < networks_info.size(); i += 8) {
+        for (int i = 3; i < networks_info.size(); i += 9) {
             if (!mrkts.contains(networks_info.get(i))) {
                 if (networks_info.get(i + 1).equals(jcbCU.getSelectedItem().toString())) {
                     if (networks_info.get(i - 1).equals(region)) {
@@ -3986,7 +4026,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         jcbRegionBulk.addItem("Select a region...");
 
         ArrayList<String> regions = new ArrayList<>();
-        for (int i = 2; i < networks_info.size(); i += 8) {
+        for (int i = 2; i < networks_info.size(); i += 9) {
             if (!regions.contains(networks_info.get(i))) {
                 if (networks_info.get(i + 2).equals(jcbCU.getSelectedItem().toString())) {
                     regions.add(networks_info.get(i));
@@ -4033,7 +4073,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             region = jcbRegionBulk.getSelectedItem().toString();
         }
         ArrayList<String> mrkts = new ArrayList<>();
-        for (int i = 3; i < networks_info.size(); i += 8) {
+        for (int i = 3; i < networks_info.size(); i += 9) {
             if (!mrkts.contains(networks_info.get(i))) {
                 if (networks_info.get(i + 1).equals(jcbCU.getSelectedItem().toString())) {
                     if (networks_info.get(i - 1).equals(region)) {
@@ -4218,7 +4258,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
         // Count rows to divide time
         int total_rows = 0;
-        for (int z = 2; z < networks_info.size(); z += 8) {
+        for (int z = 2; z < networks_info.size(); z += 9) {
             if (networks_info.get(z + 4).equals("PSS") && networks_info.get(z + 2).equals(cu)) {
                 for (int i = 0; i < mrkts_bulk.size(); i++) {
                     if (region.equals(networks_info.get(z)) && mrkts_bulk.get(i).equals(networks_info.get(z + 1))) {
@@ -4639,7 +4679,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
 
             // Create csv with data
-            String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";
+            //String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";
+            String path = "C:\\Users\\ealloem\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";            
             //System.out.println("ESS: " + metrics_for_ess);
             // Sum time with same network and activity (Productive, Training, Meeting, etc)
             ArrayList<String> sum_metrics = new ArrayList<>();
@@ -4868,6 +4909,24 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jB_Export_Net_CatalogActionPerformed
 
+    private void jcbProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProjectNameActionPerformed
+        // Project Name combobox action
+        String project = (String) jcbProjectName.getSelectedItem();
+        String cu = (String) jcbCU.getSelectedItem();
+        for (int i = 0; i < networks_info.size(); i++) {
+            if (networks_info.get(i).equals(project) && networks_info.get(i - 4).equals(cu) 
+                    && networks_info.get(i - 2).equals("PSS")) {
+                jcbSubnet.getModel().setSelectedItem(networks_info.get(i - 3));
+            } else {
+                continue;
+            }
+        }
+        
+        if (jcbProjectName.getItemCount() != 0) {
+            jcbProjectName.setToolTipText("<html><h3>" + jcbProjectName.getSelectedItem().toString() + "</h3></html>");
+        }
+    }//GEN-LAST:event_jcbProjectNameActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -4964,6 +5023,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JLabel jLNetwork;
     private javax.swing.JLabel jLOnTime;
     private javax.swing.JLabel jLOnTime_MarketBulk;
+    private javax.swing.JLabel jLProjectName;
     private javax.swing.JLabel jLRegionBulk;
     private javax.swing.JLabel jLRequestor;
     private javax.swing.JLabel jLRequestor_MarketBulk;
@@ -5060,6 +5120,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbMarket;
     private javax.swing.JComboBox<String> jcbOnTime;
     private javax.swing.JComboBox<String> jcbOnTime_MarketBulk;
+    private javax.swing.JComboBox<String> jcbProjectName;
     private javax.swing.JComboBox<String> jcbRegion;
     private javax.swing.JComboBox<String> jcbRegionBulk;
     private javax.swing.JComboBox<String> jcbSAP;

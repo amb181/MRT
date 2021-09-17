@@ -3017,7 +3017,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
 
     private void jcbSubnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSubnetActionPerformed
         // Subnetwork combobox
-        System.out.println("H E R E : " + networks_info);
         String subnet = (String) jcbSubnet.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
