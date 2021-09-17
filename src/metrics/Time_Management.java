@@ -66,14 +66,13 @@ public class Time_Management extends javax.swing.JFrame {
     List<String> organizations = new ArrayList<String>();
     List<String> cus = new ArrayList<String>();
     List<String> user_teams = new ArrayList<String>();
-    List<String> user_names = new ArrayList<String>();
     List<String> act_codes = new ArrayList<String>();
     List<String> regions = new ArrayList<String>();
     List<String> markets = new ArrayList<String>();
     List<String> netTeams = new ArrayList<String>();
     List<String> technologies = new ArrayList<String>();
     List<String> networks = new ArrayList<String>();
-    String[] LMSignums = {"QIVAALC", "EJOSEBL", "TIMAFCC", "EMAUHER", "EEDNPRE", "EPANVIC"};
+    String[] LMSignums = {"QIVAALC", "EEDNPRE", "TIMAFCC", "EMAUHER", "EEDNPRE", "EPANVIC"};
     String[] LMOrganizations = {"BNEW SAN SAB SDU MX MANA Project Supp 1",
                                 "BNEW SAN SAB SDU MX MANA Project Supp 2", 
                                 "BNEW SAN SAB SDU MX MANA Project Supp 3",
@@ -89,6 +88,7 @@ public class Time_Management extends javax.swing.JFrame {
     ArrayList<String> taskIDandTasks = new ArrayList<>();
     ArrayList<String> networksinfo = new ArrayList<>();
     ArrayList<String> users_info = new ArrayList<>();
+    ArrayList<String> tasks_info = new ArrayList<>();
     ArrayList<String> marketsinfo = new ArrayList<>();
     ArrayList<String> netTeamCURegMark = new ArrayList<>(); // Team, CU, Reg, Market
     ArrayList<String> netMrktTech = new ArrayList<>(); // Market, Technology
@@ -293,6 +293,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jTFCATNum = new javax.swing.JTextField();
         jCBLineManager = new javax.swing.JComboBox<>();
+        jCBTeam_user = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jCBAction = new javax.swing.JComboBox<>();
         jPSearch = new javax.swing.JPanel();
@@ -928,6 +929,11 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBAccess.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBAccess.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regular", "Admin" }));
+        jCBAccess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBAccessActionPerformed(evt);
+            }
+        });
 
         jLTeamSupp.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTeamSupp.setText("Another Team:");
@@ -980,6 +986,11 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBJobStage.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBJobStage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "4", "5", "N/A" }));
+        jCBJobStage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBJobStageActionPerformed(evt);
+            }
+        });
 
         jLabel37.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel37.setText("CAT's Number:");
@@ -992,10 +1003,17 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBLineManager.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBLineManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcala Elizalde Ivan Gerardo", "Blanco Jose Alberto", "Campos Aldo", "Hernandez Mauricio", "Preciado Edna", "Pantoja Victor" }));
+        jCBLineManager.setToolTipText("");
         jCBLineManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBLineManagerActionPerformed(evt);
+            }
+        });
+
+        jCBTeam_user.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBTeam_user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTeam_userActionPerformed(evt);
             }
         });
 
@@ -1054,7 +1072,9 @@ public class Time_Management extends javax.swing.JFrame {
                                 .addComponent(jTFCATNum, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPUserLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
+                                .addGap(12, 12, 12)
+                                .addComponent(jCBTeam_user, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCBTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
@@ -1094,7 +1114,8 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addComponent(jCBCustomerUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel36)
-                        .addComponent(jCBJobStage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jCBJobStage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBTeam_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLAccess)
@@ -1121,7 +1142,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel7.setText("Choose action:");
 
         jCBAction.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Add new user", "Edit user" }));
+        jCBAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select...", "Add new user", "Edit user" }));
         jCBAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBActionActionPerformed(evt);
@@ -1163,6 +1184,11 @@ public class Time_Management extends javax.swing.JFrame {
         jLSignumEdit.setText("Name:");
 
         jCBSearchUser.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBSearchUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBSearchUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPSearchLayout = new javax.swing.GroupLayout(jPSearch);
         jPSearch.setLayout(jPSearchLayout);
@@ -1172,8 +1198,8 @@ public class Time_Management extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLSignumEdit)
                 .addGap(18, 18, 18)
-                .addComponent(jCBSearchUser, 0, 188, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jCBSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBSearch)
                 .addGap(18, 18, 18)
                 .addComponent(jBClear)
@@ -1698,7 +1724,7 @@ public class Time_Management extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCBMarketSearch, 0, 388, Short.MAX_VALUE)
+                .addComponent(jCBMarketSearch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1844,55 +1870,59 @@ public class Time_Management extends javax.swing.JFrame {
             .addGroup(jPNetEditLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPNetEditLayout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBSaveNet))
                     .addGroup(jPNetEditLayout.createSequentialGroup()
                         .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPNetEditLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTFPD, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPNetEditLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
                                 .addComponent(jCBTeam_editnet, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTFPD, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCBNetCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel15)
+                                .addGap(40, 40, 40)
+                                .addComponent(jCBNetRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26))
                             .addGroup(jPNetEditLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
+                                .addGap(27, 27, 27)
                                 .addComponent(jTFNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel11)
-                                .addGap(18, 18, 18)
+                                .addGap(26, 26, 26)
                                 .addComponent(jCBNetActCode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTFResponsible, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel13))
-                            .addGroup(jPNetEditLayout.createSequentialGroup()
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel17)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBNetCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCBNetRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCBNetMarket, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel16))
                         .addGap(18, 18, 18)
-                        .addComponent(jTFSubnetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addComponent(jTFResponsible, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 549, Short.MAX_VALUE)
+                                .addComponent(jLabel13)
+                                .addGap(27, 27, 27)
+                                .addComponent(jTFSubnetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(88, 88, 88))
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addComponent(jCBNetMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPNetEditLayout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBSaveNet)))
                 .addContainerGap())
         );
         jPNetEditLayout.setVerticalGroup(
@@ -1901,43 +1931,50 @@ public class Time_Management extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(jTFPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10)
-                        .addComponent(jTFNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11)
-                        .addComponent(jCBNetActCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel12)
-                    .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTFResponsible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel13)
-                        .addComponent(jTFSubnetwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
                         .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCBTeam_editnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(jCBNetRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17)
-                            .addComponent(jCBNetCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(jCBNetMarket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jCBNetCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBNetRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17)
+                        .addComponent(jCBTeam_editnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel16)
+                        .addComponent(jCBNetMarket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPNetEditLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(jBSaveNet)
-                        .addContainerGap())
+                        .addGap(15, 15, 15)
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jTFSubnetwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(jTFPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 32, Short.MAX_VALUE)
+                        .addComponent(jBSaveNet))
                     .addGroup(jPNetEditLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22)
-                            .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jCBNetActCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jTFResponsible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jTFNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(22, 22, 22)
+                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel22)
+                                    .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jTableNetworks.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -1970,17 +2007,17 @@ public class Time_Management extends javax.swing.JFrame {
             .addGroup(jPNetworksLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1826, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4)
                     .addGroup(jPNetworksLayout.createSequentialGroup()
                         .addComponent(jLNetAction)
                         .addGap(18, 18, 18)
                         .addComponent(jCBNetAction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPNetworksLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPNetworksLayout.createSequentialGroup()
                         .addComponent(jPNetEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBNetTableCSV))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1463, Short.MAX_VALUE))
+                .addContainerGap(905, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1997,7 +2034,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jPNetEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBNetTableCSV))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2754,7 +2791,7 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBNetActionActionPerformed
 
     private void jBSaveNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveNetActionPerformed
-        // TODO add your handling code here:
+        // Save button for Add new network:
         boolean flagNetwork = false;
         flagNetwork = ReviewFieldsState();
         if (flagNetwork) {
@@ -2833,9 +2870,8 @@ public class Time_Management extends javax.swing.JFrame {
 
     private void jBSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchActionPerformed
         // TODO add your handling code here:
-        String signumEdit = jCBSearchUser.getItemAt(jCBSearchUser.getSelectedIndex());
-        String[] names = signumEdit.split(",");
-        String lastName1 = names[0];
+        String signumEdit = jCBSearchUser.getSelectedItem().toString();
+        String name = "", job_stage = "";
         Pattern onewordPattern = Pattern.compile("[^A-Za-z]");
         Matcher matcherSignum = onewordPattern.matcher(signumEdit);
         boolean flagSignum = matcherSignum.find();
@@ -2847,84 +2883,83 @@ public class Time_Management extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Signum must contain only letters!");
             } else {
                 jLLoading.setText("Looking for user's info...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Connection connection;
-                        PreparedStatement preparedStatement;
-                        ResultSet resultset;
-                        try {
-                            String sql = "";
-                            sql = "SELECT Signum, Name, Last_Name, Organization, Team, Customer_Unit, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, CATS_Number FROM users WHERE Last_Name = '" + lastName1 + "';";
-                            System.out.println(sql);
-                            connection = SQL_connection.getConnection();
-                            preparedStatement = connection.prepareStatement(sql);
-                            resultset = preparedStatement.executeQuery();
-                            if (!resultset.next()) {
-                                JOptionPane.showMessageDialog(Time_Management.this, "Signum not found!");
-                                jCBSearchUser.setSelectedIndex(0);
-                            } else {
-                                String signum1 = resultset.getString("Signum");
-                                String name1 = resultset.getString("Name");
-                                String lastname1 = resultset.getString("Last_Name");
-                                String organization1 = resultset.getString("Organization");
-                                String team1 = resultset.getString("Team");
-                                String customerunit1 = resultset.getString("Customer_Unit");
-                                String linemanager1 = resultset.getString("Line_Manager");
-                                String access1 = resultset.getString("Access");
-                                String supportingTeam1 = resultset.getString("Supporting_Team");
-                                String supportingCU1 = resultset.getString("Supporting_CU");
-                                String workCenter1 = resultset.getString("CATS_Number");
-                                String jobStage1 = resultset.getString("Job_Stage");
-
-                                HashMap<String, String> CU_list = new HashMap<String, String>();
-
-                                // Add keys and values (Team name, Prefix)
-                                CU_list.put("COP", "C_");
-                                CU_list.put("VSS", "V_");
-                                CU_list.put("PSS", "P_");
-                                CU_list.put("Scoping", "SCP_");
-
-                                if (CU_list.containsKey(team1)) {
-                                    customerunit1 = customerunit1.replace(CU_list.get(team1), "");
-                                }
-
-                                jTFSignum.setText(signum1);
-                                jTFName.setText(name1);
-                                jTFLastName.setText(lastname1);
-                                //jCBOrganization.setSelectedItem(organization1);
-                                jCBTeam.setSelectedItem(team1);
-                                jCBTeamActionPerformed(null);
-                                jCBCustomerUnit.setSelectedItem(customerunit1);
-                                for (int i = 0; i < 6; i++) {
-                                    if (LMSignums[i].equals(linemanager1)) {
-                                        jCBLineManager.setSelectedIndex(i);
-                                    }
-                                };
-                                jCBAccess.setSelectedIndex(Integer.parseInt(access1));
-                                jTFSupTeam.setText(supportingTeam1);
-                                jTFSupCU.setText(supportingCU1);
-                                if (jobStage1.equals("N/A")) {
-                                    jCBJobStage.setSelectedIndex(3);
-                                } else {
-                                    jobStage1 = jobStage1.substring(jobStage1.length() - 1);
-                                    System.out.println("Job Stage: " + jobStage1);
-                                    jCBJobStage.setSelectedItem(jobStage1);
-                                }
-                                jTFCATNum.setText(workCenter1);
-                            }
-                            connection.close();
-
-                        } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(Time_Management.this, "An error ocurred during the look up! Please try again...");
+                
+                for (int i = 0; i < users_info.size(); i += 13){
+                    name = users_info.get(i + 1) + ", " + users_info.get(i + 2);                    
+                    
+                    if (signumEdit.equals(name)){ 
+                        
+                        // Remove items from comboboxes
+                        jCBLineManager.removeAllItems();
+                        jCBTeam_user.removeAllItems();
+                        jCBCustomerUnit.removeAllItems();
+                        jCBJobStage.removeAllItems();
+                        jTFSignum.removeAll();
+                        
+                        //Fill information from user
+                        jTFSignum.setText(users_info.get(i));
+                        jTFName.setText(users_info.get(i + 2));
+                        jTFLastName.setText(users_info.get(i + 1));
+                        jTFCATNum.setText(users_info.get(i + 12));
+                        jCBTeam_user.addItem(users_info.get(i + 4));
+                        jTFSupTeam.setText(users_info.get(i + 8));
+                        jTFSupCU.setText(users_info.get(i + 9));
+                        job_stage = users_info.get(i + 10);
+                        
+                        //Fill job stage combo box
+                        if (!job_stage.contains("Job Stage ") || job_stage.contains("Job stage")){
+                          job_stage = users_info.get(i + 10);  
+                        } else {
+                            job_stage = users_info.get(i + 10).toLowerCase();
+                            job_stage = job_stage.replace("job stage ", "");
                         }
+                        jCBJobStage.addItem(job_stage);
+                        
+                        //Fill team and CU information
+                        String cu = users_info.get(i + 3);
+                        String team = users_info.get(i + 4);
+                        
+                        if (cu.equals("SDLM") || cu.equals("SPM")){
+                            jCBCustomerUnit.addItem(users_info.get(i + 3));
+                        }else{
+                            
+                            // Removing prefix from CU 
+                            HashMap<String, String> cu_list = new HashMap<>();
 
-                        jDLoading.dispose();
+                            // Add keys and values (Team name, Prefix)
+                            cu_list.put("COP", "C_");
+                            cu_list.put("VSS", "V_");
+                            cu_list.put("PSS", "P_");
+                            cu_list.put("Scoping", "SCP_");
+
+                            if (cu_list.containsKey(team)) {
+                                cu = cu.replace(cu_list.get(team), "");
+                                jCBCustomerUnit.addItem(cu);
+                            }else {
+                                jCBCustomerUnit.addItem(users_info.get(i + 3));
+                            }
+                        }
+                        
+                        //Search manager name according to signum  
+                        for (int n = 0; n < users_info.size(); n += 13){
+                            if (users_info.get(i+6).equals(users_info.get(n)))
+                                jCBLineManager.addItem(users_info.get(n + 1) + " " + users_info.get(n + 2));                            
+                        }
+                        
+                        // Set access info
+                        if (users_info.get(i + 7).equals("0")){
+                            jCBAccess.setSelectedIndex(0);
+                        } else{
+                            jCBAccess.setSelectedIndex(1);
+                        }
+                        
+                        
                     }
-                }).start();
-                jDLoading.setVisible(true);
+                }
+
             }
         }
+
     }//GEN-LAST:event_jBSearchActionPerformed
 
     private void jBClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearActionPerformed
@@ -2934,7 +2969,8 @@ public class Time_Management extends javax.swing.JFrame {
 
     private void jBDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteActionPerformed
         // TODO add your handling code here:
-        String signumEdit = jCBSearchUser.getItemAt(jCBSearchUser.getSelectedIndex());
+        String signumEdit = jCBSearchUser.getSelectedItem().toString();
+        System.out.println("estooo " + signumEdit);
         Pattern onewordPattern = Pattern.compile("[^A-Za-z]");
         Matcher matcherSignum = onewordPattern.matcher(signumEdit);
         boolean flagSignum = matcherSignum.find();
@@ -2948,6 +2984,7 @@ public class Time_Management extends javax.swing.JFrame {
                     DeleteUserDB();
                     ResetUserFields();
                     jLLoading.setText("Updating user's local table...");
+                    users_info.clear();
                     GetAllUsers();
                     jDLoading.dispose();
                 }
@@ -2957,22 +2994,83 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDeleteActionPerformed
 
     private void jCBActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBActionActionPerformed
-        // Action Button in user view
-        if (jCBAction.getSelectedIndex() == 0) {
+        // Add new user option
+        if (jCBAction.getSelectedIndex() == 1) {
             jPUser.setVisible(true);
             jPSearch.setVisible(false);
             jTFSignum.setEditable(true);
+            jCBTeam_user.setVisible(false);
             jTFName.setEditable(true);
             jTFLastName.setEditable(true);
             ResetUserFields();
-        } else if (jCBAction.getSelectedIndex() == 1) {
+            
+            jCBLineManager.removeAllItems();
+            // Fill line managers list in Add new user
+            jCBLineManager.addItem("Select an option...");
+            
+            ArrayList<String> managers = new ArrayList<String>();
+            String lm_name = "";
+            
+            for (int i = 4; i < users_info.size(); i += 13) {
+                if (users_info.get(i).equals("SDLM")){
+                    lm_name = users_info.get(i - 3) + " " + users_info.get(i - 2);
+                    if (!managers.contains(lm_name))
+                        managers.add(lm_name);
+                }
+            }
+            
+            Collections.sort(managers);
+            for (int i = 0; i < managers.size(); i++){
+                jCBLineManager.addItem(managers.get(i));
+            }
+           // Edit user
+        } else if (jCBAction.getSelectedIndex() == 2) {
             jPUser.setVisible(true);
+            jCBTeam.setVisible(false);
             jPSearch.setVisible(true);
+            jCBTeam_user.setVisible(true);
             jTFSignum.setEditable(false);
             jTFName.setEditable(false);
             jTFLastName.setEditable(false);
             ResetUserFields();
-        }
+            
+            jCBSearchUser.removeAllItems();
+            // Fill user list in Edit user
+            jCBSearchUser.addItem("Select an option...");
+            
+            ArrayList<String> users_list = new ArrayList<String>();
+            String username = "";
+            
+            for (int i = 0; i < users_info.size(); i += 13) {                
+                username = users_info.get(i + 1) + ", " + users_info.get(i + 2);
+                if (!users_list.contains(username))
+                    users_list.add(username);
+               
+            }      
+            users_list.remove("Blanco, Jose Alberto");
+            Collections.sort(users_list);
+            for (int i = 0; i < users_list.size(); i++){
+                jCBSearchUser.addItem(users_list.get(i));
+            }
+            
+            // Fill supported teams
+            jCBSupportedTeam.addItem("Select a team...");
+            
+            ArrayList<String> teams = new ArrayList<String>();
+            
+            
+            for (int i = 2; i < tasks_info.size(); i += 9){
+                if (!teams.contains(tasks_info.get(i)))
+                    teams.add(tasks_info.get(i));                
+            }
+            Collections.sort(teams);
+            for (int i = 0; i < teams.size(); i++){
+                jCBSupportedTeam.addItem(teams.get(i));
+            }
+            
+        } else
+            jCBTeam_user.setVisible(false);
+            ResetUserFields();
     }//GEN-LAST:event_jCBActionActionPerformed
 
     private void jCBSupportedCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSupportedCUActionPerformed
@@ -3022,13 +3120,14 @@ public class Time_Management extends javax.swing.JFrame {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (jCBAction.getSelectedIndex() == 0) {
+                        if (jCBAction.getSelectedIndex() == 1) {
                             InsertIntoUserDB();
                         } else {
                             UpdateUserDB();
                             //JOptionPane.showMessageDialog(this, "There's an empty field! Please fill every text field in order to save the user.");
                         }
                         jLLoading.setText("Updating user's local table...");
+                        users_info.clear();
                         GetAllUsers();
                         ResetUserFields();
                         jDLoading.dispose();
@@ -3081,6 +3180,7 @@ public class Time_Management extends javax.swing.JFrame {
             }       
         }).start();
         jDLoading.setVisible(true);
+        ResetNetworkFields();
     }//GEN-LAST:event_jBNetDeleteActionPerformed
 
     private void jCBToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBToActionPerformed
@@ -3235,17 +3335,27 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDeleteCUSuppActionPerformed
 
     private void jCBSupportedTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSupportedTeamActionPerformed
-        // TODO add your handling code here:
+        // Fill supported cu 
         jCBSupportedCU.removeAllItems();
-
-        String team1 = jCBSupportedTeam.getItemAt(jCBSupportedTeam.getSelectedIndex());
-        for (int i = 0; i < teamsAndCUs.size(); i++) {
-            if (i % 2 == 0) {
-                if (team1.equals(teamsAndCUs.get(i))) {
-                    jCBSupportedCU.addItem(teamsAndCUs.get(i + 1));
-                }
-            }
+        
+        ArrayList<String> cus = new ArrayList<String>();
+        String team = "";
+        
+        if (jCBSupportedTeam.getItemCount() != 0){
+            team = jCBSupportedTeam.getSelectedItem().toString();
         }
+        
+        for (int i = 0; i < tasks_info.size(); i += 9){
+            if (team.equals(tasks_info.get(i + 2)))
+                if (!cus.contains(tasks_info.get(i + 3)))
+                    cus.add(tasks_info.get(i + 3));
+        }
+        Collections.sort(cus);
+        System.out.println("la CU " + cus);
+        for (int i = 0; i < cus.size(); i++){
+            jCBSupportedCU.addItem(cus.get(i));
+        }
+        
     }//GEN-LAST:event_jCBSupportedTeamActionPerformed
 
     private void jCBTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeamActionPerformed
@@ -3268,19 +3378,30 @@ public class Time_Management extends javax.swing.JFrame {
 
     private void jBAddSupCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddSupCUActionPerformed
         // TODO add your handling code here:
-        String normalTeam = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
-        String anotherTeam = jCBSupportedTeam.getItemAt(jCBSupportedTeam.getSelectedIndex());
-        String anotherCU = jCBSupportedCU.getItemAt(jCBSupportedCU.getSelectedIndex());
+        String normalTeam = jCBTeam.getSelectedItem().toString();
+        String anotherTeam = jCBSupportedTeam.getSelectedItem().toString();
+        String anotherCU = jCBSupportedCU.getSelectedItem().toString();
         String supTeam = jTFSupTeam.getText();
         String supCU = jTFSupCU.getText();
+        
+        HashMap<String, String> cu_list = new HashMap<>();
 
-        if (anotherTeam.equals("COP")) {
-            anotherCU = "C_" + anotherCU;
-        } else if (anotherTeam.equals("VSS")) {
-            anotherCU = "V_" + anotherCU;
-        } else if (anotherTeam.equals("PSS")) {
-            anotherCU = "P_" + anotherCU;
+        // Add keys and values (Team name, Prefix)
+        cu_list.put("COP", "C_");
+        cu_list.put("VSS", "V_");
+        cu_list.put("PSS", "P_");
+        cu_list.put("Scoping", "SCP_");
+
+        if (cu_list.containsKey(anotherTeam)){
+            anotherCU = cu_list.get(anotherTeam) + anotherCU;
         }
+//        if (anotherTeam.equals("COP")) {
+//            anotherCU = "C_" + anotherCU;
+//        } else if (anotherTeam.equals("VSS")) {
+//            anotherCU = "V_" + anotherCU;
+//        } else if (anotherTeam.equals("PSS")) {
+//            anotherCU = "P_" + anotherCU;
+//        }
 
         if (!anotherTeam.equals(normalTeam)) {
             if (supTeam.equals("N/A")) {
@@ -3378,38 +3499,34 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBNetRegionActionPerformed
 
     private void jCBNetMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetMarketActionPerformed
-        // TODO add your handling code here:
+        // Fill technology combobox for add new network:
         List<String> techs1 = new ArrayList<String>();
         String tech1 = "";
         jCBNetTech.removeAllItems();
-        if (jCBNetMarket.getItemCount() != 0) {
-            try {
-                String mar1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
-                for (int i = 7; i < networksinfo.size(); i = i + 10) {
-                    if (i % 2 == 0) {
-                        tech1 = netMrktTech.get(i + 1);
-                        if (mar1.equals(netMrktTech.get(i))) {
-                            if (techs1.isEmpty()) {
-                                techs1.add(tech1);
-                            } else if (!techs1.contains(tech1)) {
-                                techs1.add(tech1);
-                            }
-                        }
-                    }
-                }
-                if (techs1.isEmpty()) {
-                    jCBNetTech.addItem("N/A");
-                    techs1.add("N/A");
-                } else {
-                    Collections.sort(techs1);
-                    for (int i = 0; i < techs1.size(); i++) {
-                        jCBNetTech.addItem(techs1.get(i));
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("Error: " + e);
+        String mar1 = "", team1 = "", cu1 = "", reg1 = "";
+        
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0 && jCBNetRegion.getItemCount() != 0 && jCBNetMarket.getItemCount() != 0)  {
+            team1 = jCBNetTeam.getSelectedItem().toString();
+            cu1 = jCBNetCustomer.getSelectedItem().toString();
+            reg1 = jCBNetRegion.getSelectedItem().toString();
+            mar1 = jCBNetMarket.getSelectedItem().toString();
+        }
+        
+        for (int i = 0; i < networksinfo.size(); i = i + 10) {             
+            if (team1.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1)) && reg1.equals(networksinfo.get(i + 2))) {
+                if (!techs1.contains(networksinfo.get(i + 7)))
+                    techs1.add(networksinfo.get(i+7));
             }
         }
+        if (techs1.isEmpty()) {
+            jCBNetTech.addItem("N/A");
+            techs1.add("N/A");
+        } 
+        Collections.sort(techs1);
+        
+        for (int i = 0; i < techs1.size(); i++) {
+            jCBNetTech.addItem(techs1.get(i));
+        }   
     }//GEN-LAST:event_jCBNetMarketActionPerformed
 
     private void jMISourcingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMISourcingActionPerformed
@@ -4080,6 +4197,22 @@ public class Time_Management extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBTeam_editmarketActionPerformed
 
+    private void jCBJobStageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBJobStageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBJobStageActionPerformed
+
+    private void jCBSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSearchUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBSearchUserActionPerformed
+
+    private void jCBTeam_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_userActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTeam_userActionPerformed
+
+    private void jCBAccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBAccessActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBAccessActionPerformed
+
     private void GetTaskTypes() {
         // Get different task ids
         Connection connection;
@@ -4183,6 +4316,13 @@ public class Time_Management extends javax.swing.JFrame {
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery();
             while (resultset.next()) {               
+                String[] row1 = {resultset.getString("Signum"), resultset.getString("Last_Name"), resultset.getString("Name"), resultset.getString("Customer_Unit"), resultset.getString("Team"),
+                    resultset.getString("Organization"), resultset.getString("Line_Manager"), resultset.getString("Access"), resultset.getString("Supporting_Team"), resultset.getString("Supporting_CU"),
+                    resultset.getString("Job_Stage"), resultset.getString("Act_Type"), resultset.getString("CATS_Number")};
+                
+                List<String> newList1 = Arrays.asList(row1);
+
+                users_info.addAll(newList1);
                 
                 for (int i = 0; i < 13; i++) {
                     row[i] = resultset.getString(i + 1);
@@ -4190,19 +4330,7 @@ public class Time_Management extends javax.swing.JFrame {
                 org1 = resultset.getString("Organization");
                 cu1 = resultset.getString("Customer_Unit");
                 team1 = resultset.getString("Team");
-                name1 = resultset.getString("Last_Name") + " " + resultset.getString("Name");
-                name2 = resultset.getString("Last_Name") + ", " + resultset.getString("Name");
-                if (!user_names.isEmpty()) {
-                    if (!user_names.contains(name1)) {
-                        user_names.add(name1);
-                        jCBUser.addItem(name1);
-                        jCBSearchUser.addItem(name2);
-                    }
-                } else {
-                    user_names.add(name1);
-                    jCBUser.addItem(name1);
-                    jCBSearchUser.addItem(name2);
-                }
+                
                 if (!organizations.isEmpty()) {
                     if (!organizations.contains(org1)) {
                         organizations.add(org1);
@@ -4258,14 +4386,23 @@ public class Time_Management extends javax.swing.JFrame {
         model.setColumnIdentifiers(column);
         try {
             String sql, taskid1, task1, team1, cu1;
-            sql = "SELECT Task_ID, Task, Team, Customer_Unit, Service_Package_Name, Deliverable, "
+            sql = "SELECT Task_ID, Task, Team, Customer_Unit, SAP_Billable, Service_Package_Name, Deliverable, "
                     + "Project_Support_Domain, LoE FROM tasks ORDER BY Team asc;";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery();
             ArrayList<String> _teams = new ArrayList<>();
             while (resultset.next()) {
+                String[] row4 = {resultset.getString("Task_ID"), resultset.getString("Task"), resultset.getString("Team"), resultset.getString("Customer_Unit"),
+                    resultset.getString("SAP_Billable"), resultset.getString("Service_Package_Name"), resultset.getString("Deliverable"),
+                    resultset.getString("Project_Support_Domain"), resultset.getString("LoE")};
+                
+                List<String> newList1 = Arrays.asList(row4);
+
+                tasks_info.addAll(newList1);
+                
                 String[] row1 = {resultset.getString("Team"), resultset.getString("Customer_Unit")};
+                
                 // If task has same name but different task_id
                 if (teamsAndCUs.isEmpty()) {
                     List<String> newList = Arrays.asList(row1);
@@ -4377,7 +4514,6 @@ public class Time_Management extends javax.swing.JFrame {
                 teams.add(_teams.get(i));
                 jCBTaskTeam.addItem(_teams.get(i));
                 jCBTeam.addItem(_teams.get(i));
-                jCBSupportedTeam.addItem(_teams.get(i));
                 jCBTeamTaskSearch.addItem(_teams.get(i));
             }
             Collections.sort(tasks);
@@ -4581,9 +4717,17 @@ public class Time_Management extends javax.swing.JFrame {
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
             String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
-            String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
-            String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
+            String manager_name = jCBLineManager.getSelectedItem().toString();
+            String name = "", lmsignum = "", organization = "";
+            
+            for (int i = 0; i < users_info.size(); i += 13){
+                name = users_info.get(i + 1) + " " + users_info.get(i + 2);
+                if (manager_name.equals(name))
+                    lmsignum = users_info.get(i);
+                if (lmsignum.equals(users_info.get(i + 6)))
+                    organization = users_info.get(i + 5);
+            }
 
             HashMap<String, String> team_list = new HashMap<String, String>();
 
@@ -4606,13 +4750,13 @@ public class Time_Management extends javax.swing.JFrame {
             preparedStatement = connection.prepareStatement("INSERT INTO users (Signum, Last_Name, Name, Customer_Unit, Team, Organization, Line_Manager, Access, Supporting_Team, Supporting_CU, Job_Stage, Act_Type, CATS_Number) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            preparedStatement.setObject(1, jTFSignum.getText());
+            preparedStatement.setObject(1, jTFSignum.getText().toUpperCase());
             preparedStatement.setObject(2, jTFLastName.getText());
             preparedStatement.setObject(3, jTFName.getText());
             preparedStatement.setObject(4, cu1);
             preparedStatement.setObject(5, team1);
-            preparedStatement.setObject(6, org1);
-            preparedStatement.setObject(7, lmsignum1);
+            preparedStatement.setObject(6, organization);
+            preparedStatement.setObject(7, lmsignum);
             preparedStatement.setObject(8, access);
             preparedStatement.setObject(9, supportingTeam);
             preparedStatement.setObject(10, supportingCU);
@@ -4626,12 +4770,15 @@ public class Time_Management extends javax.swing.JFrame {
                 System.out.println("Mensaje: " + resultset.getString("mens"));*/
             System.out.println("Query: " + preparedStatement);
             connection.close();
-
-            //JOptionPane.showMessageDialog(this, "User saved successfully.");
+               
+            JOptionPane.showMessageDialog(this, "User saved successfully.");
             ResetUserFields();
         } catch (SQLException e) {
-            System.out.println(e);
-            JOptionPane.showMessageDialog(this, "Something went wrong, please try again later.");
+            System.out.println(e);            
+            if (e.toString().contains("Duplicate entry"))
+                JOptionPane.showMessageDialog(this, "The user you tried to save already exists");
+            else
+                JOptionPane.showMessageDialog(this, "Something went wrong, please try again later.");
         }
     }
 
@@ -4645,10 +4792,19 @@ public class Time_Management extends javax.swing.JFrame {
             String team1 = jCBTeam.getSelectedItem().toString();
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
-            String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());
-            String lmsignum1 = LMSignums[jCBLineManager.getSelectedIndex()];
-            String org1 = LMOrganizations[jCBLineManager.getSelectedIndex()];
+            String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());            
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
+            
+            String manager_name = jCBLineManager.getSelectedItem().toString();
+            String name = "", lmsignum = "", organization = "";
+            
+            for (int i = 0; i < users_info.size(); i += 13){
+                name = users_info.get(i + 1) + " " + users_info.get(i + 2);
+                if (manager_name.equals(name))
+                    lmsignum = users_info.get(i);
+                if (lmsignum.equals(users_info.get(i + 6)))
+                    organization = users_info.get(i + 5);
+            }
 
             HashMap<String, String> CU_list = new HashMap<String, String>();
 
@@ -4676,8 +4832,8 @@ public class Time_Management extends javax.swing.JFrame {
                     + "WHERE Signum = ?;");
             preparedStatement.setObject(1, cu1);
             preparedStatement.setObject(2, team1);
-            preparedStatement.setObject(3, org1);
-            preparedStatement.setObject(4, lmsignum1);
+            preparedStatement.setObject(3, organization);
+            preparedStatement.setObject(4, lmsignum);
             preparedStatement.setObject(5, access);
             preparedStatement.setObject(6, supportingTeam);
             preparedStatement.setObject(7, supportingCU);
@@ -4701,11 +4857,14 @@ public class Time_Management extends javax.swing.JFrame {
     private void DeleteUserDB() {
         Connection connection;
         PreparedStatement preparedStatement;
+        String name = jCBSearchUser.getSelectedItem().toString();
+        String[] lastname = name.split(",");
+        String lastname1 = lastname[0];
         try {
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("DELETE FROM users "
                     + "WHERE Last_Name = ?");
-            preparedStatement.setObject(1, jCBSearchUser.getItemAt(jCBSearchUser.getSelectedIndex()));
+            preparedStatement.setObject(1, lastname1);
             preparedStatement.executeUpdate();
             System.out.println("Query: " + preparedStatement);
             connection.close();
@@ -4900,7 +5059,7 @@ public class Time_Management extends javax.swing.JFrame {
         try {
             String pd = jTFPD.getText();
             String net = jTFNetwork.getText();
-            String activityCode = jCBNetActCode.getItemAt(jCBNetActCode.getSelectedIndex());
+            String activityCode = jCBNetActCode.getSelectedItem().toString();
             String responsible = jTFResponsible.getText();
             String region = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
             String market = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
@@ -4909,6 +5068,9 @@ public class Time_Management extends javax.swing.JFrame {
             String team = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
             String technology = jCBNetTech.getSelectedItem().toString();
             System.out.println("Technology: " + technology);
+            
+            if (activityCode.equals(""))             
+                JOptionPane.showMessageDialog(this, "Activity code is empty");
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO networks (PD, Network, Activity_code, Region, Market, Customer, Responsible, Subnetwork, Team, Technology) "
                     + "VALUES (?,?,?,?,?,?,?,?,?,?);");
@@ -5052,7 +5214,7 @@ public class Time_Management extends javax.swing.JFrame {
         boolean flag = false;
 
         if (!jTFPD.getText().equals("") && !jTFNetwork.getText().equals("")
-                && !jTFResponsible.getText().equals("") && !jTFSubnetwork.getText().equals("")) {
+                && !jTFResponsible.getText().equals("") && !jTFSubnetwork.getText().equals("") && jCBNetActCode.getItemCount() != 0 ) {
             flag = true;
         }
         return flag;
@@ -5066,7 +5228,7 @@ public class Time_Management extends javax.swing.JFrame {
         jCBTeam.setSelectedIndex(0);
         jCBCustomerUnit.setSelectedIndex(0);
 //        jCBLineManager.setSelectedIndex(0);
-        jCBSupportedCU.setSelectedIndex(0);
+//        jCBSupportedCU.setSelectedIndex(0);
         //jTFSignumEdit.setText("");
         jTFSupTeam.setText("N/A");
         jTFSupCU.setText("N/A");
@@ -5673,6 +5835,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBTeamTaskSearch;
     private javax.swing.JComboBox<String> jCBTeam_editmarket;
     private javax.swing.JComboBox<String> jCBTeam_editnet;
+    private javax.swing.JComboBox<String> jCBTeam_user;
     private javax.swing.JComboBox<String> jCBTo;
     private javax.swing.JComboBox<String> jCBUser;
     private javax.swing.JComboBox<String> jCBYearFrom;

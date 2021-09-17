@@ -1911,6 +1911,12 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         if (jTableAddMetrics.getEditingRow() != -1) {
             jTableAddMetrics.getCellEditor().stopCellEditing();// In case there's selected a field in the table
         }
+        // Restart current week
+        Calendar now = Calendar.getInstance();
+        current_week = now.get(Calendar.WEEK_OF_YEAR);
+        if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            current_week = current_week - 1;
+        }
         // Start thread
         jLabelLoading.setText("Saving your metrics into database...");
         new Thread(new Runnable() {
@@ -2732,7 +2738,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             BigDecimal mult_time = time.multiply(BigDecimal.valueOf(entries));
             for (int i = 0; i < entries; i++) {
                 // Check if division sums the original quantity, if not tweak it
-                if (b_bulk == true && mult_time != total_time){
+                if (b_bulk == true && mult_time != total_time) {
                     if (i == entries - 1) {
                         BigDecimal missing_time = total_time.subtract(mult_time);
                         data[13] = time.add(missing_time).toString();
@@ -4686,8 +4692,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Web Learning")) {
+                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday")
+                        || task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";

@@ -189,7 +189,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
                 // If week changes update hours per day table
-                if (week != edit_week){
+                if (week != edit_week) {
                     edit_week = week;
                     GetDailyHours();
                 }
@@ -199,7 +199,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
         // Populate jcbCU with possible CUs for this team
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
-        if (usersinfo.get(2).startsWith("SCP_")){
+        if (usersinfo.get(2).startsWith("SCP_")) {
             cu = usersinfo.get(2).replace("SCP_", "");
             jcbCU.addItem(cu);
         }
@@ -1921,6 +1921,12 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
         if (jTableAddMetrics.getEditingRow() != -1) {
             jTableAddMetrics.getCellEditor().stopCellEditing();// In case there's selected a field in the table
         }
+        // Restart current week
+        Calendar now = Calendar.getInstance();
+        current_week = now.get(Calendar.WEEK_OF_YEAR);
+        if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            current_week = current_week - 1;
+        }
         // Start thread
         jLabelLoading.setText("Saving your metrics into database...");
         new Thread(new Runnable() {
@@ -2552,7 +2558,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
             // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
-            if (current_week != edit_week){
+            if (current_week != edit_week) {
                 current_week = edit_week;
             }
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
@@ -2755,7 +2761,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
             BigDecimal mult_time = time.multiply(BigDecimal.valueOf(entries));
             for (int i = 0; i < entries; i++) {
                 // Check if division sums the original quantity, if not tweak it
-                if (b_bulk == true && mult_time != total_time){
+                if (b_bulk == true && mult_time != total_time) {
                     if (i == entries - 1) {
                         BigDecimal missing_time = total_time.subtract(mult_time);
                         data[13] = time.add(missing_time).toString();
@@ -3636,7 +3642,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
         String subnet = (String) jcbSubnet.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu) 
+            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu)
                     && networks_info.get(i + 1).equals("Scoping")) {
                 //System.out.println(i);
                 int net = i - 5;
@@ -4705,8 +4711,8 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Web Learning")) {
+                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday")
+                        || task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";
