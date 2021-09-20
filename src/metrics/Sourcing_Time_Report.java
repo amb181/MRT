@@ -1573,6 +1573,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                 }
             }
         }).start();
+        jDLoading.setModal(true);
         jDLoading.setVisible(true);
     }//GEN-LAST:event_jB_SaveActionPerformed
 

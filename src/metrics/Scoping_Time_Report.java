@@ -1124,6 +1124,11 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
 
         jTextFieldActivity.setEditable(false);
         jTextFieldActivity.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jTextFieldActivity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldActivityActionPerformed(evt);
+            }
+        });
 
         jcbSubnet.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jcbSubnet.addActionListener(new java.awt.event.ActionListener() {
@@ -1384,10 +1389,8 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                         .addComponent(jLabelHoursDaysH1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
                         .addComponent(jLabelHoursDaysB1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jTextFieldActivity))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jRSingle)
@@ -1414,7 +1417,8 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                             .addComponent(jcbFailedFTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jcbSubnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jcbFTR, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbFTR, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldActivity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLComments)
@@ -1431,7 +1435,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                                 .addComponent(jBClearTable)
                                 .addComponent(jBDeleteRow)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabelTeam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelTeam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -2125,6 +2129,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                 }
             }
         }).start();
+        jDLoading.setModal(true);
         jDLoading.setVisible(true);
     }//GEN-LAST:event_jB_SaveActionPerformed
 
@@ -4922,6 +4927,10 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Table is empty!");
         }
     }//GEN-LAST:event_jB_Export_Net_CatalogActionPerformed
+
+    private void jTextFieldActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldActivityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldActivityActionPerformed
 
     /**
      * @param args the command line arguments

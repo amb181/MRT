@@ -411,6 +411,8 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jCBNetTech = new javax.swing.JComboBox<>();
         jCBTeam_editnet = new javax.swing.JComboBox<>();
+        jCBProjectName = new javax.swing.JComboBox<>();
+        jLabel40 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableNetworks = new javax.swing.JTable(){
             @Override
@@ -1741,19 +1743,20 @@ public class Time_Management extends javax.swing.JFrame {
             jPNetSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPNetSearchLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPNetSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBNetSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24)
-                    .addComponent(jCBNetTeamSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel23)
-                    .addComponent(jCBCUSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26)
-                    .addComponent(jCBMarketSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPNetSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPNetSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBNetworkSearch)
                         .addComponent(jBNetSearch)
-                        .addComponent(jBNetDelete)))
+                        .addComponent(jBNetDelete))
+                    .addGroup(jPNetSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCBNetSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel24)
+                        .addComponent(jCBNetTeamSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel25)
+                        .addComponent(jLabel23)
+                        .addComponent(jCBCUSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel26)
+                        .addComponent(jCBMarketSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -1817,6 +1820,11 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBNetActCode.setEditable(true);
         jCBNetActCode.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBNetActCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBNetActCodeActionPerformed(evt);
+            }
+        });
 
         jCBNetTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBNetTeam.addActionListener(new java.awt.event.ActionListener() {
@@ -1864,6 +1872,17 @@ public class Time_Management extends javax.swing.JFrame {
             }
         });
 
+        jCBProjectName.setEditable(true);
+        jCBProjectName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBProjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBProjectNameActionPerformed(evt);
+            }
+        });
+
+        jLabel40.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jLabel40.setText("Project name:");
+
         javax.swing.GroupLayout jPNetEditLayout = new javax.swing.GroupLayout(jPNetEdit);
         jPNetEdit.setLayout(jPNetEditLayout);
         jPNetEditLayout.setHorizontalGroup(
@@ -1887,7 +1906,7 @@ public class Time_Management extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCBNetTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPNetEditLayout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addGap(18, 18, 18)
@@ -1899,7 +1918,20 @@ public class Time_Management extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCBNetActCode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCBNetRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jCBNetRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
+                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel10))
+                                .addGap(38, 38, 38)
+                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPNetEditLayout.createSequentialGroup()
+                                        .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel40)))))
+                        .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPNetEditLayout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
@@ -1909,13 +1941,8 @@ public class Time_Management extends javax.swing.JFrame {
                                     .addComponent(jTFResponsible)
                                     .addComponent(jCBNetMarket, 0, 260, Short.MAX_VALUE)))
                             .addGroup(jPNetEditLayout.createSequentialGroup()
-                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel22)
-                                    .addComponent(jLabel10))
-                                .addGap(38, 38, 38)
-                                .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTFNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPNetEditLayout.createSequentialGroup()
                         .addGap(1319, 1319, 1319)
                         .addComponent(jBSaveNet)))
@@ -1968,7 +1995,9 @@ public class Time_Management extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addGroup(jPNetEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jCBNetTech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCBProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel40))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBSaveNet)
                 .addContainerGap())
@@ -2752,7 +2781,7 @@ public class Time_Management extends javax.swing.JFrame {
             jCBNetTeam.removeAllItems();
             jCBNetTeam.addItem("Select a team");          
             ArrayList<String> _teams = new ArrayList<String>();
-            for (int i = 0; i < networksinfo.size(); i= i+10){
+            for (int i = 0; i < networksinfo.size(); i= i+11){
                 if (!_teams.contains(networksinfo.get(i))){
                     _teams.add(networksinfo.get(i));
                 }            
@@ -2773,7 +2802,7 @@ public class Time_Management extends javax.swing.JFrame {
             jCBNetTeamSearch.removeAllItems();
             jCBNetTeamSearch.addItem("Select a team");
             ArrayList<String> _teams1 = new ArrayList<String>();
-            for (int i = 0; i < networksinfo.size(); i= i+10){
+            for (int i = 0; i < networksinfo.size(); i= i+11){
                 if (!_teams1.contains(networksinfo.get(i))){
                     _teams1.add(networksinfo.get(i));
                 }            
@@ -2800,7 +2829,7 @@ public class Time_Management extends javax.swing.JFrame {
                     } else {
                         UpdateNetworksDB();
                     }                                       
-
+                    networksinfo.clear();
                     GetNetworksSearch();
                     jDLoading.dispose();
                 }
@@ -2819,7 +2848,7 @@ public class Time_Management extends javax.swing.JFrame {
         String network = jCBNetSearch.getSelectedItem().toString(); 
         
         
-        for (int i=4; i < networksinfo.size(); i += 10 ){
+        for (int i=4; i < networksinfo.size(); i += 11 ){
             if (networksinfo.get(i).equals(network) && (networksinfo.get(i-4).equals(team) && (networksinfo.get(i-3).equals(cu)) && (networksinfo.get(i-1).equals(market)))){
                 jCBTeam_editnet.addItem(networksinfo.get(i-4));
                 //Clean comboboxes                
@@ -2829,6 +2858,7 @@ public class Time_Management extends javax.swing.JFrame {
                 jCBNetMarket.removeAllItems();
                 jCBNetActCode.removeAllItems();
                 jCBNetTech.removeAllItems();
+                jCBProjectName.removeAllItems();
                 // Fill with new information                
                 jCBNetCustomer.addItem(networksinfo.get(i-3));
                 jCBNetRegion.addItem(networksinfo.get(i-2));
@@ -2838,7 +2868,8 @@ public class Time_Management extends javax.swing.JFrame {
                 jCBNetActCode.addItem(networksinfo.get(i+2));
                 jCBNetTech.addItem(networksinfo.get(i+3));
                 jTFPD.setText(networksinfo.get(i+4));
-                jTFResponsible.setText(networksinfo.get(i+5));                  
+                jTFResponsible.setText(networksinfo.get(i+5)); 
+                jCBProjectName.addItem(networksinfo.get(i+6));
             }
         }
         
@@ -3018,6 +3049,22 @@ public class Time_Management extends javax.swing.JFrame {
             for (int i = 0; i < managers.size(); i++){
                 jCBLineManager.addItem(managers.get(i));
             }
+            
+            // Fill supported teams
+            jCBSupportedTeam.addItem("Select a team...");
+            
+            ArrayList<String> teams = new ArrayList<String>();
+            
+            
+            for (int i = 2; i < tasks_info.size(); i += 9){
+                if (!teams.contains(tasks_info.get(i)))
+                    teams.add(tasks_info.get(i));                
+            }
+            Collections.sort(teams);
+            for (int i = 0; i < teams.size(); i++){
+                jCBSupportedTeam.addItem(teams.get(i));
+            }
+            
            // Edit user
         } else if (jCBAction.getSelectedIndex() == 2) {
             jPUser.setVisible(true);
@@ -3427,7 +3474,7 @@ public class Time_Management extends javax.swing.JFrame {
             team = jCBNetTeam.getSelectedItem().toString();
         }        
         jCBNetCustomer.removeAllItems();
-        for (int i = 1; i < networksinfo.size(); i = i + 10) {
+        for (int i = 1; i < networksinfo.size(); i = i + 11) {
             if (!CU_list.contains(networksinfo.get(i))) {
                 if (networksinfo.get(i - 1).equals(team)) {
                     CU_list.add(networksinfo.get(i));
@@ -3507,7 +3554,7 @@ public class Time_Management extends javax.swing.JFrame {
             mar1 = jCBNetMarket.getSelectedItem().toString();
         }
         
-        for (int i = 0; i < networksinfo.size(); i = i + 10) {             
+        for (int i = 0; i < networksinfo.size(); i = i + 11) {             
             if (team1.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1)) && reg1.equals(networksinfo.get(i + 2))) {
                 if (!techs1.contains(networksinfo.get(i + 7)))
                     techs1.add(networksinfo.get(i+7));
@@ -3646,7 +3693,7 @@ public class Time_Management extends javax.swing.JFrame {
            team = jCBNetTeamSearch.getSelectedItem().toString(); 
         }        
         jCBCUSearch.removeAllItems();        
-        for (int i = 1; i < networksinfo.size(); i = i + 10) {
+        for (int i = 1; i < networksinfo.size(); i = i + 11) {
             if (!CU_list.contains(networksinfo.get(i))) {
                 if (networksinfo.get(i - 1).equals(team)) {
                     CU_list.add(networksinfo.get(i));
@@ -3665,14 +3712,14 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBNetSearchActionPerformed
 
     private void jCBCUSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCUSearchActionPerformed
-        // TODO add your handling code here:
+        // Fill Market in search network
         List<String> markets1 = new ArrayList<String>();
         String market1 = "";
         jCBMarketSearch.removeAllItems();
         if (jCBCUSearch.getItemCount() != 0) {
             String cu1 = jCBCUSearch.getSelectedItem().toString();
             String team1 = jCBNetTeamSearch.getSelectedItem().toString();
-            for (int i = 0; i < networksinfo.size(); i = i + 10) {
+            for (int i = 0; i < networksinfo.size(); i = i + 11) {
                 if (team1.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
                     market1 = networksinfo.get(i + 3);
                     if (markets1.isEmpty()) {
@@ -3699,7 +3746,7 @@ public class Time_Management extends javax.swing.JFrame {
             String cu1 = jCBCUSearch.getSelectedItem().toString();
             String team1 = jCBNetTeamSearch.getSelectedItem().toString();
             String mar1 = jCBMarketSearch.getSelectedItem().toString();
-            for (int i = 4; i < networksinfo.size(); i = i + 10) {
+            for (int i = 4; i < networksinfo.size(); i = i + 11) {
                 if (team1.equals(networksinfo.get(i - 4)) && cu1.equals(networksinfo.get(i - 3)) && mar1.equals(networksinfo.get(i - 1))) {
                     if (!networks.contains(networksinfo.get(i))) {
                         networks.add(networksinfo.get(i));
@@ -3865,7 +3912,7 @@ public class Time_Management extends javax.swing.JFrame {
             jCBTeamMrkt.removeAllItems();
             jCBTeamMrkt.addItem("Select a team");
             ArrayList<String> _teams = new ArrayList<String>();
-            for (int i = 0; i < networksinfo.size(); i=i + 10){
+            for (int i = 0; i < networksinfo.size(); i=i + 11){
                 if (!_teams.contains(networksinfo.get(i))){
                     _teams.add(networksinfo.get(i));
                 }            
@@ -3886,7 +3933,7 @@ public class Time_Management extends javax.swing.JFrame {
             jCBMarTeam.removeAllItems();
             jCBMarTeam.addItem("Select a team");
             ArrayList<String> _teams = new ArrayList<String>();
-            for (int i = 0; i < networksinfo.size(); i=i + 10){
+            for (int i = 0; i < networksinfo.size(); i=i + 11){
                 if (!_teams.contains(networksinfo.get(i))){
                     _teams.add(networksinfo.get(i));
                 }            
@@ -3907,7 +3954,7 @@ public class Time_Management extends javax.swing.JFrame {
             team = jCBTeamMrkt.getSelectedItem().toString();
         }        
         jCBNetCustomer.removeAllItems();
-        for (int i = 1; i < networksinfo.size(); i = i + 10) {
+        for (int i = 1; i < networksinfo.size(); i = i + 11) {
             if (!cu_list .contains(networksinfo.get(i))) {
                 if (networksinfo.get(i - 1).equals(team)) {
                     cu_list .add(networksinfo.get(i));
@@ -4077,7 +4124,7 @@ public class Time_Management extends javax.swing.JFrame {
             reg = jCBNetRegion.getSelectedItem().toString();
             market = jCBNetMarket.getSelectedItem().toString();
         }                
-        for (int i = 0; i < networksinfo.size(); i = i + 10) {// Team, CU, Region, Market, Technology
+        for (int i = 0; i < networksinfo.size(); i = i + 11) {// Team, CU, Region, Market, Technology
             if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
                 if (!activity_code.contains(networksinfo.get(i + 6))) {
                     activity_code.add(networksinfo.get(i + 6));
@@ -4208,6 +4255,36 @@ public class Time_Management extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBAccessActionPerformed
 
+    private void jCBNetActCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetActCodeActionPerformed
+        //Fill project name combo box
+        jCBProjectName.removeAllItems();
+        String team = "", cu = "";
+        ArrayList<String> projects = new ArrayList<String>();       
+        
+        
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0){
+            team = jCBNetTeam.getSelectedItem().toString();
+            cu = jCBNetCustomer.getSelectedItem().toString();
+        }
+        for (int i = 0; i < networksinfo.size(); i += 11){
+            if (team.equals(networksinfo.get(i)) && cu.equals(networksinfo.get(i + 1))){
+                if (!projects.contains(networksinfo.get(i + 10))){
+                    projects.add(networksinfo.get(i + 10));
+                }
+            }
+            
+        }
+        Collections.sort(projects);
+        for (int i = 0; i < projects.size(); i++){
+            jCBProjectName.addItem(projects.get(i));
+        }
+        
+    }//GEN-LAST:event_jCBNetActCodeActionPerformed
+
+    private void jCBProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBProjectNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBProjectNameActionPerformed
+
     private void GetTaskTypes() {
         // Get different task ids
         Connection connection;
@@ -4253,13 +4330,14 @@ public class Time_Management extends javax.swing.JFrame {
             String sql = "";
             sql = "SELECT PD, Network, Activity_Code, "
                     + "Region, Market, Team, Customer, "
-                    + "Responsible, Subnetwork, Technology FROM networks ORDER BY Team asc;";
+                    + "Responsible, Subnetwork, Technology, Project FROM networks ORDER BY Team asc;";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery();            
             while (resultset.next()) {
                 String[] row1 = {resultset.getString("Team"), resultset.getString("Customer"), resultset.getString("Region"), resultset.getString("Market"), resultset.getString("Network"),
-                    resultset.getString("Subnetwork"), resultset.getString("Activity_code"), resultset.getString("Technology"), resultset.getString("PD"), resultset.getString("Responsible")};
+                    resultset.getString("Subnetwork"), resultset.getString("Activity_code"), resultset.getString("Technology"), resultset.getString("PD"),
+                    resultset.getString("Responsible"), resultset.getString("Project")};
                 List<String> newList1 = Arrays.asList(row1);
 
                 networksinfo.addAll(newList1);
@@ -5062,13 +5140,19 @@ public class Time_Management extends javax.swing.JFrame {
             String subnetwork = jTFSubnetwork.getText();
             String team = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
             String technology = jCBNetTech.getSelectedItem().toString();
+            String project = jCBProjectName.getSelectedItem().toString();
             System.out.println("Technology: " + technology);
             
-            if (activityCode.equals(""))             
-                JOptionPane.showMessageDialog(this, "Activity code is empty");
+            if (activityCode == null )             
+                JOptionPane.showMessageDialog(this, "Activity code is empty!");
+            else if (technology == null)
+                JOptionPane.showMessageDialog(this, "Technology is empty!");
+            else if (project == null)
+                JOptionPane.showMessageDialog(this, "Project Name is empty!");
+            
             connection = SQL_connection.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO networks (PD, Network, Activity_code, Region, Market, Customer, Responsible, Subnetwork, Team, Technology) "
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?);");
+            preparedStatement = connection.prepareStatement("INSERT INTO networks (PD, Network, Activity_code, Region, Market, Customer, Responsible, Subnetwork, Team, Technology, Project) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?);");
             preparedStatement.setObject(1, pd);
             preparedStatement.setObject(2, net);
             preparedStatement.setObject(3, activityCode);
@@ -5079,6 +5163,7 @@ public class Time_Management extends javax.swing.JFrame {
             preparedStatement.setObject(8, subnetwork);
             preparedStatement.setObject(9, team);
             preparedStatement.setObject(10, technology);
+            preparedStatement.setObject(11, project);
             preparedStatement.executeUpdate();
             connection.close();
 
@@ -5178,11 +5263,11 @@ public class Time_Management extends javax.swing.JFrame {
             String net1 = jTFNetwork.getText();
             String team1 = jCBTeam_editnet.getSelectedItem().toString();
             String technology = jCBNetTech.getSelectedItem().toString();
+            String project = jCBProjectName.getSelectedItem().toString();            
             
-            System.out.println("El team " + team1);
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE networks SET Activity_code = ?, Responsible = ?, "
-                    + "Subnetwork = ?,  Customer = ?, Region = ?, Market = ?, Technology = ? "
+                    + "Subnetwork = ?,  Customer = ?, Region = ?, Market = ?, Technology = ?, Project = ? "
                     + "WHERE (Network = ?) AND (Team = ?);");
             preparedStatement.setObject(1, act1);
             preparedStatement.setObject(2, resp1);
@@ -5191,8 +5276,11 @@ public class Time_Management extends javax.swing.JFrame {
             preparedStatement.setObject(5, reg1);
             preparedStatement.setObject(6, mark1);
             preparedStatement.setObject(7, technology);
-            preparedStatement.setObject(8, net1);
-            preparedStatement.setObject(9, team1);
+            preparedStatement.setObject(8, project);
+            preparedStatement.setObject(9, net1);
+            preparedStatement.setObject(10, team1);
+            
+            
             System.out.println("Query: " + preparedStatement);
             preparedStatement.executeUpdate();
             connection.close();
@@ -5814,6 +5902,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBNetTeamSearch;
     private javax.swing.JComboBox<String> jCBNetTech;
     private javax.swing.JComboBox<String> jCBOrgMetrics;
+    private javax.swing.JComboBox<String> jCBProjectName;
     private javax.swing.JComboBox<String> jCBProjectSuppDom;
     private javax.swing.JComboBox<String> jCBRegionMrkt;
     private javax.swing.JComboBox<String> jCBSearchUser;
@@ -5893,6 +5982,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
