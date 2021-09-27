@@ -138,7 +138,7 @@ public class Metrics {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String user = System.getProperty("user.name");
-        //String user = "QIVAALC";
+        // String user = "EERICAB";
         System.out.println("Current user: " + user);
 
         try {

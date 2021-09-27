@@ -4679,9 +4679,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
 
             // Create csv with data
-            //String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";
-            String path = "C:\\Users\\ealloem\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";            
-            //System.out.println("ESS: " + metrics_for_ess);
+            String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";
+            // String path = "C:\\Users\\ealloem\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";            
+            System.out.println("ESS: " + metrics_for_ess);
             // Sum time with same network and activity (Productive, Training, Meeting, etc)
             ArrayList<String> sum_metrics = new ArrayList<>();
             // Iterate every saved task in metrics_for_ess
@@ -4741,10 +4741,10 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 boolean new_task = true;
                 for (int j = 0; j < sum_metrics.size(); j += 10) {
                     if (sum_metrics.get(j + 2).equals(task_) && sum_metrics.get(j).equals(subnet)) { // If same task
-                        //System.out.println("\nSumando: " + sum_metrics.get(j + 2) + " | " + task_ + " | day: " + day);
-                        String new_time = String.valueOf(Float.parseFloat(metrics_for_ess.get(i + 7)) + Float.parseFloat(sum_metrics.get(j + 2 + day)));
+                        // System.out.println("\nSumando: " + sum_metrics.get(j + 2) + " | " + task_ + " | day: " + day);
+                        String new_time = String.valueOf(BigDecimal.valueOf(Double.parseDouble(metrics_for_ess.get(i + 7))).add(BigDecimal.valueOf(Double.parseDouble(sum_metrics.get(j + 2 + day)))));
                         sum_metrics.set(j + 2 + day, new_time);
-                        //System.out.println("SUM: " + sum_metrics); // Print array contents
+                        // System.out.println("SUM: " + sum_metrics); // Print array contents
                         new_task = false;
                         break;
                     }
@@ -4767,7 +4767,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     //System.out.println("SUM: " + sum_metrics); // Print array contents
                 }
             }
-
+            
             try (PrintWriter writer = new PrintWriter(new File(path))) {
                 StringBuilder sb = new StringBuilder();
                 // New line
@@ -4876,7 +4876,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 if (reply == JOptionPane.YES_OPTION) {
                     Desktop.getDesktop().open(new File(path));
                 } else {
-                    JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
+                    JOptionPane.showMessageDialog(this, "File was saved to " + path);
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(PSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);

@@ -988,11 +988,6 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBJobStage.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBJobStage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "4", "5", "N/A" }));
-        jCBJobStage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBJobStageActionPerformed(evt);
-            }
-        });
 
         jLabel37.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel37.setText("CAT's Number:");
@@ -1006,18 +1001,8 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBLineManager.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBLineManager.setToolTipText("");
-        jCBLineManager.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBLineManagerActionPerformed(evt);
-            }
-        });
 
         jCBTeam_user.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_userActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPUserLayout = new javax.swing.GroupLayout(jPUser);
         jPUser.setLayout(jPUserLayout);
@@ -1186,11 +1171,6 @@ public class Time_Management extends javax.swing.JFrame {
         jLSignumEdit.setText("Name:");
 
         jCBSearchUser.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBSearchUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBSearchUserActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPSearchLayout = new javax.swing.GroupLayout(jPSearch);
         jPSearch.setLayout(jPSearchLayout);
@@ -1767,11 +1747,6 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel8.setText("PD:");
 
         jTFPD.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jTFPD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFPDActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel10.setText("Network: ");
@@ -1785,11 +1760,6 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel12.setText("Responsible:");
 
         jTFResponsible.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jTFResponsible.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFResponsibleActionPerformed(evt);
-            }
-        });
 
         jLabel13.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel13.setText("Subnetwork:");
@@ -1820,11 +1790,6 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBNetActCode.setEditable(true);
         jCBNetActCode.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBNetActCode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBNetActCodeActionPerformed(evt);
-            }
-        });
 
         jCBNetTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBNetTeam.addActionListener(new java.awt.event.ActionListener() {
@@ -1866,19 +1831,9 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBTeam_editnet.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_editnet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_editnetActionPerformed(evt);
-            }
-        });
 
         jCBProjectName.setEditable(true);
         jCBProjectName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBProjectName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBProjectNameActionPerformed(evt);
-            }
-        });
 
         jLabel40.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel40.setText("Project name:");
@@ -2042,7 +1997,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jBNetTableCSV)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1853, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPNetSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1436, Short.MAX_VALUE))
         );
         jPNetworksLayout.setVerticalGroup(
             jPNetworksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2241,11 +2196,6 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBTeam_editmarket.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_editmarket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_editmarketActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -2779,7 +2729,7 @@ public class Time_Management extends javax.swing.JFrame {
             ResetNetworkFields();
             // Fill Team in Add new network
             jCBNetTeam.removeAllItems();
-            jCBNetTeam.addItem("Select a team");          
+            jCBNetTeam.addItem("Select a team"); 
             ArrayList<String> _teams = new ArrayList<String>();
             for (int i = 0; i < networksinfo.size(); i= i+11){
                 if (!_teams.contains(networksinfo.get(i))){
@@ -3490,7 +3440,7 @@ public class Time_Management extends javax.swing.JFrame {
     private void jCBNetCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetCustomerActionPerformed
         //Fill Customer Unit in Add new network
         ArrayList<String> regions1 = new ArrayList<String>();
-        jCBNetRegion.removeAllItems();
+        jCBNetRegion.removeAllItems();        
         String team = "", cu1 = "";        
         
         if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0){
@@ -3508,6 +3458,28 @@ public class Time_Management extends javax.swing.JFrame {
         Collections.sort(regions1);
         for (int i = 0; i < regions1.size(); i++) {
             jCBNetRegion.addItem(regions1.get(i));
+        }
+        
+        //Fill project name combo box
+        jCBProjectName.removeAllItems();
+        ArrayList<String> projects = new ArrayList<String>();       
+        
+        
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0){
+            team = jCBNetTeam.getSelectedItem().toString();
+            cu1 = jCBNetCustomer.getSelectedItem().toString();
+        }
+        for (int i = 0; i < networksinfo.size(); i += 11){
+            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))){
+                if (!projects.contains(networksinfo.get(i + 10))){
+                    projects.add(networksinfo.get(i + 10));
+                }
+            }
+            
+        }
+        Collections.sort(projects);
+        for (int i = 0; i < projects.size(); i++){
+            jCBProjectName.addItem(projects.get(i));
         }
     }//GEN-LAST:event_jCBNetCustomerActionPerformed
 
@@ -4115,7 +4087,7 @@ public class Time_Management extends javax.swing.JFrame {
     private void jCBNetTechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetTechActionPerformed
         // Fill activity code in Add new network
         ArrayList<String> activity_code = new ArrayList<String>();
-        jCBNetActCode.removeAllItems();
+        jCBNetActCode.removeAllItems();        
         String team = "", cu1 = "", reg = "", market = "";        
         
         if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0 && jCBNetRegion.getItemCount() != 0 && jCBNetMarket.getItemCount() != 0){
@@ -4215,75 +4187,13 @@ public class Time_Management extends javax.swing.JFrame {
         loading.setVisible(true);
     }//GEN-LAST:event_jMIScopingActionPerformed
 
-    private void jCBLineManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBLineManagerActionPerformed
-        // Show LM
-    }//GEN-LAST:event_jCBLineManagerActionPerformed
-
     private void jCBMarketListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMarketListActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBMarketListActionPerformed
 
-    private void jTFPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFPDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFPDActionPerformed
-
-    private void jTFResponsibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFResponsibleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFResponsibleActionPerformed
-
-    private void jCBTeam_editnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editnetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTeam_editnetActionPerformed
-
-    private void jCBTeam_editmarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editmarketActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTeam_editmarketActionPerformed
-
-    private void jCBJobStageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBJobStageActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBJobStageActionPerformed
-
-    private void jCBSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSearchUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBSearchUserActionPerformed
-
-    private void jCBTeam_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_userActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTeam_userActionPerformed
-
     private void jCBAccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBAccessActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBAccessActionPerformed
-
-    private void jCBNetActCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetActCodeActionPerformed
-        //Fill project name combo box
-        jCBProjectName.removeAllItems();
-        String team = "", cu = "";
-        ArrayList<String> projects = new ArrayList<String>();       
-        
-        
-        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0){
-            team = jCBNetTeam.getSelectedItem().toString();
-            cu = jCBNetCustomer.getSelectedItem().toString();
-        }
-        for (int i = 0; i < networksinfo.size(); i += 11){
-            if (team.equals(networksinfo.get(i)) && cu.equals(networksinfo.get(i + 1))){
-                if (!projects.contains(networksinfo.get(i + 10))){
-                    projects.add(networksinfo.get(i + 10));
-                }
-            }
-            
-        }
-        Collections.sort(projects);
-        for (int i = 0; i < projects.size(); i++){
-            jCBProjectName.addItem(projects.get(i));
-        }
-        
-    }//GEN-LAST:event_jCBNetActCodeActionPerformed
-
-    private void jCBProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBProjectNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBProjectNameActionPerformed
 
     private void GetTaskTypes() {
         // Get different task ids
@@ -4318,14 +4228,14 @@ public class Time_Management extends javax.swing.JFrame {
     }
 
     private void GetNetworksSearch() {
-        String netHeader[] = {"PD", "Network", "Activity Code", "Region", "Market", "Team", "Customer Unit", "Responsible", "Subnetwork", "Technology"};
+        String netHeader[] = {"PD", "Network", "Activity Code", "Region", "Market", "Team", "Customer Unit", "Responsible", "Subnetwork", "Technology", "Project"};
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(netHeader);
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String actcode, team, subnet, reg, markt, tech;
-        String[] row = new String[10];
+        String[] row = new String[11];
         try {
             String sql = "";
             sql = "SELECT PD, Network, Activity_Code, "
@@ -4342,7 +4252,7 @@ public class Time_Management extends javax.swing.JFrame {
 
                 networksinfo.addAll(newList1);
 
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 11; i++) {
                     row[i] = resultset.getString(i + 1);
                 }
                 if (networks.isEmpty()) {
@@ -5141,13 +5051,13 @@ public class Time_Management extends javax.swing.JFrame {
             String team = jCBNetTeam.getItemAt(jCBNetTeam.getSelectedIndex());
             String technology = jCBNetTech.getSelectedItem().toString();
             String project = jCBProjectName.getSelectedItem().toString();
-            System.out.println("Technology: " + technology);
+            System.out.println("Selection : " + activityCode);
             
-            if (activityCode == null )             
+            if (activityCode == null || activityCode.equals("") )             
                 JOptionPane.showMessageDialog(this, "Activity code is empty!");
-            else if (technology == null)
+            else if (technology == null || technology.equals(""))
                 JOptionPane.showMessageDialog(this, "Technology is empty!");
-            else if (project == null)
+            else if (project.equals("") || project.equals(""))
                 JOptionPane.showMessageDialog(this, "Project Name is empty!");
             
             connection = SQL_connection.getConnection();
@@ -5254,17 +5164,17 @@ public class Time_Management extends javax.swing.JFrame {
         Connection connection;
         PreparedStatement preparedStatement;
         try {
-            String act1 = jCBNetActCode.getItemAt(jCBNetActCode.getSelectedIndex());
+            String act1 = jCBNetActCode.getSelectedItem().toString();
             String resp1 = jTFResponsible.getText();
             String subnet1 = jTFSubnetwork.getText();
-            String cu1 = jCBNetCustomer.getItemAt(jCBNetCustomer.getSelectedIndex());
-            String reg1 = jCBNetRegion.getItemAt(jCBNetRegion.getSelectedIndex());
-            String mark1 = jCBNetMarket.getItemAt(jCBNetMarket.getSelectedIndex());
+            String cu1 = jCBNetCustomer.getSelectedItem().toString();
+            String reg1 = jCBNetRegion.getSelectedItem().toString();
+            String mark1 = jCBNetMarket.getSelectedItem().toString();
             String net1 = jTFNetwork.getText();
             String team1 = jCBTeam_editnet.getSelectedItem().toString();
             String technology = jCBNetTech.getSelectedItem().toString();
-            String project = jCBProjectName.getSelectedItem().toString();            
-            
+            String project = jCBProjectName.getSelectedItem().toString();  
+                       
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE networks SET Activity_code = ?, Responsible = ?, "
                     + "Subnetwork = ?,  Customer = ?, Region = ?, Market = ?, Technology = ?, Project = ? "
@@ -5295,9 +5205,9 @@ public class Time_Management extends javax.swing.JFrame {
 
     private boolean ReviewFieldsState() {
         boolean flag = false;
-
         if (!jTFPD.getText().equals("") && !jTFNetwork.getText().equals("")
-                && !jTFResponsible.getText().equals("") && !jTFSubnetwork.getText().equals("") && jCBNetActCode.getItemCount() != 0 ) {
+                && !jTFResponsible.getText().equals("") && !jTFSubnetwork.getText().equals("") && !jCBProjectName.getSelectedItem().toString().equals("") &&
+                !jCBNetActCode.getSelectedItem().toString().equals("") && !jCBNetTech.getSelectedItem().toString().equals("")) {
             flag = true;
         }
         return flag;
@@ -5892,7 +5802,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBMarketSearch;
     private javax.swing.JComboBox<String> jCBMetricTeam;
     private javax.swing.JComboBox<String> jCBMrktAction;
-    private javax.swing.JComboBox<String> jCBNetActCode;
+    javax.swing.JComboBox<String> jCBNetActCode;
     private javax.swing.JComboBox<String> jCBNetAction;
     private javax.swing.JComboBox<String> jCBNetCustomer;
     private javax.swing.JComboBox<String> jCBNetMarket;

@@ -4752,7 +4752,7 @@ public final class COP_Time_Report extends javax.swing.JFrame {
                 for (int j = 0; j < sum_metrics.size(); j += 10) {
                     if (sum_metrics.get(j + 2).equals(task_) && sum_metrics.get(j).equals(subnet)) { // If same task
                         //System.out.println("\nSumando: " + sum_metrics.get(j + 2) + " | " + task_ + " | day: " + day);
-                        String new_time = String.valueOf(Float.parseFloat(metrics_for_ess.get(i + 7)) + Float.parseFloat(sum_metrics.get(j + 2 + day)));
+                        String new_time = String.valueOf(BigDecimal.valueOf(Double.parseDouble(metrics_for_ess.get(i + 7))).add(BigDecimal.valueOf(Double.parseDouble(sum_metrics.get(j + 2 + day)))));
                         sum_metrics.set(j + 2 + day, new_time);
                         //System.out.println("SUM: " + sum_metrics); // Print array contents
                         new_task = false;
