@@ -906,6 +906,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabel5.setText("Customer Unit:");
 
+        jCBCustomerUnit.setEditable(true);
         jCBCustomerUnit.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBCustomerUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1003,6 +1004,11 @@ public class Time_Management extends javax.swing.JFrame {
         jCBLineManager.setToolTipText("");
 
         jCBTeam_user.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jCBTeam_user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTeam_userActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPUserLayout = new javax.swing.GroupLayout(jPUser);
         jPUser.setLayout(jPUserLayout);
@@ -2498,7 +2504,7 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jRBToActionPerformed
 
     private void jCBFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBFromActionPerformed
-        // TODO add your handling code here:
+        // Fill To combobox:
         jCBTo.removeAllItems();
 
         int inicial = jCBFrom.getSelectedIndex();
@@ -2508,7 +2514,7 @@ public class Time_Management extends javax.swing.JFrame {
         if (jRBWeek.isSelected()) {
             for (int i = inicial + 1; i < 52 + 1; i++) {
                 jCBTo.addItem(Integer.toString(i));
-                jCBTo.setSelectedIndex(jCBFrom.getSelectedIndex());
+                jCBTo.getSelectedItem().toString();
             }
         }
 
@@ -2845,13 +2851,17 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBTaskSearchActionPerformed
 
     private void jBSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchActionPerformed
-        // TODO add your handling code here:
+        // Search User button:
         String signumEdit = jCBSearchUser.getSelectedItem().toString();
         String name = "", job_stage = "";
+        ArrayList<String> teams = new ArrayList<String>();       
+        
         Pattern onewordPattern = Pattern.compile("[^A-Za-z]");
         Matcher matcherSignum = onewordPattern.matcher(signumEdit);
+        
         boolean flagSignum = matcherSignum.find();
         flagSignum = false;
+        
         if (signumEdit.equals("")) {
             JOptionPane.showMessageDialog(this, "The field is empty! Please type a signum to start editing.");
         } else {
@@ -2878,6 +2888,7 @@ public class Time_Management extends javax.swing.JFrame {
                         jTFLastName.setText(users_info.get(i + 1));
                         jTFCATNum.setText(users_info.get(i + 12));
                         jCBTeam_user.addItem(users_info.get(i + 4));
+                        teams.add(users_info.get(i + 4));
                         jTFSupTeam.setText(users_info.get(i + 8));
                         jTFSupCU.setText(users_info.get(i + 9));
                         job_stage = users_info.get(i + 10);
@@ -2891,7 +2902,7 @@ public class Time_Management extends javax.swing.JFrame {
                         }
                         jCBJobStage.addItem(job_stage);
                         
-                        //Fill team and CU information
+                        //Fill CU information
                         String cu = users_info.get(i + 3);
                         String team = users_info.get(i + 4);
                         
@@ -2932,7 +2943,15 @@ public class Time_Management extends javax.swing.JFrame {
                         
                     }
                 }
-
+                // Fill the rest of the teams in Team Combobox
+                for (int i = 2; i < tasks_info.size(); i += 9)
+                    if (!teams.contains(tasks_info.get(i)))
+                        teams.add(tasks_info.get(i));
+                
+                for (int i = 1; i < teams.size(); i ++){
+                    jCBTeam_user.addItem(teams.get(i));  
+                }                
+                
             }
         }
 
@@ -2944,9 +2963,8 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jBClearActionPerformed
 
     private void jBDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteActionPerformed
-        // TODO add your handling code here:
+        // Delete user:
         String signumEdit = jCBSearchUser.getSelectedItem().toString();
-        System.out.println("estooo " + signumEdit);
         Pattern onewordPattern = Pattern.compile("[^A-Za-z]");
         Matcher matcherSignum = onewordPattern.matcher(signumEdit);
         boolean flagSignum = matcherSignum.find();
@@ -3000,8 +3018,9 @@ public class Time_Management extends javax.swing.JFrame {
                 jCBLineManager.addItem(managers.get(i));
             }
             
-            // Fill supported teams
+            // Fill teams combo box and supported team
             jCBSupportedTeam.addItem("Select a team...");
+            jCBTeam.addItem("Select a team...");
             
             ArrayList<String> teams = new ArrayList<String>();
             
@@ -3013,6 +3032,7 @@ public class Time_Management extends javax.swing.JFrame {
             Collections.sort(teams);
             for (int i = 0; i < teams.size(); i++){
                 jCBSupportedTeam.addItem(teams.get(i));
+                jCBTeam.addItem(teams.get(i));
             }
             
            // Edit user
@@ -3273,18 +3293,23 @@ public class Time_Management extends javax.swing.JFrame {
     }
 
     private void jBDeleteCUSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteCUSuppActionPerformed
-        // TODO add your handling code here:
+        // Delete Support CU
         String normalTeam = jCBTeam.getItemAt(jCBTeam.getSelectedIndex());
         String supTeams = jTFSupTeam.getText();
         String supCUs = jTFSupCU.getText();
-        String selTeam = jCBSupportedTeam.getItemAt(jCBSupportedTeam.getSelectedIndex());
-        String selCU = jCBSupportedCU.getItemAt(jCBSupportedCU.getSelectedIndex());
-        if (selTeam.equals("COP")) {
-            selCU = "C_" + selCU;
-        } else if (selTeam.equals("VSS")) {
-            selCU = "V_" + selCU;
-        } else if (selTeam.equals("PSS")) {
-            selCU = "P_" + selCU;
+        String selTeam = jCBSupportedTeam.getSelectedItem().toString();
+        String selCU = jCBSupportedCU.getSelectedItem().toString();
+        
+        HashMap<String, String> cu_list = new HashMap<>();
+
+        // Add keys and values (Team name, Prefix)
+        cu_list.put("COP", "C_");
+        cu_list.put("VSS", "V_");
+        cu_list.put("PSS", "P_");
+        cu_list.put("Scoping", "SCP_");
+
+        if (cu_list.containsKey(selTeam)){
+            selCU = cu_list.get(selTeam) + selCU;
         }
 
         if (supTeams.equals("N/A") && supCUs.equals("N/A")) {
@@ -3353,24 +3378,35 @@ public class Time_Management extends javax.swing.JFrame {
     private void jCBTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeamActionPerformed
         // Add team to user's assignment
         jCBCustomerUnit.removeAllItems();
-
-        String team = jCBTeam.getSelectedItem().toString();
-        try {
-            for (int i = 0; i < teamsAndCUs.size(); i++) {
-                if (i % 2 == 0) {
-                    if (team.equals(teamsAndCUs.get(i))) {
-                        jCBCustomerUnit.addItem(teamsAndCUs.get(i + 1));
-                    }
+        ArrayList<String> cus = new ArrayList<>();
+        String team = "";
+        
+        if (jCBTeam.getItemCount() != 0){
+            team = jCBTeam.getSelectedItem().toString();
+        }  
+        
+        for (int i = 3; i < tasks_info.size(); i = i + 9) {
+            if (team.equals(tasks_info.get(i - 1)))
+                if (!cus.contains(tasks_info.get(i))) {
+                    cus.add(tasks_info.get(i));
                 }
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
         }
+        
+        Collections.sort(cus);
+        for (int i = 0; i < cus.size(); i++) {
+            jCBCustomerUnit.addItem(cus.get(i));
+        }
+        
     }//GEN-LAST:event_jCBTeamActionPerformed
 
     private void jBAddSupCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddSupCUActionPerformed
-        // TODO add your handling code here:
-        String normalTeam = jCBTeam.getSelectedItem().toString();
+        // Add supported CU:
+        String normalTeam = "";
+        if (jCBAction.getSelectedItem().toString().equals("Edit user")){
+            normalTeam = jCBTeam_user.getSelectedItem().toString();
+        }else{
+            normalTeam = jCBTeam.getSelectedItem().toString();
+        }        
         String anotherTeam = jCBSupportedTeam.getSelectedItem().toString();
         String anotherCU = jCBSupportedCU.getSelectedItem().toString();
         String supTeam = jTFSupTeam.getText();
@@ -4195,6 +4231,25 @@ public class Time_Management extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBAccessActionPerformed
 
+    private void jCBTeam_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_userActionPerformed
+        // Fill cu
+//        String team1 = "";
+//        ArrayList<String> cus = new ArrayList<String>();         
+//        jCBCustomerUnit.removeAllItems();
+//        if (jCBTeam_user.getItemCount() != 0){
+//            team1 = jCBTeam_user.getSelectedItem().toString();
+//        }   
+//        
+//        for (int i = 3; i < tasks_info.size(); i += 9)
+//            if (team1.equals(tasks_info.get(i - 1)))
+//                if (!cus.contains(tasks_info.get(i)))
+//                    cus.add(tasks_info.get(i));
+//
+//        for (int i = 1; i < cus.size(); i ++){
+//            jCBCustomerUnit.addItem(cus.get(i));  
+//        }
+    }//GEN-LAST:event_jCBTeam_userActionPerformed
+
     private void GetTaskTypes() {
         // Get different task ids
         Connection connection;
@@ -4335,6 +4390,12 @@ public class Time_Management extends javax.swing.JFrame {
                     orgs.add(organi[1]);
                 }
                 model.addRow(row);
+                
+                //Delete Director signum to not displaying in Table
+                for (int i = 0; i < model.getRowCount(); i++){
+                    if (((String)model.getValueAt(i, 0)).equals("EJOSEBL"))
+                        model.removeRow(i);
+                }
             }
             Collections.sort(orgs);
             for (int i = 0; i < orgs.size(); i++) {
@@ -4496,7 +4557,6 @@ public class Time_Management extends javax.swing.JFrame {
             for (int i = 0; i < _teams.size(); i++) {
                 teams.add(_teams.get(i));
                 jCBTaskTeam.addItem(_teams.get(i));
-                jCBTeam.addItem(_teams.get(i));
                 jCBTeamTaskSearch.addItem(_teams.get(i));
             }
             Collections.sort(tasks);
@@ -4772,10 +4832,11 @@ public class Time_Management extends javax.swing.JFrame {
             int access = jCBAccess.getSelectedIndex();
             String supportingCU = jTFSupCU.getText();
             String supportingTeam = jTFSupTeam.getText();
-            String team1 = jCBTeam.getSelectedItem().toString();
+            //String team1 = jCBTeam.getSelectedItem().toString();
+            String team1 = jCBTeam_user.getSelectedItem().toString();
             String cu1 = jCBCustomerUnit.getSelectedItem().toString();
             String cat1 = jTFCATNum.getText();
-            String js1 = jCBJobStage.getItemAt(jCBJobStage.getSelectedIndex());            
+            String js1 = jCBJobStage.getSelectedItem().toString();            
             String acttype1 = ActTypes[jCBJobStage.getSelectedIndex()];
             
             String manager_name = jCBLineManager.getSelectedItem().toString();
@@ -4829,7 +4890,7 @@ public class Time_Management extends javax.swing.JFrame {
 
             connection.close();
 
-            //JOptionPane.showMessageDialog(this, "User saved successfully.");
+            JOptionPane.showMessageDialog(this, "User updated successfully.");
             ResetUserFields();
         } catch (SQLException e) {
             System.out.println(e);
@@ -5218,8 +5279,8 @@ public class Time_Management extends javax.swing.JFrame {
         jTFName.setText("");
         jTFLastName.setText("");
         //jCBOrganization.setSelectedIndex(0);
-        jCBTeam.setSelectedIndex(0);
-        jCBCustomerUnit.setSelectedIndex(0);
+//        jCBTeam.setSelectedIndex(0);
+//        jCBCustomerUnit.setSelectedIndex(0);
 //        jCBLineManager.setSelectedIndex(0);
 //        jCBSupportedCU.setSelectedIndex(0);
         //jTFSignumEdit.setText("");
@@ -5313,11 +5374,11 @@ public class Time_Management extends javax.swing.JFrame {
         String week = "", name = "";
         List<String> columnas = new ArrayList<String>();
         String fileName = "Metrics ";
-        String team1 = jCBMetricTeam.getItemAt(jCBMetricTeam.getSelectedIndex());
-        String orgn1 = jCBOrgMetrics.getItemAt(jCBOrgMetrics.getSelectedIndex());
+        String team1 = jCBMetricTeam.getSelectedItem().toString();
+        String orgn1 = jCBOrgMetrics.getSelectedItem().toString();
         team1 = team1.toLowerCase();
-        String yearFrom1 = jCBYearFrom.getItemAt(jCBYearFrom.getSelectedIndex());
-        String yearTo1 = jCBYearTo.getItemAt(jCBYearTo.getSelectedIndex());
+        String yearFrom1 = jCBYearFrom.getSelectedItem().toString();
+        String yearTo1 = jCBYearTo.getSelectedItem().toString();
         int rowCounter = 0;
 
         if (jRBSignum.isSelected()) {
@@ -5526,14 +5587,14 @@ public class Time_Management extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(header);
         String name1 = "", parametros = "", orden = "", fileName = "Metrics ", week = "";
-        String team1 = jCBMetricTeam.getItemAt(jCBMetricTeam.getSelectedIndex());
-        String orgn1 = jCBOrgMetrics.getItemAt(jCBOrgMetrics.getSelectedIndex());
-        String yearFrom1 = jCBYearFrom.getItemAt(jCBYearFrom.getSelectedIndex());
-        String yearTo1 = jCBYearTo.getItemAt(jCBYearTo.getSelectedIndex());
+        String team1 = jCBMetricTeam.getSelectedItem().toString();
+        String orgn1 = jCBOrgMetrics.getSelectedItem().toString();
+        String yearFrom1 = jCBYearFrom.getSelectedItem().toString();
+        String yearTo1 = jCBYearTo.getSelectedItem().toString();
         int rowCounter = 0;
         String organization = new String();
         team1 = team1.toLowerCase();
-
+        
         if (jCBUser.getSelectedIndex() != 0) {
             name1 = " AND Name = '" + jCBUser.getSelectedItem() + "'";
             fileName = fileName + jCBUser.getSelectedItem();
@@ -5542,11 +5603,11 @@ public class Time_Management extends javax.swing.JFrame {
         if (jRBWeek.isSelected()) {
             parametros = parametros + "Work_date, ";
             orden = "Work_date, " + orden;
-            String weekFrom = jCBFrom.getItemAt(jCBFrom.getSelectedIndex());
-            String weekTo = jCBTo.getItemAt(jCBTo.getSelectedIndex());
+            String weekFrom = jCBFrom.getSelectedItem().toString();
+            String weekTo = jCBTo.getSelectedItem().toString();
 
             if (!jRBTo.isSelected()) {
-                week = "WHERE Week = " + weekFrom;
+                week = "WHERE Week = " + weekFrom + " AND YEAR(Work_date) = " + yearFrom1;
                 fileName = fileName + " Week " + weekFrom;
             } else {
                 week = "WHERE Week BETWEEN " + weekFrom + " AND " + weekTo;
@@ -5555,8 +5616,8 @@ public class Time_Management extends javax.swing.JFrame {
         }
         if (jRBMonth.isSelected()) {
             String date1, date2;
-            String monthFrom = jCBFrom.getItemAt(jCBFrom.getSelectedIndex());
-            String monthTo = jCBTo.getItemAt(jCBTo.getSelectedIndex());
+            String monthFrom = jCBFrom.getSelectedItem().toString();
+            String monthTo = jCBTo.getSelectedItem().toString();
             int mFrom = 0, mTo = 0;
             for (int i = 0; i < 12; i++) {
                 if (monthFrom.equals(months[i])) {
@@ -5585,12 +5646,12 @@ public class Time_Management extends javax.swing.JFrame {
             String[] daysQuarter = {"31", "30", "30", "31"};
             String[] quarterFrom = {"1", "4", "7", "10"};
             String[] quarterTo = {"3", "6", "9", "12"};
-            date1 = "2020-" + quarterFrom[monthFrom] + "-01";
+            date1 = yearFrom1 + "-" + quarterFrom[monthFrom] + "-01";
             if (jRBTo.isSelected()) {
-                date2 = "2020-" + quarterTo[monthTo] + "-" + daysQuarter[monthTo];
+                date2 = yearTo1 + "-" + quarterTo[monthTo] + "-" + daysQuarter[monthTo];
                 fileName = fileName + " From Q" + monthFrom + " To Q" + monthTo;
             } else {
-                date2 = "2020-" + quarterTo[monthFrom] + "-" + daysQuarter[monthFrom];
+                date2 = yearTo1 + "-" + quarterTo[monthFrom] + "-" + daysQuarter[monthFrom];
                 fileName = fileName + " From Q" + monthFrom;
             }
             parametros = parametros + "Work_date, ";

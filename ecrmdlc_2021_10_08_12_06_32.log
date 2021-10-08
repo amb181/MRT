@@ -1,0 +1,23 @@
+Java version: 1.8.0_291
+Number of items: 52
+Successful connection to the database.
+Successful connection to the database.
+Org: MANA Project Supp 5
+Org: MANA Project Supp 1.
+Org: MANA Project Supp 2.
+Org: MANA.
+Org: MANA Project Supp 4.
+Org: MANA Project Supp 3.
+Org: VAS2.
+Org: MELA Site Eng 2.
+Successful connection to the database.
+Successful connection to the database.
+Successful connection to the database.
+la CU []
+la CU [AT&T, Bell Canada, RCIS, Rogers, T-Mobile, Verizon]
+Entrando a Save user button...
+Asi se guarda Sourcing Automation
+EL team Sourcing
+Successful connection to the database.
+Query: com.mysql.cj.jdbc.ClientPreparedStatement: UPDATE users SET Customer_Unit = 'Sourcing Automation', Team = 'Sourcing', Organization = 'BNEW SAN SAB SDU MX MANA Project Supp 3', Line_Manager = 'EPANVIC', Access = 1, Supporting_Team = 'COP@VSS@Scoping', Supporting_CU = 'C_Rogers@C_RCIS@P_T-Mobile@P_RCIS@P_FMS@SCP_AT&T', Job_Stage = 'Job Stage 3', Act_type = '6000', CATS_Number = '23742499' WHERE Signum = 'ECRMDLC';
+Successful connection to the database.
