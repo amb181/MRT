@@ -2078,7 +2078,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
                     // If something failed show where it did
                     if (!failed.equals("")) {
-                        JOptionPane.showMessageDialog(PSS_Time_Report.this, "Please verify your info near " + failed + " in row 1");
+                        JOptionPane.showMessageDialog(PSS_Time_Report.this,  "Incorrect data in " + failed + " in row 1, please verify your info.");
                         error = true;
                         System.out.println("Error near " + failed + " in row 1");
                         break;
@@ -2957,7 +2957,12 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "File cannot be imported here");
                         }
                         SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                        finalValues.set(12, dcn1.format(new_date));
+                        if (dcn1.format(new_date).toString().startsWith("00")){
+                            String _date = dcn1.format(new_date).toString().replace("00", "20");
+                            finalValues.set(12, _date);
+                        } else {
+                            finalValues.set(12, dcn1.format(new_date));
+                        }
                     }
                     String[] row = new String[finalValues.size()];
                     finalValues.toArray(row);
@@ -4548,7 +4553,12 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                         Logger.getLogger(PSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                    finalValues.set(12, dcn1.format(new_date));
+                    if (dcn1.format(new_date).toString().startsWith("00")){
+                            String _date = dcn1.format(new_date).toString().replace("00", "20");
+                            finalValues.set(12, _date);
+                    } else {
+                        finalValues.set(12, dcn1.format(new_date));
+                    }
                 }
                 String[] row = new String[finalValues.size()];
                 finalValues.toArray(row);
