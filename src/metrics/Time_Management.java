@@ -57,7 +57,6 @@ public class Time_Management extends javax.swing.JFrame {
     Statement statement;
     int week = 0;
     String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    String[] monthSQL = {"2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12"};
     int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     String tid;
     List<String> tasks = new ArrayList<String>();
@@ -2460,7 +2459,7 @@ public class Time_Management extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBShowPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPreviewActionPerformed
-        // TODO add your handling code here:
+        // Show filtered data:
         jLLoading.setText("Fetching metrics from database...");
         new Thread(new Runnable() {
             @Override
@@ -3209,7 +3208,7 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jRBNameActionPerformed
 
     private void jBShowMetricsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowMetricsActionPerformed
-        // TODO add your handling code here:
+        // Show all metrics button:
         jLLoading.setText("Fetching metrics from database...");
         new Thread(new Runnable() {
             @Override
@@ -5374,6 +5373,7 @@ public class Time_Management extends javax.swing.JFrame {
         String week = "", name = "";
         List<String> columnas = new ArrayList<String>();
         String fileName = "Metrics ";
+        String name_month = "";
         String team1 = jCBMetricTeam.getSelectedItem().toString();
         String orgn1 = jCBOrgMetrics.getSelectedItem().toString();
         team1 = team1.toLowerCase();
@@ -5431,8 +5431,8 @@ public class Time_Management extends javax.swing.JFrame {
             parametros = parametros + "Work_date, ";
             columnas.add("Work date");
             orden = "Work_date, " + orden;
-            String weekFrom = jCBFrom.getItemAt(jCBFrom.getSelectedIndex());
-            String weekTo = jCBTo.getItemAt(jCBTo.getSelectedIndex());
+            String weekFrom = jCBFrom.getSelectedItem().toString();
+            String weekTo = jCBTo.getSelectedItem().toString();
 
             if (!jRBTo.isSelected()) {
                 week = "WHERE Week = " + weekFrom + " AND YEAR(Work_date) = " + yearFrom1;
@@ -5445,8 +5445,8 @@ public class Time_Management extends javax.swing.JFrame {
         }
         if (jRBMonth.isSelected()) {
             String date1, date2;
-            String monthFrom = jCBFrom.getItemAt(jCBFrom.getSelectedIndex());
-            String monthTo = jCBTo.getItemAt(jCBTo.getSelectedIndex());
+            String monthFrom = jCBFrom.getSelectedItem().toString();
+            String monthTo = jCBTo.getSelectedItem().toString();
             int mFrom = 0, mTo = 0;
             for (int i = 0; i < 12; i++) {
                 if (monthFrom.equals(months[i])) {
@@ -5471,8 +5471,8 @@ public class Time_Management extends javax.swing.JFrame {
         }
         if (jRBQuarter.isSelected()) {
             String date1, date2;
-            int monthFrom = Integer.parseInt(jCBFrom.getItemAt(jCBFrom.getSelectedIndex())) - 1;
-            int monthTo = Integer.parseInt(jCBTo.getItemAt(jCBTo.getSelectedIndex())) - 1;
+            int monthFrom = Integer.parseInt(jCBFrom.getSelectedItem().toString()) - 1;
+            int monthTo = Integer.parseInt(jCBTo.getSelectedItem().toString()) - 1;
             String[] daysQuarter = {"31", "30", "30", "31"};
             String[] quarterFrom = {"1", "4", "7", "10"};
             String[] quarterTo = {"3", "6", "9", "12"};
@@ -5484,7 +5484,7 @@ public class Time_Management extends javax.swing.JFrame {
                 date2 = yearFrom1 + "-" + quarterTo[monthFrom] + "-" + daysQuarter[monthFrom];
                 fileName = fileName + "From Q" + monthFrom;
             }
-            parametros = parametros + "Work_date, ";
+            parametros = parametros + "MONTH(Work_date), ";
             columnas.add("Month");
             orden = "MONTH(Work_date), " + orden;
             week = "WHERE Work_date BETWEEN '" + date1 + "' AND '" + date2 + "'";
@@ -5503,6 +5503,21 @@ public class Time_Management extends javax.swing.JFrame {
         columnas.toArray(column);
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(column);
+        
+        HashMap<String, String> months_dic = new HashMap<>();
+
+        months_dic.put("1", "January");
+        months_dic.put("2", "February");
+        months_dic.put("3", "March");
+        months_dic.put("4", "April");
+        months_dic.put("5", "May");
+        months_dic.put("6", "June");
+        months_dic.put("7", "July");
+        months_dic.put("8", "August");
+        months_dic.put("9", "September");
+        months_dic.put("10", "October");
+        months_dic.put("11", "November");
+        months_dic.put("12", "December");
 
         try {
             String[] valores = new String[columnas.size()];
@@ -5536,9 +5551,7 @@ public class Time_Management extends javax.swing.JFrame {
                         if (jRBQuarter.isSelected()) {
                             if (j == columnas.size() - 1) {
                                 for (int i = 0; i < 12; i++) {
-                                    if (rs.getString(j).startsWith(monthSQL[i])) {
-                                        valores[j - 1] = months[i];
-                                    }
+                                    valores[j - 1] = months_dic.get(rs.getString(j));
                                 }
                             } else {
                                 valores[j - 1] = rs.getString(j);
@@ -5561,7 +5574,7 @@ public class Time_Management extends javax.swing.JFrame {
                         }
                     }*/
                     }
-                    rowCounter += 1;
+                    rowCounter += 1;                    
                     model.addRow(valores);
                 } while (rs.next());
             }
@@ -5707,19 +5720,8 @@ public class Time_Management extends javax.swing.JFrame {
             } else {
                 do {
                     for (int j = 1; j < 24; j++) {
-                        if (jRBQuarter.isSelected()) {
-                            if (j == 12) {
-                                for (int i = 0; i < 12; i++) {
-                                    if (resultSet.getString(j).startsWith(monthSQL[i])) {
-                                        valores[j - 1] = months[i];
-                                    }
-                                }
-                            } else {
-                                valores[j - 1] = resultSet.getString(j);
-                            }
-                        } else {
-                            valores[j - 1] = resultSet.getString(j);
-                        }
+                          valores[j - 1] = resultSet.getString(j);
+                        
                     }
                     rowCounter += 1;
                     model.addRow(valores);
