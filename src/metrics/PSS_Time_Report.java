@@ -2944,6 +2944,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     }
                     //Date format
                     Pattern pdate = Pattern.compile("^(([0-9][0-9][0-9][0-9]-)*([0-9][0-9]-)*([0-9][0-9]))$");  // Date format YYYY-MM-DD
+                    System.out.println("lo que trae: " + finalValues.get(12));
                     Matcher mdate = pdate.matcher(finalValues.get(12));
                     boolean bdate = mdate.find();
                     if (!bdate) {
