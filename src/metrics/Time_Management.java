@@ -3114,7 +3114,7 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBTaskEditActionPerformed
 
     private void jBSaveTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTaskActionPerformed
-        // TODO add your handling code here:
+        // Save task:
         String loe = jTFLOE.getText();
         Pattern decimalPattern = Pattern.compile("^-?\\d{0,2}(\\.\\d{1,2})?");
         Matcher matcherLOE = decimalPattern.matcher(loe);
@@ -4882,7 +4882,26 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDeleteTask3ActionPerformed
 
     private void jBSearchTask3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchTask3ActionPerformed
-        // TODO add your handling code here:
+        // Search package to edit package:
+        if (jCBTaskEdit.getSelectedIndex() == 4){
+            jLLoading.setText("Fetching task from database...");        
+        
+            String team = jCBTeamSearchPackage.getSelectedItem().toString();
+            String cu = jCBPackage_CU.getSelectedItem().toString();
+            String s_package = jCBPackageSearch.getSelectedItem().toString();
+
+            for (int i = 1; i < service_packages.size(); i += 5){
+                if (service_packages.get(i).equals(team) && (service_packages.get(i+1).equals(cu) && (service_packages.get(i+2).equals(s_package)))){
+                    jCBTeam_package.addItem(tasks_info.get(i));
+                    jCBCUPackageAdd.addItem(tasks_info.get(i+1));
+                    if (!team.equals("SDU"))
+                        jCBPackage_billable1.setSelectedIndex(0);
+                    else
+                        jCBPackage_billable1.setSelectedIndex(1);
+                    jCBServicePackageAdd.addItem(tasks_info.get(i+2));
+                }
+            }
+        }
     }//GEN-LAST:event_jBSearchTask3ActionPerformed
 
     private void jCBPackageSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPackageSearchActionPerformed
@@ -4969,29 +4988,25 @@ public class Time_Management extends javax.swing.JFrame {
 
     private void jCBTeam_packageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_packageActionPerformed
         // Fill CU in Add package:
-        
-        jCBCUPackageAdd.removeAllItems();
-        ArrayList<String> cus = new ArrayList<>();
-        String team = "";
-        if (jCBTeam_package.getItemCount() != 0){
-            team = jCBTeam_package.getSelectedItem().toString();
-        }        
+        if (jCBTaskEdit.getSelectedIndex() == 3)
+            jCBCUPackageAdd.removeAllItems();
+            ArrayList<String> cus = new ArrayList<>();
+            String team = "";
+            if (jCBTeam_package.getItemCount() != 0){
+                team = jCBTeam_package.getSelectedItem().toString();
+            }        
 
-        for (int i = 1; i < service_packages.size(); i = i + 5) {
-            if (!cus.contains(service_packages.get(i + 1))) {
-                if (service_packages.get(i).equals(team)) {
-                    cus.add(service_packages.get(i+1));
+            for (int i = 1; i < service_packages.size(); i = i + 5) {
+                if (!cus.contains(service_packages.get(i + 1))) {
+                    if (service_packages.get(i).equals(team)) {
+                        cus.add(service_packages.get(i+1));
+                    }
                 }
             }
-        }
-        Collections.sort(cus);
-        for (int i = 0; i < cus.size(); i++) {
-            jCBCUPackageAdd.addItem(cus.get(i));
-        }
-            
-        
-
-        
+            Collections.sort(cus);
+            for (int i = 0; i < cus.size(); i++) {
+                jCBCUPackageAdd.addItem(cus.get(i));
+            }
     }//GEN-LAST:event_jCBTeam_packageActionPerformed
 
     private void jCBCUPackageAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCUPackageAddActionPerformed
@@ -5023,7 +5038,33 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBCUPackageAddActionPerformed
 
     private void jBSaveTask1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTask1ActionPerformed
-        // TODO add your handling code here:
+        // Save changes of package or deliverable
+        String loe = jTFLOE.getText();
+        Pattern decimalPattern = Pattern.compile("^-?\\d{0,2}(\\.\\d{1,2})?");
+        Matcher matcherLOE = decimalPattern.matcher(loe);
+        boolean flagLOE = matcherLOE.matches();
+        if (jTFTaskName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Task field is empty!");
+        } else if (!flagLOE && !loe.equals("")) {
+            JOptionPane.showMessageDialog(this, "LOE is not a number! Please type a number with maximum two decimals.");
+        } else {
+            jLLoading.setText("Saving task into database...");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (jCBTaskEdit.getSelectedIndex() == 0) {
+                        InsertTaskIntoDB();
+                    } else {
+                        UpdateTaskIntoDB();
+                    }
+                    jLLoading.setText("Updating task's local table...");
+                    GetAllTasks();
+
+                    jDLoading.dispose();
+                }
+            }).start();
+            jDLoading.setVisible(true);
+        }
     }//GEN-LAST:event_jBSaveTask1ActionPerformed
 
     private void jCBDeliverablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeliverablesActionPerformed
