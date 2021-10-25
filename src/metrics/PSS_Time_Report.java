@@ -143,9 +143,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         editor2.setEditable(false);
         Calendar now = Calendar.getInstance();
         current_week = now.get(Calendar.WEEK_OF_YEAR);
-            if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                current_week = current_week - 1;
-            }
+        if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            current_week = current_week - 1;
+        }
         // Set current week panel 2
         for (int i = 1; i <= current_week; i++) {
             jcbWeek1.addItem(String.valueOf(i));
@@ -192,11 +192,11 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
                 // If week changes update hours per day table
-                if (week != edit_week){
+                if (week != edit_week) {
                     edit_week = week;
                     GetDailyHours();
                 }
-                
+
             }
         });
         jcbSubnet.addItem("Select a subnetwork...");
@@ -212,7 +212,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             if (cus[i].startsWith("P_")) {
                 cu = cus[i].replace("P_", "");
                 jcbCU.addItem(cu);
-                
+
             }
         }
         System.out.println("E Q U I P O S: " + usersinfo.get(8));
@@ -232,7 +232,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }
         // Get hours per day in label
         GetDailyHours();
-        
+
         // Fit images in ABOUT option
         ImageIcon logo_ = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/MRT_logo.png")));
         Image logo_cast = logo_.getImage();
@@ -2078,7 +2078,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
                     // If something failed show where it did
                     if (!failed.equals("")) {
-                        JOptionPane.showMessageDialog(PSS_Time_Report.this,  "Incorrect data in " + failed + " in row 1, please verify your info.");
+                        JOptionPane.showMessageDialog(PSS_Time_Report.this, "Incorrect data in " + failed + " in row 1, please verify your info.");
                         error = true;
                         System.out.println("Error near " + failed + " in row 1");
                         break;
@@ -2117,7 +2117,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         }).start();
         jDLoading.setModal(true);
         jDLoading.setVisible(true);
-        
+
     }//GEN-LAST:event_jB_SaveActionPerformed
 
     private String Validate_task_net(int task_index, int net_index, String cu, String region, String market,
@@ -2158,48 +2158,48 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             if (!region.equals(networks_info.get(net_index + 2))) {
                 String _network = networks_info.get(net_index);
                 boolean found = false;
-                for (int i = 0; i < networks_info.size(); i++){
-                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 2).equals(region)){
-                       found = true; 
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 2).equals(region)) {
+                        found = true;
                     }
                 }
-                if (found == false){
+                if (found == false) {
                     return failed = "Region: " + region;
                 }
             }
             if (!market.equals(networks_info.get(net_index + 3))) {
                 String _network = networks_info.get(net_index);
                 boolean found = false;
-                for (int i = 0; i < networks_info.size(); i++){
-                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 3).equals(market)){
-                       found = true; 
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 3).equals(market)) {
+                        found = true;
                     }
                 }
-                if (found == false){
+                if (found == false) {
                     return failed = "Market: " + market;
                 }
             }
             if (!subnet.equals(networks_info.get(net_index + 5))) {
                 String _network = networks_info.get(net_index);
                 boolean found = false;
-                for (int i = 0; i < networks_info.size(); i++){
-                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 5).equals(subnet)){
-                       found = true; 
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 5).equals(subnet)) {
+                        found = true;
                     }
                 }
-                if (found == false){
+                if (found == false) {
                     return failed = "Subnetwork: " + subnet;
                 }
             }
             if (!act.equals(networks_info.get(net_index + 1))) {
                 String _network = networks_info.get(net_index);
                 boolean found = false;
-                for (int i = 0; i < networks_info.size(); i++){
-                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 1).equals(act)){
-                       found = true; 
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 1).equals(act)) {
+                        found = true;
                     }
                 }
-                if (found == false){
+                if (found == false) {
                     return failed = "Activity: " + act;
                 }
             }
@@ -2481,6 +2481,37 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                                         }
                                     }).start();
                                     jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("FMS")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                FMS_Time_Report time_r = new FMS_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit FMS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
                                 }
                             } catch (Exception e) {
                                 System.out.println(e);
@@ -2585,7 +2616,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
             // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
-            if (current_week != edit_week){
+            if (current_week != edit_week) {
                 current_week = edit_week;
             }
 
@@ -2789,7 +2820,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             BigDecimal mult_time = time.multiply(BigDecimal.valueOf(entries));
             for (int i = 0; i < entries; i++) {
                 // Check if division sums the original quantity, if not tweak it
-                if (b_bulk == true && mult_time != total_time){
+                if (b_bulk == true && mult_time != total_time) {
                     if (i == entries - 1) {
                         BigDecimal missing_time = total_time.subtract(mult_time);
                         data[13] = time.add(missing_time).toString();
@@ -2958,7 +2989,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "File cannot be imported here");
                         }
                         SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                        if (dcn1.format(new_date).toString().startsWith("00")){
+                        if (dcn1.format(new_date).toString().startsWith("00")) {
                             String _date = dcn1.format(new_date).toString().replace("00", "20");
                             finalValues.set(12, _date);
                         } else {
@@ -3045,7 +3076,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             }
             while (count < 2) {
                 // Insert row
-                if (tasks.get(0 + (count * 3)).contains("ADMIN")){
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
                     sb.append("SDU" + ',');                             // CU
                     sb.append("SDU" + ',');                             // Region
                     sb.append("SDU" + ',');                             // Market
@@ -3058,7 +3089,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 sb.append("N/A" + ',');                                 // Requestor
                 sb.append(tasks.get(0 + (count * 3)) + ',');            // Task ID
                 sb.append(tasks.get(1 + (count * 3)) + ',');            // Task
-                if (tasks.get(0 + (count * 3)).contains("ADMIN")){
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
                     sb.append("0" + ',');             // Network
                     sb.append("0" + ',');             // Subetwork
                     sb.append("0" + ',');             // Activity
@@ -3075,7 +3106,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                 sb.append("8.25" + ',');                                // Time
                 sb.append(current_week);                                // Week
                 sb.append(',');
-                if (tasks.get(0 + (count * 3)).contains("ADMIN")){
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
                     sb.append("N/A" + ',');                                 // FTR
                     sb.append("N/A" + ',');                                 // On time
                 } else {
@@ -3152,7 +3183,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
-        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping"};
+        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping", "metrics_fms"};
         for (int i = 0; i < strs.length; i++) {
             tables.add(strs[i]); // Check for every table
         }
@@ -3418,12 +3449,14 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                         sql = "update_metrics_sourcing";
                     } else if (team.equals("Scoping")) {
                         sql = "update_metrics_scoping";
-                    }else if (team.equals("COP")) {
+                    } else if (team.equals("COP")) {
                         sql = "update_metrics_cop";
                     } else if (team.equals("VSS")) {
                         sql = "update_metrics_vss";
                     } else if (team.equals("PSS")) {
                         sql = "update_metrics_pss";
+                    } else if (team.equals("FMS")) {
+                        sql = "update_metrics_fms";
                     }
 
                     if (id_ch > 0) {
@@ -3538,6 +3571,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                                 sql = "metrics_vss";
                             } else if (team.equals("PSS")) {
                                 sql = "metrics_pss";
+                            } else if (team.equals("FMS")) {
+                                sql = "metrics_fms";
                             }
 
                             try {
@@ -3690,7 +3725,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         String subnet = (String) jcbSubnet.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu) 
+            if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu)
                     && networks_info.get(i + 1).equals("PSS")) {
                 //System.out.println(i);
                 int net = i - 5;
@@ -3911,14 +3946,19 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
 
     private void jcbMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMarketActionPerformed
         // Populate subnetwork
+        String cu = null;
         String market = null;
         String region = null;
-        if (jcbMarket.getItemCount() != 0) {
-            market = jcbMarket.getSelectedItem().toString();
+        if (jcbCU.getItemCount() != 0) {
+            cu = jcbCU.getSelectedItem().toString();
         }
         if (jcbRegion.getItemCount() != 0) {
             region = jcbRegion.getSelectedItem().toString();
         }
+        if (jcbMarket.getItemCount() != 0) {
+            market = jcbMarket.getSelectedItem().toString();
+        }
+
         // Refresh jcbSubnetwork
         jcbSubnet.removeAllItems();
         jcbProjectName.removeAllItems();
@@ -3926,7 +3966,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
             jcbSubnet.addItem("Select a subnetwork...");
             jcbProjectName.addItem("Select a project...");
             for (int i = 5; i < networks_info.size(); i += 9) {
-                if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
+                if (networks_info.get(i - 1).equals(cu)) { // Mostrar solo para CU seleccionada
                     if (networks_info.get(i - 3).equals(region)) {
                         if (networks_info.get(i - 2).equals(market)) {
                             jcbSubnet.addItem(networks_info.get(i));
@@ -4554,9 +4594,9 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                         Logger.getLogger(PSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                    if (dcn1.format(new_date).toString().startsWith("00")){
-                            String _date = dcn1.format(new_date).toString().replace("00", "20");
-                            finalValues.set(12, _date);
+                    if (dcn1.format(new_date).toString().startsWith("00")) {
+                        String _date = dcn1.format(new_date).toString().replace("00", "20");
+                        finalValues.set(12, _date);
                     } else {
                         finalValues.set(12, dcn1.format(new_date));
                     }
@@ -4708,8 +4748,8 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     task_ = "Annual Leave (2000)";
                 } else if (task_.equals("Non-Operational meeting")) {
                     task_ = "Meeting (1310)";
-                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday") || 
-                        task_.equals("Web Learning")) {
+                } else if (task_.equals("On the Job Training") || task_.equals("MANA Holiday")
+                        || task_.equals("Web Learning")) {
                     task_ = "Training (1410)";
                 } else if (task_.equals("Marriage Leave")) {
                     task_ = "Marriage Leave (2135)";
@@ -4778,7 +4818,7 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
                     //System.out.println("SUM: " + sum_metrics); // Print array contents
                 }
             }
-            
+
             try (PrintWriter writer = new PrintWriter(new File(path))) {
                 StringBuilder sb = new StringBuilder();
                 // New line
@@ -4925,14 +4965,14 @@ public final class PSS_Time_Report extends javax.swing.JFrame {
         String project = (String) jcbProjectName.getSelectedItem();
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
-            if (networks_info.get(i).equals(project) && networks_info.get(i - 4).equals(cu) 
+            if (networks_info.get(i).equals(project) && networks_info.get(i - 4).equals(cu)
                     && networks_info.get(i - 2).equals("PSS")) {
                 jcbSubnet.getModel().setSelectedItem(networks_info.get(i - 3));
             } else {
                 continue;
             }
         }
-        
+
         if (jcbProjectName.getItemCount() != 0) {
             jcbProjectName.setToolTipText("<html><h3>" + jcbProjectName.getSelectedItem().toString() + "</h3></html>");
         }

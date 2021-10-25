@@ -54,7 +54,7 @@ public class Metrics {
             date = date.replace("/", "_").replace(" ", "_").replace(":", "_");
             // Write log every time the program runs and create folder if not exists
             String user_log = usersinfo.get(0);
-            // String user_log = "ealloem";
+            //String user_log = "ealloem";
             File dir = new File("C:\\Users\\" + user_log + "\\Documents\\MRT");
             
             if (!dir.exists()) {
@@ -138,7 +138,7 @@ public class Metrics {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String user = System.getProperty("user.name");
-        // String user = "EERICAB";
+        //String user = "EPALEUR";
         System.out.println("Current user: " + user);
 
         try {
@@ -187,7 +187,7 @@ public class Metrics {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        localversion = "3.5"; //Version
+        localversion = "3.6"; //Version
         try {
             connection = SQL_connection.getConnection();
             String sql_version = "SELECT version FROM source_control ORDER BY version DESC LIMIT 1;";

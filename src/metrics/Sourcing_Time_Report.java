@@ -1894,6 +1894,37 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                         }
                                     }).start();
                                     jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("FMS")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                FMS_Time_Report time_r = new FMS_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit FMS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
                                 }
                             } catch (Exception e) {
                                 System.out.println(e);
@@ -2540,7 +2571,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
-        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping"};
+        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping", "metrics_fms"};
         for (int i = 0; i < strs.length; i++) {
             tables.add(strs[i]); // Check for every table
         }
@@ -2819,6 +2850,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         sql = "update_metrics_vss";
                     } else if (team.equals("PSS")) {
                         sql = "update_metrics_pss";
+                    } else if (team.equals("FMS")) {
+                        sql = "update_metrics_fms";
                     }
 
                     if (id_ch > 0) {
@@ -2933,6 +2966,8 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 sql = "metrics_vss";
                             } else if (team.equals("PSS")) {
                                 sql = "metrics_pss";
+                            } else if (team.equals("FMS")) {
+                                sql = "metrics_fms";
                             }
 
                             try {

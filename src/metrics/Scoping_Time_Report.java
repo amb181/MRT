@@ -2092,7 +2092,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                     // If something failed show where it did
                     int current_row = row + 1;
                     if (!failed.equals("")) {
-                        JOptionPane.showMessageDialog(Scoping_Time_Report.this,  "Incorrect data in " + failed + " in row " + current_row + ", please verify your info.");
+                        JOptionPane.showMessageDialog(Scoping_Time_Report.this, "Incorrect data in " + failed + " in row " + current_row + ", please verify your info.");
                         error = true;
                         System.out.println("Error near " + failed + " in row " + current_row);
                         break;
@@ -2445,6 +2445,37 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                                                     @Override
                                                     public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                                                         if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit PSS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("FMS")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                FMS_Time_Report time_r = new FMS_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit FMS",
                                                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                                                             time_r.dispose();
 
@@ -2931,7 +2962,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "File cannot be imported here");
                         }
                         SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                        if (dcn1.format(new_date).toString().startsWith("00")){
+                        if (dcn1.format(new_date).toString().startsWith("00")) {
                             String _date = dcn1.format(new_date).toString().replace("00", "20");
                             finalValues.set(12, _date);
                         } else {
@@ -3116,7 +3147,7 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
-        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping"};
+        String[] strs = {"metrics_sourcing", "metrics_cop", "metrics_vss", "metrics_pss", "metrics_scoping", "metrics_fms"};
         for (int i = 0; i < strs.length; i++) {
             tables.add(strs[i]); // Check for every table
         }
@@ -3388,6 +3419,8 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                         sql = "update_metrics_vss";
                     } else if (team.equals("PSS")) {
                         sql = "update_metrics_pss";
+                    } else if (team.equals("FMS")) {
+                        sql = "update_metrics_fms";
                     }
 
                     if (id_ch > 0) {
@@ -3502,6 +3535,8 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                                 sql = "metrics_vss";
                             } else if (team.equals("PSS")) {
                                 sql = "metrics_pss";
+                            } else if (team.equals("FMS")) {
+                                sql = "metrics_fms";
                             }
 
                             try {
@@ -4573,9 +4608,9 @@ public final class Scoping_Time_Report extends javax.swing.JFrame {
                         Logger.getLogger(Scoping_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                    if (dcn1.format(new_date).toString().startsWith("00")){
-                            String _date = dcn1.format(new_date).toString().replace("00", "20");
-                            finalValues.set(12, _date);
+                    if (dcn1.format(new_date).toString().startsWith("00")) {
+                        String _date = dcn1.format(new_date).toString().replace("00", "20");
+                        finalValues.set(12, _date);
                     } else {
                         finalValues.set(12, dcn1.format(new_date));
                     }

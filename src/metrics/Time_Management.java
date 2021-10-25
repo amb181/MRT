@@ -5,6 +5,7 @@
  */
 package metrics;
 
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
@@ -216,6 +217,14 @@ public class Time_Management extends javax.swing.JFrame {
         jPanelLoading = new javax.swing.JPanel();
         jLLoading = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jFrame_Compliance = new javax.swing.JFrame();
+        jB_Export_Compliance = new javax.swing.JButton();
+        jcb_Org_compliance = new javax.swing.JComboBox<>();
+        jL_select_team = new javax.swing.JLabel();
+        jL_select_org = new javax.swing.JLabel();
+        jcb_Team_compliance = new javax.swing.JComboBox<>();
+        jcbWeek_Compliance = new javax.swing.JComboBox<>();
+        jLWeek_Compliance = new javax.swing.JLabel();
         jPView = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableShowMetrics = new javax.swing.JTable(){
@@ -264,7 +273,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLMetricTeams = new javax.swing.JLabel();
         jLMetricOrg = new javax.swing.JLabel();
         jCBOrgMetrics = new javax.swing.JComboBox<>();
-        jLabel39 = new javax.swing.JLabel();
+        jLabel_Filters = new javax.swing.JLabel();
         jPEdit = new javax.swing.JPanel();
         jPUser = new javax.swing.JPanel();
         jLSignum = new javax.swing.JLabel();
@@ -489,6 +498,7 @@ public class Time_Management extends javax.swing.JFrame {
         jMReview = new javax.swing.JMenuItem();
         jMenuTeams = new javax.swing.JMenu();
         jMICOP = new javax.swing.JMenuItem();
+        jMIFMS = new javax.swing.JMenuItem();
         jMIPSS = new javax.swing.JMenuItem();
         jMIScoping = new javax.swing.JMenuItem();
         jMISourcing = new javax.swing.JMenuItem();
@@ -498,6 +508,8 @@ public class Time_Management extends javax.swing.JFrame {
         jMEditTask = new javax.swing.JMenuItem();
         jMEditNetworks = new javax.swing.JMenuItem();
         jMEditMarkets = new javax.swing.JMenuItem();
+        jMenuCompliance = new javax.swing.JMenu();
+        jMComp_people = new javax.swing.JMenuItem();
 
         jPanelLoading.setBackground(new java.awt.Color(255, 255, 255));
         jPanelLoading.setPreferredSize(new java.awt.Dimension(365, 334));
@@ -520,7 +532,7 @@ public class Time_Management extends javax.swing.JFrame {
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLLoading)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jDLoadingLayout = new javax.swing.GroupLayout(jDLoading.getContentPane());
@@ -534,6 +546,77 @@ public class Time_Management extends javax.swing.JFrame {
         jDLoadingLayout.setVerticalGroup(
             jDLoadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jB_Export_Compliance.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jB_Export_Compliance.setText("Search & Export");
+        jB_Export_Compliance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_Export_ComplianceActionPerformed(evt);
+            }
+        });
+
+        jcb_Org_compliance.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jL_select_team.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jL_select_team.setText("Select team:");
+
+        jL_select_org.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jL_select_org.setText("Select org:");
+
+        jcb_Team_compliance.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jcbWeek_Compliance.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jLWeek_Compliance.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jLWeek_Compliance.setText("Week:");
+
+        javax.swing.GroupLayout jFrame_ComplianceLayout = new javax.swing.GroupLayout(jFrame_Compliance.getContentPane());
+        jFrame_Compliance.getContentPane().setLayout(jFrame_ComplianceLayout);
+        jFrame_ComplianceLayout.setHorizontalGroup(
+            jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame_ComplianceLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jL_select_org)
+                .addGroup(jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrame_ComplianceLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jcb_Org_compliance, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(87, Short.MAX_VALUE))
+                    .addGroup(jFrame_ComplianceLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jL_select_team)
+                        .addGap(36, 36, 36)
+                        .addComponent(jcb_Team_compliance, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jFrame_ComplianceLayout.createSequentialGroup()
+                .addGap(320, 320, 320)
+                .addGroup(jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrame_ComplianceLayout.createSequentialGroup()
+                        .addComponent(jLWeek_Compliance)
+                        .addGap(18, 18, 18)
+                        .addComponent(jcbWeek_Compliance, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jB_Export_Compliance))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jFrame_ComplianceLayout.setVerticalGroup(
+            jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame_ComplianceLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcb_Team_compliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jL_select_team))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jL_select_org)
+                    .addComponent(jcb_Org_compliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(jFrame_ComplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLWeek_Compliance)
+                    .addComponent(jcbWeek_Compliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jB_Export_Compliance)
+                .addGap(23, 23, 23))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -794,8 +877,8 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBOrgMetrics.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
-        jLabel39.setFont(new java.awt.Font("Ericsson Hilda", 0, 14)); // NOI18N
-        jLabel39.setText("Filters");
+        jLabel_Filters.setFont(new java.awt.Font("Ericsson Hilda", 0, 14)); // NOI18N
+        jLabel_Filters.setText("Filters");
 
         javax.swing.GroupLayout jPViewLayout = new javax.swing.GroupLayout(jPView);
         jPView.setLayout(jPViewLayout);
@@ -836,7 +919,7 @@ public class Time_Management extends javax.swing.JFrame {
                                         .addComponent(jRBTask)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jRBTaskID))
-                                    .addComponent(jLabel39))
+                                    .addComponent(jLabel_Filters))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -866,7 +949,7 @@ public class Time_Management extends javax.swing.JFrame {
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jRBName)
                                     .addComponent(jCBUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel39))
+                                    .addComponent(jLabel_Filters))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -894,8 +977,8 @@ public class Time_Management extends javax.swing.JFrame {
                                     .addComponent(jRBNetwork)
                                     .addComponent(jRBSubnetwork))))
                         .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPEdit.setBackground(new java.awt.Color(255, 255, 255));
@@ -1885,11 +1968,11 @@ public class Time_Management extends javax.swing.JFrame {
                     .addGroup(jPEditTaskLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2240, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBExportTaskCSV))
                     .addGroup(jPEditTaskLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 2352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 233, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPEditTaskLayout.setVerticalGroup(
@@ -1912,7 +1995,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(jPSearchPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPAddPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -2631,6 +2714,15 @@ public class Time_Management extends javax.swing.JFrame {
         });
         jMenuTeams.add(jMICOP);
 
+        jMIFMS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMIFMS.setText("FMS");
+        jMIFMS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIFMSActionPerformed(evt);
+            }
+        });
+        jMenuTeams.add(jMIFMS);
+
         jMIPSS.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jMIPSS.setText("PSS");
         jMIPSS.addActionListener(new java.awt.event.ActionListener() {
@@ -2721,6 +2813,22 @@ public class Time_Management extends javax.swing.JFrame {
         jMenuEdit.add(jMEditMarkets);
 
         jMenuBar1.add(jMenuEdit);
+
+        jMenuCompliance.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuCompliance.setText("Compliance");
+        jMenuCompliance.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+
+        jMComp_people.setBackground(new java.awt.Color(255, 255, 255));
+        jMComp_people.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jMComp_people.setText("People with missing time");
+        jMComp_people.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMComp_peopleActionPerformed(evt);
+            }
+        });
+        jMenuCompliance.add(jMComp_people);
+
+        jMenuBar1.add(jMenuCompliance);
 
         setJMenuBar(jMenuBar1);
 
@@ -5099,6 +5207,219 @@ public class Time_Management extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBDeliverableSearchActionPerformed
 
+    private void jMComp_peopleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMComp_peopleActionPerformed
+        // Menu item to select people with missing time reported within a specific time frame
+        // Initialize frame
+        jFrame_Compliance.setTitle("Search for period of time");
+        jFrame_Compliance.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
+        jFrame_Compliance.setSize(800, 300);
+        jFrame_Compliance.setResizable(false);
+        jFrame_Compliance.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        jFrame_Compliance.setVisible(true);
+        jFrame_Compliance.setLocationRelativeTo(null);
+
+        // Init jcombobox Team and Org
+        jcb_Team_compliance.addItem("All");
+        jcb_Org_compliance.addItem("All");
+        for (int i = 0; i < teams.size(); i++) {
+            jcb_Team_compliance.addItem(teams.get(i));
+        }
+        for (int i = 0; i < organizations.size(); i++) {
+            jcb_Org_compliance.addItem(organizations.get(i));
+        }
+        // Week combobox
+        Calendar now = Calendar.getInstance();
+        int current_week = 0;
+        current_week = now.get(Calendar.WEEK_OF_YEAR);
+        if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            current_week = current_week - 1;
+        }
+        // Set current week panel 2
+        for (int i = 1; i <= current_week; i++) {
+            jcbWeek_Compliance.addItem(String.valueOf(i));
+        }
+        jcbWeek_Compliance.setSelectedIndex(current_week - 1);
+    }//GEN-LAST:event_jMComp_peopleActionPerformed
+
+    private void jB_Export_ComplianceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_Export_ComplianceActionPerformed
+        // Export compliance report button
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Check selected team
+                List<String> teams_list = new ArrayList<String>();
+                ArrayList<String> data = new ArrayList<>();
+                PreparedStatement preparedStatement;
+                
+                String _week = jcbWeek_Compliance.getSelectedItem().toString();
+                String _org = jcb_Org_compliance.getSelectedItem().toString();
+
+                if (jcb_Team_compliance.getSelectedItem().toString().equals("All")) {
+                    for (int i = 0; i < teams.size(); i++){
+                        teams_list.add("%" + teams.get(i) + "%");
+                    }
+                } else {
+                    teams_list.add("%" + jcb_Team_compliance.getSelectedItem().toString() + "%");
+                }
+                
+                if (jcb_Org_compliance.getSelectedItem().toString().equals("All")) {
+                    _org = "%%";
+                } else {
+                    _org = "%" + jcb_Org_compliance.getSelectedItem().toString() + "%";
+                }
+                String sql_table = "", sql = "";
+                for (int i = 0; i < teams_list.size(); i++) {
+                    sql_table = "metrics_" + teams_list.get(i).toLowerCase().replace("%", "");
+                    Connection connection = SQL_connection.getConnection();
+                    ResultSet resultSet;
+
+                    sql = "SELECT t1.Signum, t1.Name, IFNULL(t2.Week, '" + _week + "') as Week, IFNULL(t2.Time, '0') as Time\n" +
+                            "FROM (\n" +
+                            "	SELECT Total.Signum, Total.Name, Correct.Week\n" +
+                            "	FROM (\n" +
+                            "		SELECT Signum, concat(Last_Name, ' ', Name) as Name\n" +
+                            "		FROM users\n" +
+                            "		WHERE (Team LIKE ? OR Supporting_Team LIKE ?)\n" +
+                            "			AND Organization LIKE ?\n" +
+                            "	) as Total\n" +
+                            "	LEFT JOIN (\n" +
+                            "		SELECT Signum, Name, Week, SUM(Logged_Time) as Time\n" +
+                            "		FROM " + sql_table + "\n" +
+                            "		WHERE Week = ?\n" +
+                            "			AND Organization LIKE ?\n" +
+                            "		GROUP BY Signum, Week\n" +
+                            "		HAVING SUM(Logged_Time) >= 41.25\n" +
+                            "	) as Correct\n" +
+                            "	ON Total.Signum = UPPER(Correct.Signum)\n" +
+                            "	WHERE Correct.Signum IS NULL\n" +
+                            ") as t1\n" +
+                            "LEFT JOIN (\n" +
+                            "	SELECT Signum, Name, Week, SUM(Logged_Time) as Time\n" +
+                            "	FROM " + sql_table + "\n" +
+                            "	WHERE Week = ?\n" +
+                            "		AND Organization LIKE ?\n" +
+                            "	GROUP BY Signum, Week\n" +
+                            "	HAVING SUM(Logged_Time) < 41.25\n" +
+                            ") as t2\n" +
+                            "ON t1.Signum = t2.Signum;";
+
+                    try {
+                        preparedStatement = connection.prepareStatement(sql);
+
+                        // Place parameters in query
+                        preparedStatement.setString(1, teams_list.get(i));
+                        preparedStatement.setString(2, teams_list.get(i));
+                        preparedStatement.setString(3, _org);
+                        preparedStatement.setString(4, _week);
+                        preparedStatement.setString(5, _org);
+                        preparedStatement.setString(6, _week);
+                        preparedStatement.setString(7, _org);
+
+                        // Execute query
+                        System.out.println("Compliance query: " + preparedStatement);
+                        resultSet = preparedStatement.executeQuery();
+                        // Fetch results
+                        data.add(sql_table);
+                        data.add("");
+                        data.add("");
+                        data.add("");
+                        while (resultSet.next()) {
+                            for (int j = 0; j < 4; j++) {
+                                data.add(resultSet.getString(j + 1));
+                            }
+                        }
+                        connection.close();
+                        System.out.println("Data: " + data);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Error in " + sql_table);
+                        continue;
+                    }
+                }
+                // Create csv with data
+                String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\Result_compliance_" + usersinfo.get(0) + "_" +
+                        jcb_Team_compliance.getSelectedItem().toString() + ".csv";
+                try (PrintWriter writer = new PrintWriter(new File(path))) {
+                    StringBuilder sb = new StringBuilder();
+                    // Header
+                    sb.append("Signum" + ',');
+                    sb.append("Name" + ',');
+                    sb.append("Week" + ',');
+                    sb.append("Time" + ',');
+                    sb.append('\n');
+                    // Fill rows
+                    for (int i = 1; i < data.size() + 1; i++) {
+                        sb.append("\"" + data.get(i - 1) + "\"");
+                        if (((i % 4) == 0)) {
+                            //sb.append(",");
+                            sb.append("\n");
+                        } else {
+                            sb.append(",");
+                        }
+                    }
+                    writer.write(sb.toString());
+                    System.out.println("File writed successfully");
+                    int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "Compliance file created", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        Desktop.getDesktop().open(new File(path));
+                    } else {
+                        JOptionPane.showMessageDialog(Time_Management.this, "File was saved to " + path);
+                    }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(Time_Management.this, "File could not be created");
+                    jDLoading.dispose();
+                    jFrame_Compliance.dispose();
+                    return;
+                } catch (IOException ex) {
+                    Logger.getLogger(Time_Management.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jDLoading.dispose();
+            }
+        }
+        ).start();
+        jDLoading.setVisible(true);
+        jFrame_Compliance.dispose();
+    }//GEN-LAST:event_jB_Export_ComplianceActionPerformed
+
+    private void jMIFMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIFMSActionPerformed
+        // Open FMS recording window
+        StartDialog starting = new StartDialog();
+        JDialog loading = starting.GetLoadingDialog();
+        loading.setModal(true);
+        loading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        loading.toFront();
+        loading.requestFocus();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FMS_Time_Report time_r = new FMS_Time_Report();
+                    time_r.show();
+                    time_r.setLocationRelativeTo(null);
+                    loading.dispose();
+                    // Confirm exit window
+                    time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                    time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                            if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit FMS",
+                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                time_r.dispose();
+
+                            }
+                        }
+                    });
+                } catch (ParseException | IOException ex) {
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
+        loading.toFront();
+        loading.requestFocus();
+        loading.setVisible(true);
+    }//GEN-LAST:event_jMIFMSActionPerformed
+
     private void GetTaskTypes() {
         // Get different task ids
         Connection connection;
@@ -5271,6 +5592,11 @@ public class Time_Management extends javax.swing.JFrame {
                 cu1 = resultset.getString("Customer_Unit");
                 team1 = resultset.getString("Team");
                 
+                if (!teams.contains(team1)){
+                    teams.add(team1);
+                }
+                Collections.sort(teams);
+                
                 if (!organizations.isEmpty()) {
                     if (!organizations.contains(org1)) {
                         organizations.add(org1);
@@ -5291,6 +5617,7 @@ public class Time_Management extends javax.swing.JFrame {
                     System.out.println("Org: " + organi[1]);
                     orgs.add(organi[1]);
                 }
+                Collections.sort(organizations);
                 model.addRow(row);
                 
                 //Delete Director signum to not displaying in Table
@@ -6722,6 +7049,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JButton jBSearchTask3;
     private javax.swing.JButton jBShowMetrics;
     private javax.swing.JButton jBShowPreview;
+    private javax.swing.JButton jB_Export_Compliance;
     private javax.swing.JComboBox<String> jCBAccess;
     private javax.swing.JComboBox<String> jCBAction;
     private javax.swing.JComboBox<String> jCBCUMrkt;
@@ -6784,6 +7112,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBYearFrom;
     private javax.swing.JComboBox<String> jCBYearTo;
     private javax.swing.JDialog jDLoading;
+    private javax.swing.JFrame jFrame_Compliance;
     private javax.swing.JLabel jLAccess;
     private javax.swing.JLabel jLBillable;
     private javax.swing.JLabel jLCUSupported;
@@ -6811,8 +7140,11 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLTaskSearch8;
     private javax.swing.JLabel jLTaskType;
     private javax.swing.JLabel jLTeamSupp;
+    private javax.swing.JLabel jLWeek_Compliance;
     private javax.swing.JLabel jLYear;
     private javax.swing.JLabel jLYearTo;
+    private javax.swing.JLabel jL_select_org;
+    private javax.swing.JLabel jL_select_team;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -6844,7 +7176,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel47;
@@ -6854,19 +7185,23 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_Filters;
     private javax.swing.JLabel jLpackage;
     private javax.swing.JLabel jLpackage1;
+    private javax.swing.JMenuItem jMComp_people;
     private javax.swing.JMenuItem jMEditMarkets;
     private javax.swing.JMenuItem jMEditNetworks;
     private javax.swing.JMenuItem jMEditTask;
     private javax.swing.JMenuItem jMEditUsers;
     private javax.swing.JMenuItem jMICOP;
+    private javax.swing.JMenuItem jMIFMS;
     private javax.swing.JMenuItem jMIPSS;
     private javax.swing.JMenuItem jMIScoping;
     private javax.swing.JMenuItem jMISourcing;
     private javax.swing.JMenuItem jMIVSS;
     private javax.swing.JMenuItem jMReview;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuCompliance;
     private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuTeams;
     private javax.swing.JMenu jMenuView;
@@ -6919,5 +7254,8 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JTable jTUsersList;
     private javax.swing.JTable jTableNetworks;
     private javax.swing.JTable jTableShowMetrics;
+    private javax.swing.JComboBox<String> jcbWeek_Compliance;
+    private javax.swing.JComboBox<String> jcb_Org_compliance;
+    private javax.swing.JComboBox<String> jcb_Team_compliance;
     // End of variables declaration//GEN-END:variables
 }

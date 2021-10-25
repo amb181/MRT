@@ -63,33 +63,33 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
-import static metrics.Metrics.localversion;
 import static metrics.Metrics.usersinfo;
+import static metrics.Metrics.localversion;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
  * @author ealloem
  */
-public final class VSS_Time_Report extends javax.swing.JFrame {
+public final class FMS_Time_Report extends javax.swing.JFrame {
 
     /**
-     * Creates new form VSS_Time_Report
+     * Creates new form FMS_Time_Report
      *
      * @throws java.text.ParseException
      * @throws java.io.IOException
      */
     ArrayList<String> tasks_info = new ArrayList<>();
     ArrayList<String> networks_info = new ArrayList<>();
-    ArrayList<String> metrics_vss_info = new ArrayList<>();
+    ArrayList<String> metrics_fms_info = new ArrayList<>();
     ArrayList<String> mrkts_bulk = new ArrayList<>();
     ArrayList<String> metrics_for_ess = new ArrayList<>();
-    int current_week = 0, times_in_edit = 0;
+    int current_week = 0, times_in_edit = 0, edit_week = 0;
     float hours = 0;
     boolean all_markets_checkbox = false;
     String saved = "Data saved successfully!";
 
-    public VSS_Time_Report() throws ParseException, IOException {
+    public FMS_Time_Report() throws ParseException, IOException {
         initComponents();
         jPanel2.setVisible(false);
         jPanel3.setVisible(false);
@@ -143,13 +143,16 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         editor2.setEditable(false);
         Calendar now = Calendar.getInstance();
         current_week = now.get(Calendar.WEEK_OF_YEAR);
+        if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            current_week = current_week - 1;
+        }
         // Set current week panel 2
         for (int i = 1; i <= current_week; i++) {
             jcbWeek1.addItem(String.valueOf(i));
         }
         jcbWeek1.setSelectedIndex(current_week - 1);
         GetHours();
-        this.setTitle("VSS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
+        this.setTitle("FMS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
                 + "Hours: " + hours);
         jLabelVersion.setText("v_" + localversion);
         // Get week from new jDateChooser and put it in week textfield
@@ -165,7 +168,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         cal.setTime(date_);
         cal.setTime(date_1);
         cal.setTime(date_2);
-        week = cal.get(Calendar.WEEK_OF_YEAR);
+        week = current_week;
+        edit_week = week;
         jTextFieldWeek.setText(String.valueOf(week));
         jTextFieldWeek_MarketBulk.setText(String.valueOf(week));
         // Update week number every time user clics new date
@@ -178,7 +182,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 try {
                     date_ = dcn.parse(date_change);
                 } catch (ParseException ex) {
-                    Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date_);
@@ -187,24 +191,31 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     week = week - 1;
                 }
                 jTextFieldWeek.setText(String.valueOf(week));
+                // If week changes update hours per day table
+                if (week != edit_week) {
+                    edit_week = week;
+                    GetDailyHours();
+                }
+
             }
         });
         jcbSubnet.addItem("Select a subnetwork...");
+        jcbProjectName.addItem("Select a project...");
         // Populate jcbCU with possible CUs for this team
         String[] cus = usersinfo.get(8).split("@");
         String cu = null;
-        if (usersinfo.get(2).equals("V_AT&T") || usersinfo.get(2).equals("V_Sprint") || usersinfo.get(2).equals("V_T-Mobile")
-                || usersinfo.get(2).equals("V_Verizon")) {
-            cu = usersinfo.get(2).replace("V_", "");
+        if (usersinfo.get(2).startsWith("F_")) {
+            cu = usersinfo.get(2).replace("F_", "");
             jcbCU.addItem(cu);
         }
         for (int i = 0; i < cus.length; i++) {
-            if (cus[i].equals("V_AT&T") || cus[i].equals("V_Sprint") || cus[i].equals("V_T-Mobile")
-                    || cus[i].equals("V_Verizon")) {
-                cu = cus[i].replace("V_", "");
+            if (cus[i].startsWith("F_")) {
+                cu = cus[i].replace("F_", "");
                 jcbCU.addItem(cu);
+
             }
         }
+        System.out.println("E Q U I P O S: " + usersinfo.get(8));
         // Populate jcbTask1 with All default
         ArrayList<String> check_list1 = new ArrayList<>();
         jcbTask1.addItem("Select an activity...");
@@ -253,10 +264,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         header1.setForeground(Color.white);
         header1.setFont(new Font("Ericsson Hilda", 0, 20));
         jDLoading.setVisible(false);
-        if (jcbCU.getSelectedItem().toString().equals("AT&T")) {
-            jcbTech.setVisible(false);
-            jLabelTech.setVisible(false);
-        }
 
         // Market Bulk
         // Update week number every time user clics new date
@@ -269,7 +276,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 try {
                     date_ = dcn.parse(date_change);
                 } catch (ParseException ex) {
-                    Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date_);
@@ -296,6 +303,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jLabelLoading = new javax.swing.JLabel();
         jLabelLoading1 = new javax.swing.JLabel();
         jFrameCatalog = new javax.swing.JFrame();
+        jB_Export_Net_Catalog = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableCatalog = new javax.swing.JTable(){
             @Override
@@ -314,7 +322,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 return component;
             }
         };
-        jB_Export_Net_Catalog = new javax.swing.JButton();
         jFrameMarketsBulk = new javax.swing.JFrame();
         jPanelMarketBulk = new javax.swing.JPanel();
         jcbRegionBulk = new javax.swing.JComboBox<>();
@@ -409,13 +416,13 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jLabelRegion = new javax.swing.JLabel();
         jcbMarket = new javax.swing.JComboBox<>();
         jLabelMarket = new javax.swing.JLabel();
-        jcbTech = new javax.swing.JComboBox<>();
-        jLabelTech = new javax.swing.JLabel();
         jBCatalog = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextFieldComments = new javax.swing.JTextArea();
         jLabelTeam = new javax.swing.JLabel();
         jBMarketsBulk = new javax.swing.JButton();
+        jcbProjectName = new javax.swing.JComboBox<>();
+        jLProjectName = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLTask1 = new javax.swing.JLabel();
         jcbTask1 = new javax.swing.JComboBox<>();
@@ -431,7 +438,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         ;
         jBSearch = new javax.swing.JButton();
         jCheckBoxWeek = new javax.swing.JCheckBox();
-        jButtonUpdate = new javax.swing.JButton();
+        jBUpdate = new javax.swing.JButton();
         jBDeleteRow1 = new javax.swing.JButton();
         jcbWeek1 = new javax.swing.JComboBox<>();
         jBClearTable2 = new javax.swing.JButton();
@@ -502,16 +509,23 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             .addComponent(jPanelLoading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jB_Export_Net_Catalog.setText("Download");
+        jB_Export_Net_Catalog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_Export_Net_CatalogActionPerformed(evt);
+            }
+        });
+
         jTableCatalog.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "PD", "Network", "Activity code", "Region", "Market", "Customer", "Responsible", "Subnetwork", "Team", "Technology"
+                "PD", "Network", "Activity code", "Region", "Market", "Customer", "Responsible", "Subnetwork", "Team", "Technology", "Project Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -519,13 +533,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTableCatalog);
-
-        jB_Export_Net_Catalog.setText("Download");
-        jB_Export_Net_Catalog.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jB_Export_Net_CatalogActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jFrameCatalogLayout = new javax.swing.GroupLayout(jFrameCatalog.getContentPane());
         jFrameCatalog.getContentPane().setLayout(jFrameCatalogLayout);
@@ -546,8 +553,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             .addGroup(jFrameCatalogLayout.createSequentialGroup()
                 .addComponent(jB_Export_Net_Catalog)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jcbRegionBulk.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -726,7 +733,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jcbRegionBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelMarketBulkLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(32, 32, 32)
                         .addComponent(jBCancel_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -746,7 +753,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
                         .addComponent(jLComments_MarketBulk)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMarketBulkLayout.createSequentialGroup()
+                    .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBAddBulkMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -755,75 +762,75 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLRegionBulk)
+                    .addComponent(jcbRegionBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMarketsBulk))
+                .addGap(12, 12, 12)
                 .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
-                        .addGap(84, 84, 84)
                         .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLTaskID_MarketBulk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldTask_ID_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLTask_MarketBulk)
-                                    .addComponent(jcbTask_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(191, 191, 191))
-                            .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
-                                .addGap(76, 76, 76)
-                                .addComponent(jLComments_MarketBulk)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(156, 156, 156)
-                        .addComponent(jBAddBulkMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMarketBulkLayout.createSequentialGroup()
+                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
+                                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLTaskID_MarketBulk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldTask_ID_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLTask_MarketBulk)
+                                            .addComponent(jcbTask_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(191, 191, 191))
+                                    .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
+                                        .addGap(76, 76, 76)
+                                        .addComponent(jLComments_MarketBulk)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(177, 177, 177)
+                                .addComponent(jBAddBulkMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(77, 77, 77))
+                            .addComponent(jPanelMarketSelection, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
                         .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLRegionBulk)
-                            .addComponent(jcbRegionBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelMarketsBulk))
-                        .addGap(12, 12, 12)
+                            .addComponent(jTextFieldNumReqMarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelNum_req_Bulk))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelMarketSelection, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanelMarketBulkLayout.createSequentialGroup()
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldNumReqMarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelNum_req_Bulk))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jDateChooser_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLDate_MarketBulk))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLWeek_MarketBulk)
-                                    .addComponent(jTextFieldWeek_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLTimeMarket_Bulk)
-                                    .addComponent(jLHoursForLoggedTime_MarketBulk)
-                                    .addComponent(jTextFieldTime_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(12, 12, 12)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLRequestor_MarketBulk)
-                                    .addComponent(jTextFieldRequestor_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLOnTime_MarketBulk)
-                                    .addComponent(jcbOnTime_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLFaildeOnTime_MarketBulk)
-                                    .addComponent(jcbFailedOnTime_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLFTR_MarketBulk)
-                                    .addComponent(jcbFTR_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLFailFTR_MarketBulk)
-                                    .addComponent(jcbFailedFTR_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBCancel_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25))))))
+                            .addComponent(jDateChooser_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLDate_MarketBulk))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLWeek_MarketBulk)
+                            .addComponent(jTextFieldWeek_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLTimeMarket_Bulk)
+                            .addComponent(jLHoursForLoggedTime_MarketBulk)
+                            .addComponent(jTextFieldTime_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLRequestor_MarketBulk)
+                            .addComponent(jTextFieldRequestor_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLOnTime_MarketBulk)
+                            .addComponent(jcbOnTime_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLFaildeOnTime_MarketBulk)
+                            .addComponent(jcbFailedOnTime_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLFTR_MarketBulk)
+                            .addComponent(jcbFTR_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMarketBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLFailFTR_MarketBulk)
+                            .addComponent(jcbFailedFTR_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBCancel_MarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78))))
         );
 
         javax.swing.GroupLayout jFrameMarketsBulkLayout = new javax.swing.GroupLayout(jFrameMarketsBulk.getContentPane());
@@ -836,7 +843,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             jFrameMarketsBulkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrameMarketsBulkLayout.createSequentialGroup()
                 .addComponent(jPanelMarketBulk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jDateChooser_Start.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -885,7 +892,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jFrameHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jDateChooser_End, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jDateChooser_End, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jDateChooser_Start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcb_Team_history, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(31, Short.MAX_VALUE))
@@ -968,6 +975,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jLRequests.setText("Number of requests:");
 
         jTextFieldRequests.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jTextFieldRequests.setText("1");
 
         jLComments.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLComments.setText("Comments:");
@@ -1009,6 +1017,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
         jcbFTR.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jcbFTR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N/A", "Yes", "No" }));
+        jcbFTR.setSelectedIndex(1);
 
         jLFTR.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLFTR.setText("FTR:");
@@ -1021,6 +1030,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
         jcbOnTime.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jcbOnTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N/A", "Yes", "No" }));
+        jcbOnTime.setSelectedIndex(1);
 
         jLOnTime.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLOnTime.setText("On Time:");
@@ -1071,7 +1081,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false, false, false, false, false, false, true, true, false, false, false, false, false, true, true
+                false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1159,16 +1169,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jLabelMarket.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabelMarket.setText("Market:");
 
-        jcbTech.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jcbTech.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbTechActionPerformed(evt);
-            }
-        });
-
-        jLabelTech.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLabelTech.setText("Technology:");
-
         jBCatalog.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jBCatalog.setText("Catalog");
         jBCatalog.addActionListener(new java.awt.event.ActionListener() {
@@ -1184,7 +1184,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
         jLabelTeam.setFont(new java.awt.Font("Ericsson Hilda", 1, 36)); // NOI18N
         jLabelTeam.setForeground(new java.awt.Color(0, 153, 153));
-        jLabelTeam.setText("VSS Metrics");
+        jLabelTeam.setText("FMS Metrics");
 
         jBMarketsBulk.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jBMarketsBulk.setText("Different markets");
@@ -1194,138 +1194,150 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
         });
 
+        jcbProjectName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jcbProjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProjectNameActionPerformed(evt);
+            }
+        });
+
+        jLProjectName.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jLProjectName.setText("Project Name: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextFieldRequestor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jcbFTR, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLFTR))
-                                        .addGap(30, 30, 30)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jcbOnTime, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLOnTime))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jcbFailedFTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLFailFTR, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jcbFailedOnTime, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLFaildeOnTime))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLRequests)
-                                            .addComponent(jTextFieldRequests, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelSubnetwork)
-                                            .addComponent(jcbSubnet, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLNetwork)
-                                            .addComponent(jTextFieldNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldActivity, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLActivity))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRSingle)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRBulk)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSpinnerBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelHoursDaysH1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelHoursDaysB1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jBMarketsBulk)
-                                        .addGap(0, 56, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLComments)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBAddTable)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jTextFieldRequestor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jcbFTR, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLFTR))
+                                                .addGap(30, 30, 30)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jcbOnTime, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLOnTime))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jcbFailedFTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLFailFTR, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jcbFailedOnTime, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLFaildeOnTime))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLRequests)
+                                                    .addComponent(jTextFieldRequests, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabelSubnetwork)
+                                                    .addComponent(jcbSubnet, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLNetwork)
+                                                    .addComponent(jTextFieldNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jTextFieldActivity, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLActivity))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jRSingle)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jRBulk)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jSpinnerBulk, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jcbSAP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jLCU, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLSAP_Billing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLTaskID)
+                                                    .addComponent(jTextFieldTask_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGap(7, 7, 7)
+                                                        .addComponent(jcbTask, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18))
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLTask)
+                                                        .addGap(350, 350, 350)))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLDate))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLHoursForLoggedTime))
+                                                    .addComponent(jLTime))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jTextFieldWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLWeek))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLRequestor))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jcbCU, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabelRegion)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jcbRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabelMarket)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jcbMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLProjectName)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jcbProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelHoursDaysH1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelHoursDaysB1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jBCatalog)
+                                            .addComponent(jBMarketsBulk))
+                                        .addGap(0, 62, Short.MAX_VALUE)))))
                         .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jBDeleteRow)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jBClearTable)
-                                .addGap(634, 634, 634)
-                                .addComponent(jLabelTeam)
-                                .addGap(412, 412, 412)
-                                .addComponent(jB_Save))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jcbSAP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jLCU, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLSAP_Billing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jcbCU, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabelRegion)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jcbRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabelMarket)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jcbMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabelTech)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jcbTech, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jBCatalog))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLTaskID)
-                                                .addComponent(jTextFieldTask_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addGap(7, 7, 7)
-                                                    .addComponent(jcbTask, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(18, 18, 18))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jLTask)
-                                                    .addGap(350, 350, 350)))
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLDate))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jTextFieldTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(jLHoursForLoggedTime))
-                                                .addComponent(jLTime))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTextFieldWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLWeek))
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLRequestor))))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(89, 89, 89))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jBDeleteRow)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBClearTable)
+                        .addGap(634, 634, 634)
+                        .addComponent(jLabelTeam)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jB_Save)
+                        .addGap(54, 54, 54))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1338,9 +1350,9 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     .addComponent(jLabelRegion)
                     .addComponent(jcbMarket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMarket)
-                    .addComponent(jcbTech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelTech)
-                    .addComponent(jBCatalog))
+                    .addComponent(jBCatalog)
+                    .addComponent(jcbProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLProjectName))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1518,11 +1530,11 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
         });
 
-        jButtonUpdate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jButtonUpdate.setText("Update");
-        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+        jBUpdate.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
+        jBUpdate.setText("Update");
+        jBUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUpdateActionPerformed(evt);
+                jBUpdateActionPerformed(evt);
             }
         });
 
@@ -1612,7 +1624,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLDate1)
                                         .addGap(18, 18, 18)
                                         .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1622,14 +1634,13 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                         .addComponent(jcbWeek1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
                                         .addComponent(jBSearch))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(371, 371, 371)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jBHistory))
-                                            .addComponent(jLabelHoursDaysH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabelHoursDaysH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(24, 24, 24)
+                                        .addComponent(jBHistory)))
                                 .addGap(19, 19, 19))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jBDeleteRow1)
@@ -1637,10 +1648,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         .addComponent(jBClearTable2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jB_ESS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBExport)
-                        .addGap(34, 34, 34)
-                        .addComponent(jButtonUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBUpdate)
                         .addContainerGap())))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1658,9 +1669,9 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelHoursDaysB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcbTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBHistory)))
-                    .addComponent(jLabelTeam1))
+                            .addComponent(jcbTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabelTeam1)
+                    .addComponent(jBHistory))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1670,12 +1681,12 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         .addComponent(jLDate1)
                         .addComponent(jLWeek1)
                         .addComponent(jLSAP_Billing1)
-                        .addComponent(jcbSAP1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcbSAP1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBSearch)
                         .addComponent(jcbWeek1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxWeek)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 724, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 682, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1684,7 +1695,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonUpdate)
+                            .addComponent(jBUpdate)
                             .addComponent(jBExport)
                             .addComponent(jB_ESS))
                         .addGap(35, 35, 35))))
@@ -1782,7 +1793,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabelDescNaudiz)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabelDescAbout, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+                            .addComponent(jLabelDescAbout, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabelSupport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1926,7 +1937,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 System.out.println("Rows to insert: " + rows);
                 boolean error = false;
                 DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
-
                 // Validate jAddMetrics table's info
                 for (int row = 0; row < rows; row++) {
                     String cu = (String) jTableAddMetrics.getValueAt(0, 0);
@@ -1965,10 +1975,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     for (int i = 0; i < tasks_info.size(); i++) {
                         if (tasks_info.get(i).equals(task)) {
                             task_index = i;
+                            System.out.println("1st task index: " + task_index);
                             break;
                         }
                     }
-                    // Find subnet in networks_info
                     // Find net in networks_info
                     int net_index = 0;
                     for (int i = 0; i < networks_info.size(); i++) {
@@ -1992,7 +2002,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     try {
                         date_ = dcn.parse(w_date);
                     } catch (ParseException ex) {
-                        Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                         System.out.println("Error parsing date " + w_date);
                     }
                     Calendar cal = Calendar.getInstance();
@@ -2020,7 +2030,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
                     if (!signum.equals(usersinfo.get(0)) || signum.equals("")) {      // Signum -> usersinfo
                         failed = "Signum " + signum;
-                        System.out.println("Signum: " + signum + " | " + usersinfo.get(0));
                     }
                     if ((!brequestor1 && !brequestor2) || requestor.equals("")) {       // Requestor -> only alphabet characters 
                         failed = "Requestor " + requestor;
@@ -2047,7 +2056,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     int thresh1 = current_week - 2;
                     int thresh2 = current_week + 2;
                     if (validate_date < thresh1 || validate_date > thresh2) {
-                        failed = "Week " + week + " (please contact your Line Manager)";
+                        failed = "Week " + week + " (please contact your SPM or LM)";
                     }
 
                     if (!ftr_list.contains(ftr) || ftr.equals("")) {                               // FTR -> Not empty or in list                                      // Week -> corresponding to date
@@ -2068,17 +2077,16 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     }
 
                     // If something failed show where it did
-                    int current_row = row + 1;
                     if (!failed.equals("")) {
-                        JOptionPane.showMessageDialog(VSS_Time_Report.this,  "Incorrect data in " + failed + " in row " + current_row + ", please verify your info.");
+                        JOptionPane.showMessageDialog(FMS_Time_Report.this, "Incorrect data in " + failed + " in row 1, please verify your info.");
                         error = true;
-                        System.out.println("Error near " + failed + " in row " + current_row);
+                        System.out.println("Error near " + failed + " in row 1");
                         break;
                     }
                     int res = 0;
                     if (error == false) { // If true if before this should handle it
                         if (rows == 0) {
-                            JOptionPane.showMessageDialog(VSS_Time_Report.this, "Nothing saved");
+                            JOptionPane.showMessageDialog(FMS_Time_Report.this, "Nothing saved");
                         } else {    // Insert into database
                             jLabelLoading.setText("Saving your metrics into database...");
                             res = InsertIntoDB(cu, region, market, signum, requestor, task_id, task, net, subnet, act, tech, sap,
@@ -2096,19 +2104,20 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 GetHours();
                 GetDailyHours();
                 System.out.println("Total hours this week: " + hours);
-                VSS_Time_Report.this.setTitle("VSS               " + usersinfo.get(0) + " | " + usersinfo.get(4)
+                FMS_Time_Report.this.setTitle("FMS               " + usersinfo.get(0) + " | " + usersinfo.get(4)
                         + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | " + "Hours: " + hours);
                 jDLoading.dispose();
                 if (error) {
                     return;
                 } else {
-                    JOptionPane.showMessageDialog(VSS_Time_Report.this, saved);
+                    JOptionPane.showMessageDialog(FMS_Time_Report.this, saved);
                     ClearDataPanel1();
                 }
             }
         }).start();
         jDLoading.setModal(true);
         jDLoading.setVisible(true);
+
     }//GEN-LAST:event_jB_SaveActionPerformed
 
     private String Validate_task_net(int task_index, int net_index, String cu, String region, String market,
@@ -2139,9 +2148,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             if (!act.equals("0")) {                                  // Activity
                 return failed = "Activity: " + act;
             }
-            if (!tech.equals("N/A")) {                                  // Technology
-                return failed = "Technology: " + tech;
-            }
         } else {
             if (!cu.equals(tasks_info.get(task_index + 2))) {
                 return failed = "CU: " + cu;
@@ -2150,24 +2156,61 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 return failed = "Network: " + net;
             }
             if (!region.equals(networks_info.get(net_index + 2))) {
-                return failed = "Region: " + region;
+                String _network = networks_info.get(net_index);
+                boolean found = false;
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 2).equals(region)) {
+                        found = true;
+                    }
+                }
+                if (found == false) {
+                    return failed = "Region: " + region;
+                }
             }
             if (!market.equals(networks_info.get(net_index + 3))) {
-                return failed = "Market: " + market;
+                String _network = networks_info.get(net_index);
+                boolean found = false;
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 3).equals(market)) {
+                        found = true;
+                    }
+                }
+                if (found == false) {
+                    return failed = "Market: " + market;
+                }
             }
             if (!subnet.equals(networks_info.get(net_index + 5))) {
-                return failed = "Subnetwork: " + subnet;
+                String _network = networks_info.get(net_index);
+                boolean found = false;
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 5).equals(subnet)) {
+                        found = true;
+                    }
+                }
+                if (found == false) {
+                    return failed = "Subnetwork: " + subnet;
+                }
             }
             if (!act.equals(networks_info.get(net_index + 1))) {
-                return failed = "Activity: " + act;
-            }
-            if (!tech.equals(networks_info.get(net_index + 7))) {
-                return failed = "Technology: " + tech;
+                String _network = networks_info.get(net_index);
+                boolean found = false;
+                for (int i = 0; i < networks_info.size(); i++) {
+                    if (networks_info.get(i).equals(_network) && networks_info.get(i + 1).equals(act)) {
+                        found = true;
+                    }
+                }
+                if (found == false) {
+                    return failed = "Activity: " + act;
+                }
             }
         }
 
         if (!sap.equals(tasks_info.get(task_index + 3))) {            // SAP
             return failed = "SAP: " + sap;
+        }
+
+        if (!tech.equals("N/A")) {                                  // Technology
+            return failed = "Technology: " + tech;
         }
 
         if (!task.equals(tasks_info.get(task_index))) {          // Task
@@ -2206,7 +2249,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         CallableStatement callableStatement;
         try {
             connection = SQL_connection.getConnection();
-            callableStatement = connection.prepareCall("CALL register_metrics_vss"
+            callableStatement = connection.prepareCall("CALL register_metrics_fms"
                     + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?);");
 
             Float.parseFloat(time);
@@ -2244,7 +2287,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
             int result = callableStatement.getInt(24);
             if (result == 0) {
-                saved = "Unable to save " + task + " with time " + time + ".\nYou may have exceeded 24 hours.\nPlease verify rows were saved before this one.";
+                saved = "Unable to save " + task + " with time " + time + ".\nYou may have exceeded 24 hours.\nPlease verify rows saved before this one.";
             } else {
                 saved = "Data saved successfully!";
             }
@@ -2266,19 +2309,19 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jcbCU.setSelectedItem(0);
         jcbRegion.setSelectedItem(0);
         jcbMarket.setSelectedItem(0);
-        jcbTech.setSelectedItem(0);
         jcbSAP.setSelectedItem("Billable");
         jTextFieldTask_ID.setText("");
         jTextFieldTime.setText("");
         jcbSubnet.setSelectedIndex(0);
+        jcbProjectName.setSelectedIndex(0);
         jTextFieldNetwork.setText("");
         jTextFieldActivity.setText("");
         jTextFieldRequestor.setText("");
-        jcbFTR.setSelectedIndex(0);
-        jcbOnTime.setSelectedIndex(0);
+        jcbFTR.setSelectedIndex(1);
+        jcbOnTime.setSelectedIndex(1);
         jcbFailedFTR.setSelectedIndex(0);
         jcbFailedOnTime.setSelectedIndex(0);
-        jTextFieldRequests.setText("");
+        jTextFieldRequests.setText("1");
         jRSingle.setSelected(true);
         jRBulk.setSelected(false);
         // Populate jcbTask1 with Billable default
@@ -2300,10 +2343,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         List<String> teams = new ArrayList<String>(Arrays.asList(teams_));
         teams.add(usersinfo.get(3));
         jcbTeam1.removeAllItems();
-        jcbTeam1.addItem("VSS");
+        jcbTeam1.addItem("FMS");
         if (!usersinfo.get(7).equals("N/A")) {
             for (int i = 0; i < teams.size(); i++) {
-                if (!teams.get(i).equals("VSS")) {
+                if (!teams.get(i).equals("FMS")) {
                     jcbTeam1.addItem(teams.get(i));
 
                     JMenuItem menu = new JMenuItem(teams.get(i));
@@ -2371,7 +2414,38 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                                 time_r.toFront();
                                                 time_r.requestFocus();
                                             } catch (ParseException | IOException ex) {
-                                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }).start();
+                                    jDLoading.setVisible(true);
+                                } else if (clicked_on.equals("VSS")) {
+                                    jDLoading.setModal(true);
+                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                VSS_Time_Report time_r = new VSS_Time_Report();
+                                                time_r.show();
+                                                time_r.setLocationRelativeTo(null);
+                                                // Confirm exit window
+                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
+                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
+                                                    @Override
+                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit VSS",
+                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                                            time_r.dispose();
+
+                                                        }
+                                                    }
+                                                });
+                                                jDLoading.dispose();
+                                                time_r.toFront();
+                                                time_r.requestFocus();
+                                            } catch (ParseException | IOException ex) {
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                                             }
                                         }
                                     }).start();
@@ -2391,7 +2465,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                                 time_r.addWindowListener(new java.awt.event.WindowAdapter() {
                                                     @Override
                                                     public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit COP",
+                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit VSS",
                                                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                                                             time_r.dispose();
 
@@ -2402,7 +2476,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                                 time_r.toFront();
                                                 time_r.requestFocus();
                                             } catch (ParseException | IOException ex) {
-                                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                                             }
                                         }
                                     }).start();
@@ -2433,43 +2507,12 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                                 time_r.toFront();
                                                 time_r.requestFocus();
                                             } catch (ParseException | IOException ex) {
-                                                Logger.getLogger(Sourcing_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                        }
-                                    }).start();
-                                    jDLoading.setVisible(true);
-                                } else if (clicked_on.equals("FMS")) {
-                                    jDLoading.setModal(true);
-                                    jDLoading.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                FMS_Time_Report time_r = new FMS_Time_Report();
-                                                time_r.show();
-                                                time_r.setLocationRelativeTo(null);
-                                                // Confirm exit window
-                                                time_r.setDefaultCloseOperation(time_r.DO_NOTHING_ON_CLOSE);
-                                                time_r.addWindowListener(new java.awt.event.WindowAdapter() {
-                                                    @Override
-                                                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                                                        if (JOptionPane.showConfirmDialog(time_r, "Are you sure you want to close this window?", "Exit FMS",
-                                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                                                            time_r.dispose();
-
-                                                        }
-                                                    }
-                                                });
-                                                jDLoading.dispose();
-                                                time_r.toFront();
-                                                time_r.requestFocus();
-                                            } catch (ParseException | IOException ex) {
                                                 Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                                             }
                                         }
                                     }).start();
                                     jDLoading.setVisible(true);
-                                }
+                                } 
                             } catch (Exception e) {
                                 System.out.println(e);
                             }
@@ -2490,7 +2533,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         int year = Calendar.getInstance().get(Calendar.YEAR);
         try {
             connection = SQL_connection.getConnection();
-            String sql_user_time = "SELECT SUM(Logged_Time) AS Hours FROM metrics_vss WHERE Signum='"
+            String sql_user_time = "SELECT SUM(Logged_Time) AS Hours FROM metrics_fms WHERE Signum='"
                     + usersinfo.get(0) + "' AND Week=" + current_week + " AND Work_date LIKE '" + year + "-%';";
             preparedStatement = connection.prepareStatement(sql_user_time);
             resultset = preparedStatement.executeQuery();
@@ -2509,13 +2552,13 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        // Get VSS tasks
+        // Get FMS tasks
         try {
             String sql_task = null;
 
             sql_task = "SELECT * "
                     + "FROM tasks "
-                    + "WHERE Team='SDU' OR Team='VSS' "
+                    + "WHERE Team='SDU' OR Team='FMS' "
                     + "ORDER BY Task ASC;";
 
             connection = SQL_connection.getConnection();
@@ -2548,7 +2591,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             // Get users info to request proper tasks
             String sql_task = "SELECT * "
                     + "FROM networks " // CHANGE THIS TABLE
-                    + "WHERE Team='VSS';";
+                    + "WHERE Team='FMS';";
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement(sql_task);
             resultset = preparedStatement.executeQuery();
@@ -2556,7 +2599,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             while (resultset.next()) {
                 String[] row = {resultset.getString("Network"), resultset.getString("Activity_code"),
                     resultset.getString("Region"), resultset.getString("Market"), resultset.getString("Customer"),
-                    resultset.getString("Subnetwork"), resultset.getString("Team"), resultset.getString("Technology")};
+                    resultset.getString("Subnetwork"), resultset.getString("Team"), resultset.getString("Technology"),
+                    resultset.getString("Project")};
                 List<String> newList = Arrays.asList(row);
 
                 networks_info.addAll(newList);
@@ -2571,9 +2615,13 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             int year = Calendar.getInstance().get(Calendar.YEAR);
             Connection connection = SQL_connection.getConnection();
             ResultSet resultSet;
+            // This is for the case user clicks on the calendar and a different week is required, at the end current_week is restored
+            if (current_week != edit_week) {
+                current_week = edit_week;
+            }
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
-                    + "FROM metrics_vss "
+                    + "FROM metrics_fms "
                     + "WHERE Signum = ? AND Week = '" + current_week + "' AND Work_date LIKE '" + year + "-%'"
                     + "GROUP BY Work_date ORDER BY Work_date;";
 
@@ -2603,7 +2651,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             ResultSet resultSet;
 
             String sql = "SELECT SUM(Logged_Time) AS Hours, WEEKDAY(Work_date) AS Day "
-                    + "FROM metrics_vss "
+                    + "FROM metrics_fms "
                     + "WHERE Signum = ? AND Week = ? AND Work_date LIKE '" + year + "-%'"
                     + "GROUP BY Work_date ORDER BY Work_date;";
 
@@ -2634,7 +2682,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         Pattern ptime = Pattern.compile("\\d{0,2}(\\.\\d{1,2})?");
         String stime = jTextFieldTime.getText();
         Matcher mtime = ptime.matcher(stime);
-        boolean btime = mtime.find();
+        boolean btime = mtime.matches();
         // Requests format
         Pattern preq = Pattern.compile("^[1-9][0-9]*$");
         String sreq = jTextFieldRequests.getText();
@@ -2660,6 +2708,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Choose a subnetwork!");
             error = true;
         }
+        if (jcbProjectName.getSelectedItem().equals("Select a project...")) {
+            JOptionPane.showMessageDialog(this, "Choose a project!");
+            error = true;
+        }
         if (jcbRegion.getSelectedItem().equals("Select a region...")) {
             JOptionPane.showMessageDialog(this, "Choose a region!");
             error = true;
@@ -2682,7 +2734,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         }
         if (!breq) {
             JOptionPane.showMessageDialog(this, "Number of requests must be a number!");
-            jTextFieldRequests.setText("");
+            jTextFieldRequests.setText("1");
             error = true;
         }
         if (!btime) {
@@ -2697,23 +2749,21 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 error = true;
             }
         }
-        if (jcbTech.isVisible() && jcbTech.getSelectedItem().toString().equals("Select a technology...")) {
-            JOptionPane.showMessageDialog(this, "Choose a technology!");
-            error = true;
-        }
         if (validate_date < thresh1 || validate_date > thresh2) {
             JOptionPane.showMessageDialog(this, "You can only add data from week " + thresh1 + " until week " + thresh2 + "\nplease contact your Line Manager.");
+            error = true;
+        }
+        //Comment
+        if (jTextFieldComments.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You must leave a comment!");
             error = true;
         }
         if (!error) {
             // Get combo boxes values
             String cu = "";
+            String tech = "N/A";
             String region = (String) jcbRegion.getSelectedItem();
             String market = (String) jcbMarket.getSelectedItem();
-            String tech = (String) jcbTech.getSelectedItem();
-            if (!jcbTech.isVisible()) {
-                tech = "N/A";
-            }
             String sap = (String) jcbSAP.getSelectedItem();
             if (sap.equals("Billable")) {
                 cu = (String) jcbCU.getSelectedItem();
@@ -2722,6 +2772,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
             String task_id = (String) jTextFieldTask_ID.getText();
             String task = (String) jcbTask.getSelectedItem();
+            // Check for tasks with "same name"
             if (task.contains("  ")) {
                 task = task.replace("  ", "");
             }
@@ -2779,11 +2830,11 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
             // Set all indices to 0
             jTextFieldTime.setText("");
-            jTextFieldRequests.setText("");
+            jTextFieldRequests.setText("1");
             jTextFieldRequestor.setText("");
             jTextFieldComments.setText("");
-            jcbFTR.setSelectedIndex(0);
-            jcbOnTime.setSelectedIndex(0);
+            jcbFTR.setSelectedIndex(1);
+            jcbOnTime.setSelectedIndex(1);
             jcbFailedFTR.setSelectedIndex(0);
             jcbFailedOnTime.setSelectedIndex(0);
             jRSingle.setSelected(true);
@@ -2846,6 +2897,9 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         if (jcbTask.getSelectedIndex() == 0) {
             jTextFieldTask_ID.setText("");
         }
+        if (jcbTask.getItemCount() != 0) {
+            jcbTask.setToolTipText("<html><h3>" + jcbTask.getSelectedItem().toString() + "</h3></html>");
+        }
     }//GEN-LAST:event_jcbTaskActionPerformed
 
     private void jRSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRSingleActionPerformed
@@ -2876,10 +2930,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         int response = fc.showOpenDialog(this);
         if (response == JFileChooser.APPROVE_OPTION) {
             String imported_file = fc.getSelectedFile().toString();
-            System.out.println(imported_file);
-            jPanel2.setVisible(false);
-            jPanel1.setVisible(true);
-
             DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
             tblModel.setRowCount(0);
             try (BufferedReader br = new BufferedReader(new FileReader(imported_file))) {
@@ -2930,14 +2980,15 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     if (!bdate) {
                         // Change date format
                         SimpleDateFormat dcn = new SimpleDateFormat("MM/dd/yyyy");
-                        SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
                         Date new_date = null;
                         try {
                             new_date = dcn.parse(finalValues.get(12));
                         } catch (ParseException ex) {
-                            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this, "File cannot be imported here");
                         }
-                        if (dcn1.format(new_date).toString().startsWith("00")){
+                        SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
+                        if (dcn1.format(new_date).toString().startsWith("00")) {
                             String _date = dcn1.format(new_date).toString().replace("00", "20");
                             finalValues.set(12, _date);
                         } else {
@@ -2949,9 +3000,11 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     tblModel.addRow(row);
                 }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "File cannot be imported here");
             } catch (IOException ex) {
-                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "File cannot be imported here");
             }
         }
     }//GEN-LAST:event_jMenuItemOpenActionPerformed
@@ -2967,7 +3020,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jPanel2.setVisible(false);
         jPanel3.setVisible(false);
         String cu = jcbCU.getSelectedItem().toString();
-        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\Reporting_time_vss_" + usersinfo.get(0) + "_template.csv";
+        // String path = "C:\\Users\\ealloem\\Documents\\Reporting_time_" + usersinfo.get(0) + "_template.csv";
+        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\Reporting_time_fms_" + usersinfo.get(0) + "_template.csv";
         try (PrintWriter writer = new PrintWriter(new File(path))) {
 
             StringBuilder sb = new StringBuilder();
@@ -3009,7 +3063,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     tasks.add(tasks_info.get(i + 3));   // Billable or not
                 }
             }
-            for (int i = 5; i < networks_info.size(); i += 8) {
+            for (int i = 5; i < networks_info.size(); i += 9) {
                 if (networks_info.get(i - 1).equals(cu)) {
                     nets.add(networks_info.get(i - 5));   // Net
                     nets.add(networks_info.get(i));       // Subnet
@@ -3021,41 +3075,47 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
             while (count < 2) {
                 // Insert row
-                if (tasks.get(0).contains("ADMIN")) {
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
                     sb.append("SDU" + ',');                             // CU
                     sb.append("SDU" + ',');                             // Region
                     sb.append("SDU" + ',');                             // Market
                 } else {
-                    sb.append(cu + ',');
-                    sb.append(nets.get(5 + (count * 6)) + ',');
-                    sb.append(nets.get(4 + (count * 6)) + ',');
+                    sb.append(cu + ',');                                    // CU
+                    sb.append(nets.get(5 + (count * 6)) + ',');             // Region
+                    sb.append(nets.get(4 + (count * 6)) + ',');             // Market
                 }
                 sb.append(usersinfo.get(0) + ',');                      // Signum
                 sb.append("N/A" + ',');                                 // Requestor
                 sb.append(tasks.get(0 + (count * 3)) + ',');            // Task ID
                 sb.append(tasks.get(1 + (count * 3)) + ',');            // Task
                 if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
-                    sb.append("0" + ',');
-                    sb.append("0" + ',');
-                    sb.append("0" + ',');
-                    sb.append("N/A" + ',');
+                    sb.append("0" + ',');             // Network
+                    sb.append("0" + ',');             // Subetwork
+                    sb.append("0" + ',');             // Activity
+                    sb.append("N/A" + ',');             // Technology
+                    sb.append("Not Billable" + ',');            // SAP
                 } else {
-                    sb.append(nets.get(0 + (count * 6)) + ',');  // Network
-                    sb.append(nets.get(1 + (count * 6)) + ',');  // Subetwork
-                    sb.append(nets.get(2 + (count * 6)) + ',');  // Activity
-                    sb.append(nets.get(3 + (count * 6)) + ',');  // Technology
+                    sb.append(nets.get(0 + (count * 6)) + ',');             // Network
+                    sb.append(nets.get(1 + (count * 6)) + ',');             // Subetwork
+                    sb.append(nets.get(2 + (count * 6)) + ',');             // Activity
+                    sb.append(nets.get(3 + (count * 6)) + ',');             // Technology
+                    sb.append(tasks.get(2 + (count * 3)) + ',');            // SAP
                 }
-                sb.append(tasks.get(2 + (count * 3)) + ',');    // SAP
-                sb.append(date_change + ',');                   // Date
-                sb.append("8.25" + ',');                        // Time
-                sb.append(current_week);                        // Week
+                sb.append(date_change + ',');                           // Date
+                sb.append("8.25" + ',');                                // Time
+                sb.append(current_week);                                // Week
                 sb.append(',');
-                sb.append("N/A" + ',');                         // FTR
-                sb.append("N/A" + ',');                         // On time
-                sb.append("N/A" + ',');                         // Failed ftr
-                sb.append("N/A" + ',');                         // Failed on time
-                sb.append("1" + ',');                           // Num of requests
-                sb.append("N/A" + ',');                         // Comments
+                if (tasks.get(0 + (count * 3)).contains("ADMIN")) {
+                    sb.append("N/A" + ',');                                 // FTR
+                    sb.append("N/A" + ',');                                 // On time
+                } else {
+                    sb.append("Yes" + ',');                                 // FTR
+                    sb.append("Yes" + ',');                                 // On time
+                }
+                sb.append("N/A" + ',');                                 // Failed ftr
+                sb.append("N/A" + ',');                                 // Failed on time
+                sb.append("1" + ',');                                   // Num of requests
+                sb.append("N/A" + ',');                                 // Comments
                 sb.append('\n');
                 count += 1;
             }
@@ -3070,7 +3130,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItemGenerateActionPerformed
 
@@ -3104,6 +3164,9 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         ClearDataPanel1();
         GetHours();
         GetDailyHours();
+        // Clear table
+        DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
+        tblModel.setRowCount(0);
     }//GEN-LAST:event_jMenuItemRecordActionPerformed
 
     private void jBSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchActionPerformed
@@ -3115,7 +3178,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jLabelLoading.setText("Loading...");
         DefaultTableModel dtm;
         jBDeleteRow1.setVisible(true);
-        jButtonUpdate.setVisible(true);
+        jBUpdate.setVisible(true);
         dtm = (DefaultTableModel) this.jTableSeeMetrics.getModel();
         String team = (String) jcbTeam1.getSelectedItem();
         ArrayList<String> tables = new ArrayList<>();
@@ -3132,19 +3195,20 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 if (team.equals("All teams")) {
                     a = tables.size();
                     jBDeleteRow1.setVisible(false);
-                    jButtonUpdate.setVisible(false);
+                    jBUpdate.setVisible(false);
                 } else {
                     a = 1;
                 }
 
-                metrics_vss_info.clear();
+                metrics_fms_info.clear();
                 DefaultTableModel model = (DefaultTableModel) jTableSeeMetrics.getModel();
                 model.setRowCount(0);
                 Connection connection = SQL_connection.getConnection();
                 ResultSet resultSet;
                 ResultSetMetaData rsm;
-                int year = Calendar.getInstance().get(Calendar.YEAR);
+
                 String qdate = null, sap = null;
+                int year = Calendar.getInstance().get(Calendar.YEAR);
                 if (jCheckBoxWeek.isSelected()) {
                     qdate = "Week=? AND Work_date LIKE '" + year + "-%'";
                 } else {
@@ -3205,27 +3269,27 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                 resultSet.getString("Comments")};
                             List<String> newList = Arrays.asList(row);
 
-                            metrics_vss_info.addAll(newList);
+                            metrics_fms_info.addAll(newList);
                         }
-                        System.out.println("Metrics: " + metrics_vss_info);
+                        System.out.println("Metrics: " + metrics_fms_info);
 
                         for (int i = 0; i < data.size(); i++) {
                             dtm.addRow(data.get(i));
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     j += 1;
                 }
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 //
                 jDLoading.dispose();
                 if (model.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(VSS_Time_Report.this, "No data available for current selection");
+                    JOptionPane.showMessageDialog(FMS_Time_Report.this, "No data available for current selection");
                 }
             }
         }).start();
@@ -3247,7 +3311,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBoxWeekActionPerformed
 
-    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+    private void jBUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUpdateActionPerformed
         // Button 'Update' action code
         if (jTableSeeMetrics.getEditingRow() != -1) {
             jTableSeeMetrics.getCellEditor().stopCellEditing();// In case there's selected a field in the table
@@ -3300,7 +3364,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         try {
                             date_ = dcn.parse(date);
                         } catch (ParseException ex) {
-                            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                             System.out.println("Error parsing date " + date);
                         }
                         Calendar cal = Calendar.getInstance();
@@ -3333,7 +3397,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         }
                         // If something failed show where it did and finish flow
                         if (!failed.equals("")) {
-                            JOptionPane.showMessageDialog(VSS_Time_Report.this, "Please verify your info near " + failed);
+                            JOptionPane.showMessageDialog(FMS_Time_Report.this, "Please verify your info near " + failed);
                             error = true;
                             System.out.println("Error near " + failed);
                         }
@@ -3355,14 +3419,14 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
                     ArrayList<String> ids = new ArrayList<>();
                     int id_ch = 0;
-                    for (int i = 0; i < metrics_vss_info.size(); i += 7) {
-                        System.out.println(metrics_vss_info.get(i) + " | " + compare.get(i));
-                        if (metrics_vss_info.get(i).equals(compare.get(i))) {
-                            if (!(metrics_vss_info.get(i + 2).equals(compare.get(i + 2))) // Requestor
-                                    || !(metrics_vss_info.get(i + 3).equals(compare.get(i + 3))) // Date
-                                    || !(metrics_vss_info.get(i + 4).equals(compare.get(i + 4))) // Time
-                                    || !(metrics_vss_info.get(i + 5).equals(compare.get(i + 5))) // Week
-                                    || !(metrics_vss_info.get(i + 6).equals(compare.get(i + 6)))) { // Comments
+                    for (int i = 0; i < metrics_fms_info.size(); i += 7) {
+                        System.out.println(metrics_fms_info.get(i) + " | " + compare.get(i));
+                        if (metrics_fms_info.get(i).equals(compare.get(i))) {
+                            if (!(metrics_fms_info.get(i + 2).equals(compare.get(i + 2))) // Requestor
+                                    || !(metrics_fms_info.get(i + 3).equals(compare.get(i + 3))) // Date
+                                    || !(metrics_fms_info.get(i + 4).equals(compare.get(i + 4))) // Time
+                                    || !(metrics_fms_info.get(i + 5).equals(compare.get(i + 5))) // Week
+                                    || !(metrics_fms_info.get(i + 6).equals(compare.get(i + 6)))) { // Comments
                                 ids.add(compare.get(i));
                                 ids.add(compare.get(i + 1));
                                 ids.add(compare.get(i + 2));
@@ -3375,7 +3439,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         }
                     }
                     System.out.println("IDs changed: " + id_ch);
-                    System.out.println(metrics_vss_info);
+                    System.out.println(metrics_fms_info);
                     System.out.println(compare + "\n");
                     System.out.println(ids);
                     // Update database if changes were made
@@ -3434,7 +3498,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                             saved = "Something went wrong, please try again later.";
                         }
                     } else {
-                        JOptionPane.showMessageDialog(VSS_Time_Report.this, "Nothing changed.");
+                        JOptionPane.showMessageDialog(FMS_Time_Report.this, "Nothing changed.");
                         jDLoading.dispose();
                         return;
                     }
@@ -3442,15 +3506,15 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 // Refresh total hours
                 GetDailyHours1();
                 GetHours();
-                VSS_Time_Report.this.setTitle("VSS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
+                FMS_Time_Report.this.setTitle("FMS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
                         + "Hours: " + hours);
                 saved = "Data saved successfully!";
                 jDLoading.dispose();
-                JOptionPane.showMessageDialog(VSS_Time_Report.this, saved);
+                JOptionPane.showMessageDialog(FMS_Time_Report.this, saved);
             }
         }).start();
         jDLoading.setVisible(true);
-    }//GEN-LAST:event_jButtonUpdateActionPerformed
+    }//GEN-LAST:event_jBUpdateActionPerformed
 
     private void jBDeleteRow1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteRow1ActionPerformed
         // Delete row panel 2 button
@@ -3467,13 +3531,11 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                         PreparedStatement preparedStatement;
 
                         int[] selected_rows = jTableSeeMetrics.getSelectedRows();
-                        for (int z = 0; z < selected_rows.length; z++) {
-                            System.out.println("Fila " + selected_rows[z]);
-                        }
                         int x = 0;
                         for (int j = 0; j < selected_rows.length; j++) {
                             // Compare to get selected row's id 
                             int row = selected_rows[j];
+
                             System.out.println("Selected row: " + (row - x));
                             String id_ = jTableSeeMetrics.getModel().getValueAt((row - x), 0).toString();
                             System.out.println("id_" + id_);
@@ -3481,12 +3543,12 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                             System.out.println("ID to delete: " + id);
 
                             // Delete row from list
-                            int i = metrics_vss_info.indexOf(id_);
+                            int i = metrics_fms_info.indexOf(id_);
                             int a = 0;
                             System.out.println("Index:" + i);
-                            // Delete 6 elements in metrics_cop_info
+                            // Delete 6 elements in metrics_fms_info
                             while (a < 7) {
-                                metrics_vss_info.remove(i);
+                                metrics_fms_info.remove(i);
                                 a += 1;
                             }
                             // Delete 22 elements in metrics_for_ess
@@ -3521,24 +3583,24 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                                 // Delete table row
                                 tblModel.removeRow(jTableSeeMetrics.getSelectedRow());
                             } catch (SQLException ex) {
-                                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             x += 1;
                         } // End for
                         try {
                             connection.close();
                         } catch (SQLException ex) {
-                            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         GetDailyHours1();
-                        JOptionPane.showMessageDialog(VSS_Time_Report.this, "Row deleted.");
-                        System.out.println("After delete row: " + metrics_vss_info);
                         GetHours();
-                        VSS_Time_Report.this.setTitle("VSS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
+                        FMS_Time_Report.this.setTitle("FMS               " + usersinfo.get(0) + " | " + usersinfo.get(4) + " | " + usersinfo.get(1) + " | " + "Week: " + current_week + " | "
                                 + "Hours: " + hours);
+                        JOptionPane.showMessageDialog(FMS_Time_Report.this, "Row deleted.");
+                        System.out.println("After delete row: " + metrics_fms_info);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(VSS_Time_Report.this, "Select one row.");
+                    JOptionPane.showMessageDialog(FMS_Time_Report.this, "Select one row.");
                 }
                 jDLoading.dispose();
             }
@@ -3553,14 +3615,12 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jcbTask.addItem("Select an activity...");
         ArrayList<String> check_list = new ArrayList<>();
         String task = null;
-
+        jTextFieldRequests.setText("1");
         if (sap.equals("Not Billable")) {
             jcbRegion.removeAllItems();
             jcbRegion.addItem("SDU");
             jcbMarket.removeAllItems();
             jcbMarket.addItem("SDU");
-            jcbTech.removeAllItems();
-            jcbTech.addItem("N/A");
             // Fill tasks
             for (int i = 1; i < tasks_info.size(); i += 5) {
                 task = tasks_info.get(i);
@@ -3586,9 +3646,9 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             // Fill region
             jcbRegion.removeAllItems();
             jcbRegion.addItem("Select a region...");
-
+            
             ArrayList<String> regions = new ArrayList<>();
-            for (int i = 2; i < networks_info.size(); i += 8) {
+            for (int i = 2; i < networks_info.size(); i += 9) {
                 if (!regions.contains(networks_info.get(i))) {
                     if (networks_info.get(i + 2).equals(jcbCU.getSelectedItem().toString())) {
                         regions.add(networks_info.get(i));
@@ -3600,6 +3660,9 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             for (int i = 0; i < regions.size(); i++) {
                 jcbRegion.addItem(regions.get(i));
             }
+            
+            System.out.println("A Q U I : " + regions);
+            
             // Fill market
             jcbMarket.removeAllItems();
             jcbMarket.addItem("Select a market...");
@@ -3608,7 +3671,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 region = jcbRegion.getSelectedItem().toString();
             }
             ArrayList<String> mrkts = new ArrayList<>();
-            for (int i = 3; i < networks_info.size(); i += 8) {
+            for (int i = 3; i < networks_info.size(); i += 9) {
                 if (!mrkts.contains(networks_info.get(i))) {
                     if (networks_info.get(i + 1).equals(jcbCU.getSelectedItem().toString())) {
                         if (networks_info.get(i - 1).equals(region)) {
@@ -3625,23 +3688,23 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
         // Refresh jcbSubnetwork
         jcbSubnet.removeAllItems();
+        jcbProjectName.removeAllItems();
         if (jcbSAP.getSelectedIndex() == 0) {
             jcbSubnet.addItem("Select a subnetwork...");
-            jTextFieldNetwork.setText("");
-            jTextFieldActivity.setText("");
-            for (int i = 5; i < networks_info.size(); i += 8) {
+            jcbProjectName.addItem("Select a project...");
+            for (int i = 5; i < networks_info.size(); i += 9) {
                 if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
                     if (networks_info.get(i - 3).equals(jcbRegion.getSelectedItem().toString())) {
                         if (networks_info.get(i - 2).equals(jcbMarket.getSelectedItem().toString())) {
                             jcbSubnet.addItem(networks_info.get(i));
+                            jcbProjectName.addItem(networks_info.get(i + 3));
                         }
                     }
                 }
             }
         } else {
             jcbSubnet.addItem("0");
-            jTextFieldNetwork.setText("0");
-            jTextFieldActivity.setText("0");
+            jcbProjectName.addItem("N/A");
         }
 
     }//GEN-LAST:event_jcbSAPActionPerformed
@@ -3665,22 +3728,23 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         String cu = (String) jcbCU.getSelectedItem();
         for (int i = 0; i < networks_info.size(); i++) {
             if (networks_info.get(i).equals(subnet) && networks_info.get(i - 1).equals(cu)
-                    && networks_info.get(i + 1).equals("VSS")) {
+                    && networks_info.get(i + 1).equals("FMS")) {
                 //System.out.println(i);
                 int net = i - 5;
                 jTextFieldNetwork.setText(networks_info.get(net));
                 int act = i - 4;
                 jTextFieldActivity.setText(networks_info.get(act));
+                jcbProjectName.getModel().setSelectedItem(networks_info.get(i + 3));
             } else {
                 continue;
             }
-            if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
-                jTextFieldNetwork.setText("0");
-                jTextFieldActivity.setText("0");
-            } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
-                jTextFieldNetwork.setText("");
-                jTextFieldActivity.setText("");
-            }
+        }
+        if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 1) {
+            jTextFieldNetwork.setText("0");
+            jTextFieldActivity.setText("0");
+        } else if (jcbSubnet.getSelectedIndex() == 0 && jcbSAP.getSelectedIndex() == 0) {
+            jTextFieldNetwork.setText("");
+            jTextFieldActivity.setText("");
         }
     }//GEN-LAST:event_jcbSubnetActionPerformed
 
@@ -3696,7 +3760,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             jcbRegion.addItem("Select a region...");
 
             ArrayList<String> regions = new ArrayList<>();
-            for (int i = 2; i < networks_info.size(); i += 8) {
+            for (int i = 2; i < networks_info.size(); i += 9) {
                 if (!regions.contains(networks_info.get(i))) {
                     if (networks_info.get(i + 2).equals(jcbCU.getSelectedItem().toString())) {
                         regions.add(networks_info.get(i));
@@ -3708,7 +3772,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             for (int i = 0; i < regions.size(); i++) {
                 jcbRegion.addItem(regions.get(i));
             }
-
             // Fill tasks
             String sap = (String) jcbSAP.getSelectedItem();
             jcbTask.removeAllItems();
@@ -3731,15 +3794,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     }
                 }
             }
-
-            // Tech jcombobox
-            if (!jcbCU.getSelectedItem().toString().equals("AT&T")) {
-                jcbTech.setVisible(true);
-                jLabelTech.setVisible(true);
-            } else {
-                jcbTech.setVisible(false);
-                jLabelTech.setVisible(false);
-            }
         }
     }//GEN-LAST:event_jcbCUActionPerformed
 
@@ -3751,7 +3805,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jcbTask1.removeAllItems();
         jcbTask1.addItem("Select an activity...");
         String task = null;
-        if (team.equals("VSS")) {
+        if (team.equals("FMS")) {
             for (int i = 0; i < tasks_info.size(); i++) {
                 String check = tasks_info.get(i);
                 if (switch_.equals("All")) {
@@ -3803,7 +3857,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jcbTask1.removeAllItems();
         jcbTask1.addItem("Select an activity...");
         String task = null;
-        if (team.equals("VSS")) {
+        if (team.equals("FMS")) {
             for (int i = 0; i < tasks_info.size(); i++) {
                 String check = tasks_info.get(i);
                 if (switch_.equals("All")) {
@@ -3852,7 +3906,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jFrameCatalog.setTitle("Networks Catalog");
         jFrameCatalog.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
         jFrameCatalog.setLocationRelativeTo(null);
-        jFrameCatalog.setSize(1300, 600);
+        jFrameCatalog.setSize(1500, 600);
         JTableHeader header = jTableCatalog.getTableHeader();
         header.setBackground(new Color(0, 130, 240));
         header.setForeground(Color.white);
@@ -3865,8 +3919,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             ResultSet resultSet = null;
             ResultSetMetaData rsm = null;
             String sql = "SELECT * "
-                    + "FROM networks " // CHANGE this table
-                    + "WHERE Team = 'VSS' AND Customer = '" + cu + "' "
+                    + "FROM networks "
+                    + "WHERE Team = 'FMS' AND Customer = '" + cu + "' "
                     + "ORDER BY Customer, Region, Market;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -3886,56 +3940,46 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
         jFrameCatalog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jFrameCatalog.setVisible(true);
     }//GEN-LAST:event_jBCatalogActionPerformed
 
     private void jcbMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMarketActionPerformed
-        // Populate technology and subnetwork
-        jcbTech.removeAllItems();
-        jcbTech.addItem("Select a technology...");
-
+        // Populate subnetwork
+        String cu = null;
         String market = null;
         String region = null;
-        if (jcbMarket.getItemCount() != 0) {
-            market = jcbMarket.getSelectedItem().toString();
+        if (jcbCU.getItemCount() != 0) {
+            cu = jcbCU.getSelectedItem().toString();
         }
         if (jcbRegion.getItemCount() != 0) {
             region = jcbRegion.getSelectedItem().toString();
         }
-        ArrayList<String> techs = new ArrayList<>();
-        for (int i = 7; i < networks_info.size(); i += 8) {
-            if (!techs.contains(networks_info.get(i))) {
-                if (networks_info.get(i - 3).equals(jcbCU.getSelectedItem().toString())) {
-                    if (networks_info.get(i - 5).equals(region)) {
-                        if (networks_info.get(i - 4).equals(market)) {
-                            techs.add(networks_info.get(i));
-                        }
-                    }
-                }
-            }
+        if (jcbMarket.getItemCount() != 0) {
+            market = jcbMarket.getSelectedItem().toString();
         }
-        Collections.sort(techs);
-        for (int i = 0; i < techs.size(); i++) {
-            jcbTech.addItem(techs.get(i));
-        }
+
         // Refresh jcbSubnetwork
         jcbSubnet.removeAllItems();
+        jcbProjectName.removeAllItems();
         if (jcbSAP.getSelectedIndex() == 0) {
             jcbSubnet.addItem("Select a subnetwork...");
-            for (int i = 5; i < networks_info.size(); i += 8) {
-                if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
+            jcbProjectName.addItem("Select a project...");
+            for (int i = 5; i < networks_info.size(); i += 9) {
+                if (networks_info.get(i - 1).equals(cu)) { // Mostrar solo para CU seleccionada
                     if (networks_info.get(i - 3).equals(region)) {
                         if (networks_info.get(i - 2).equals(market)) {
                             jcbSubnet.addItem(networks_info.get(i));
+                            jcbProjectName.addItem(networks_info.get(i + 3));
                         }
                     }
                 }
             }
         } else {
             jcbSubnet.addItem("0");
+            jcbProjectName.addItem("N/A");
         }
     }//GEN-LAST:event_jcbMarketActionPerformed
 
@@ -3949,7 +3993,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             region = jcbRegion.getSelectedItem().toString();
         }
         ArrayList<String> mrkts = new ArrayList<>();
-        for (int i = 3; i < networks_info.size(); i += 8) {
+        for (int i = 3; i < networks_info.size(); i += 9) {
             if (!mrkts.contains(networks_info.get(i))) {
                 if (networks_info.get(i + 1).equals(jcbCU.getSelectedItem().toString())) {
                     if (networks_info.get(i - 1).equals(region)) {
@@ -3963,38 +4007,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             jcbMarket.addItem(mrkts.get(i));
         }
     }//GEN-LAST:event_jcbRegionActionPerformed
-
-    private void jcbTechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTechActionPerformed
-        // Technology combobox action, fill subnetwork
-        String market = null;
-        String region = null;
-        String tech = null;
-        if (jcbMarket.getItemCount() != 0) {
-            market = jcbMarket.getSelectedItem().toString();
-        }
-        if (jcbRegion.getItemCount() != 0) {
-            region = jcbRegion.getSelectedItem().toString();
-        }
-        if (jcbTech.getItemCount() != 0) {
-            tech = jcbTech.getSelectedItem().toString();
-        }
-
-        jcbSubnet.removeAllItems();
-        if (jcbSAP.getSelectedIndex() == 0) {
-            jcbSubnet.addItem("Select a subnetwork...");
-            for (int i = 5; i < networks_info.size(); i += 8) {
-                if (networks_info.get(i - 1).equals(jcbCU.getSelectedItem().toString())) { // Mostrar solo para CU seleccionada
-                    if (networks_info.get(i - 3).equals(region)) {
-                        if (networks_info.get(i - 2).equals(market)) {
-                            if (networks_info.get(i + 2).equals(tech)) {
-                                jcbSubnet.addItem(networks_info.get(i));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }//GEN-LAST:event_jcbTechActionPerformed
 
     private void SaveTableCSV(String fileName, TableModel tableModel) throws IOException {
         String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + fileName + ".csv";
@@ -4039,7 +4051,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             try {
                 SaveTableCSV(fileName, model);
             } catch (IOException ex) {
-                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Table is empty!");
@@ -4052,7 +4064,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jFrameMarketsBulk.setTitle("Bulk for markets");
         jFrameMarketsBulk.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
         jFrameMarketsBulk.setSize(1300, 600);
-        jFrameMarketsBulk.setResizable(false);
+        //jFrameMarketsBulk.setResizable(false);
         jFrameMarketsBulk.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jFrameMarketsBulk.setVisible(true);
         jFrameMarketsBulk.setLocationRelativeTo(null);
@@ -4062,7 +4074,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jcbRegionBulk.addItem("Select a region...");
 
         ArrayList<String> regions = new ArrayList<>();
-        for (int i = 2; i < networks_info.size(); i += 8) {
+        for (int i = 2; i < networks_info.size(); i += 9) {
             if (!regions.contains(networks_info.get(i))) {
                 if (networks_info.get(i + 2).equals(jcbCU.getSelectedItem().toString())) {
                     regions.add(networks_info.get(i));
@@ -4109,7 +4121,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             region = jcbRegionBulk.getSelectedItem().toString();
         }
         ArrayList<String> mrkts = new ArrayList<>();
-        for (int i = 3; i < networks_info.size(); i += 8) {
+        for (int i = 3; i < networks_info.size(); i += 9) {
             if (!mrkts.contains(networks_info.get(i))) {
                 if (networks_info.get(i + 1).equals(jcbCU.getSelectedItem().toString())) {
                     if (networks_info.get(i - 1).equals(region)) {
@@ -4192,6 +4204,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     }
 
     public void ClearMarketBulk() {
+        mrkts_bulk.clear();
         Date date = new Date();
         jcbRegionBulk.setSelectedIndex(0);
         jTextFieldNumReqMarketBulk.setText("");
@@ -4205,21 +4218,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jcbTask_MarketBulk.setSelectedIndex(0);
         jTextFieldComments_MarketBulk.setText("");
     }
-
-    private void jcbTask_MarketBulkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTask_MarketBulkActionPerformed
-        // Task combobox action Market_Bulk, fill task id based on task
-        String task = (String) jcbTask_MarketBulk.getSelectedItem();
-        for (int i = 0; i < tasks_info.size(); i++) {
-            String task_list_element = tasks_info.get(i);
-            if (task_list_element.equals(task)) {
-                int a = i - 1;
-                jTextFieldTask_ID_MarketBulk.setText(tasks_info.get(a));
-            }
-        }
-        if (jcbTask_MarketBulk.getSelectedIndex() == 0) {
-            jTextFieldTask_ID_MarketBulk.setText("");
-        }
-    }//GEN-LAST:event_jcbTask_MarketBulkActionPerformed
 
     private void jBAddBulkMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddBulkMarketActionPerformed
         // Add button from Bulk for markets
@@ -4239,7 +4237,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         String sreq = jTextFieldNumReqMarketBulk.getText();
         Matcher mreq = preq.matcher(sreq);
         boolean breq = mreq.find();
-
         if (!breq) {
             JOptionPane.showMessageDialog(this, "Number of requests must be a number!");
             jTextFieldNumReqMarketBulk.setText("");
@@ -4309,8 +4306,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
         // Count rows to divide time
         int total_rows = 0;
-        for (int z = 2; z < networks_info.size(); z += 8) {
-            if (networks_info.get(z + 4).equals("VSS") && networks_info.get(z + 2).equals(cu)) {
+        for (int z = 2; z < networks_info.size(); z += 9) {
+            if (networks_info.get(z + 4).equals("FMS") && networks_info.get(z + 2).equals(cu)) {
                 for (int i = 0; i < mrkts_bulk.size(); i++) {
                     if (region.equals(networks_info.get(z)) && mrkts_bulk.get(i).equals(networks_info.get(z + 1))) {
                         total_rows += 1;
@@ -4330,8 +4327,8 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 String market = mrkts_bulk.get(i);
                 // Count networks in market i
                 ArrayList<String> markets_nets = new ArrayList<>();
-                for (int z = 2; z < networks_info.size(); z += 8) {
-                    if (networks_info.get(z + 4).equals("VSS") && networks_info.get(z + 2).equals(cu)) {
+                for (int z = 2; z < networks_info.size(); z += 9) {
+                    if (networks_info.get(z + 4).equals("FMS") && networks_info.get(z + 2).equals(cu)) {
                         if (region.equals(networks_info.get(z)) && market.equals(networks_info.get(z + 1))) {
                             markets_nets.add(networks_info.get(z - 2)); // Network
                             markets_nets.add(networks_info.get(z + 3)); // Subnetwork
@@ -4364,45 +4361,26 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBAddBulkMarketActionPerformed
 
+    private void jcbTask_MarketBulkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTask_MarketBulkActionPerformed
+        // Task combobox action Market_Bulk, fill task id based on task
+        String task = (String) jcbTask_MarketBulk.getSelectedItem();
+        for (int i = 0; i < tasks_info.size(); i++) {
+            String task_list_element = tasks_info.get(i);
+            if (task_list_element.equals(task)) {
+                int a = i - 1;
+                jTextFieldTask_ID_MarketBulk.setText(tasks_info.get(a));
+            }
+        }
+        if (jcbTask_MarketBulk.getSelectedIndex() == 0) {
+            jTextFieldTask_ID_MarketBulk.setText("");
+        }
+    }//GEN-LAST:event_jcbTask_MarketBulkActionPerformed
+
     private void jBCancel_MarketBulkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancel_MarketBulkActionPerformed
         // Cancel button for market bulk
         this.setEnabled(true);
         jFrameMarketsBulk.dispose();
     }//GEN-LAST:event_jBCancel_MarketBulkActionPerformed
-
-    private void jBHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHistoryActionPerformed
-        // History button
-        // Initialize frame
-        jFrameHistory.setTitle("Search for period of time");
-        jFrameHistory.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
-        jFrameHistory.setSize(400, 300);
-        jFrameHistory.setResizable(false);
-        jFrameHistory.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        jFrameHistory.setVisible(true);
-        jFrameHistory.setLocationRelativeTo(null);
-
-        // Init jcombobox CU
-        String[] teams_ = usersinfo.get(7).split("@");
-        List<String> teams = new ArrayList<String>(Arrays.asList(teams_));
-        teams.add(usersinfo.get(3));
-        jcb_Team_history.addItem("VSS");
-        if (!usersinfo.get(7).equals("N/A")) {
-            for (int i = 0; i < teams.size(); i++) {
-                if (!teams.get(i).equals("VSS")) {
-                    jcb_Team_history.addItem(teams.get(i));
-                }
-            }
-        }
-        jcb_Team_history.addItem("All");
-        // Init jDataChoosers
-        JTextFieldDateEditor editor_start = (JTextFieldDateEditor) jDateChooser_Start.getDateEditor();
-        JTextFieldDateEditor editor_end = (JTextFieldDateEditor) jDateChooser_End.getDateEditor();
-        editor_start.setEditable(false);
-        editor_end.setEditable(false);
-        Date date = new Date();
-        jDateChooser_Start.setDate(date);
-        jDateChooser_End.setDate(date);
-    }//GEN-LAST:event_jBHistoryActionPerformed
 
     private void jB_ExportDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_ExportDatesActionPerformed
         // Export history button
@@ -4503,16 +4481,16 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     if (reply == JOptionPane.YES_OPTION) {
                         Desktop.getDesktop().open(new File(path));
                     } else {
-                        JOptionPane.showMessageDialog(VSS_Time_Report.this, "File was saved to " + path);
+                        JOptionPane.showMessageDialog(FMS_Time_Report.this, "File was saved to " + path);
                     }
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(VSS_Time_Report.this, "File could not be created");
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(FMS_Time_Report.this, "File could not be created");
                     jDLoading.dispose();
                     jFrameHistory.dispose();
                     return;
                 } catch (IOException ex) {
-                    Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 jDLoading.dispose();
             }
@@ -4522,6 +4500,40 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jFrameHistory.dispose();
     }//GEN-LAST:event_jB_ExportDatesActionPerformed
 
+    private void jBHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHistoryActionPerformed
+        // History button
+        // Initialize frame
+        jFrameHistory.setTitle("Search for period of time");
+        jFrameHistory.setIconImage(new ImageIcon(getClass().getResource("/images/MRT_logo.png")).getImage());
+        jFrameHistory.setSize(400, 300);
+        jFrameHistory.setResizable(false);
+        jFrameHistory.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        jFrameHistory.setVisible(true);
+        jFrameHistory.setLocationRelativeTo(null);
+
+        // Init jcombobox CU
+        String[] teams_ = usersinfo.get(7).split("@");
+        List<String> teams = new ArrayList<String>(Arrays.asList(teams_));
+        teams.add(usersinfo.get(3));
+        jcb_Team_history.addItem("FMS");
+        if (!usersinfo.get(7).equals("N/A")) {
+            for (int i = 0; i < teams.size(); i++) {
+                if (!teams.get(i).equals("FMS")) {
+                    jcb_Team_history.addItem(teams.get(i));
+                }
+            }
+        }
+        jcb_Team_history.addItem("All");
+        // Init jDataChoosers
+        JTextFieldDateEditor editor_start = (JTextFieldDateEditor) jDateChooser_Start.getDateEditor();
+        JTextFieldDateEditor editor_end = (JTextFieldDateEditor) jDateChooser_End.getDateEditor();
+        editor_start.setEditable(false);
+        editor_end.setEditable(false);
+        Date date = new Date();
+        jDateChooser_Start.setDate(date);
+        jDateChooser_End.setDate(date);
+    }//GEN-LAST:event_jBHistoryActionPerformed
+
     private void jMenuItem_SavedTemplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SavedTemplateActionPerformed
         // Import previously saved template to table
         jPanel1.setVisible(true);
@@ -4529,7 +4541,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
         jPanel3.setVisible(false);
         DefaultTableModel tblModel = (DefaultTableModel) jTableAddMetrics.getModel();
         tblModel.setRowCount(0);
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\54v3d_73mp1473_v55.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\54v3d_73mp1473_P55.csv"))) {
             String line;
             br.readLine();
 
@@ -4581,12 +4593,12 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     try {
                         new_date = dcn.parse(finalValues.get(12));
                     } catch (ParseException ex) {
-                        Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     SimpleDateFormat dcn1 = new SimpleDateFormat("yyyy-MM-dd");
-                    if (dcn1.format(new_date).toString().startsWith("00")){
-                            String _date = dcn1.format(new_date).toString().replace("00", "20");
-                            finalValues.set(12, _date);
+                    if (dcn1.format(new_date).toString().startsWith("00")) {
+                        String _date = dcn1.format(new_date).toString().replace("00", "20");
+                        finalValues.set(12, _date);
                     } else {
                         finalValues.set(12, dcn1.format(new_date));
                     }
@@ -4596,10 +4608,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 tblModel.addRow(row);
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "File does not exist!");
         } catch (IOException ex) {
-            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "File cannot be used!");
         }
     }//GEN-LAST:event_jMenuItem_SavedTemplateActionPerformed
@@ -4618,7 +4630,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         // Create csv with data
-                        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\54v3d_73mp1473_v55.csv";
+                        String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\MRT\\54v3d_73mp1473_p55.csv";
                         try (PrintWriter writer = new PrintWriter(new File(path))) {
                             StringBuilder sb = new StringBuilder();
                             // Header
@@ -4667,10 +4679,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                             }
                             writer.write(sb.toString());
                             System.out.println("Template saved successfully");
-                            JOptionPane.showMessageDialog(VSS_Time_Report.this, "Templated saved successfully");
+                            JOptionPane.showMessageDialog(FMS_Time_Report.this, "Templated saved successfully");
                         } catch (FileNotFoundException ex) {
-                            Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
-                            JOptionPane.showMessageDialog(VSS_Time_Report.this, "Info could not be saved");
+                            Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(FMS_Time_Report.this, "Info could not be saved");
                             jDLoading.dispose();
                             return;
                         }
@@ -4721,6 +4733,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
 
             // Create csv with data
             String path = "C:\\Users\\" + usersinfo.get(0) + "\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";
+            // String path = "C:\\Users\\ealloem\\Documents\\" + usersinfo.get(0) + "_metrics_ess_" + date + ".csv";            
             System.out.println("ESS: " + metrics_for_ess);
             // Sum time with same network and activity (Productive, Training, Meeting, etc)
             ArrayList<String> sum_metrics = new ArrayList<>();
@@ -4781,10 +4794,10 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 boolean new_task = true;
                 for (int j = 0; j < sum_metrics.size(); j += 10) {
                     if (sum_metrics.get(j + 2).equals(task_) && sum_metrics.get(j).equals(subnet)) { // If same task
-                        //System.out.println("\nSumando: " + sum_metrics.get(j + 2) + " | " + task_ + " | day: " + day);
+                        // System.out.println("\nSumando: " + sum_metrics.get(j + 2) + " | " + task_ + " | day: " + day);
                         String new_time = String.valueOf(BigDecimal.valueOf(Double.parseDouble(metrics_for_ess.get(i + 7))).add(BigDecimal.valueOf(Double.parseDouble(sum_metrics.get(j + 2 + day)))));
                         sum_metrics.set(j + 2 + day, new_time);
-                        //System.out.println("SUM: " + sum_metrics); // Print array contents
+                        // System.out.println("SUM: " + sum_metrics); // Print array contents
                         new_task = false;
                         break;
                     }
@@ -4912,20 +4925,20 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 }
                 writer.write(sb.toString());
                 System.out.println("File writed successfully");
-                int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "ESS template saved", JOptionPane.YES_NO_OPTION);
+                int reply = JOptionPane.showConfirmDialog(null, "Do you want to open it?", "ESS template created", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     Desktop.getDesktop().open(new File(path));
                 } else {
-                    JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
+                    JOptionPane.showMessageDialog(this, "File was saved to " + path);
                 }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(VSS_Time_Report.this, "File could not be created");
+                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(FMS_Time_Report.this, "File could not be created");
                 jDLoading.dispose();
                 jFrameHistory.dispose();
                 return;
             } catch (IOException ex) {
-                Logger.getLogger(VSS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Table is empty!");
@@ -4942,12 +4955,30 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
             try {
                 SaveTableCSV(fileName, model);
             } catch (IOException ex) {
-                Logger.getLogger(COP_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FMS_Time_Report.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Table is empty!");
         }
     }//GEN-LAST:event_jB_Export_Net_CatalogActionPerformed
+
+    private void jcbProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProjectNameActionPerformed
+        // Project Name combobox action
+        String project = (String) jcbProjectName.getSelectedItem();
+        String cu = (String) jcbCU.getSelectedItem();
+        for (int i = 0; i < networks_info.size(); i++) {
+            if (networks_info.get(i).equals(project) && networks_info.get(i - 4).equals(cu)
+                    && networks_info.get(i - 2).equals("FMS")) {
+                jcbSubnet.getModel().setSelectedItem(networks_info.get(i - 3));
+            } else {
+                continue;
+            }
+        }
+
+        if (jcbProjectName.getItemCount() != 0) {
+            jcbProjectName.setToolTipText("<html><h3>" + jcbProjectName.getSelectedItem().toString() + "</h3></html>");
+        }
+    }//GEN-LAST:event_jcbProjectNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -4967,30 +4998,38 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VSS_Time_Report.class
+            java.util.logging.Logger.getLogger(FMS_Time_Report.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VSS_Time_Report.class
+            java.util.logging.Logger.getLogger(FMS_Time_Report.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VSS_Time_Report.class
+            java.util.logging.Logger.getLogger(FMS_Time_Report.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VSS_Time_Report.class
+            java.util.logging.Logger.getLogger(FMS_Time_Report.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new VSS_Time_Report().setVisible(true);
+                    new FMS_Time_Report().setVisible(true);
 
                 } catch (ParseException | IOException ex) {
-                    Logger.getLogger(VSS_Time_Report.class
+                    Logger.getLogger(FMS_Time_Report.class
                             .getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -5010,11 +5049,11 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JButton jBHistory;
     private javax.swing.JButton jBMarketsBulk;
     private javax.swing.JButton jBSearch;
+    private javax.swing.JButton jBUpdate;
     private javax.swing.JButton jB_ESS;
     private javax.swing.JButton jB_ExportDates;
     private javax.swing.JButton jB_Export_Net_Catalog;
     private javax.swing.JButton jB_Save;
-    private javax.swing.JButton jButtonUpdate;
     private javax.swing.JCheckBox jCheckBoxWeek;
     private javax.swing.JDialog jDLoading;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -5043,6 +5082,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JLabel jLNetwork;
     private javax.swing.JLabel jLOnTime;
     private javax.swing.JLabel jLOnTime_MarketBulk;
+    private javax.swing.JLabel jLProjectName;
     private javax.swing.JLabel jLRegionBulk;
     private javax.swing.JLabel jLRequestor;
     private javax.swing.JLabel jLRequestor_MarketBulk;
@@ -5084,7 +5124,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSupport;
     private javax.swing.JLabel jLabelTeam;
     private javax.swing.JLabel jLabelTeam1;
-    private javax.swing.JLabel jLabelTech;
     private javax.swing.JLabel jLabelVersion;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -5140,6 +5179,7 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbMarket;
     private javax.swing.JComboBox<String> jcbOnTime;
     private javax.swing.JComboBox<String> jcbOnTime_MarketBulk;
+    private javax.swing.JComboBox<String> jcbProjectName;
     private javax.swing.JComboBox<String> jcbRegion;
     private javax.swing.JComboBox<String> jcbRegionBulk;
     private javax.swing.JComboBox<String> jcbSAP;
@@ -5149,7 +5189,6 @@ public final class VSS_Time_Report extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbTask1;
     private javax.swing.JComboBox<String> jcbTask_MarketBulk;
     private javax.swing.JComboBox<String> jcbTeam1;
-    private javax.swing.JComboBox<String> jcbTech;
     private javax.swing.JComboBox<String> jcbWeek1;
     private javax.swing.JComboBox<String> jcb_Team_history;
     // End of variables declaration//GEN-END:variables
