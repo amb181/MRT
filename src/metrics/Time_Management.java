@@ -7799,9 +7799,9 @@ public class Time_Management extends javax.swing.JFrame {
                         + "FROM metrics_vss UNION ALL "
                         + "SELECT Signum, Organization, Name, Task_ID, Task, Network, Subnetwork, SAP_Billing, Work_date, Logged_Time, Week "
                         + "FROM metrics_pss) LOGGEDTIME "
-                        + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " LIMIT 18446744073709551615;";
+                        + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + ";";
             } else {
-                query = "SELECT " + parametros + "SUM(Logged_Time) FROM metrics_" + team1 + " " + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " LIMIT 18446744073709551615;";
+                query = "SELECT " + parametros + "SUM(Logged_Time) FROM metrics_" + team1 + " " + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + ";";
             }
             System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
@@ -7966,13 +7966,13 @@ public class Time_Management extends javax.swing.JFrame {
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_pss) METRICAS " + week + organization + name1 + " LIMIT 18446744073709551615;";
+                        + "FROM metrics_pss) METRICAS " + week + organization + name1 + ";";
             } else {
                 query = "SELECT Region, Organization, Signum, Name, Customer_Unit, "
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, "
-                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + " LIMIT 18446744073709551615;";
+                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + ";";
             }
             preparedStatement = connection.prepareStatement(query);
             System.out.println("Query: " + preparedStatement);
