@@ -386,29 +386,6 @@ public class Time_Management extends javax.swing.JFrame {
         };
         jLabel19 = new javax.swing.JLabel();
         jBExportTaskCSV = new javax.swing.JButton();
-        jPSearchPackage = new javax.swing.JPanel();
-        jBDeleteTask3 = new javax.swing.JButton();
-        jLpackage = new javax.swing.JLabel();
-        jCBPackageSearch = new javax.swing.JComboBox<>();
-        jCBPackage_CU = new javax.swing.JComboBox<>();
-        jLTaskSearch5 = new javax.swing.JLabel();
-        jCBTeamSearchPackage = new javax.swing.JComboBox<>();
-        jLabel47 = new javax.swing.JLabel();
-        jLpackage1 = new javax.swing.JLabel();
-        jCBDeliverableSearch = new javax.swing.JComboBox<>();
-        jBSearchTask3 = new javax.swing.JButton();
-        jPAddPackage = new javax.swing.JPanel();
-        jBSaveTask1 = new javax.swing.JButton();
-        jCBDeliverables = new javax.swing.JComboBox<>();
-        jLTaskSearch8 = new javax.swing.JLabel();
-        jLServicePackage = new javax.swing.JLabel();
-        jCBServicePackageAdd = new javax.swing.JComboBox<>();
-        jCBTeam_package = new javax.swing.JComboBox<>();
-        jLabel48 = new javax.swing.JLabel();
-        jCBCUPackageAdd = new javax.swing.JComboBox<>();
-        jLDeliverables = new javax.swing.JLabel();
-        jCBPackage_billable1 = new javax.swing.JComboBox<>();
-        jLBillable = new javax.swing.JLabel();
         jPNetworks = new javax.swing.JPanel();
         jLNetAction = new javax.swing.JLabel();
         jCBNetAction = new javax.swing.JComboBox<>();
@@ -1779,245 +1756,6 @@ public class Time_Management extends javax.swing.JFrame {
             }
         });
 
-        jPSearchPackage.setBackground(new java.awt.Color(255, 255, 255));
-
-        jBDeleteTask3.setBackground(new java.awt.Color(199, 64, 56));
-        jBDeleteTask3.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jBDeleteTask3.setForeground(new java.awt.Color(255, 255, 255));
-        jBDeleteTask3.setText("Delete");
-        jBDeleteTask3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBDeleteTask3ActionPerformed(evt);
-            }
-        });
-
-        jLpackage.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLpackage.setText(" Service Package:");
-
-        jCBPackageSearch.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBPackageSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBPackageSearchActionPerformed(evt);
-            }
-        });
-
-        jCBPackage_CU.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBPackage_CU.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBPackage_CUActionPerformed(evt);
-            }
-        });
-
-        jLTaskSearch5.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLTaskSearch5.setText("Team:");
-
-        jCBTeamSearchPackage.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeamSearchPackage.setToolTipText("");
-        jCBTeamSearchPackage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeamSearchPackageActionPerformed(evt);
-            }
-        });
-
-        jLabel47.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLabel47.setText("CU:");
-
-        jLpackage1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLpackage1.setText(" Deliverable:");
-
-        jCBDeliverableSearch.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBDeliverableSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBDeliverableSearchActionPerformed(evt);
-            }
-        });
-
-        jBSearchTask3.setBackground(new java.awt.Color(0, 130, 240));
-        jBSearchTask3.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jBSearchTask3.setForeground(new java.awt.Color(255, 255, 255));
-        jBSearchTask3.setText("Search");
-        jBSearchTask3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSearchTask3ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPSearchPackageLayout = new javax.swing.GroupLayout(jPSearchPackage);
-        jPSearchPackage.setLayout(jPSearchPackageLayout);
-        jPSearchPackageLayout.setHorizontalGroup(
-            jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPSearchPackageLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPSearchPackageLayout.createSequentialGroup()
-                        .addComponent(jLTaskSearch5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBTeamSearchPackage, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel47)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBPackage_CU, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPSearchPackageLayout.createSequentialGroup()
-                            .addComponent(jLpackage1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jCBDeliverableSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBSearchTask3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jBDeleteTask3)
-                            .addGap(6, 6, 6))
-                        .addGroup(jPSearchPackageLayout.createSequentialGroup()
-                            .addComponent(jLpackage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jCBPackageSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(85, Short.MAX_VALUE))
-        );
-        jPSearchPackageLayout.setVerticalGroup(
-            jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPSearchPackageLayout.createSequentialGroup()
-                .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCBPackage_CU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCBTeamSearchPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel47))
-                    .addComponent(jLTaskSearch5))
-                .addGap(18, 18, 18)
-                .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLpackage)
-                    .addComponent(jCBPackageSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLpackage1)
-                    .addComponent(jCBDeliverableSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 38, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPSearchPackageLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPSearchPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBDeleteTask3)
-                    .addComponent(jBSearchTask3))
-                .addContainerGap())
-        );
-
-        jPAddPackage.setBackground(new java.awt.Color(255, 255, 255));
-
-        jBSaveTask1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jBSaveTask1.setText("Save");
-        jBSaveTask1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSaveTask1ActionPerformed(evt);
-            }
-        });
-
-        jCBDeliverables.setEditable(true);
-        jCBDeliverables.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBDeliverables.setToolTipText("");
-        jCBDeliverables.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBDeliverablesActionPerformed(evt);
-            }
-        });
-
-        jLTaskSearch8.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLTaskSearch8.setText("Team:");
-
-        jLServicePackage.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLServicePackage.setText(" Service Package:");
-
-        jCBServicePackageAdd.setEditable(true);
-        jCBServicePackageAdd.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBServicePackageAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBServicePackageAddActionPerformed(evt);
-            }
-        });
-
-        jCBTeam_package.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_package.setToolTipText("");
-        jCBTeam_package.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_packageActionPerformed(evt);
-            }
-        });
-
-        jLabel48.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLabel48.setText("CU:");
-
-        jCBCUPackageAdd.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBCUPackageAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBCUPackageAddActionPerformed(evt);
-            }
-        });
-
-        jLDeliverables.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLDeliverables.setText("Deliverables");
-
-        jCBPackage_billable1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBPackage_billable1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Billable", "Not Billable" }));
-        jCBPackage_billable1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBPackage_billable1ActionPerformed(evt);
-            }
-        });
-
-        jLBillable.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLBillable.setText("Billable");
-
-        javax.swing.GroupLayout jPAddPackageLayout = new javax.swing.GroupLayout(jPAddPackage);
-        jPAddPackage.setLayout(jPAddPackageLayout);
-        jPAddPackageLayout.setHorizontalGroup(
-            jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPAddPackageLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPAddPackageLayout.createSequentialGroup()
-                        .addComponent(jLTaskSearch8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBTeam_package, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel48)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBCUPackageAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPAddPackageLayout.createSequentialGroup()
-                        .addComponent(jLDeliverables, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCBDeliverables, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLBillable)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBPackage_billable1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jBSaveTask1)
-                        .addGroup(jPAddPackageLayout.createSequentialGroup()
-                            .addComponent(jLServicePackage)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jCBServicePackageAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(12, 12, 12))))
-                .addContainerGap(246, Short.MAX_VALUE))
-        );
-        jPAddPackageLayout.setVerticalGroup(
-            jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPAddPackageLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLTaskSearch8)
-                    .addComponent(jCBTeam_package, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel48)
-                    .addComponent(jCBCUPackageAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLDeliverables)
-                    .addComponent(jCBDeliverables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLBillable)
-                    .addComponent(jCBPackage_billable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPAddPackageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLServicePackage)
-                    .addComponent(jCBServicePackageAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jBSaveTask1))
-        );
-
         javax.swing.GroupLayout jPEditTaskLayout = new javax.swing.GroupLayout(jPEditTask);
         jPEditTask.setLayout(jPEditTaskLayout);
         jPEditTaskLayout.setHorizontalGroup(
@@ -2030,9 +1768,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jLChoose)
                         .addGap(18, 18, 18)
                         .addComponent(jCBTaskEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPSearchPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPAddPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPEditTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPEditTaskLayout.createSequentialGroup()
@@ -2063,10 +1799,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jPSearchPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPAddPackage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 399, Short.MAX_VALUE))))
         );
 
         jPNetworks.setBackground(new java.awt.Color(255, 255, 255));
@@ -3647,7 +3380,7 @@ public class Time_Management extends javax.swing.JFrame {
 
         jMComp_people.setBackground(new java.awt.Color(255, 255, 255));
         jMComp_people.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jMComp_people.setText("People with missing time");
+        jMComp_people.setText("Missing Hours");
         jMComp_people.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMComp_peopleActionPerformed(evt);
@@ -3838,6 +3571,8 @@ public class Time_Management extends javax.swing.JFrame {
         jPEdit.setVisible(false);
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(false);
+        jCBServicePackage_add.setVisible(false);
+        jCBDeliverableSearch1.setVisible(false);
         jPMarket.setVisible(false);
         jPEditServicePackage.setVisible(false);
         this.setTitle("MRT - Audit & Report - Review Metrics");
@@ -3894,8 +3629,6 @@ public class Time_Management extends javax.swing.JFrame {
             jCBTaskTeam.setEnabled(true);
             jCBTaskCU.setEnabled(true);
             jCBTeam_editTask.setVisible(false);
-            jPAddPackage.setVisible(false);
-            jPSearchPackage.setVisible(false);
             ResetTaskFields();  
             
             //Fill team combo box
@@ -3925,8 +3658,6 @@ public class Time_Management extends javax.swing.JFrame {
             jCBTaskTeam.setVisible(false);
             jCBTeam_editTask.setVisible(true);
             jCBTeam_editTask.setEnabled(false);
-            jPAddPackage.setVisible(false);
-            jPSearchPackage.setVisible(false);
             ResetTaskFields();
             
             
@@ -3945,120 +3676,8 @@ public class Time_Management extends javax.swing.JFrame {
             for (int i = 0; i < teams.size(); i++){
                 jCBTeamTaskSearch.addItem(teams.get(i));
             }
-            
-            
-        // Add new service package
-        } else if (jCBTaskEdit.getSelectedIndex() == 3){
-            jPSearchTask.setVisible(false); 
-            jPTasks.setVisible(false);
-            jPSearchPackage.setVisible(false);
-            jPAddPackage.setVisible(true);
-            jLDeliverables.setVisible(false);
-            jCBDeliverables.setVisible(false);
-            
-            //Fill team combo box
-            jCBTeam_package.removeAllItems();
-            jCBTeam_package.addItem("Select a team...");
-            
-            ArrayList<String> _teams = new ArrayList<>();
-            
-            for (int i = 1; i < service_packages.size(); i += 5){
-                if (!_teams.contains(service_packages.get(i))){
-                    _teams.add(service_packages.get(i));
-                }            
-            }
-            Collections.sort(_teams);
-            for (int i = 0; i < _teams.size(); i++){
-                jCBTeam_package.addItem(_teams.get(i));
-            }
-        
-            
-        // Edit service package
-        } else if (jCBTaskEdit.getSelectedIndex() == 4){
-            jPSearchTask.setVisible(false); 
-            jPTasks.setVisible(false);
-            jPSearchPackage.setVisible(true);
-            jPAddPackage.setVisible(true);
-            jLpackage1.setVisible(false);
-            jCBDeliverableSearch.setVisible(false);
-            jLDeliverables.setVisible(false);
-            jCBDeliverables.setVisible(false);
-            
-            //Fill team combo box
-            jCBTeamSearchPackage.removeAllItems();
-            jCBTeamSearchPackage.addItem("Select a team...");
-            
-            ArrayList<String> teams = new ArrayList<>();
-            
-            for (int i = 1; i < service_packages.size(); i += 5){
-                if (!teams.contains(service_packages.get(i))){
-                    teams.add(service_packages.get(i));
-                }            
-            }
-            Collections.sort(teams);
-            for (int i = 0; i < teams.size(); i++){
-                jCBTeamSearchPackage.addItem(teams.get(i));
-            }
-            
-        //Add new deliverable
-        }else if (jCBTaskEdit.getSelectedIndex() == 5){
-            jPSearchTask.setVisible(false); 
-            jPTasks.setVisible(false);
-            jPSearchPackage.setVisible(false);
-            jPAddPackage.setVisible(true);
-            jLServicePackage.setVisible(true);
-            jLDeliverables.setVisible(true);
-            jCBDeliverables.setVisible(true);
-            jCBPackage_billable1.setVisible(false);
-            jLBillable.setVisible(false);
-            
-            
-            //Fill team combo box
-            jCBTeam_package.removeAllItems();
-            jCBTeam_package.addItem("Select a team...");
-            
-            ArrayList<String> _teams = new ArrayList<>();
-            
-            for (int i = 3; i < deliverables.size(); i += 5){
-                if (!_teams.contains(deliverables.get(i))){
-                    _teams.add(deliverables.get(i));
-                }            
-            }
-            Collections.sort(_teams);
-            for (int i = 0; i < _teams.size(); i++){
-                jCBTeam_package.addItem(_teams.get(i));
-            }
-            
-        //Edit deliverable
-        }else if (jCBTaskEdit.getSelectedIndex() == 6){
-            jPSearchTask.setVisible(false); 
-            jPTasks.setVisible(false);
-            jPSearchPackage.setVisible(true);
-            jPAddPackage.setVisible(true);
-            jCBPackage_billable1.setVisible(false);
-            jLBillable.setVisible(false);
-            jLpackage.setVisible(false);
-            jCBPackageSearch.setVisible(false);
-            
-            //Fill team combo box
-            jCBTeam_package.removeAllItems();
-            jCBTeamSearchPackage.removeAllItems();
-            jCBTeamSearchPackage.addItem("Select a team...");
-            
-            ArrayList<String> _teams = new ArrayList<>();
-            
-            for (int i = 3; i < deliverables.size(); i += 5){
-                if (!_teams.contains(deliverables.get(i))){
-                    _teams.add(deliverables.get(i));
-                }            
-            }
-            Collections.sort(_teams);
-            for (int i = 0; i < _teams.size(); i++){
-                jCBTeamSearchPackage.addItem(_teams.get(i));
-            }
-            
-            
-        }
+        }    
+       
     }//GEN-LAST:event_jCBTaskEditActionPerformed
 
     private void jBSaveTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTaskActionPerformed
@@ -5827,228 +5446,6 @@ public class Time_Management extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jCBDeliverableActionPerformed
 
-    private void jBDeleteTask3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteTask3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBDeleteTask3ActionPerformed
-
-    private void jBSearchTask3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchTask3ActionPerformed
-        // Search package to edit package:
-        if (jCBTaskEdit.getSelectedIndex() == 4){
-            jLLoading.setText("Fetching task from database...");        
-        
-            String team = jCBTeamSearchPackage.getSelectedItem().toString();
-            String cu = jCBPackage_CU.getSelectedItem().toString();
-            String s_package = jCBPackageSearch.getSelectedItem().toString();
-
-            for (int i = 1; i < service_packages.size(); i += 5){
-                if (service_packages.get(i).equals(team) && (service_packages.get(i+1).equals(cu) && (service_packages.get(i+2).equals(s_package)))){
-                    jCBTeam_package.addItem(tasks_info.get(i));
-                    jCBCUPackageAdd.addItem(tasks_info.get(i+1));
-                    if (!team.equals("SDU"))
-                        jCBPackage_billable1.setSelectedIndex(0);
-                    else
-                        jCBPackage_billable1.setSelectedIndex(1);
-                    jCBServicePackageAdd.addItem(tasks_info.get(i+2));
-                }
-            }
-        }
-    }//GEN-LAST:event_jBSearchTask3ActionPerformed
-
-    private void jCBPackageSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPackageSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBPackageSearchActionPerformed
-
-    private void jCBTeamSearchPackageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeamSearchPackageActionPerformed
-        // Fill CU in search package:
-        if (jCBTaskEdit.getSelectedIndex() == 4){
-            jCBPackage_CU.removeAllItems();
-            ArrayList<String> cus = new ArrayList<>();
-            String team = "";
-            if (jCBTeamSearchPackage.getItemCount() != 0){
-                team = jCBTeamSearchPackage.getSelectedItem().toString();
-            }        
-
-            for (int i = 2; i < service_packages.size(); i = i + 5) {
-                if (!cus.contains(service_packages.get(i))) {
-                    if (service_packages.get(i - 1).equals(team)) {
-                        cus.add(service_packages.get(i));
-                    }
-                }
-            }
-            Collections.sort(cus);
-            for (int i = 0; i < cus.size(); i++) {
-                jCBPackage_CU.addItem(cus.get(i));
-            }
-        }else if (jCBTaskEdit.getSelectedIndex() == 6){
-            jCBPackage_CU.removeAllItems();
-            ArrayList<String> cus = new ArrayList<>();
-            String team = "";
-            if (jCBTeamSearchPackage.getItemCount() != 0){
-                team = jCBTeamSearchPackage.getSelectedItem().toString();
-            }        
-
-            for (int i = 4; i < deliverables.size(); i = i + 5) {
-                if (!cus.contains(service_packages.get(i))) {
-                    if (service_packages.get(i - 1).equals(team)) {
-                        cus.add(service_packages.get(i));
-                    }
-                }
-            }
-            Collections.sort(cus);
-            for (int i = 0; i < cus.size(); i++) {
-                jCBPackage_CU.addItem(cus.get(i));
-            }
-            
-        }
-        
-
-        
-        
-    }//GEN-LAST:event_jCBTeamSearchPackageActionPerformed
-
-    private void jCBPackage_CUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPackage_CUActionPerformed
-        // Fill Service Package in search:
-        
-        jCBPackageSearch.removeAllItems();
-        ArrayList<String> s_packages = new ArrayList<>();
-        String team = "", cu = "";
-        if (jCBTeamSearchPackage.getItemCount() != 0 && jCBPackage_CU.getItemCount() != 0){
-            team = jCBTeamSearchPackage.getSelectedItem().toString();
-            cu = jCBPackage_CU.getSelectedItem().toString();
-        }        
-
-        for (int i = 3; i < service_packages.size(); i = i + 5) {
-            if (!s_packages.contains(service_packages.get(i))) {
-                if (service_packages.get(i - 2).equals(team) && service_packages.get(i - 1).equals(cu)) {
-                    s_packages.add(service_packages.get(i));
-                }
-            }
-        }
-        Collections.sort(s_packages);
-        for (int i = 0; i < s_packages.size(); i++) {
-            jCBPackageSearch.addItem(s_packages.get(i));
-        }
-        
-        
-    }//GEN-LAST:event_jCBPackage_CUActionPerformed
-
-    private void jCBServicePackageAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicePackageAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBServicePackageAddActionPerformed
-
-    private void jCBTeam_packageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_packageActionPerformed
-        // Fill CU in Add package:
-        if (jCBTaskEdit.getSelectedIndex() == 3)
-            jCBCUPackageAdd.removeAllItems();
-            ArrayList<String> cus = new ArrayList<>();
-            String team = "";
-            if (jCBTeam_package.getItemCount() != 0){
-                team = jCBTeam_package.getSelectedItem().toString();
-            }        
-
-            for (int i = 1; i < service_packages.size(); i = i + 5) {
-                if (!cus.contains(service_packages.get(i + 1))) {
-                    if (service_packages.get(i).equals(team)) {
-                        cus.add(service_packages.get(i+1));
-                    }
-                }
-            }
-            Collections.sort(cus);
-            for (int i = 0; i < cus.size(); i++) {
-                jCBCUPackageAdd.addItem(cus.get(i));
-            }
-    }//GEN-LAST:event_jCBTeam_packageActionPerformed
-
-    private void jCBCUPackageAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCUPackageAddActionPerformed
-        // Service Package fill in Add package:
-        
-        jCBServicePackageAdd.removeAllItems();
-        ArrayList<String> s_packages = new ArrayList<>();
-        String team = "", cu = "";
-        if (jCBTeam_package.getItemCount() != 0 && jCBCUPackageAdd.getItemCount() != 0){
-            team = jCBTeam_package.getSelectedItem().toString();
-            cu = jCBCUPackageAdd.getSelectedItem().toString();
-        }        
-
-        for (int i = 3; i < service_packages.size(); i = i + 5) {
-            if (!s_packages.contains(service_packages.get(i))) {
-                if (service_packages.get(i - 2).equals(team) && service_packages.get(i - 1).equals(cu)) {
-                    s_packages.add(service_packages.get(i));
-                }
-            }
-        }
-        Collections.sort(s_packages);
-        for (int i = 0; i < s_packages.size(); i++) {
-            jCBServicePackageAdd.addItem(s_packages.get(i));
-        }
-         
-        
-        
-        
-    }//GEN-LAST:event_jCBCUPackageAddActionPerformed
-
-    private void jBSaveTask1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTask1ActionPerformed
-        // Save changes of package or deliverable
-        String loe = jTFLOE.getText();
-        Pattern decimalPattern = Pattern.compile("^-?\\d{0,2}(\\.\\d{1,2})?");
-        Matcher matcherLOE = decimalPattern.matcher(loe);
-        boolean flagLOE = matcherLOE.matches();
-        if (jTFTaskName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Task field is empty!");
-        } else if (!flagLOE && !loe.equals("")) {
-            JOptionPane.showMessageDialog(this, "LOE is not a number! Please type a number with maximum two decimals.");
-        } else {
-            jLLoading.setText("Saving task into database...");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (jCBTaskEdit.getSelectedIndex() == 0) {
-                        InsertTaskIntoDB();
-                    } else {
-                        UpdateTaskIntoDB();
-                    }
-                    jLLoading.setText("Updating task's local table...");
-                    GetAllTasks();
-
-                    jDLoading.dispose();
-                }
-            }).start();
-            jDLoading.setVisible(true);
-        }
-    }//GEN-LAST:event_jBSaveTask1ActionPerformed
-
-    private void jCBDeliverablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeliverablesActionPerformed
-        // Fill service package:        
-        jCBServicePackageAdd.removeAllItems();
-        ArrayList<String> s_packages = new ArrayList<>();
-        String team = "", cu = "";
-        if (jCBTeam_package.getItemCount() != 0 && jCBCUPackageAdd.getItemCount() != 0){
-            team = jCBTeam_package.getSelectedItem().toString();
-            cu = jCBCUPackageAdd.getSelectedItem().toString();
-        }        
-
-        for (int i = 3; i < service_packages.size(); i = i + 5) {
-            if (!s_packages.contains(service_packages.get(i))) {
-                if (service_packages.get(i - 2).equals(team) && service_packages.get(i - 1).equals(cu)) {
-                    s_packages.add(service_packages.get(i));
-                }
-            }
-        }
-        Collections.sort(s_packages);
-        for (int i = 0; i < s_packages.size(); i++) {
-            jCBServicePackageAdd.addItem(s_packages.get(i));
-        }
-        
-    }//GEN-LAST:event_jCBDeliverablesActionPerformed
-
-    private void jCBPackage_billable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPackage_billable1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBPackage_billable1ActionPerformed
-
-    private void jCBDeliverableSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeliverableSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBDeliverableSearchActionPerformed
-
     private void jMComp_peopleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMComp_peopleActionPerformed
         // Menu item to select people with missing time reported within a specific time frame
         // Initialize frame
@@ -6413,10 +5810,8 @@ public class Time_Management extends javax.swing.JFrame {
             }
 
         }else{
-            jPSearchPackage.setVisible(true);
             jPSearchDeliverable.setVisible(false);
-            jPAddPackage.setVisible(false);
-            jPAddDeliverable.setVisible(true);
+            jPAddDeliverable.setVisible(false);
         }
     }//GEN-LAST:event_jCBPackageActionActionPerformed
 
@@ -6858,7 +6253,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPMarket.setVisible(false);
         jPEditServicePackage.setVisible(true);
-        this.setTitle("MRT - Audit & Report - Add, Edit and Delete Markets");
+        this.setTitle("MRT - Audit & Report - Add, Edit and Delete Service Packages and Deliverables");
     }//GEN-LAST:event_jMEditServicePackageActionPerformed
 
     private void GetTaskTypes() {
@@ -7028,7 +6423,7 @@ public class Time_Management extends javax.swing.JFrame {
             String team = jCBTeamSearchDeliverable.getSelectedItem().toString();
             String cu = jCBCUSearchDeliverable.getSelectedItem().toString();
             String s_packages = jCBPackage_deliverablesearch.getSelectedItem().toString();
-            String _deliverables = jCBDeliverableSearch.getSelectedItem().toString();
+            String _deliverables = jCBDeliverableSearch1.getSelectedItem().toString();
             String id = "";
             
             for (int i = 0; i < deliverables.size(); i+=5) {
@@ -7061,7 +6456,7 @@ public class Time_Management extends javax.swing.JFrame {
             String team = jCBTeamSearchDeliverable.getSelectedItem().toString();
             String cu = jCBCUSearchDeliverable.getSelectedItem().toString();
             String s_package = jCBPackage_deliverablesearch.getSelectedItem().toString(); 
-            String _deliverable = jCBDeliverableSearch.getSelectedItem().toString();
+            String _deliverable = jCBDeliverableSearch1.getSelectedItem().toString();
             String new_deliverable = jCBDeliverable_add.getSelectedItem().toString();
             String id = "";
             
@@ -8699,7 +8094,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JButton jBDeleteDeliverable;
     private javax.swing.JButton jBDeleteTask;
     private javax.swing.JButton jBDeleteTask1;
-    private javax.swing.JButton jBDeleteTask3;
     private javax.swing.JButton jBDeleteTask5;
     private javax.swing.JButton jBExportTaskCSV;
     private javax.swing.JButton jBExportUserCSV;
@@ -8713,7 +8107,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JButton jBSaveNet;
     private javax.swing.JButton jBSaveNewUser;
     private javax.swing.JButton jBSaveTask;
-    private javax.swing.JButton jBSaveTask1;
     private javax.swing.JButton jBSaveTask2;
     private javax.swing.JButton jBSaveTask5;
     private javax.swing.JButton jBSearch;
@@ -8721,7 +8114,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JButton jBSearchMrkt;
     private javax.swing.JButton jBSearchTask;
     private javax.swing.JButton jBSearchTask1;
-    private javax.swing.JButton jBSearchTask3;
     private javax.swing.JButton jBSearchTask5;
     private javax.swing.JButton jBShowMetrics;
     private javax.swing.JButton jBShowPreview;
@@ -8730,7 +8122,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBAction;
     private javax.swing.JComboBox<String> jCBBillable_packageadd;
     private javax.swing.JComboBox<String> jCBCUMrkt;
-    private javax.swing.JComboBox<String> jCBCUPackageAdd;
     private javax.swing.JComboBox<String> jCBCUPackageAdd2;
     private javax.swing.JComboBox<String> jCBCUPackageSearch;
     private javax.swing.JComboBox<String> jCBCUSearch;
@@ -8741,11 +8132,9 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBCustomerUnit;
     private javax.swing.JButton jCBDeleteMrkt;
     private javax.swing.JComboBox<String> jCBDeliverable;
-    private javax.swing.JComboBox<String> jCBDeliverableSearch;
     private javax.swing.JComboBox<String> jCBDeliverableSearch1;
     private javax.swing.JComboBox<String> jCBDeliverableSearch2;
     private javax.swing.JComboBox<String> jCBDeliverable_add;
-    private javax.swing.JComboBox<String> jCBDeliverables;
     private javax.swing.JComboBox<String> jCBDeliverables2;
     private javax.swing.JComboBox<String> jCBFrom;
     private javax.swing.JComboBox<String> jCBJobStage;
@@ -8769,11 +8158,8 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBNetTech;
     private javax.swing.JComboBox<String> jCBOrgMetrics;
     private javax.swing.JComboBox<String> jCBPackageAction;
-    private javax.swing.JComboBox<String> jCBPackageSearch;
     private javax.swing.JComboBox<String> jCBPackageSearch2;
-    private javax.swing.JComboBox<String> jCBPackage_CU;
     private javax.swing.JComboBox<String> jCBPackage_CU2;
-    private javax.swing.JComboBox<String> jCBPackage_billable1;
     private javax.swing.JComboBox<String> jCBPackage_billable3;
     private javax.swing.JComboBox<String> jCBPackage_deliverablesearch;
     private javax.swing.JComboBox<String> jCBProjectName;
@@ -8781,7 +8167,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBRegionMrkt;
     private javax.swing.JComboBox<String> jCBSearchUser;
     private javax.swing.JComboBox<String> jCBServicePN;
-    private javax.swing.JComboBox<String> jCBServicePackageAdd;
     private javax.swing.JComboBox<String> jCBServicePackageAdd2;
     private javax.swing.JComboBox<String> jCBServicePackageSearch;
     private javax.swing.JComboBox<String> jCBServicePackage_add;
@@ -8797,7 +8182,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBTeamMrkt;
     private javax.swing.JComboBox<String> jCBTeamPackageSearch;
     private javax.swing.JComboBox<String> jCBTeamSearchDeliverable;
-    private javax.swing.JComboBox<String> jCBTeamSearchPackage;
     private javax.swing.JComboBox<String> jCBTeamSearchPackage2;
     private javax.swing.JComboBox<String> jCBTeamTaskSearch;
     private javax.swing.JComboBox<String> jCBTeam_adddeliverable;
@@ -8807,7 +8191,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBTeam_editmarket;
     private javax.swing.JComboBox<String> jCBTeam_editnet;
     private javax.swing.JComboBox<String> jCBTeam_editpackage;
-    private javax.swing.JComboBox<String> jCBTeam_package;
     private javax.swing.JComboBox<String> jCBTeam_package2;
     private javax.swing.JComboBox<String> jCBTeam_user;
     private javax.swing.JComboBox<String> jCBTo;
@@ -8817,14 +8200,12 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JDialog jDLoading;
     private javax.swing.JFrame jFrame_Compliance;
     private javax.swing.JLabel jLAccess;
-    private javax.swing.JLabel jLBillable;
     private javax.swing.JLabel jLBillable1;
     private javax.swing.JLabel jLBillable2;
     private javax.swing.JLabel jLBillable3;
     private javax.swing.JLabel jLCUSupported;
     private javax.swing.JLabel jLChoose;
     private javax.swing.JLabel jLChoose1;
-    private javax.swing.JLabel jLDeliverables;
     private javax.swing.JLabel jLDeliverables2;
     private javax.swing.JLabel jLFileName;
     private javax.swing.JLabel jLFrom;
@@ -8832,7 +8213,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLMetricOrg;
     private javax.swing.JLabel jLMetricTeams;
     private javax.swing.JLabel jLNetAction;
-    private javax.swing.JLabel jLServicePackage;
     private javax.swing.JLabel jLServicePackage2;
     private javax.swing.JLabel jLSignum;
     private javax.swing.JLabel jLSignumEdit;
@@ -8849,9 +8229,7 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLTaskSearch11;
     private javax.swing.JLabel jLTaskSearch2;
     private javax.swing.JLabel jLTaskSearch3;
-    private javax.swing.JLabel jLTaskSearch5;
     private javax.swing.JLabel jLTaskSearch6;
-    private javax.swing.JLabel jLTaskSearch8;
     private javax.swing.JLabel jLTaskType;
     private javax.swing.JLabel jLTaskType1;
     private javax.swing.JLabel jLTaskType2;
@@ -8899,8 +8277,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel52;
@@ -8910,8 +8286,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_Filters;
-    private javax.swing.JLabel jLpackage;
-    private javax.swing.JLabel jLpackage1;
     private javax.swing.JLabel jLpackage3;
     private javax.swing.JLabel jLpackage4;
     private javax.swing.JLabel jLpackage5;
@@ -8935,7 +8309,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuTeams;
     private javax.swing.JMenu jMenuView;
     private javax.swing.JPanel jPAddDeliverable;
-    private javax.swing.JPanel jPAddPackage;
     private javax.swing.JPanel jPAddPackage1;
     private javax.swing.JPanel jPAddPackage2;
     private javax.swing.JPanel jPEdit;
@@ -8949,7 +8322,6 @@ public class Time_Management extends javax.swing.JFrame {
     private javax.swing.JPanel jPSearch;
     private javax.swing.JPanel jPSearchDeliverable;
     private javax.swing.JPanel jPSearchMrkt;
-    private javax.swing.JPanel jPSearchPackage;
     private javax.swing.JPanel jPSearchPackage1;
     private javax.swing.JPanel jPSearchPackage2;
     private javax.swing.JPanel jPSearchTask;
