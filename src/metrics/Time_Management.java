@@ -1440,7 +1440,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLChoose.setText("Choose action:");
 
         jCBTaskEdit.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTaskEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select action...", "Add a new task", "Edit existing task", "Add new service package", "Edit service package", "Add new deliverable", "Edit deliverable" }));
+        jCBTaskEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select action...", "Add a new task", "Edit existing task" }));
         jCBTaskEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBTaskEditActionPerformed(evt);
@@ -1799,7 +1799,7 @@ public class Time_Management extends javax.swing.JFrame {
                         .addComponent(jPSearchTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 399, Short.MAX_VALUE))))
+                        .addGap(0, 280, Short.MAX_VALUE))))
         );
 
         jPNetworks.setBackground(new java.awt.Color(255, 255, 255));
@@ -3695,7 +3695,7 @@ public class Time_Management extends javax.swing.JFrame {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (jCBTaskEdit.getSelectedIndex() == 0) {
+                    if (jCBTaskEdit.getSelectedIndex() == 1) {
                         InsertTaskIntoDB();
                     } else {
                         UpdateTaskIntoDB();

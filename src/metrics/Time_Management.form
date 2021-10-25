@@ -2082,14 +2082,10 @@
               <Font name="Ericsson Hilda" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="7">
+              <StringArray count="3">
                 <StringItem index="0" value="Select action..."/>
                 <StringItem index="1" value="Add a new task"/>
                 <StringItem index="2" value="Edit existing task"/>
-                <StringItem index="3" value="Add new service package"/>
-                <StringItem index="4" value="Edit service package"/>
-                <StringItem index="5" value="Add new deliverable"/>
-                <StringItem index="6" value="Edit deliverable"/>
               </StringArray>
             </Property>
           </Properties>
