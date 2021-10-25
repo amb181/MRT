@@ -3559,7 +3559,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(false);
         jPMarket.setVisible(false);
-        jPEditServicePackage.setVisible(false);
+        jPEditServicePackage1.setVisible(false);
         ResetUserFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Users");
         //this.setSize(jPEdit.getPreferredSize());
@@ -3573,8 +3573,9 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jCBServicePackage_add.setVisible(false);
         jCBDeliverableSearch1.setVisible(false);
+        jCBServicePackageSearch.setVisible(false);
         jPMarket.setVisible(false);
-        jPEditServicePackage.setVisible(false);
+        jPEditServicePackage1.setVisible(false);
         this.setTitle("MRT - Audit & Report - Review Metrics");
         //this.setSize(jPView.getPreferredSize());
     }//GEN-LAST:event_jMReviewActionPerformed
@@ -3590,7 +3591,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPEditTask.setVisible(true);
         jPMarket.setVisible(false);
-        jPEditServicePackage.setVisible(false);
+        jPEditServicePackage1.setVisible(false);
         // ResetTaskFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Tasks");
         //this.setSize(jPEditTask.getPreferredSize());
@@ -3767,7 +3768,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(true);
         jPMarket.setVisible(false);
-        jPEditServicePackage.setVisible(false);
+        jPEditServicePackage1.setVisible(false);
         ResetNetworkFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Networks");
         System.out.println("Width: " + jPNetworks.getWidth() + " Height: " + jPNetworks.getHeight());
@@ -4830,7 +4831,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPEditTask.setVisible(false);
         jPMarket.setVisible(true);
-        jPEditServicePackage.setVisible(false);
+        jPEditServicePackage1.setVisible(false);
         ResetTaskFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Markets");
     }//GEN-LAST:event_jMEditMarketsActionPerformed
@@ -6252,7 +6253,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(false);
         jPMarket.setVisible(false);
-        jPEditServicePackage.setVisible(true);
+        jPEditServicePackage1.setVisible(true);
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Service Packages and Deliverables");
     }//GEN-LAST:event_jMEditServicePackageActionPerformed
 
