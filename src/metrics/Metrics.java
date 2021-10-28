@@ -118,6 +118,10 @@ public class Metrics {
                                 Scoping_Time_Report time_r = new Scoping_Time_Report();
                                 time_r.show();
                                 time_r.setLocationRelativeTo(null);
+                            }else if (usersinfo.get(3).equals("FMS")) {
+                                FMS_Time_Report time_r = new FMS_Time_Report();
+                                time_r.show();
+                                time_r.setLocationRelativeTo(null);
                             }
                             loading.dispose();
                         } catch (ParseException | IOException ex) {

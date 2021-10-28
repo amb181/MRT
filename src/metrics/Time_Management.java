@@ -45,7 +45,12 @@ import javax.swing.table.TableModel;
 import static metrics.Metrics.usersinfo;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import java.awt.Desktop;
+import java.util.Set;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -151,6 +156,7 @@ public class Time_Management extends javax.swing.JFrame {
         jTFSupTeam.setEditable(false);
         jTFSupCU.setEditable(false);
         jCBYearTo.setEnabled(false);
+        jPEditServicePackage.setVisible(false);
         AutoCompleteDecorator.decorate(jCBTaskSearch);
         AutoCompleteDecorator.decorate(jCBLineManager);
         AutoCompleteDecorator.decorate(jCBTeam);
@@ -770,7 +776,7 @@ public class Time_Management extends javax.swing.JFrame {
         jCBUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         jCBMetricTeam.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBMetricTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "COP", "PSS", "Scoping", "Sourcing", "VSS" }));
+        jCBMetricTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "COP", "FMS", "PSS", "Scoping", "Sourcing", "VSS" }));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 130, 240), 1, true));
@@ -1640,11 +1646,6 @@ public class Time_Management extends javax.swing.JFrame {
         jCBProjectSuppDom.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
         jCBTeam_editTask.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_editTask.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_editTaskActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPTasksLayout = new javax.swing.GroupLayout(jPTasks);
         jPTasks.setLayout(jPTasksLayout);
@@ -2024,11 +2025,6 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBNetTech.setEditable(true);
         jCBNetTech.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBNetTech.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBNetTechActionPerformed(evt);
-            }
-        });
 
         jCBTeam_editnet.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
 
@@ -2733,7 +2729,7 @@ public class Time_Management extends javax.swing.JFrame {
         jLChoose1.setText("Choose action:");
 
         jCBPackageAction.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBPackageAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select action...", "Add new service package", "Edit service package", "Add new deliverable", "Edit deliverable" }));
+        jCBPackageAction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select...", "Add new service package", "Edit service package", "Add new deliverable", "Edit deliverable" }));
         jCBPackageAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBPackageActionActionPerformed(evt);
@@ -2766,11 +2762,6 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBServicePackageSearch.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBServicePackageSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBServicePackageSearchActionPerformed(evt);
-            }
-        });
 
         jLTaskSearch3.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLTaskSearch3.setText("Team:");
@@ -2840,11 +2831,6 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBBillable_packageadd.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBBillable_packageadd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Billable", "Not Billable" }));
-        jCBBillable_packageadd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBBillable_packageaddActionPerformed(evt);
-            }
-        });
 
         jLBillable1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLBillable1.setText("Billable");
@@ -2878,19 +2864,9 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBTeam_editpackage.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_editpackage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_editpackageActionPerformed(evt);
-            }
-        });
 
         jCBServicePackage_add.setEditable(true);
         jCBServicePackage_add.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBServicePackage_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBServicePackage_addActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPAddPackage1Layout = new javax.swing.GroupLayout(jPAddPackage1);
         jPAddPackage1.setLayout(jPAddPackage1Layout);
@@ -2984,11 +2960,6 @@ public class Time_Management extends javax.swing.JFrame {
         jLpackage3.setText("Deliverable");
 
         jCBDeliverableSearch1.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBDeliverableSearch1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBDeliverableSearch1ActionPerformed(evt);
-            }
-        });
 
         jBSearchDeliverable.setBackground(new java.awt.Color(0, 130, 240));
         jBSearchDeliverable.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
@@ -3069,11 +3040,6 @@ public class Time_Management extends javax.swing.JFrame {
 
         jCBDeliverable_add.setEditable(true);
         jCBDeliverable_add.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBDeliverable_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBDeliverable_addActionPerformed(evt);
-            }
-        });
 
         jLBillable3.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLBillable3.setText("Deliverables");
@@ -3107,11 +3073,6 @@ public class Time_Management extends javax.swing.JFrame {
         });
 
         jCBTeam_editdeliverable.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jCBTeam_editdeliverable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBTeam_editdeliverableActionPerformed(evt);
-            }
-        });
 
         jCBServicePackage_adddeliverable.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jCBServicePackage_adddeliverable.addActionListener(new java.awt.event.ActionListener() {
@@ -3559,7 +3520,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(false);
         jPMarket.setVisible(false);
-        jPEditServicePackage1.setVisible(false);
+        jPEditServicePackage.setVisible(false);
         ResetUserFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Users");
         //this.setSize(jPEdit.getPreferredSize());
@@ -3575,7 +3536,7 @@ public class Time_Management extends javax.swing.JFrame {
         jCBDeliverableSearch1.setVisible(false);
         jCBServicePackageSearch.setVisible(false);
         jPMarket.setVisible(false);
-        jPEditServicePackage1.setVisible(false);
+        jPEditServicePackage.setVisible(false);
         this.setTitle("MRT - Audit & Report - Review Metrics");
         //this.setSize(jPView.getPreferredSize());
     }//GEN-LAST:event_jMReviewActionPerformed
@@ -3591,7 +3552,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPEditTask.setVisible(true);
         jPMarket.setVisible(false);
-        jPEditServicePackage1.setVisible(false);
+        jPEditServicePackage.setVisible(false);
         // ResetTaskFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Tasks");
         //this.setSize(jPEditTask.getPreferredSize());
@@ -3702,6 +3663,7 @@ public class Time_Management extends javax.swing.JFrame {
                         UpdateTaskIntoDB();
                     }
                     jLLoading.setText("Updating task's local table...");
+                    tasks_info.clear();
                     GetAllTasks();
 
                     jDLoading.dispose();
@@ -3768,7 +3730,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(true);
         jPMarket.setVisible(false);
-        jPEditServicePackage1.setVisible(false);
+        jPEditServicePackage.setVisible(false);
         ResetNetworkFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Networks");
         System.out.println("Width: " + jPNetworks.getWidth() + " Height: " + jPNetworks.getHeight());
@@ -4144,12 +4106,24 @@ public class Time_Management extends javax.swing.JFrame {
 
     private void jBSaveNewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveNewUserActionPerformed
         // TODO add your handling code here:
-        System.out.println("Entrando a Save user button...");
         String signum = jTFSignum.getText();
         String name = jTFName.getText();
         String lastName = jTFLastName.getText();
         String catsNumber = jTFCATNum.getText();
-
+        ArrayList<String> customer_units = new ArrayList<String>();
+        String cu = "";
+        
+        if (jCBCustomerUnit.getItemCount() != 0){
+            cu = jCBCustomerUnit.getSelectedItem().toString();
+        }
+        
+        for (int i = 3; i < tasks_info.size(); i += 9){
+            if (!customer_units.contains(tasks_info.get(i)))
+                customer_units.add(tasks_info.get(i));
+        }
+        
+        
+        System.out.println("el arreglo: " + customer_units);
         Pattern onewordPattern = Pattern.compile("[^A-Za-z]");
         Pattern lettersPattern = Pattern.compile("[^A-Za-z]->[A-Za-z]");
         Pattern numberPattern = Pattern.compile("[^0-9]");
@@ -4171,6 +4145,8 @@ public class Time_Management extends javax.swing.JFrame {
             } else if (flagName) {
                 JOptionPane.showMessageDialog(this, "Name must contain only letters!");
                 jTFName.setText("");
+            } else if (!customer_units.contains(cu)) {
+                JOptionPane.showMessageDialog(this, "This is not an available Customer Unit!");                
             } else if (flagLastName) {
                 JOptionPane.showMessageDialog(this, "Last name must contain only letters!");
                 jTFLastName.setText("");
@@ -4424,7 +4400,7 @@ public class Time_Management extends javax.swing.JFrame {
                     cus.add(tasks_info.get(i + 3));
         }
         Collections.sort(cus);
-        System.out.println("la CU " + cus);
+        
         for (int i = 0; i < cus.size(); i++){
             jCBSupportedCU.addItem(cus.get(i));
         }
@@ -4572,6 +4548,27 @@ public class Time_Management extends javax.swing.JFrame {
         Collections.sort(projects);
         for (int i = 0; i < projects.size(); i++){
             jCBProjectName.addItem(projects.get(i));
+        }
+        
+        // Fill activity code in Add new network
+        ArrayList<String> activity_code = new ArrayList<String>();
+        jCBNetActCode.removeAllItems();       
+        
+        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0){
+            team = jCBNetTeam.getSelectedItem().toString();  
+            cu1 = jCBNetCustomer.getSelectedItem().toString();
+        }                
+        for (int i = 0; i < networksinfo.size(); i = i + 11) {// Team, CU
+            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
+                if (!activity_code.contains(networksinfo.get(i + 6))) {
+                    activity_code.add(networksinfo.get(i + 6));
+                }
+            }
+        }
+        
+        Collections.sort(activity_code);
+        for (int i = 0; i < activity_code.size(); i++) {
+            jCBNetActCode.addItem(activity_code.get(i));
         }
     }//GEN-LAST:event_jCBNetCustomerActionPerformed
 
@@ -4831,7 +4828,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPEditTask.setVisible(false);
         jPMarket.setVisible(true);
-        jPEditServicePackage1.setVisible(false);
+        jPEditServicePackage.setVisible(false);
         ResetTaskFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Markets");
     }//GEN-LAST:event_jMEditMarketsActionPerformed
@@ -5178,33 +5175,6 @@ public class Time_Management extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCBRegionMrktActionPerformed
 
-    private void jCBNetTechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNetTechActionPerformed
-        // Fill activity code in Add new network
-        ArrayList<String> activity_code = new ArrayList<String>();
-        jCBNetActCode.removeAllItems();        
-        String team = "", cu1 = "", reg = "", market = "";        
-        
-        if (jCBNetTeam.getItemCount() != 0 && jCBNetCustomer.getItemCount() != 0 && jCBNetRegion.getItemCount() != 0 && jCBNetMarket.getItemCount() != 0){
-            team = jCBNetTeam.getSelectedItem().toString();  
-            cu1 = jCBNetCustomer.getSelectedItem().toString();
-            reg = jCBNetRegion.getSelectedItem().toString();
-            market = jCBNetMarket.getSelectedItem().toString();
-        }                
-        for (int i = 0; i < networksinfo.size(); i = i + 11) {// Team, CU, Region, Market, Technology
-            if (team.equals(networksinfo.get(i)) && cu1.equals(networksinfo.get(i + 1))) {
-                if (!activity_code.contains(networksinfo.get(i + 6))) {
-                    activity_code.add(networksinfo.get(i + 6));
-                }
-            }
-        
-        }
-        Collections.sort(activity_code);
-        for (int i = 0; i < activity_code.size(); i++) {
-            jCBNetActCode.addItem(activity_code.get(i));
-        }
-        
-    }//GEN-LAST:event_jCBNetTechActionPerformed
-
     private void jMIPSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPSSActionPerformed
         // TODO add your handling code here:
         StartDialog starting = new StartDialog();
@@ -5332,7 +5302,6 @@ public class Time_Management extends javax.swing.JFrame {
                 }
             }
         }
-        System.out.println("llena los packages: " + packages);
         Collections.sort(packages);
         for (int i = 0; i < packages.size(); i++) {
             jCBServicePN.addItem(packages.get(i));
@@ -5357,10 +5326,6 @@ public class Time_Management extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jCBTaskCUActionPerformed
-
-    private void jCBTeam_editTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editTaskActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTeam_editTaskActionPerformed
 
     private void jTFTaskNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFTaskNameActionPerformed
         // TODO add your handling code here:
@@ -5709,16 +5674,23 @@ public class Time_Management extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDeleteTask5ActionPerformed
 
     private void jCBPackageActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPackageActionActionPerformed
-        // action selected
-        // Add new service package:
-        if (jCBPackageAction.getSelectedItem().toString().equals("Add new service package")){
+        
+        if (jCBPackageAction.getSelectedIndex() == 0){
             jPSearchPackage1.setVisible(false);
+            jPAddPackage1.setVisible(false);
+            jPSearchDeliverable.setVisible(false);
+            jPAddDeliverable.setVisible(false);           
+            
+            
+        // Add new service package:
+        }else if (jCBPackageAction.getSelectedIndex() == 1){
+            jPSearchPackage1.setVisible(false);
+            jPAddPackage1.setVisible(true);
+            jCBTeam_addpackage.setVisible(true);
             jPSearchDeliverable.setVisible(false);
             jPAddDeliverable.setVisible(false);
             jCBTeam_editpackage.setVisible(false);
-            jCBTeam_addpackage.setVisible(true);
-            jCBTeam_editpackage.setEnabled(true);
-            jCBCU_packageadd.setEnabled(true);
+            jCBTeam_editpackage.setEnabled(false);
 
             //Fill team combo box
             jCBTeam_addpackage.removeAllItems();
@@ -5737,14 +5709,14 @@ public class Time_Management extends javax.swing.JFrame {
             }
 
             // Edit service package:
-        } else if (jCBPackageAction.getSelectedItem().toString().equals("Edit service package")){
+        } else if (jCBPackageAction.getSelectedIndex() == 2){
             jPSearchPackage1.setVisible(true);
-            jCBTeam_editpackage.setVisible(true);
+            jPAddPackage1.setVisible(true);
             jPSearchDeliverable.setVisible(false);
             jPAddDeliverable.setVisible(false);
-            jCBTeam_addpackage.setVisible(false);
+            jCBTeam_editpackage.setVisible(true);
             jCBTeam_editpackage.setEnabled(false);
-            jCBCU_packageadd.setEnabled(false);
+            jCBTeam_addpackage.setVisible(false);
 
             //Fill team combo box
             jCBTeamPackageSearch.removeAllItems();
@@ -5761,7 +5733,7 @@ public class Time_Management extends javax.swing.JFrame {
             for (int i = 0; i < teams.size(); i++){
                 jCBTeamPackageSearch.addItem(teams.get(i));
             }
-        }else if (jCBPackageAction.getSelectedItem().toString().equals("Add new deliverable")){
+        }else if (jCBPackageAction.getSelectedIndex() == 3){
             jPSearchPackage1.setVisible(false);
             jPSearchDeliverable.setVisible(false);
             jPAddPackage1.setVisible(false);
@@ -5784,7 +5756,7 @@ public class Time_Management extends javax.swing.JFrame {
                 jCBTeam_adddeliverable.addItem(teams.get(i));
             }
 
-        }else if (jCBPackageAction.getSelectedItem().toString().equals("Edit deliverable")){
+        }else if (jCBPackageAction.getSelectedIndex() == 4){
             jPSearchPackage1.setVisible(false);
             jPSearchDeliverable.setVisible(true);
             jPAddPackage1.setVisible(false);
@@ -5810,10 +5782,8 @@ public class Time_Management extends javax.swing.JFrame {
                 jCBTeamSearchDeliverable.addItem(teams.get(i));
             }
 
-        }else{
-            jPSearchDeliverable.setVisible(false);
-            jPAddDeliverable.setVisible(false);
         }
+                
     }//GEN-LAST:event_jCBPackageActionActionPerformed
 
     private void jBDeleteTask1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteTask1ActionPerformed
@@ -5861,10 +5831,6 @@ public class Time_Management extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBSearchTask1ActionPerformed
 
-    private void jCBServicePackageSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicePackageSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBServicePackageSearchActionPerformed
-
     private void jCBTeamPackageSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeamPackageSearchActionPerformed
         // Fill CU in Search package :
         jCBCUPackageSearch.removeAllItems();
@@ -5908,104 +5874,6 @@ public class Time_Management extends javax.swing.JFrame {
             jCBServicePackageSearch.addItem(s_packages.get(i));
         }
     }//GEN-LAST:event_jCBCUPackageSearchActionPerformed
-
-    private void jCBBillable_packageaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBBillable_packageaddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBBillable_packageaddActionPerformed
-
-    private void jBSaveTask2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTask2ActionPerformed
-        //Save service package
-        boolean flagPackage = true;
-        // Validar por equipo y cu que no se repita en ese Team - CU
-        String team = jCBTeam_addpackage.getSelectedItem().toString();
-        String cu = jCBCU_packageadd.getSelectedItem().toString();
-        String s_package = jCBServicePackage_add.getSelectedItem().toString();
-        String billable = jCBBillable_packageadd.getSelectedItem().toString();
-        String msg = "";
-
-        if (s_package == null || s_package.equals(" ") || s_package.equals("")) {
-            flagPackage = false;
-            msg = "Service Package is empty!";
-        } else {
-            for (int i = 0; i < service_packages.size(); i = i + 5) {
-                if (team.equals(service_packages.get(i + 1)) && cu.equals(service_packages.get(i + 2)) && s_package.equals(service_packages.get(i + 3)) && billable.equals(service_packages.get(i + 4))) {
-                    flagPackage = false;
-                    msg = "Service Package already exists!";
-                }
-            }
-        }
-        if (flagPackage) {
-            jLLoading.setText("Saving service package into database...");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (jCBPackageAction.getSelectedIndex() == 1) {
-                        InsertServicePackage();
-                    } else if (jCBPackageAction.getSelectedIndex() == 2){
-                        UpdatePackages();
-                    }
-                    service_packages.clear();
-                    GetServicePackages();
-                    jDLoading.dispose();
-                }
-            }).start();
-            jDLoading.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, msg);
-        }
-    }//GEN-LAST:event_jBSaveTask2ActionPerformed
-
-    private void jCBTeam_addpackageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_addpackageActionPerformed
-        // Fill CU information in add service package
-        jCBCU_packageadd.removeAllItems();
-        String team = "";
-        ArrayList<String> cus = new ArrayList<>();
-
-        if (jCBTeam_addpackage.getItemCount() != 0)
-        team = jCBTeam_addpackage.getSelectedItem().toString();
-
-        for (int i = 2; i < service_packages.size(); i += 5){
-            if (team.equals(service_packages.get(i - 1)))
-            if (!cus.contains(service_packages.get(i))){
-                cus.add(service_packages.get(i));
-            }
-        }
-        Collections.sort(cus);
-        for (int i = 0; i < cus.size(); i++){
-            jCBCU_packageadd.addItem(cus.get(i));
-        }
-    }//GEN-LAST:event_jCBTeam_addpackageActionPerformed
-
-    private void jCBCU_packageaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCU_packageaddActionPerformed
-        // Fill Service Package information:
-        jCBServicePackage_add.removeAllItems();
-        String team = "", cu = "";
-        ArrayList<String> s_packages = new ArrayList<>();
-
-        if (jCBTeam_addpackage.getItemCount() != 0 && jCBCU_packageadd.getItemCount() != 0){
-            team = jCBTeam_addpackage.getSelectedItem().toString();
-            cu = jCBCU_packageadd.getSelectedItem().toString();
-        }
-
-        for (int i = 3; i < service_packages.size(); i += 5){
-            if (team.equals(service_packages.get(i - 2)) && cu.equals(service_packages.get(i-1)))
-            if (!s_packages.contains(service_packages.get(i))){
-                s_packages.add(service_packages.get(i));
-            }
-        }
-        Collections.sort(s_packages);
-        for (int i = 0; i < s_packages.size(); i++){
-            jCBServicePackage_add.addItem(s_packages.get(i));
-        }
-    }//GEN-LAST:event_jCBCU_packageaddActionPerformed
-
-    private void jCBTeam_editpackageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editpackageActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTeam_editpackageActionPerformed
-
-    private void jCBServicePackage_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicePackage_addActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBServicePackage_addActionPerformed
 
     private void jBDeleteDeliverableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteDeliverableActionPerformed
         // Delete deliverable:
@@ -6075,10 +5943,6 @@ public class Time_Management extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCBTeamSearchDeliverableActionPerformed
 
-    private void jCBDeliverableSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeliverableSearch1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBDeliverableSearch1ActionPerformed
-
     private void jBSearchDeliverableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSearchDeliverableActionPerformed
         // Search deliverable:
         String team = jCBTeamSearchDeliverable.getSelectedItem().toString();
@@ -6126,10 +5990,6 @@ public class Time_Management extends javax.swing.JFrame {
             jCBDeliverableSearch1.addItem(_deliverables.get(i));
         }
     }//GEN-LAST:event_jCBPackage_deliverablesearchActionPerformed
-
-    private void jCBDeliverable_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDeliverable_addActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBDeliverable_addActionPerformed
 
     private void jBSaveDeliverableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveDeliverableActionPerformed
         //Save deliverable:
@@ -6206,10 +6066,10 @@ public class Time_Management extends javax.swing.JFrame {
             cu = jCBCU_adddeliverable.getSelectedItem().toString();
         }
 
-        for (int i = 4; i < deliverables.size(); i += 5){
-            if (team.equals(deliverables.get(i - 1)) && cu.equals(deliverables.get(i)))
-            if (!s_packages.contains(deliverables.get(i-2))){
-                s_packages.add(deliverables.get(i-2));
+        for (int i = 3; i < service_packages.size(); i += 5){
+            if (team.equals(service_packages.get(i - 2)) && cu.equals(service_packages.get(i-1)))
+            if (!s_packages.contains(service_packages.get(i))){
+                s_packages.add(service_packages.get(i));
             }
         }
         Collections.sort(s_packages);
@@ -6217,10 +6077,6 @@ public class Time_Management extends javax.swing.JFrame {
             jCBServicePackage_adddeliverable.addItem(s_packages.get(i));
         }
     }//GEN-LAST:event_jCBCU_adddeliverableActionPerformed
-
-    private void jCBTeam_editdeliverableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_editdeliverableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBTeam_editdeliverableActionPerformed
 
     private void jCBServicePackage_adddeliverableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicePackage_adddeliverableActionPerformed
         // Fill deliverables combo box in add deliverable:
@@ -6253,9 +6109,95 @@ public class Time_Management extends javax.swing.JFrame {
         jPEditTask.setVisible(false);
         jPNetworks.setVisible(false);
         jPMarket.setVisible(false);
-        jPEditServicePackage1.setVisible(true);
+        jPEditServicePackage.setVisible(true);
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Service Packages and Deliverables");
     }//GEN-LAST:event_jMEditServicePackageActionPerformed
+
+    private void jCBCU_packageaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCU_packageaddActionPerformed
+        // Fill Service Package information:
+        jCBServicePackage_add.removeAllItems();
+        String team = "", cu = "";
+        ArrayList<String> s_packages = new ArrayList<>();
+
+        if (jCBTeam_addpackage.getItemCount() != 0 && jCBCU_packageadd.getItemCount() != 0){
+            team = jCBTeam_addpackage.getSelectedItem().toString();
+            cu = jCBCU_packageadd.getSelectedItem().toString();
+        }
+
+        for (int i = 3; i < service_packages.size(); i += 5){
+            if (team.equals(service_packages.get(i - 2)) && cu.equals(service_packages.get(i-1)))
+            if (!s_packages.contains(service_packages.get(i))){
+                s_packages.add(service_packages.get(i));
+            }
+        }
+        Collections.sort(s_packages);
+        for (int i = 0; i < s_packages.size(); i++){
+            jCBServicePackage_add.addItem(s_packages.get(i));
+        }
+    }//GEN-LAST:event_jCBCU_packageaddActionPerformed
+
+    private void jCBTeam_addpackageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTeam_addpackageActionPerformed
+        // Fill CU information in add service package
+        jCBCU_packageadd.removeAllItems();
+        String team = "";
+        ArrayList<String> cus = new ArrayList<>();
+
+        if (jCBTeam_addpackage.getItemCount() != 0)
+        team = jCBTeam_addpackage.getSelectedItem().toString();
+
+        for (int i = 2; i < service_packages.size(); i += 5){
+            if (team.equals(service_packages.get(i - 1)))
+            if (!cus.contains(service_packages.get(i))){
+                cus.add(service_packages.get(i));
+            }
+        }
+        Collections.sort(cus);
+        for (int i = 0; i < cus.size(); i++){
+            jCBCU_packageadd.addItem(cus.get(i));
+        }
+    }//GEN-LAST:event_jCBTeam_addpackageActionPerformed
+
+    private void jBSaveTask2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveTask2ActionPerformed
+        //Save service package
+        boolean flagPackage = true;
+        // Validar por equipo y cu que no se repita en ese Team - CU
+        String team = jCBTeam_addpackage.getSelectedItem().toString();
+        String cu = jCBCU_packageadd.getSelectedItem().toString();
+        String s_package = jCBServicePackage_add.getSelectedItem().toString();
+        String billable = jCBBillable_packageadd.getSelectedItem().toString();
+        String msg = "";
+
+        if (s_package == null || s_package.equals(" ") || s_package.equals("")) {
+            flagPackage = false;
+            msg = "Service Package is empty!";
+        } else {
+            for (int i = 0; i < service_packages.size(); i = i + 5) {
+                if (team.equals(service_packages.get(i + 1)) && cu.equals(service_packages.get(i + 2)) && s_package.equals(service_packages.get(i + 3)) && billable.equals(service_packages.get(i + 4))) {
+                    flagPackage = false;
+                    msg = "Service Package already exists!";
+                }
+            }
+        }
+        if (flagPackage) {
+            jLLoading.setText("Saving service package into database...");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (jCBPackageAction.getSelectedIndex() == 1) {
+                        InsertServicePackage();
+                    } else if (jCBPackageAction.getSelectedIndex() == 2){
+                        UpdatePackages();
+                    }
+                    service_packages.clear();
+                    GetServicePackages();
+                    jDLoading.dispose();
+                }
+            }).start();
+            jDLoading.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, msg);
+        }
+    }//GEN-LAST:event_jBSaveTask2ActionPerformed
 
     private void GetTaskTypes() {
         // Get different task ids
@@ -7181,12 +7123,12 @@ public class Time_Management extends javax.swing.JFrame {
             String ID = "";
             String countID = "";
             String task = jTFTaskName.getText();
-            String type = jCBTaskType.getItemAt(jCBTaskType.getSelectedIndex());
-            String team = jCBTaskTeam.getItemAt(jCBTaskTeam.getSelectedIndex());
-            String cu = jCBTaskCU.getItemAt(jCBTaskCU.getSelectedIndex());
-            String spn = jCBServicePN.getItemAt(jCBServicePN.getSelectedIndex());
-            String deliv = jCBDeliverable.getItemAt(jCBDeliverable.getSelectedIndex());
-            String psd = jCBProjectSuppDom.getItemAt(jCBProjectSuppDom.getSelectedIndex());
+            String type = jCBTaskType.getSelectedItem().toString();
+            String team = jCBTaskTeam.getSelectedItem().toString();
+            String cu = jCBTaskCU.getSelectedItem().toString();
+            String spn = jCBServicePN.getSelectedItem().toString();
+            String deliv = jCBDeliverable.getSelectedItem().toString();
+            String psd = jCBProjectSuppDom.getSelectedItem().toString();
             String loe = jTFLOE.getText();
             String billable = "Billable";
             int index = jCBTaskType.getSelectedIndex();
@@ -7196,7 +7138,7 @@ public class Time_Management extends javax.swing.JFrame {
 
             connection = SQL_connection.getConnection();
             preparedStatement = connection.prepareStatement("SELECT Task_ID FROM tasks "// COUNT(Task_ID) AS counter,
-                    + "WHERE Task_ID LIKE '" + type + "%' ORDER BY Task_ID DESC LIMIT 1;");
+                    + "WHERE Task_ID LIKE '" + type + "%' AND Service_Package_Name LIKE '%" + spn + "%' ORDER BY Task_ID DESC LIMIT 1;");
             System.out.println("Query: " + preparedStatement);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -7800,7 +7742,7 @@ public class Time_Management extends javax.swing.JFrame {
                         + "FROM metrics_vss UNION ALL "
                         + "SELECT Signum, Organization, Name, Task_ID, Task, Network, Subnetwork, SAP_Billing, Work_date, Logged_Time, Week "
                         + "FROM metrics_pss) LOGGEDTIME "
-                        + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + ";";
+                        + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + " ;";
             } else {
                 query = "SELECT " + parametros + "SUM(Logged_Time) FROM metrics_" + team1 + " " + week + organization + name + " GROUP BY " + orden + " ORDER BY " + orden + ";";
             }
@@ -7957,6 +7899,11 @@ public class Time_Management extends javax.swing.JFrame {
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
+                        + "FROM metrics_fms UNION ALL "
+                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
+                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
+                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
+                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
                         + "FROM metrics_sourcing UNION ALL "
                         + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
@@ -7967,13 +7914,18 @@ public class Time_Management extends javax.swing.JFrame {
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
+                        + "FROM metrics_scoping UNION ALL "
+                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
+                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
+                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
+                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
                         + "FROM metrics_pss) METRICAS " + week + organization + name1 + ";";
             } else {
                 query = "SELECT Region, Organization, Signum, Name, Customer_Unit, "
                         + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
                         + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
                         + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, "
-                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + ";";
+                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + " ;";
             }
             preparedStatement = connection.prepareStatement(query);
             System.out.println("Query: " + preparedStatement);
