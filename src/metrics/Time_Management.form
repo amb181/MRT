@@ -2061,7 +2061,7 @@
                           <Component id="jPSearchTask" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPTasks" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="242" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="280" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -2691,7 +2691,7 @@
                       </Group>
                       <Component id="jPNetSearch" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="1436" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

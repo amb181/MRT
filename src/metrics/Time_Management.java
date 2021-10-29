@@ -5738,6 +5738,7 @@ public class Time_Management extends javax.swing.JFrame {
             jPSearchDeliverable.setVisible(false);
             jPAddPackage1.setVisible(false);
             jPAddDeliverable.setVisible(true);
+            jCBTeam_adddeliverable.setVisible(true);
             jCBTeam_editdeliverable.setVisible(false);
 
             //Fill team combo box
@@ -6110,6 +6111,7 @@ public class Time_Management extends javax.swing.JFrame {
         jPNetworks.setVisible(false);
         jPMarket.setVisible(false);
         jPEditServicePackage.setVisible(true);
+        ResetPackageFields();
         this.setTitle("MRT - Audit & Report - Add, Edit and Delete Service Packages and Deliverables");
     }//GEN-LAST:event_jMEditServicePackageActionPerformed
 
@@ -7504,6 +7506,14 @@ public class Time_Management extends javax.swing.JFrame {
 //        jCBDeliverable.setSelectedIndex(0);
 //        jCBProjectSuppDom.setSelectedIndex(0);
         jTFLOE.setText("");
+    }
+    
+    
+    private void ResetPackageFields() {
+        jPSearchPackage1.setVisible(false);
+        jPSearchDeliverable.setVisible(false);
+        jPAddDeliverable.setVisible(false);
+        //jCBTeamTaskSearch.setSelectedIndex(0);
     }
      private void hide_task_comboboxes() {
         jCBTeamTaskSearch.setVisible(false);
