@@ -7531,11 +7531,10 @@ public class Time_Management extends javax.swing.JFrame {
     private void SaveTableCSV(String fileName, TableModel tableModel) throws IOException {
         String user = System.getProperty("user.name");
         String path = "C:\\Users\\" + user + "\\Documents\\" + fileName + ".csv";
-        try (PrintWriter writer = new PrintWriter(new File(path))) {
-
+        try (PrintWriter writer = new PrintWriter(new File(path))) {            
             int columnas = tableModel.getColumnCount();
             int filas = tableModel.getRowCount();
-            System.out.println("Row Count: " + filas);
+            System.out.println("Columns: " + columnas + "\nRows: " + filas);
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < columnas; j++) {
                 sb.append(tableModel.getColumnName(j) + ",");
@@ -7560,9 +7559,9 @@ public class Time_Management extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Template file was saved to " + path);
             }
             //JOptionPane.showMessageDialog(this, "CSV file was saved to " + path + " successfully.");
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
+        } 
     }
 
     public void resizeColumnWidth(JTable table) {
@@ -7897,45 +7896,25 @@ public class Time_Management extends javax.swing.JFrame {
                 valores[j] = "";
             }
             connection = SQL_connection.getConnection();
-            String query = "";
+            String[] _teams = {"cop", "fms", "pss", "scoping", "sourcing", "vss"};
+            System.out.println("Estos son: " + teams);
+            String query = "SELECT Region, Organization, Signum, Name, Customer_Unit, \n" +
+                        "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, \n" +
+                        "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, \n" +
+                        "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments \n" +
+                        "FROM metrics_";
+            
             if (team1.equals("all")) {
-                query = "SELECT * FROM ("
-                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_cop UNION ALL "
-                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_fms UNION ALL "
-                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_sourcing UNION ALL "
-                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_vss UNION ALL "
-                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_scoping UNION ALL "
-                        + "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, Comments "
-                        + "FROM metrics_pss) METRICAS " + week + organization + name1 + ";";
+                String query_all = "\nSELECT * FROM ( \n";
+                for (int i=0; i < _teams.length; i++){
+                    query_all += query + _teams[i];
+                    if (i < _teams.length - 1){
+                        query_all+= " \nUNION ALL \n";
+                    }
+                }
+                query = query_all + "\n) METRICAS " + week + organization + name1 + ";";
             } else {
-                query = "SELECT Region, Organization, Signum, Name, Customer_Unit, "
-                        + "Requestor, Task_ID, Task, Network, Subnetwork, Activity_Code, "
-                        + "SAP_Billing, Work_Date, Logged_Time, Week, Market, Technology, "
-                        + "FTR, On_Time, Failed_FTR_Category, Failed_On_Time, Num_Requests, "
-                        + "Comments FROM metrics_" + team1 + " " + week + organization + name1 + " ;";
+                query += team1 + " " + week + organization + name1 + " ;";
             }
             preparedStatement = connection.prepareStatement(query);
             System.out.println("Query: " + preparedStatement);
@@ -7945,8 +7924,7 @@ public class Time_Management extends javax.swing.JFrame {
             } else {
                 do {
                     for (int j = 1; j < 24; j++) {
-                          valores[j - 1] = resultSet.getString(j);
-                        
+                        valores[j - 1] = resultSet.getString(j);
                     }
                     rowCounter += 1;
                     model.addRow(valores);

@@ -72,6 +72,7 @@ public class Metrics {
             // Print log
             PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\" + user_log + "\\Documents\\MRT\\" + usersinfo.get(0) + "_" + date + ".log"));
             System.setOut(out);
+            System.setErr(out);
             
             System.out.println("Java version: " + System.getProperty("java.version"));
 
@@ -142,7 +143,7 @@ public class Metrics {
         PreparedStatement preparedStatement;
         ResultSet resultset;
         String user = System.getProperty("user.name");
-        //String user = "EPALEUR";
+        //String user = "EIVOVIL";
         System.out.println("Current user: " + user);
 
         try {
@@ -191,7 +192,7 @@ public class Metrics {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultset;
-        localversion = "3.6"; //Version
+        localversion = "3.7"; //Version
         try {
             connection = SQL_connection.getConnection();
             String sql_version = "SELECT version FROM source_control ORDER BY version DESC LIMIT 1;";

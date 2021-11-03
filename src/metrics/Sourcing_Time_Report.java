@@ -340,7 +340,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jLabelDescRaido = new javax.swing.JLabel();
         jLabelDescNaudiz = new javax.swing.JLabel();
         jLabelDescAbout = new javax.swing.JLabel();
-        jLabelSupport = new javax.swing.JLabel();
         jLabelVersion = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -1182,9 +1181,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
         jLabelDescAbout.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabelDescAbout.setText("<html>The idea of taking nordic runes to create the MRT logo comes from the Bluetooth logo since it is the most<br/>famous patent of Ericsson so, we decided to relate this desktop app to it.<br/><br/>MRT stands for \"Metrics Recording Tool\" and we can find those initials in the logo.<br/> <br/>This logo is formed with the three runes shown above, this runes resemblance to the letters M, R and T.<br/>They come from the Elder Futhark Runic alphabet and their meanings form the philosophy of this tool. <br/><br/>This philosophy is to meet the need of recording your daily journey. </html>");
 
-        jLabelSupport.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
-        jLabelSupport.setText("<html>Support:<br/>alejandro.molina.bermudez@ericsson.com<br/>dulce.cao@ericsson.com</html>");
-
         jLabelVersion.setFont(new java.awt.Font("Ericsson Hilda", 0, 18)); // NOI18N
         jLabelVersion.setText("Version: ");
 
@@ -1216,9 +1212,7 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                         .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(121, 121, 121))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelSupport, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelVersion)
                 .addContainerGap())
         );
@@ -1247,10 +1241,9 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
                                 .addComponent(jLabelNaudiz, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabelDescNaudiz)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 112, Short.MAX_VALUE))
                             .addComponent(jLabelDescAbout, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelSupport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(87, 87, 87)))
                 .addContainerGap())
         );
 
@@ -3865,7 +3858,6 @@ public final class Sourcing_Time_Report extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNaudiz;
     private javax.swing.JLabel jLabelRaido;
     private javax.swing.JLabel jLabelSubnetwork;
-    private javax.swing.JLabel jLabelSupport;
     private javax.swing.JLabel jLabelTeam;
     private javax.swing.JLabel jLabelTeam1;
     private javax.swing.JLabel jLabelVersion;

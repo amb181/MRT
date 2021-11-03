@@ -2704,7 +2704,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="178" max="32767" attributes="0"/>
+                  <EmptySpace pref="325" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelDescAbout" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -2715,8 +2715,6 @@
                   <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelSupport" min="-2" pref="494" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabelVersion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -2751,12 +2749,11 @@
                                   <Component id="jLabelNaudiz" min="-2" pref="200" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabelDescNaudiz" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="114" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jLabelDescAbout" pref="329" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabelSupport" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -2815,14 +2812,6 @@
               <Font name="Ericsson Hilda" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;The idea of taking nordic runes to create the MRT logo comes from the Bluetooth logo since it is the most&lt;br/&gt;famous patent of Ericsson so, we decided to relate this desktop app to it.&lt;br/&gt;&lt;br/&gt;MRT stands for &quot;Metrics Recording Tool&quot; and we can find those initials in the logo.&lt;br/&gt; &lt;br/&gt;This logo is formed with the three runes shown above, this runes resemblance to the letters M, R and T.&lt;br/&gt;They come from the Elder Futhark Runic alphabet and their meanings form the philosophy of this tool. &lt;br/&gt;&lt;br/&gt;This philosophy is to meet the need of recording your daily journey. &lt;/html&gt;"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelSupport">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ericsson Hilda" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;Support:&lt;br/&gt;alejandro.molina.bermudez@ericsson.com&lt;br/&gt;dulce.cao@ericsson.com&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelVersion">

@@ -211,7 +211,8 @@ public class StartDialog extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String url = "https://ericsson-my.sharepoint.com/:f:/p/alejandro_molina_bermudez/ElLKc2nhnlVCjrFqwrCrv7UBA7fWTbIDTjcrhmoLw1CfDw?e=vcAe9g";
+        // String url = "https://ericsson-my.sharepoint.com/:f:/p/alejandro_molina_bermudez/ElLKc2nhnlVCjrFqwrCrv7UBA7fWTbIDTjcrhmoLw1CfDw?e=vcAe9g";
+        String url = "https://ericsson.sharepoint.com/:f:/s/MRTMetricsReportingTool/EiXqrdw8XSZCkM0dobiSL0wBJ4XF6QbXvUJhYvF67u6mVA?e=4zCbdk";
         openWebPage(url);
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
