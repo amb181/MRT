@@ -7837,7 +7837,7 @@ public class Time_Management extends javax.swing.JFrame {
                 week = "WHERE Week = " + weekFrom + " AND YEAR(Work_date) = " + yearFrom1;
                 fileName = fileName + " Week " + weekFrom;
             } else {
-                week = "WHERE Week BETWEEN " + weekFrom + " AND " + weekTo;
+                week = "WHERE Week BETWEEN " + weekFrom + " AND " + weekTo + " AND YEAR(Work_date) BETWEEN " + yearFrom1 + " AND " + yearTo1;
                 fileName = fileName + " From Week " + weekFrom + " TO " + weekTo;
             }
         }
